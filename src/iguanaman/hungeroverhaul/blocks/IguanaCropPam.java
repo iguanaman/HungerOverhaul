@@ -27,11 +27,11 @@ import assets.pamharvestcraft.TileEntityPamCrop;
 
 public class IguanaCropPam extends BlockPamCrop {
 	   
-	Type[] biomesNormal = new Type[]{Type.FOREST, Type.PLAINS};
-	Type[] biomesHumid = new Type[]{Type.JUNGLE, Type.SWAMP};
-	Type[] biomesDesert = new Type[]{Type.DESERT};
+	public static Type[] biomesNormal = new Type[]{Type.FOREST, Type.PLAINS};
+	public static Type[] biomesHumid = new Type[]{Type.JUNGLE, Type.SWAMP};
+	public static Type[] biomesDesert = new Type[]{Type.DESERT};
 	
-   public Type[][] biomes = new Type[][]
+   public static Type[][] biomes = new Type[][]
 		   {biomesNormal, biomesNormal, biomesNormal, biomesNormal, biomesNormal, biomesNormal, biomesNormal,
 		   biomesNormal, biomesNormal, biomesNormal, biomesNormal, biomesNormal, biomesNormal, biomesNormal, biomesNormal, biomesNormal,  
 		   biomesHumid, biomesNormal, biomesNormal, biomesNormal, biomesNormal, biomesNormal, biomesNormal, biomesHumid, 
@@ -107,22 +107,21 @@ public class IguanaCropPam extends BlockPamCrop {
 	        
 	        if (stage == 2)
 			{
-	            if (world.isRemote)
-	                return true;
+	            if (world.isRemote) return true;
 	            
-	            	int meta = 0;
-	            	int produce = IguanaConfig.producePerHarvestMin + world.rand.nextInt(IguanaConfig.producePerHarvestMax - IguanaConfig.producePerHarvestMin);
-					if (cropID > 28) {
-						meta = 1;
-						produce = Math.min(Math.round((float) produce / 2), 1);
-					}
-	
-		    		EntityItem entityitem = new EntityItem(world, player.posX, player.posY - 1.0D, player.posZ, new ItemStack(PamHarvestCraft.PamCropItems[cropID], produce, 0));
-					world.spawnEntityInWorld(entityitem);
-					entityitem.onCollideWithPlayer(player);
-					tileentitypamcrop.setGrowthStage(meta);
-					world.markBlockForUpdate(par2, par3, par4);
-					return true;
+            	int meta = 0;
+            	int produce = IguanaConfig.producePerHarvestMin + world.rand.nextInt(IguanaConfig.producePerHarvestMax - IguanaConfig.producePerHarvestMin);
+				if (cropID > 28) {
+					meta = 1;
+					produce = Math.min(Math.round((float) produce / 2f), 1);
+				}
+
+	    		EntityItem entityitem = new EntityItem(world, player.posX, player.posY - 1.0D, player.posZ, new ItemStack(PamHarvestCraft.PamCropItems[cropID], produce, 0));
+				world.spawnEntityInWorld(entityitem);
+				entityitem.onCollideWithPlayer(player);
+				tileentitypamcrop.setGrowthStage(meta);
+				world.markBlockForUpdate(par2, par3, par4);
+				return true;
 			}
 
 		}
@@ -130,49 +129,36 @@ public class IguanaCropPam extends BlockPamCrop {
 		return false;
 	}
 
-   /**
-    * Ticks the block if it's been scheduled
-    */
-	@Override
-   public void updateTick(World par1World, int par2, int par3, int par4, Random par5Random)
-   {
-       super.updateTick(par1World, par2, par3, par4, par5Random);
-       TileEntityPamCrop tileentitypamcrop;
-       if (par1World.getBlockLightValue(par2, par3 + 1, par4) >= 9 && 
-        		(IguanaConfig.cropsNeedSunlight == true && par1World.isDaytime() && par1World.canBlockSeeTheSky(par2, par3, par4))
-        		||
-        		(IguanaConfig.cropsNeedSunlight == false)
-        		)
-       {
-    	   tileentitypamcrop = (TileEntityPamCrop)par1World.getBlockTileEntity(par2, par3, par4);
-           if(tileentitypamcrop != null) {
-               float f = this.getGrowthRate(par1World, par2, par3, par4);
+    /**
+     * Ticks the block if it's been scheduled
+     */
+    @Override
+    public void updateTick(World par1World, int par2, int par3, int par4, Random par5Random)
+    {
+        if (IguanaConfig.cropsNeedSunlight && (!par1World.isDaytime() || !par1World.canBlockSeeTheSky(par2, par3, par4))) return;
 
-                // biome modifier
-                float biomeModifier = (float)IguanaConfig.wrongBiomeRegrowthMultiplier;
-            	try {
-            		BiomeGenBase biome = par1World.getWorldChunkManager().getBiomeGenAt(par2, par4);
-            		for (Type biomeType : this.biomes[tileentitypamcrop.cropID]) {
-            			if(BiomeDictionary.isBiomeOfType(biome, biomeType)) {
-                        	//FMLLog.warning("biome is type: " + biomeType.toString(), new Object());
-            				biomeModifier = 1.0F;
-            				break;
-            			}
-            		}
-				} catch (Exception var5) {
-    				biomeModifier = 1.0F;
-				}
-            	
-               if(par5Random.nextInt((int)((150.0F * (float)IguanaConfig.cropRegrowthMultiplier) / f) + 1) == 0) {
-                   {
-                	   tileentitypamcrop.growCrops();
-                   }
+        TileEntityPamCrop tileentitypamcrop = (TileEntityPamCrop)par1World.getBlockTileEntity(par2, par3, par4);
+        if(tileentitypamcrop != null) {
+           int cropID = tileentitypamcrop.getCropID();
+           
+	        // biome modifier
+	        int biomeModifier = IguanaConfig.wrongBiomeRegrowthMultiplier;
+	    	try {
+	    		BiomeGenBase biome = par1World.getWorldChunkManager().getBiomeGenAt(par2, par4);
+	    		for (Type biomeType : this.biomes[cropID]) {
+	    			if(BiomeDictionary.isBiomeOfType(biome, biomeType)) {
+	                	//FMLLog.warning("biome is type: " + biomeType.toString(), new Object());
+	    				biomeModifier = 1;
+	    				break;
+	    			}
+	    		}
+			} catch (Exception var5) { biomeModifier = 1; }
+	    	
+	    	if (par5Random.nextInt(IguanaConfig.cropRegrowthMultiplier * biomeModifier) != 0) return;
+        }
 
-                   par1World.markBlockForUpdate(par2, par3, par4);
-           }
-           }
-       }
-   }
+    	super.updateTick(par1World, par2, par3, par4, par5Random);
+    }
 
    /**
     * Gets the growth rate for the crop. Setup to encourage rows by halving growth rate if there is diagonals, crops on
@@ -240,16 +226,15 @@ public class IguanaCropPam extends BlockPamCrop {
  	      {
  	         TileEntityPamCrop tileentitypamcrop = (TileEntityPamCrop)par1World.getBlockTileEntity(par2, par3, par4);
 
- 		  	   if (par1World.difficultySetting < 2  && IguanaConfig.difficultyScalingBoneMeal) 
- 		  	   {
- 	            	tileentitypamcrop.setGrowthStage(Math.max(tileentitypamcrop.getGrowthStage() + 1, 2));
- 		  	   } else if (par1World.rand.nextInt(3) == 0)
- 		  	   {
- 	            	tileentitypamcrop.setGrowthStage(Math.max(tileentitypamcrop.getGrowthStage() + 1, 2));
- 		  	   }
-        	par1World.markBlockForUpdate(par2, par3, par4);
- 	      } else {
- 	         return;
+ 	         int rnd = 1;
+		  	 if (par1World.difficultySetting == 2  && IguanaConfig.difficultyScalingBoneMeal) rnd = 3;
+	 	     if (tileentitypamcrop.cropID > 28) rnd *= 2;
+	 	     
+	 	     if (rnd == 1 || par1World.rand.nextInt(rnd) == 0) 
+	 	     {
+		  		   tileentitypamcrop.setGrowthStage(Math.max(tileentitypamcrop.getGrowthStage() + 1, 2));
+		  		   par1World.markBlockForUpdate(par2, par3, par4);
+	 	     }
  	      }
   	   }
     }

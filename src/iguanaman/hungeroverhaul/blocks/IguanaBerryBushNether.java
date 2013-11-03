@@ -6,43 +6,34 @@ import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraftforge.common.BiomeDictionary;
+import net.minecraftforge.common.BiomeDictionary.Type;
 import mods.natura.blocks.crops.NetherBerryBush;
 
-public class IguanaNetherBerryBush extends NetherBerryBush {
+public class IguanaBerryBushNether extends NetherBerryBush {
 
-	public IguanaNetherBerryBush(int id) {
+	public IguanaBerryBushNether(int id) {
 		super(id);
 	}
 	
     /* Bush growth */
-
+    /**
+     * Ticks the block if it's been scheduled
+     */
     @Override
-    public void updateTick (World world, int x, int y, int z, Random random1)
+    public void updateTick(World par1World, int par2, int par3, int par4, Random par5Random)
     {
-        if (world.isRemote)
-        {
-            return;
-        }
+        // biome modifier
+        int biomeModifier = IguanaConfig.wrongBiomeRegrowthMultiplier;
+    	try {
+    		BiomeGenBase biome = par1World.getWorldChunkManager().getBiomeGenAt(par2, par4);
+    		if(BiomeDictionary.isBiomeOfType(biome, Type.NETHER)) biomeModifier = 1;
+		} catch (Exception var5) { biomeModifier = 1; }
+    	
+    	if (par5Random.nextInt(IguanaConfig.cropRegrowthMultiplier * biomeModifier) != 0) return;
 
-        int height;
-
-        for (height = 1; world.getBlockId(x, y - height, z) == this.blockID; ++height)
-        {
-            ;
-        }
-
-        if (random1.nextInt(75 * IguanaConfig.cropRegrowthMultiplier) == 0)
-        {
-            int md = world.getBlockMetadata(x, y, z);
-            if (md < 12)
-            {
-                world.setBlock(x, y, z, blockID, md + 4, 3);
-            }
-            if (random1.nextInt(3) == 0 && height < 3 && world.getBlockId(x, y + 1, z) == 0 && md >= 8)
-            {
-                world.setBlock(x, y + 1, z, blockID, md % 4, 3);
-            }
-        }
+    	super.updateTick(par1World, par2, par3, par4, par5Random);
     }
 
     @Override

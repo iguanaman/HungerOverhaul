@@ -1,38 +1,24 @@
 package iguanaman.hungeroverhaul.items;
 
-import iguanaman.hungeroverhaul.blocks.IguanaCropPam;
+import iguanaman.hungeroverhaul.blocks.IguanaCrop;
+import iguanaman.hungeroverhaul.blocks.IguanaCropNatura;
+import iguanaman.hungeroverhaul.blocks.IguanaStem;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.BiomeDictionary.Type;
-import net.minecraftforge.oredict.OreDictionary;
 
 import org.lwjgl.input.Keyboard;
 
-import thaumcraft.api.ThaumcraftApi;
-import thaumcraft.api.aspects.Aspect;
-import thaumcraft.api.aspects.AspectList;
-import cpw.mods.fml.common.Loader;
+import mods.natura.items.NaturaSeeds;
 
-import assets.pamharvestcraft.ItemPamSeeds;
-import assets.pamharvestcraft.PamHarvestCraft;
+public class IguanaSeedNatura extends NaturaSeeds {
 
-public class IguanaSeedPam extends ItemPamSeeds {
-
-	public IguanaSeedPam(int i, int j) {
-		super(i, j);
-		
-    	if (Loader.isModLoaded("Thaumcraft"))
-    	{
-    	   if (!ThaumcraftApi.exists(itemID, -1))
-    	   {
-    		   ThaumcraftApi.registerObjectTag(itemID, -1, new AspectList().add(Aspect.SEED, 1));
-    	   }
-    	}
+	public IguanaSeedNatura(int id, int cropID, int soilID) {
+		super(id, cropID, soilID);
 	}
 	
 	/**
@@ -42,8 +28,8 @@ public class IguanaSeedPam extends ItemPamSeeds {
     public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
     {
     	Type[] theBiomes = null;
-    	if (PamHarvestCraft.pamCrop instanceof IguanaCropPam) {
-    		theBiomes = ((IguanaCropPam)PamHarvestCraft.pamCrop).biomes[this.cropID];
+    	if (Block.blocksList[this.blockType] instanceof IguanaCropNatura) {
+    		theBiomes = ((IguanaCropNatura)Block.blocksList[this.blockType]).biomes;
     	}
     	
     	if (theBiomes != null) {
@@ -55,5 +41,4 @@ public class IguanaSeedPam extends ItemPamSeeds {
 	    	par3List.add(tooltip.substring(0, tooltip.length() - 2));
     	}
     }
-
 }

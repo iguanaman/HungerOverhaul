@@ -7,10 +7,6 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class IguanaCropVegetable extends IguanaCrop {
 
-	public IguanaCropVegetable(int par1, String veg, int regrow) {
-		super(par1, veg, regrow);
-	}
-
 	public IguanaCropVegetable(int par1, String veg) {
 		super(par1, veg);
 	}

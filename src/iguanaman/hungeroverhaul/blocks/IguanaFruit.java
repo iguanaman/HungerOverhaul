@@ -1,6 +1,5 @@
 package iguanaman.hungeroverhaul.blocks;
 
-
 import iguanaman.hungeroverhaul.IguanaConfig;
 
 import java.util.ArrayList;
@@ -15,15 +14,17 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeDictionary.Type;
 import net.minecraftforge.oredict.OreDictionary;
 import assets.pamharvestcraft.BlockPamFruit;
 
 public class IguanaFruit extends BlockPamFruit {
 
+	Type[] biomes = new Type[]{Type.JUNGLE, Type.SWAMP};
+
 	public IguanaFruit(int i, String fruit) {
 		super(i, fruit);
-        this.setBiomes(new Type[]{Type.JUNGLE, Type.SWAMP});
 		
     	if (Loader.isModLoaded("Thaumcraft"))
     	{
@@ -36,32 +37,28 @@ public class IguanaFruit extends BlockPamFruit {
     	}
 	}
 
-	ArrayList<Type> biomes;
-
+    /**
+     * Ticks the block if it's been scheduled
+     */
     @Override
     public void updateTick(World par1World, int par2, int par3, int par4, Random par5Random)
     {
-        super.updateTick(par1World, par2, par3, par4, par5Random);
+        // biome modifier
+        int biomeModifier = IguanaConfig.wrongBiomeRegrowthMultiplier;
+    	try {
+    		BiomeGenBase biome = par1World.getWorldChunkManager().getBiomeGenAt(par2, par4);
+    		for (Type biomeType : this.biomes) {
+    			if(BiomeDictionary.isBiomeOfType(biome, biomeType)) {
+                	//FMLLog.warning("biome is type: " + biomeType.toString(), new Object());
+    				biomeModifier = 1;
+    				break;
+    			}
+    		}
+		} catch (Exception var5) { biomeModifier = 1; }
+    	
+    	if (par5Random.nextInt(IguanaConfig.treeCropRegrowthMultiplier * biomeModifier) != 0) return;
 
-        int var6 = par1World.getBlockMetadata(par2, par3, par4);
-
-        if (var6 < 2)
-        {
-            // biome modifier
-            int biomeModifier = IguanaConfig.wrongBiomeRegrowthMultiplier;
-        	try {
-        		BiomeGenBase biome = par1World.getWorldChunkManager().getBiomeGenAt(par2, par4);
-        		if (this.biomes.contains(biome)) {biomeModifier = 1;}
-			} catch (Exception var5) {
-				biomeModifier = 1;
-			}
-
-            if (par5Random.nextInt(20 * IguanaConfig.treeCropRegrowthMultiplier * biomeModifier) == 0)
-            {
-                ++var6;
-                par1World.setBlock(par2, par3, par4, super.blockID, var6, 2);
-            }
-        }
+    	super.updateTick(par1World, par2, par3, par4, par5Random);
     }
 
     /**
@@ -73,7 +70,6 @@ public class IguanaFruit extends BlockPamFruit {
        if(par5 >= 2) {
        		super.dropBlockAsItem(par1World, par2, par3, par4, par5, par6);
 	       	par1World.setBlockMetadataWithNotify(par2, par3, par4, 0, 2);
-	        super.onBlockActivated(par1World, par2, par3, par4, par5EntityPlayer, par6, par7, par8, par9);
 	        return true;
        }
        else
@@ -81,13 +77,6 @@ public class IguanaFruit extends BlockPamFruit {
            return super.onBlockActivated(par1World, par2, par3, par4, par5EntityPlayer, par6, par7, par8, par9);
         }
        
-    }
-
-    protected IguanaFruit setBiomes(Type[] par1)
-    {
-    	this.biomes = new ArrayList<Type>();
-    	for(Type biome : par1) {this.biomes.add(biome);}
-        return this;
     }
     
     /**

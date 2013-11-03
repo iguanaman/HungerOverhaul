@@ -41,6 +41,7 @@ public class IguanaSeedFoodPam extends ItemPamSeedFood {
 	/**
      * allows items to add custom lines of information to the mouseover description
      */
+	@Override
     public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
     {
     	Type[] theBiomes = null;
@@ -49,17 +50,12 @@ public class IguanaSeedFoodPam extends ItemPamSeedFood {
     	}
     	
     	if (theBiomes != null) {
-        	if(Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) 
-        	{ 
-		    	String tooltip = "";
-		    	for(Type biomeType : theBiomes) {
-		    		tooltip += biomeType.toString().substring(0, 1).toUpperCase() + biomeType.toString().substring(1).toLowerCase() + ", ";
-		    	}
-		    	par3List.add("Crop grows best in:");
-		    	par3List.add(tooltip.substring(0, tooltip.length() - 2));
-        	} else {
-    	    	par3List.add("\u00A7o<Hold SHIFT for more>\u00A7r");
-        	}
+	    	String tooltip = "";
+	    	for(Type biomeType : theBiomes) {
+	    		tooltip += biomeType.toString().substring(0, 1).toUpperCase() + biomeType.toString().substring(1).toLowerCase() + ", ";
+	    	}
+	    	par3List.add("Crop grows best in:");
+	    	par3List.add(tooltip.substring(0, tooltip.length() - 2));
     	}
     }
 

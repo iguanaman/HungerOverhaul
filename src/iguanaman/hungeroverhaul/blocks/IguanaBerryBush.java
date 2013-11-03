@@ -6,47 +6,44 @@ import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraftforge.common.BiomeDictionary;
+import net.minecraftforge.common.BiomeDictionary.Type;
 import mods.natura.blocks.crops.BerryBush;
 
 public class IguanaBerryBush extends BerryBush {
+	
+	public Type[] biomes = new Type[]{Type.FOREST, Type.PLAINS};
 
 	public IguanaBerryBush(int id) {
 		super(id);
 	}
 	
     /* Bush growth */
-
+    /**
+     * Ticks the block if it's been scheduled
+     */
     @Override
-    public void updateTick (World world, int x, int y, int z, Random random1)
+    public void updateTick(World par1World, int par2, int par3, int par4, Random par5Random)
     {
-        if (world.isRemote)
-        {
-            return;
-        }
+        if (IguanaConfig.cropsNeedSunlight && (!par1World.isDaytime() || !par1World.canBlockSeeTheSky(par2, par3, par4))) return;
+        
+        // biome modifier
+        int biomeModifier = IguanaConfig.wrongBiomeRegrowthMultiplier;
+    	try {
+    		BiomeGenBase biome = par1World.getWorldChunkManager().getBiomeGenAt(par2, par4);
+    		for (Type biomeType : this.biomes) {
+    			if(BiomeDictionary.isBiomeOfType(biome, biomeType)) {
+                	//FMLLog.warning("biome is type: " + biomeType.toString(), new Object());
+    				biomeModifier = 1;
+    				break;
+    			}
+    		}
+		} catch (Exception var5) { biomeModifier = 1; }
+    	
+    	if (par5Random.nextInt(IguanaConfig.cropRegrowthMultiplier * biomeModifier) != 0) return;
 
-        int height;
-
-        for (height = 1; world.getBlockId(x, y - height, z) == this.blockID; ++height)
-        {
-            ;
-        }
-
-        if (random1.nextInt(20 * IguanaConfig.cropRegrowthMultiplier) == 0 && world.getBlockLightValue(x, y, z) >= 9 && 
-        		(IguanaConfig.cropsNeedSunlight == true && world.isDaytime() && world.canBlockSeeTheSky(x, y, z))
-        		||
-        		(IguanaConfig.cropsNeedSunlight == false)
-        		)
-        {
-            int md = world.getBlockMetadata(x, y, z);
-            if (md < 12)
-            {
-                world.setBlock(x, y, z, blockID, md + 4, 3);
-            }
-            if (random1.nextInt(3) == 0 && height < 3 && world.getBlockId(x, y + 1, z) == 0 && md >= 8)
-            {
-                world.setBlock(x, y + 1, z, blockID, md % 4, 3);
-            }
-        }
+    	super.updateTick(par1World, par2, par3, par4, par5Random);
     }
 
     @Override

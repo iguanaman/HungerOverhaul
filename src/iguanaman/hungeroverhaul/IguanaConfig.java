@@ -30,6 +30,7 @@ public class IguanaConfig {
     
     public static int hoeToolDamageMultiplier;
     public static int wrongBiomeRegrowthMultiplier;
+    public static int flowerRegrowthMultiplier;
     public static int cropRegrowthMultiplier;
     public static int treeCropRegrowthMultiplier;
     public static int seedsPerHarvestMin;
@@ -175,6 +176,10 @@ public class IguanaConfig {
         Property wrongBiomeRegrowthMultiplierProperty = config.get("modifiers", "wrongBiomeRegrowthMultiplier", 2);
 		wrongBiomeRegrowthMultiplierProperty.comment = "Multipier on time it takes any crop to grow in the wrong biome";
 		wrongBiomeRegrowthMultiplier = wrongBiomeRegrowthMultiplierProperty.getInt(2);
+
+        Property flowerRegrowthMultiplierProperty = config.get("modifiers", "flowerRegrowthMultiplier", 1);
+        flowerRegrowthMultiplierProperty.comment = "Multiplier on the time it takes a WeeeFlower crop to grow";
+		flowerRegrowthMultiplier = flowerRegrowthMultiplierProperty.getInt(1);
 
         Property cropRegrowthMultiplierProperty = config.get("modifiers", "cropRegrowthMultiplier", 4);
 		cropRegrowthMultiplierProperty.comment = "Multiplier on the time it takes a non-tree crop to grow";

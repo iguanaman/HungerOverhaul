@@ -1,7 +1,11 @@
 package iguanaman.hungeroverhaul;
 
-
 import iguanaman.hungeroverhaul.RecipeRemover;
+import iguanaman.hungeroverhaul.commands.IguanaCommandConfig;
+import iguanaman.hungeroverhaul.commands.IguanaCommandHunger;
+import iguanaman.hungeroverhaul.handlers.IguanaEventHook;
+import iguanaman.hungeroverhaul.handlers.IguanaPlayerHandler;
+import iguanaman.hungeroverhaul.handlers.VillageHandlerCustomField;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -10,54 +14,23 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
+import net.minecraft.command.ICommandManager;
+import net.minecraft.command.ServerCommandManager;
+import net.minecraft.crash.CallableMinecraftVersion;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.CraftingManager;
+import net.minecraft.potion.Potion;
+import net.minecraft.src.ModLoader;
+import net.minecraft.world.gen.structure.MapGenStructureIO;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.oredict.ShapelessOreRecipe;
+
 import org.modstats.ModstatInfo;
 import org.modstats.Modstats;
 
 import tconstruct.util.PHConstruct;
 
-import assets.pamharvestcraft.HarvestConfigurationHandler;
-import assets.pamharvestcraft.ItemPamSeedFood;
-import assets.pamharvestcraft.PamHarvestCraft;
-
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockCarrot;
-import net.minecraft.block.BlockCrops;
-import net.minecraft.block.BlockPotato;
-import net.minecraft.block.BlockReed;
-import net.minecraft.block.BlockStem;
-import net.minecraft.block.BlockTallGrass;
-import net.minecraft.block.material.Material;
-import net.minecraft.command.CommandHandler;
-import net.minecraft.command.ICommandManager;
-import net.minecraft.command.ServerCommandManager;
-import net.minecraft.crash.CallableMinecraftVersion;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.EnumToolMaterial;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemFood;
-import net.minecraft.item.ItemHoe;
-import net.minecraft.item.ItemReed;
-import net.minecraft.item.ItemSeedFood;
-import net.minecraft.item.ItemSeeds;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.crafting.CraftingManager;
-import net.minecraft.item.crafting.IRecipe;
-import net.minecraft.item.crafting.ShapedRecipes;
-import net.minecraft.item.crafting.ShapelessRecipes;
-import net.minecraft.potion.Potion;
-import net.minecraft.potion.PotionHelper;
-import net.minecraft.src.ModLoader;
-import net.minecraft.util.MathHelper;
-import net.minecraft.world.gen.structure.ComponentVillageWell;
-import net.minecraft.world.gen.structure.MapGenStructureIO;
-import net.minecraftforge.common.BiomeDictionary.Type;
-import net.minecraftforge.common.ChestGenHooks;
-import net.minecraftforge.common.ConfigCategory;
-import net.minecraftforge.common.Configuration;
-import net.minecraftforge.common.EnumPlantType;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.Property;
-import net.minecraftforge.oredict.ShapelessOreRecipe;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
@@ -79,25 +52,12 @@ import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.common.registry.VillagerRegistry;
 import cpw.mods.fml.relauncher.Side;
-import iguanaman.hungeroverhaul.*;
-import iguanaman.hungeroverhaul.blocks.IguanaCrop;
-import iguanaman.hungeroverhaul.blocks.IguanaCropPam;
-import iguanaman.hungeroverhaul.blocks.IguanaCropReed;
-import iguanaman.hungeroverhaul.blocks.IguanaCropVegetable;
-import iguanaman.hungeroverhaul.blocks.IguanaFruit;
-import iguanaman.hungeroverhaul.blocks.IguanaStem;
-import iguanaman.hungeroverhaul.commands.IguanaCommandConfig;
-import iguanaman.hungeroverhaul.commands.IguanaCommandHunger;
-import iguanaman.hungeroverhaul.handlers.IguanaEventHook;
-import iguanaman.hungeroverhaul.handlers.IguanaPlayerHandler;
-import iguanaman.hungeroverhaul.handlers.VillageHandlerCustomField;
-import iguanaman.hungeroverhaul.items.IguanaReed;
-import iguanaman.hungeroverhaul.items.IguanaSeed;
-import iguanaman.hungeroverhaul.items.IguanaSeedPam;
 
-@Mod(modid="HungerOverhaul", name="Hunger Overhaul", version="1.6.X-2i", dependencies = "after:TConstruct@;after:pamharvestcraft@;after:Natura@;after:Thaumcraft;")
+@Mod(modid="HungerOverhaul", name="Hunger Overhaul", version="1.6.X-2i", 
+dependencies = "after:TConstruct;after:pamharvestcraft;after:pamtemperateplants;after:pamrandomplants;after:pamweeeflowers;after:Natura;after:Thaumcraft")
 @NetworkMod(clientSideRequired=true, serverSideRequired=true)
 @ModstatInfo(prefix="hngrovrhl")
+
 public class HungerOverhaul {
 
         // The instance of your mod that Forge uses.
@@ -160,10 +120,27 @@ public class HungerOverhaul {
     		CraftingManager.getInstance().getRecipeList().add(new ShapelessOreRecipe(Item.seeds, Item.wheat));
             
             ModuleVanilla.init();
-            ModuleHarvestCraftCrops.init();
-            ModuleHarvestCraftTrees.init();
-            ModuleWeeeFlowers.init();
-            ModuleNatura.init();
+    		if(Loader.isModLoaded("pamharvestcraft"))
+    		{
+	            ModuleHarvestCraftCrops.init();
+	            ModuleHarvestCraftTrees.init();
+    		}
+    		if(Loader.isModLoaded("pamtemperateplants"))
+            {
+    			ModuleTemperatePlants.init();
+            }
+    		if(Loader.isModLoaded("pamrandomplants"))
+            {
+    			ModuleRandomPlants.init();
+            }
+    		if(Loader.isModLoaded("pamweeeflowers"))
+            {
+    			ModuleWeeeFlowers.init();
+            }
+    		if(Loader.isModLoaded("Natura"))
+            {
+    			ModuleNatura.init();
+            }
     		
         }
        

@@ -43,8 +43,6 @@ public class IguanaFood extends ItemFood {
 	public IguanaFood(int par1, int par2, float par3, boolean par4, boolean integrate, boolean isJuicy, boolean isSeedy) {
 		super(par1, par2, par3, par4);
         this.healAmount = par2;
-       
-        // this.setAlwaysEdible();
 
 		if (IguanaConfig.modifyFoodStackSize == true) {
 	    	if (par2 <= 2) {
@@ -60,7 +58,7 @@ public class IguanaFood extends ItemFood {
 	    	}
 		}
     	
-    	if (integrate == true && par2 > 9) {
+    	if (integrate && par2 > 9) {
     		if (IguanaConfig.addTradesButcher == true) {
         		VillagerRegistry.instance().registerVillageTradeHandler(4, new TradeHandlerFood(this.itemID, this.maxStackSize));
     		}
