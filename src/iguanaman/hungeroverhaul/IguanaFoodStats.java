@@ -20,9 +20,7 @@ import net.minecraft.util.FoodStats;
 public class IguanaFoodStats extends FoodStats {
 
 	   public IguanaFoodStats(int hungerLevel) {
-		   if (hungerLevel < 20) {
-				  super.foodLevel = hungerLevel;
-		   }
+		   if (hungerLevel < 20) super.foodLevel = hungerLevel;
 	   }
 
 	   public IguanaFoodStats(FoodStats stats) {

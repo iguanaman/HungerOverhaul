@@ -289,12 +289,9 @@ public class IguanaEventHook {
 	@ForgeSubscribe
 	public void onBlockHarvested(HarvestDropsEvent event)
 	{
-		if (event.block != null)
+		if (IguanaConfig.removeTallGrassSeeds && event.block != null && event.block instanceof BlockTallGrass)
 		{
-			if (IguanaConfig.removeTallGrassSeeds && event.block instanceof BlockTallGrass)
-			{
-				event.drops.clear();
-			}
+			event.drops.clear();
 		}
 	}
 	

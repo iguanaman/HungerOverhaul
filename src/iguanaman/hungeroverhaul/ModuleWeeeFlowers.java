@@ -41,7 +41,7 @@ public class ModuleWeeeFlowers {
     				PamWeeeFlowers.pampinkflowerVine, PamWeeeFlowers.pamlightgreyflowerVine, PamWeeeFlowers.pamdarkgreyflowerVine, 
     				PamWeeeFlowers.pamcyanflowerVine, PamWeeeFlowers.pampurpleflowerVine, PamWeeeFlowers.pamblueflowerVine, 
     				PamWeeeFlowers.pambrownflowerVine, PamWeeeFlowers.pamgreenflowerVine, PamWeeeFlowers.pamredflowerVine, 
-    				PamWeeeFlowers.pamblackflowerVine, PamWeeeFlowers.pamFlower
+    				PamWeeeFlowers.pamblackflowerVine, PamWeeeFlowers.pamFlower, PamWeeeFlowers.pammoonFlower
     				};
 
     		AspectList flowerAspects = new AspectList().add(Aspect.PLANT, 1);
@@ -53,13 +53,6 @@ public class ModuleWeeeFlowers {
 				   ThaumcraftApi.registerObjectTag(flower.blockID, -1, flowerAspects);
 			   }
     		}
-    		
-    		
-    		// MOON FLOWER BLOCK
-		   if (!ThaumcraftApi.exists(PamWeeeFlowers.pammoonFlower.blockID, -1))
-		   {
-			   ThaumcraftApi.registerObjectTag(PamWeeeFlowers.pammoonFlower.blockID, -1, flowerAspects.add(Aspect.ELDRITCH, 1));
-		   }
     		
     	}
 	    	
