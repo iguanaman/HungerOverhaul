@@ -104,9 +104,9 @@ public class IguanaConfig {
 		addHarvestCraftChestLootProperty.comment = "HarvestCraft items added to dungeon/temple chests (Harvestcraft)";
 		addHarvestCraftChestLoot = addHarvestCraftChestLootProperty.getBoolean(true);
 
-        Property addCustomVillageFieldProperty = config.get("modules", "addCustomVillageField", true);
-        addCustomVillageFieldProperty.comment = "Adds a custom field to villages";
-		addCustomVillageField = addCustomVillageFieldProperty.getBoolean(true);
+        Property addCustomVillageFieldProperty = config.get("modules", "addCustomVillageField", false);
+        addCustomVillageFieldProperty.comment = "Adds a custom field to villages (possibly causes crashes, use at own risk)";
+		addCustomVillageField = addCustomVillageFieldProperty.getBoolean(false);
 
         Property addSetHungerCommandProperty = config.get("modules", "addSetHungerCommand", true);
 		addSetHungerCommandProperty.comment = "Adds a console command to allow OPs to set a player's hunger level";
