@@ -126,11 +126,6 @@ public class IguanaCommandConfig extends CommandBase {
 				IguanaConfig.seedChance = Integer.parseInt(value);
 				worked = true;
 			}
-			else if (setting.equalsIgnoreCase("seedChanceDifficultyModifier") && isInteger(value))
-			{
-				IguanaConfig.seedChanceDifficultyModifier = Integer.parseInt(value);
-				worked = true;
-			}
 			else if (setting.equalsIgnoreCase("eggTimeoutMultiplier") && isInteger(value))
 			{
 				IguanaConfig.eggTimeoutMultiplier = Integer.parseInt(value);
@@ -209,11 +204,6 @@ public class IguanaCommandConfig extends CommandBase {
 			else if (setting.equalsIgnoreCase("foodRegensHealth"))
 			{
 				IguanaConfig.foodRegensHealth = Boolean.parseBoolean(value);
-				worked = true;
-			}
-			else if (setting.equalsIgnoreCase("disableHunger"))
-			{
-				IguanaConfig.disableHunger = Boolean.parseBoolean(value);
 				worked = true;
 			}
 			else if (setting.equalsIgnoreCase("damageOnStarve") && isInteger(value))

@@ -73,7 +73,7 @@ public class HungerOverhaul {
         	
         	IguanaConfig.init(event.getSuggestedConfigurationFile());
 
-    		if(Loader.isModLoaded("TConstruct") && IguanaConfig.modifyFoodStats) {
+    		if(Loader.isModLoaded("TConstruct")) {
     			try {
     				if (!PHConstruct.enableHealthRegen)
     				{

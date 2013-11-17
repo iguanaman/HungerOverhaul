@@ -128,7 +128,7 @@ public class ModuleVanilla {
             Item.bakedPotato = (new IguanaFood(137, 2, 0.15F, false)).setUnlocalizedName("potatoBaked").setTextureName("potato_baked");
             Item.poisonousPotato = (new IguanaFood(138, 1, 0.05F, false)).setPotionEffect(Potion.poison.id, 5, 0, 0.3F).setUnlocalizedName("potatoPoisonous").setTextureName("potato_poisonous");
             Item.pumpkinPie = (new IguanaFood(144, 3, 0.15F, false)).setUnlocalizedName("pumpkinPie").setTextureName("pumpkin_pie").setCreativeTab(CreativeTabs.tabFood);
-            Item.bowlSoup = (new IguanaFoodBowl(26, 3, 0.1F, false)).setUnlocalizedName("mushroomStew").setTextureName("mushroom_stew");
+            Item.bowlSoup = (new IguanaFoodBowl(26, 2, 0.1F, false)).setUnlocalizedName("mushroomStew").setTextureName("mushroom_stew");
             Item.carrot = (new IguanaSeedFood(135, 1, 0.05F, Block.carrot.blockID, Block.tilledField.blockID)).setUnlocalizedName("carrots").setTextureName("carrot");
             Item.potato = (new IguanaSeedFood(136, 1, 0.05F, Block.potato.blockID, Block.tilledField.blockID)).setUnlocalizedName("potato").setTextureName("potato");
 		}

@@ -44,7 +44,7 @@ public class IguanaFoodStats extends FoodStats {
 	   @Override
 	    public void addStats(int par1, float par2)
 	    {
-		   if (!IguanaConfig.disableHunger)
+		   if (IguanaConfig.hungerLossRatePercentage > 0)
 		   {
 		       this.foodLevel = Math.min(par1 + this.foodLevel, 20);
 		       this.foodSaturationLevel = Math.min(this.foodSaturationLevel + (float)par1 * par2 * 2.0F, (float)this.foodLevel);
@@ -103,7 +103,7 @@ public class IguanaFoodStats extends FoodStats {
 	 	   
 	        super.prevFoodLevel = super.foodLevel;
 
-	        if (IguanaConfig.disableHunger)
+	        if (IguanaConfig.hungerLossRatePercentage == 0)
 	        {
 	 			super.foodExhaustionLevel = 0.0F;
             	super.foodSaturationLevel = 0.0F;

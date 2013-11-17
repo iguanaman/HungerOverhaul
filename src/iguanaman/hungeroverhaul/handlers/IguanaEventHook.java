@@ -81,12 +81,10 @@ public class IguanaEventHook {
 	        	}
 			}
 	
-			if (event.entityLiving instanceof EntityChicken) {
+			if (event.entityLiving instanceof EntityChicken && IguanaConfig.eggTimeoutMultiplier > 1) {
 		    	int rnd = rand.nextInt(IguanaConfig.eggTimeoutMultiplier);
 				EntityChicken chicken = (EntityChicken)event.entityLiving;
-	        	if (chicken.timeUntilNextEgg > 0 && rnd != 0) {
-	        		chicken.timeUntilNextEgg += 1;
-	        	} 
+	        	if (chicken.timeUntilNextEgg > 0 && rnd != 0) chicken.timeUntilNextEgg += 1;
 			}
 			
 
@@ -269,7 +267,10 @@ public class IguanaEventHook {
 	            Block block = Block.tilledField;
 	            event.world.playSoundEffect((double)((float)event.x + 0.5F), (double)((float)event.y + 0.5F), (double)((float)event.z + 0.5F), block.stepSound.getStepSound(), (block.stepSound.getVolume() + 1.0F) / 2.0F, block.stepSound.getPitch() * 0.8F);
 	            if (!event.world.isRemote) {
-	            	int seedChance = IguanaConfig.seedChance - (event.world.difficultySetting * IguanaConfig.seedChanceDifficultyModifier); 
+	            	int seedChance = IguanaConfig.seedChance;
+	            	if (event.world.difficultySetting < 2) seedChance *= 2;
+	            	else if (event.world.difficultySetting == 3) seedChance = Math.max(Math.round((float)seedChance / 2f), 1);
+	            	
 	                if (event.world.rand.nextInt(100) <= seedChance) {
 		    			Block.blocksList[blockID].dropBlockAsItem_do(event.world, event.x, event.y, event.z, ForgeHooks.getGrassSeed(event.world));
 	                }
