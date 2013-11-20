@@ -1,5 +1,6 @@
 package iguanaman.hungeroverhaul.items;
 
+import iguanaman.hungeroverhaul.IguanaConfig;
 import iguanaman.hungeroverhaul.blocks.IguanaCrop;
 
 import java.util.List;
@@ -112,18 +113,21 @@ public class IguanaSeedFood extends IguanaFood implements IPlantable{
 	@Override
     public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
     {
-    	Type[] theBiomes = null;
-    	if (Block.blocksList[this.cropId] instanceof IguanaCrop) {
-    		theBiomes = ((IguanaCrop)Block.blocksList[this.cropId]).biomes;
-    	}
-    	
-    	if (theBiomes != null) {
-	    	String tooltip = "";
-	    	for(Type biomeType : theBiomes) {
-	    		tooltip += biomeType.toString().substring(0, 1).toUpperCase() + biomeType.toString().substring(1).toLowerCase() + ", ";
+    	if (IguanaConfig.wrongBiomeRegrowthMultiplier > 1)
+    	{
+	    	Type[] theBiomes = null;
+	    	if (Block.blocksList[this.cropId] instanceof IguanaCrop) {
+	    		theBiomes = ((IguanaCrop)Block.blocksList[this.cropId]).biomes;
 	    	}
-	    	par3List.add("Crop grows best in:");
-	    	par3List.add(tooltip.substring(0, tooltip.length() - 2));
+	    	
+	    	if (theBiomes != null) {
+		    	String tooltip = "";
+		    	for(Type biomeType : theBiomes) {
+		    		tooltip += biomeType.toString().substring(0, 1).toUpperCase() + biomeType.toString().substring(1).toLowerCase() + ", ";
+		    	}
+		    	par3List.add("Crop grows best in:");
+		    	par3List.add(tooltip.substring(0, tooltip.length() - 2));
+	    	}
     	}
     }
     

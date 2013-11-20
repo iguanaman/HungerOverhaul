@@ -18,8 +18,10 @@ public class IguanaConfig {
     // delays
     public static boolean cropsNeedSunlight;
     public static int wrongBiomeRegrowthMultiplier;
+    public static int wrongBiomeRegrowthMultiplierSugarcane;
     public static int flowerRegrowthMultiplier;
     public static int cropRegrowthMultiplier;
+    public static int sugarcaneRegrowthMultiplier;
     public static int treeCropRegrowthMultiplier;
     public static int eggTimeoutMultiplier;
     public static int breedingTimeoutMultiplier;
@@ -131,9 +133,14 @@ public class IguanaConfig {
 		cropsNeedSunlight = cropsNeedSunlightProperty.getBoolean(true);
 		
         Property wrongBiomeRegrowthMultiplierProperty = config.get("delays", "wrongBiomeRegrowthMultiplier", 2);
-		wrongBiomeRegrowthMultiplierProperty.comment = "Multipier on time it takes any crop to grow in the wrong biome";
+		wrongBiomeRegrowthMultiplierProperty.comment = "Multipier on time it takes any crop (except sugarcane) to grow in the wrong biome";
 		wrongBiomeRegrowthMultiplier = Math.max(wrongBiomeRegrowthMultiplierProperty.getInt(2), 1);
 		wrongBiomeRegrowthMultiplierProperty.set(wrongBiomeRegrowthMultiplier);	
+		
+        Property wrongBiomeRegrowthMultiplierSugarcaneProperty = config.get("delays", "wrongBiomeRegrowthMultiplierSugarcane", 2);
+        wrongBiomeRegrowthMultiplierSugarcaneProperty.comment = "Multipier on time it takes sugarcane to grow in the wrong biome";
+		wrongBiomeRegrowthMultiplierSugarcane = Math.max(wrongBiomeRegrowthMultiplierSugarcaneProperty.getInt(2), 1);
+		wrongBiomeRegrowthMultiplierSugarcaneProperty.set(wrongBiomeRegrowthMultiplierSugarcane);	
 
         Property flowerRegrowthMultiplierProperty = config.get("delays", "flowerRegrowthMultiplier", 1);
         flowerRegrowthMultiplierProperty.comment = "Multiplier on the time it takes a WeeeFlower crop to grow";
@@ -144,6 +151,11 @@ public class IguanaConfig {
 		cropRegrowthMultiplierProperty.comment = "Multiplier on the time it takes a non-tree crop to grow";
 		cropRegrowthMultiplier = Math.max(cropRegrowthMultiplierProperty.getInt(4), 1);
 		cropRegrowthMultiplierProperty.set(cropRegrowthMultiplier);	
+
+        Property sugarcaneRegrowthMultiplierProperty = config.get("delays", "sugarcaneRegrowthMultiplier", 4);
+		sugarcaneRegrowthMultiplierProperty.comment = "Multiplier on the time it takes sugarcane to grow";
+		sugarcaneRegrowthMultiplier = Math.max(sugarcaneRegrowthMultiplierProperty.getInt(4), 1);
+		sugarcaneRegrowthMultiplierProperty.set(sugarcaneRegrowthMultiplier);	
 
         Property treeCropRegrowthMultiplierProperty = config.get("delays", "treeCropRegrowthMultiplier", 2);
 		treeCropRegrowthMultiplierProperty.comment = "Multiplier on the time it takes a tree crop to grow";

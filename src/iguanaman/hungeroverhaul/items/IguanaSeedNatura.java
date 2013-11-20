@@ -1,5 +1,6 @@
 package iguanaman.hungeroverhaul.items;
 
+import iguanaman.hungeroverhaul.IguanaConfig;
 import iguanaman.hungeroverhaul.blocks.IguanaCrop;
 import iguanaman.hungeroverhaul.blocks.IguanaCropNatura;
 import iguanaman.hungeroverhaul.blocks.IguanaStem;
@@ -27,18 +28,21 @@ public class IguanaSeedNatura extends NaturaSeeds {
 	@Override
     public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
     {
-    	Type[] theBiomes = null;
-    	if (Block.blocksList[this.blockType] instanceof IguanaCropNatura) {
-    		theBiomes = ((IguanaCropNatura)Block.blocksList[this.blockType]).biomes;
-    	}
-    	
-    	if (theBiomes != null) {
-	    	String tooltip = "";
-	    	for(Type biomeType : theBiomes) {
-	    		tooltip += biomeType.toString().substring(0, 1).toUpperCase() + biomeType.toString().substring(1).toLowerCase() + ", ";
+    	if (IguanaConfig.wrongBiomeRegrowthMultiplier > 1)
+    	{
+	    	Type[] theBiomes = null;
+	    	if (Block.blocksList[this.blockType] instanceof IguanaCropNatura) {
+	    		theBiomes = ((IguanaCropNatura)Block.blocksList[this.blockType]).biomes;
 	    	}
-	    	par3List.add("Crop grows best in:");
-	    	par3List.add(tooltip.substring(0, tooltip.length() - 2));
+	    	
+	    	if (theBiomes != null) {
+		    	String tooltip = "";
+		    	for(Type biomeType : theBiomes) {
+		    		tooltip += biomeType.toString().substring(0, 1).toUpperCase() + biomeType.toString().substring(1).toLowerCase() + ", ";
+		    	}
+		    	par3List.add("Crop grows best in:");
+		    	par3List.add(tooltip.substring(0, tooltip.length() - 2));
+	    	}
     	}
     }
 }

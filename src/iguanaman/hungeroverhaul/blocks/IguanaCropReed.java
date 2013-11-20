@@ -12,7 +12,7 @@ import net.minecraftforge.common.BiomeDictionary.Type;
 
 public class IguanaCropReed extends BlockReed {
 
-	public Type[] biomes = new Type[]{Type.JUNGLE, Type.SWAMP};
+	public static Type[] biomes = new Type[]{Type.JUNGLE, Type.SWAMP};
 
 	public IguanaCropReed(int par1) {
 		super(par1);

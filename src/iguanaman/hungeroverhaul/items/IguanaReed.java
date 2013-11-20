@@ -1,5 +1,10 @@
 package iguanaman.hungeroverhaul.items;
 
+import iguanaman.hungeroverhaul.IguanaConfig;
+import iguanaman.hungeroverhaul.blocks.IguanaCrop;
+import iguanaman.hungeroverhaul.blocks.IguanaCropReed;
+import iguanaman.hungeroverhaul.blocks.IguanaStem;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,13 +28,14 @@ public class IguanaReed extends ItemReed {
      */
     public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
     {
-    	if(Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT)) { 
-	    	par3List.add("Plant on: Soil, Sand");
-	    	par3List.add(" ");
+    	if (IguanaConfig.wrongBiomeRegrowthMultiplierSugarcane > 1)
+    	{
+	    	String tooltip = "";
+	    	for(Type biomeType : IguanaCropReed.biomes) {
+	    		tooltip += biomeType.toString().substring(0, 1).toUpperCase() + biomeType.toString().substring(1).toLowerCase() + ", ";
+	    	}
 	    	par3List.add("Crop grows best in:");
-	    	par3List.add("Desert, Jungle, Swamp");
-    	} else {
-	    	par3List.add("\u00A7o<Hold SHIFT for more>\u00A7r");
+	    	par3List.add(tooltip.substring(0, tooltip.length() - 2));
     	}
     }
 

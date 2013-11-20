@@ -1,5 +1,6 @@
 package iguanaman.hungeroverhaul.items;
 
+import iguanaman.hungeroverhaul.IguanaConfig;
 import iguanaman.hungeroverhaul.blocks.IguanaCrop;
 import iguanaman.hungeroverhaul.blocks.IguanaCropPam;
 
@@ -44,18 +45,21 @@ public class IguanaSeedFoodPam extends ItemPamSeedFood {
 	@Override
     public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
     {
-    	Type[] theBiomes = null;
-    	if (Block.blocksList[this.cropID] instanceof IguanaCropPam) {
-    		theBiomes = ((IguanaCropPam)Block.blocksList[this.cropID]).biomes[this.cropID];
-    	}
-    	
-    	if (theBiomes != null) {
-	    	String tooltip = "";
-	    	for(Type biomeType : theBiomes) {
-	    		tooltip += biomeType.toString().substring(0, 1).toUpperCase() + biomeType.toString().substring(1).toLowerCase() + ", ";
+    	if (IguanaConfig.wrongBiomeRegrowthMultiplier > 1)
+    	{
+	    	Type[] theBiomes = null;
+	    	if (Block.blocksList[this.cropID] instanceof IguanaCropPam) {
+	    		theBiomes = ((IguanaCropPam)Block.blocksList[this.cropID]).biomes[this.cropID];
 	    	}
-	    	par3List.add("Crop grows best in:");
-	    	par3List.add(tooltip.substring(0, tooltip.length() - 2));
+	    	
+	    	if (theBiomes != null) {
+		    	String tooltip = "";
+		    	for(Type biomeType : theBiomes) {
+		    		tooltip += biomeType.toString().substring(0, 1).toUpperCase() + biomeType.toString().substring(1).toLowerCase() + ", ";
+		    	}
+		    	par3List.add("Crop grows best in:");
+		    	par3List.add(tooltip.substring(0, tooltip.length() - 2));
+	    	}
     	}
     }
 
