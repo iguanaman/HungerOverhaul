@@ -1,4 +1,4 @@
-package iguanaman.hungeroverhaul.handlers;
+package iguanaman.hungeroverhaul.util;
 
 import net.minecraft.block.Block;
 import net.minecraft.entity.passive.EntityVillager;
@@ -11,19 +11,19 @@ import cpw.mods.fml.common.registry.VillagerRegistry.IVillageTradeHandler;
 
 import java.util.Random;
 
-public class TradeHandlerSapling implements IVillageTradeHandler {
+public class TradeHandlerCrop implements IVillageTradeHandler {
 	
-	final int objectID;
+	final int itemID;
 
     
-    protected TradeHandlerSapling(int par1) {
-    	objectID = par1;
+    protected TradeHandlerCrop(int par1) {
+		itemID = par1;
 	}
 	
 
 	@Override
 	public void manipulateTradesForVillager(EntityVillager villager, MerchantRecipeList recipeList, Random random) {
-		recipeList.addToListWithCheck(new MerchantRecipe(new ItemStack(Item.emerald, 1), new ItemStack(this.objectID, 1, 0)));
+		recipeList.addToListWithCheck(new MerchantRecipe(new ItemStack(this.itemID, 16, 0), new ItemStack(Item.emerald, 1)));
 	}
 
 }

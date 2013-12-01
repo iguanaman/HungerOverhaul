@@ -3,9 +3,9 @@ package iguanaman.hungeroverhaul;
 import iguanaman.hungeroverhaul.RecipeRemover;
 import iguanaman.hungeroverhaul.commands.IguanaCommandConfig;
 import iguanaman.hungeroverhaul.commands.IguanaCommandHunger;
-import iguanaman.hungeroverhaul.handlers.IguanaEventHook;
-import iguanaman.hungeroverhaul.handlers.IguanaPlayerHandler;
-import iguanaman.hungeroverhaul.handlers.VillageHandlerCustomField;
+import iguanaman.hungeroverhaul.util.IguanaEventHook;
+import iguanaman.hungeroverhaul.util.IguanaPlayerHandler;
+import iguanaman.hungeroverhaul.util.VillageHandlerCustomField;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
@@ -66,7 +66,6 @@ public class HungerOverhaul {
         
         public static IguanaPlayerHandler playerTracker;
         public static Potion potionWellFed;
-        public static Potion slowdownNew;
         
         @EventHandler
         public void preInit(FMLPreInitializationEvent event) {
@@ -89,8 +88,7 @@ public class HungerOverhaul {
     		}
 
             potionWellFed = new Potion(IguanaConfig.wellFedId, false, 0).setIconIndex(7, 0).setPotionName("potion.wellfedPotion");
-        	slowdownNew = new Potion(IguanaConfig.newSlowdownPotionId, true, 0).setIconIndex(1, 0).setPotionName("potion.newSlowdownPotionHO");
-
+        	
             if (IguanaConfig.removeHoeRecipes) {
                 RecipeRemover.removeAnyRecipe(new ItemStack(Item.hoeWood));
                 RecipeRemover.removeAnyRecipe(new ItemStack(Item.hoeStone));

@@ -2,7 +2,7 @@ package iguanaman.hungeroverhaul.items;
 
 import iguanaman.hungeroverhaul.HungerOverhaul;
 import iguanaman.hungeroverhaul.IguanaConfig;
-import iguanaman.hungeroverhaul.handlers.TradeHandlerFood;
+import iguanaman.hungeroverhaul.util.TradeHandlerFood;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -315,6 +315,7 @@ public class IguanaFood extends ItemFood {
 	    	
 	    	par3List.add(tooltip.substring(0, 1).toUpperCase() + tooltip.substring(1));
 
+	    	/*
 	        int age = 0;
 	        try {
 	  	      age = par1ItemStack.stackTagCompound.getInteger("Age");
@@ -330,9 +331,11 @@ public class IguanaFood extends ItemFood {
 	    	} else if (age >= stageAged) {
 	    		par3List.add("\u00A72Safe to eat\u00A7r");
 	    	}
+	    	*/
 		}
     }
 
+    /*
     public int rotTimer = 0;
     public int stageAged = 1; //(int)(90F / (HungerOverhaul.foodRotSpeed / 100));
     public int stageStale = 2; //(int)(180F / (HungerOverhaul.foodRotSpeed / 100));
@@ -344,16 +347,11 @@ public class IguanaFood extends ItemFood {
 	{
 	        if (par1ItemStack.stackTagCompound == null)
 	        {
-                   par1ItemStack.setTagCompound(new NBTTagCompound());
+                   par1ItemS  tack.setTagCompound(new NBTTagCompound());
                    par1ItemStack.stackTagCompound.setInteger("Age", 0);
 	        }
 	}
     
-    /**
-     * Called each tick as long the item is on a player inventory. Uses by maps to check if is on a player hand and
-     * update it's contents.
-     */
-    /*
     @Override
     public void onUpdate(ItemStack par1ItemStack, World par2World, Entity par3Entity, int par4, boolean par5) {
     	

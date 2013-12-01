@@ -1,6 +1,7 @@
 package iguanaman.hungeroverhaul.blocks;
 
 import iguanaman.hungeroverhaul.IguanaConfig;
+import iguanaman.hungeroverhaul.util.IguanaLog;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -65,6 +66,7 @@ public class IguanaCrop extends BlockCrops { // implements IFarmable, ICrop
     @Override
     public void updateTick(World par1World, int par2, int par3, int par4, Random par5Random)
     {
+    	
         if (IguanaConfig.cropsNeedSunlight && (!par1World.isDaytime() || !par1World.canBlockSeeTheSky(par2, par3, par4))) return;
         
         // biome modifier

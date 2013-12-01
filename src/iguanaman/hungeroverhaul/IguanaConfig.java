@@ -94,7 +94,6 @@ public class IguanaConfig {
     
     // potion ids
     public static int wellFedId;
-	public static int newSlowdownPotionId;
 	
 	
 	public static void init(File file) {
@@ -391,10 +390,6 @@ public class IguanaConfig {
         Property wellFedIdProperty = config.get("potion ids", "wellFedID", 30);
 		wellFedIdProperty.comment = "Potion ID for the 'Well Fed' effect (maximum 31)";
 		wellFedId = wellFedIdProperty.getInt(30);
-        
-        Property newSlowdownPotionIdProperty = config.get("potion ids", "newSlowdownPotionId", 28);
-        newSlowdownPotionIdProperty.comment = "Potion ID for the new slowdown effect (maximum 31)";
-        newSlowdownPotionId = newSlowdownPotionIdProperty.getInt(28);
         
 		// Health
 		ConfigCategory hungerCategory = config.getCategory("health");

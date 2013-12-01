@@ -1,4 +1,4 @@
-package iguanaman.hungeroverhaul.handlers;
+package iguanaman.hungeroverhaul.util;
 
 import iguanaman.hungeroverhaul.IguanaConfig;
 
@@ -20,6 +20,7 @@ import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityMob;
+import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.passive.EntityChicken;
 import net.minecraft.entity.passive.EntityBat;
 import net.minecraft.entity.player.EntityPlayer;
@@ -46,45 +47,47 @@ public class IguanaEventHook {
 	@ForgeSubscribe
     public void onLivingUpdate(LivingUpdateEvent event) {
 		Random rand = new Random();
-
-		float healthPercent = event.entityLiving.getHealth() / event.entityLiving.getMaxHealth();
-		int foodLevel = 20;
-		boolean creative = false;
-		boolean isPlayer = false;
-		if (event.entityLiving instanceof EntityPlayer)
-		{
-			EntityPlayer player = (EntityPlayer)event.entityLiving;
-			creative = player.capabilities.isCreativeMode;
-			foodLevel = player.foodStats.foodLevel;
-			isPlayer = true;
-		} else {
-			healthPercent /= 2;
-		} 
 		
-		if (!event.entityLiving.worldObj.isRemote)
-		{
-			if (event.entityLiving instanceof EntityPlayer && IguanaConfig.constantHungerLoss) 
-			{
-				EntityPlayer player = (EntityPlayer)event.entityLiving;
-				if (!player.capabilities.isCreativeMode && !player.isDead) player.addExhaustion(0.001F);
-			}
-			
-			if (event.entityLiving instanceof EntityAgeable) {
-		    	int rndBreed = rand.nextInt(IguanaConfig.breedingTimeoutMultiplier);
-		    	int rndChild = rand.nextInt(IguanaConfig.childDurationMultiplier);
-				EntityAgeable ageable = (EntityAgeable)event.entityLiving;
-	        	int growingAge = ageable.getGrowingAge();
-	        	if (growingAge > 0 && rndBreed != 0) {
-	                ageable.setGrowingAge(++growingAge);
-	        	} else if (growingAge < 0 && rndChild != 0) {
-	                ageable.setGrowingAge(--growingAge);
-	        	}
-			}
-	
+		// Slow growth and egg rates
+		if (event.entityLiving instanceof EntityAnimal) {
+	    	int rndBreed = rand.nextInt(IguanaConfig.breedingTimeoutMultiplier);
+	    	int rndChild = rand.nextInt(IguanaConfig.childDurationMultiplier);
+			EntityAgeable ageable = (EntityAgeable)event.entityLiving;
+        	int growingAge = ageable.getGrowingAge();
+        	if (growingAge > 0 && rndBreed != 0) {
+                ageable.setGrowingAge(++growingAge);
+        	} else if (growingAge < 0 && rndChild != 0) {
+                ageable.setGrowingAge(--growingAge);
+        	}
+        	
 			if (event.entityLiving instanceof EntityChicken && IguanaConfig.eggTimeoutMultiplier > 1) {
 		    	int rnd = rand.nextInt(IguanaConfig.eggTimeoutMultiplier);
 				EntityChicken chicken = (EntityChicken)event.entityLiving;
 	        	if (chicken.timeUntilNextEgg > 0 && rnd != 0) chicken.timeUntilNextEgg += 1;
+			}
+		}
+		
+		// low stat effects
+		if (!event.entityLiving.worldObj.isRemote && event.entityLiving.entityAge % 10 == 0)
+		{
+			float healthPercent = event.entityLiving.getHealth() / event.entityLiving.getMaxHealth();
+			int foodLevel = 20;
+			boolean creative = false;
+			boolean isPlayer = false;
+			if (event.entityLiving instanceof EntityPlayer)
+			{
+				EntityPlayer player = (EntityPlayer)event.entityLiving;
+				creative = player.capabilities.isCreativeMode;
+				foodLevel = player.foodStats.foodLevel;
+				isPlayer = true;
+			} else {
+				healthPercent /= 2;
+			} 
+		
+			if (event.entityLiving instanceof EntityPlayer && IguanaConfig.constantHungerLoss) 
+			{
+				EntityPlayer player = (EntityPlayer)event.entityLiving;
+				if (!player.capabilities.isCreativeMode && !player.isDead) player.addExhaustion(0.01F);
 			}
 			
 
@@ -103,7 +106,21 @@ public class IguanaEventHook {
 		  	   // low stat effects
 		        if (!creative && isPlayer && !event.entityLiving.isDead && healthPercent > 0f)
 		        {
-
+		        	
+		           if (IguanaConfig.addLowStatSlowness)
+		           {
+				       if (foodLevel <= 1 || healthPercent <= 0.05F)
+				            event.entityLiving.addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 19, 1 + difficultyModifierEffects, true));
+				       else if (foodLevel <= 2 || healthPercent <= 0.10F)
+				            event.entityLiving.addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 19, difficultyModifierEffects, true));
+				       else if ((foodLevel <= 3 || healthPercent <= 0.15F) && difficultyModifierEffects >= 1)
+				            event.entityLiving.addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 19, -1 + difficultyModifierEffects, true));
+				       else if ((foodLevel <= 4 || healthPercent <= 0.20F) && difficultyModifierEffects >= 2)
+				            event.entityLiving.addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 19, -2 + difficultyModifierEffects, true));
+				       else if ((foodLevel <= 5 || healthPercent <= 0.25F) && difficultyModifierEffects >= 3)
+				            event.entityLiving.addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 19, -3 + difficultyModifierEffects, true));
+		           }
+		       	
 		           if (IguanaConfig.addLowStatMiningSlowdown)
 		           {
 				       if (foodLevel <= 1 || healthPercent <= 0.05F)
@@ -129,64 +146,12 @@ public class IguanaEventHook {
 		 		    	   event.entityLiving.addPotionEffect(new PotionEffect(Potion.weakness.id, 19, -3 + difficultyModifierEffects, true));
 		            }
 		
-		            if (IguanaConfig.addLowStatNausea && isPlayer) 
+		            if (IguanaConfig.addLowStatNausea && isPlayer && (foodLevel <= 1 || healthPercent <= 0.05F))
 		            {
-		 		       //Nausea effect
-		 		       if (foodLevel <= 1 || healthPercent <= 0.05F)
 		 		    	   event.entityLiving.addPotionEffect(new PotionEffect(Potion.confusion.id, 19, 0, true));
 		            }
 		        }
 			}
-		}
-		
-		if (IguanaConfig.addLowStatSlowness)
-		{
-			//slowdown effect
-			int healthValue = Math.round(healthPercent * 20f);
-	    	if (healthValue <= 4 || foodLevel <= 4)
-	    	{
-	    		double speedModifier = 1d;
-	    		if (healthValue < foodLevel)
-	    		{
-	    			speedModifier = (double)(healthValue + 5) / 10d;
-	    		}
-	    		else
-	    		{
-	    			speedModifier = (double)(foodLevel + 5) / 10d;
-	    		}
-	    		
-    			//Walking block
-    			EntityLivingBase entity = event.entityLiving;
-    			World world = entity.worldObj;
-    			
-    			if (!entity.isInWater())
-    			{
-    				double posmod = 0d;
-    				
-    				if (world.isRemote)
-    					if(entity instanceof EntityClientPlayerMP)
-    						posmod = 1.62d;
-    				
-    				int posX = (int)entity.posX;
-    				int posY = (int)(entity.posY - posmod - 1d);
-    				int posZ = (int)entity.posZ;
-    				if (posX < 0) --posX;
-    				if (posY < 0) --posY;
-    				if (posZ < 0) --posZ;
-    				
-    				Material blockOnMaterial = world.getBlockMaterial(posX, posY, posZ);
-    		        if (blockOnMaterial == Material.ice) speedModifier = 0.80d + (speedModifier / 5d);
-    			}
-
-    			/*
-        		if (event.entityLiving instanceof EntityPlayer)
-        			FMLLog.warning("sm" + Double.toString(speedModifier));
-    			*/
-		    	speedModifier = (2d * speedModifier) - 1d;
-    			
-        		entity.motionX *= speedModifier;
-        		entity.motionZ *= speedModifier;
-    		}
 		}
 	}
 
@@ -290,7 +255,7 @@ public class IguanaEventHook {
 	@ForgeSubscribe
 	public void onBlockHarvested(HarvestDropsEvent event)
 	{
-		if (IguanaConfig.removeTallGrassSeeds && event.block != null && event.block instanceof BlockTallGrass)
+		if (event.block != null && event.block instanceof BlockTallGrass && IguanaConfig.removeTallGrassSeeds)
 		{
 			event.drops.clear();
 		}

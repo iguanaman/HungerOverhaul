@@ -1,4 +1,4 @@
-package iguanaman.hungeroverhaul.handlers;
+package iguanaman.hungeroverhaul.util;
 
 import iguanaman.hungeroverhaul.IguanaConfig;
 import iguanaman.hungeroverhaul.IguanaFoodStats;
