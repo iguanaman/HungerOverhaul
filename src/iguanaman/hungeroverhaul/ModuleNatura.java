@@ -1,8 +1,10 @@
 package iguanaman.hungeroverhaul;
 
 import iguanaman.hungeroverhaul.blocks.IguanaBerryBush;
+import iguanaman.hungeroverhaul.blocks.IguanaCactus;
 import iguanaman.hungeroverhaul.blocks.IguanaCropNatura;
 import iguanaman.hungeroverhaul.blocks.IguanaBerryBushNether;
+import iguanaman.hungeroverhaul.blocks.IguanaCropVegetable;
 import iguanaman.hungeroverhaul.blocks.IguanaSaguaro;
 import iguanaman.hungeroverhaul.items.IguanaSeedNatura;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -16,12 +18,21 @@ import mods.natura.items.NaturaSeeds;
 import mods.natura.items.blocks.BerryBushItem;
 import mods.natura.items.blocks.NetherBerryBushItem;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockCactus;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.src.ModLoader;
 
 public class ModuleNatura {
+	
+	public static Block cactusNew;
 
 	public static void init() {
+
+        
+    	Block.blocksList[Block.cactus.blockID] = null;
+    	cactusNew = new IguanaCactus(81).setHardness(0.4F).setStepSound(Block.soundClothFootstep).setUnlocalizedName("cactus").setTextureName("cactus");
+        ModLoader.registerBlock(cactusNew);
 		
 		Block.blocksList[NContent.crops.blockID] = null;
 		Block.blocksList[NContent.berryBush.blockID] = null;

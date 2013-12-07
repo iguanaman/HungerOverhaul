@@ -4,16 +4,16 @@ import iguanaman.hungeroverhaul.IguanaConfig;
 
 import java.util.Random;
 
+import net.minecraft.block.BlockCactus;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeDictionary.Type;
-import mods.natura.blocks.trees.SaguaroBlock;
 
-public class IguanaSaguaro extends SaguaroBlock {
+public class IguanaCactus extends BlockCactus {
 
-	public IguanaSaguaro(int id) {
-		super(id);
+	public IguanaCactus(int par1) {
+		super(par1);
 	}
 
     /**

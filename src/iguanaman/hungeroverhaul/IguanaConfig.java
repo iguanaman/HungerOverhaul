@@ -21,6 +21,7 @@ public class IguanaConfig {
     public static int wrongBiomeRegrowthMultiplierSugarcane;
     public static int flowerRegrowthMultiplier;
     public static int cropRegrowthMultiplier;
+    public static int cactusRegrowthMultiplier;
     public static int sugarcaneRegrowthMultiplier;
     public static int treeCropRegrowthMultiplier;
     public static int eggTimeoutMultiplier;
@@ -154,7 +155,13 @@ public class IguanaConfig {
         Property sugarcaneRegrowthMultiplierProperty = config.get("delays", "sugarcaneRegrowthMultiplier", 4);
 		sugarcaneRegrowthMultiplierProperty.comment = "Multiplier on the time it takes sugarcane to grow";
 		sugarcaneRegrowthMultiplier = Math.max(sugarcaneRegrowthMultiplierProperty.getInt(4), 1);
-		sugarcaneRegrowthMultiplierProperty.set(sugarcaneRegrowthMultiplier);	
+		sugarcaneRegrowthMultiplierProperty.set(sugarcaneRegrowthMultiplier);
+
+        Property cactusRegrowthMultiplierProperty = config.get("delays", "cactusRegrowthMultiplier", 4);
+        cactusRegrowthMultiplierProperty.comment = "Multiplier on the time it takes cactus to grow (Only applies when Natura is present)";
+		cactusRegrowthMultiplier = Math.max(cactusRegrowthMultiplierProperty.getInt(4), 1);
+		cactusRegrowthMultiplierProperty.set(cactusRegrowthMultiplier);	
+		
 
         Property treeCropRegrowthMultiplierProperty = config.get("delays", "treeCropRegrowthMultiplier", 2);
 		treeCropRegrowthMultiplierProperty.comment = "Multiplier on the time it takes a tree crop to grow";
@@ -332,9 +339,9 @@ public class IguanaConfig {
         constantHungerLossProperty.comment = "You lose hunger (very slowly) at all times";
         constantHungerLoss = constantHungerLossProperty.getBoolean(true);
 
-        Property damageOnStarveProperty = config.get("hunger", "damageOnStarve", 20);
+        Property damageOnStarveProperty = config.get("hunger", "damageOnStarve", 200);
 		damageOnStarveProperty.comment = "Amount of damage you take when hunger hits zero (vanilla default 2)";
-		damageOnStarve = Math.max(damageOnStarveProperty.getInt(20), 1);
+		damageOnStarve = Math.max(damageOnStarveProperty.getInt(200), 1);
 		damageOnStarveProperty.set(damageOnStarve);
 
         Property respawnHungerValueProperty = config.get("hunger", "respawnHungerValue", 20);
