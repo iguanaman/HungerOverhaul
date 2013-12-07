@@ -1,5 +1,6 @@
 package iguanaman.hungeroverhaul;
 
+import iguanaman.hungeroverhaul.blocks.IguanaCocoa;
 import iguanaman.hungeroverhaul.blocks.IguanaCrop;
 import iguanaman.hungeroverhaul.blocks.IguanaCropReed;
 import iguanaman.hungeroverhaul.blocks.IguanaCropVegetable;
@@ -12,6 +13,7 @@ import iguanaman.hungeroverhaul.items.IguanaSeedFood;
 import iguanaman.hungeroverhaul.items.IguanaReed;
 import iguanaman.hungeroverhaul.items.IguanaSeed;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockCocoa;
 import net.minecraft.block.BlockTallGrass;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -33,6 +35,7 @@ public class ModuleVanilla {
     public static Block pumpkinStemNew;
     public static Block melonStemNew;
     public static Block reedNew;
+    public static Block cocoaNew;
     
 	public static void init() {
 
@@ -67,6 +70,10 @@ public class ModuleVanilla {
         Item.itemsList[Item.melonSeeds.itemID] = null;
         Item.pumpkinSeeds = (new IguanaSeed(105, Block.pumpkinStem.blockID, Block.tilledField.blockID)).setUnlocalizedName("seeds_pumpkin").setTextureName("seeds_pumpkin");
         Item.melonSeeds = (new IguanaSeed(106, Block.melonStem.blockID, Block.tilledField.blockID)).setUnlocalizedName("seeds_melon").setTextureName("seeds_melon");
+        
+    	Block.blocksList[Block.cocoaPlant.blockID] = null;
+    	cocoaNew = new IguanaCocoa(127).setHardness(0.2F).setResistance(5.0F).setStepSound(Block.soundWoodFootstep).setUnlocalizedName("cocoa").setTextureName("cocoa");
+        ModLoader.registerBlock(cocoaNew);
 		
         Item.itemsList[Item.appleRed.itemID] = null;
         Item.itemsList[Item.bread.itemID] = null;

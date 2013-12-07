@@ -2,22 +2,18 @@ package iguanaman.hungeroverhaul.blocks;
 
 import iguanaman.hungeroverhaul.IguanaConfig;
 
-import java.util.List;
 import java.util.Random;
 
-import net.minecraft.block.Block;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
+import net.minecraft.block.BlockCocoa;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeDictionary.Type;
-import mods.natura.blocks.trees.SaguaroBlock;
 
-public class IguanaSaguaro extends SaguaroBlock {
+public class IguanaCocoa extends BlockCocoa {
 
-	public IguanaSaguaro(int id) {
-		super(id);
+	public IguanaCocoa(int par1) {
+		super(par1);
 	}
 
     /**
@@ -30,10 +26,10 @@ public class IguanaSaguaro extends SaguaroBlock {
         int biomeModifier = IguanaConfig.wrongBiomeRegrowthMultiplier;
     	try {
     		BiomeGenBase biome = par1World.getWorldChunkManager().getBiomeGenAt(par2, par4);
-    		if(BiomeDictionary.isBiomeOfType(biome, Type.DESERT)) biomeModifier = 1;
+    		if(BiomeDictionary.isBiomeOfType(biome, Type.JUNGLE)) biomeModifier = 1;
 		} catch (Exception var5) { biomeModifier = 1; }
     	
-    	if (par5Random.nextInt(IguanaConfig.cactusRegrowthMultiplier * biomeModifier) != 0) return;
+    	if (par5Random.nextInt(IguanaConfig.cocoaRegrowthMultiplier * biomeModifier) != 0) return;
 
     	super.updateTick(par1World, par2, par3, par4, par5Random);
     }

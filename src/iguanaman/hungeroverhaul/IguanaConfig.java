@@ -22,6 +22,7 @@ public class IguanaConfig {
     public static int flowerRegrowthMultiplier;
     public static int cropRegrowthMultiplier;
     public static int cactusRegrowthMultiplier;
+    public static int cocoaRegrowthMultiplier;
     public static int sugarcaneRegrowthMultiplier;
     public static int treeCropRegrowthMultiplier;
     public static int eggTimeoutMultiplier;
@@ -161,8 +162,12 @@ public class IguanaConfig {
         cactusRegrowthMultiplierProperty.comment = "Multiplier on the time it takes cactus to grow (Only applies when Natura is present)";
 		cactusRegrowthMultiplier = Math.max(cactusRegrowthMultiplierProperty.getInt(4), 1);
 		cactusRegrowthMultiplierProperty.set(cactusRegrowthMultiplier);	
-		
 
+        Property cocoaRegrowthMultiplierProperty = config.get("delays", "cocoaRegrowthMultiplier", 4);
+        cocoaRegrowthMultiplierProperty.comment = "Multiplier on the time it takes cocoa to grow";
+        cocoaRegrowthMultiplier = Math.max(cocoaRegrowthMultiplierProperty.getInt(4), 1);
+        cocoaRegrowthMultiplierProperty.set(cocoaRegrowthMultiplier);	
+		
         Property treeCropRegrowthMultiplierProperty = config.get("delays", "treeCropRegrowthMultiplier", 2);
 		treeCropRegrowthMultiplierProperty.comment = "Multiplier on the time it takes a tree crop to grow";
 		treeCropRegrowthMultiplier = Math.max(treeCropRegrowthMultiplierProperty.getInt(2), 1);
