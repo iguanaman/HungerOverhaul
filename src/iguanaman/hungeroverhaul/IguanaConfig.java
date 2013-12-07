@@ -25,6 +25,7 @@ public class IguanaConfig {
     public static int cocoaRegrowthMultiplier;
     public static int sugarcaneRegrowthMultiplier;
     public static int treeCropRegrowthMultiplier;
+    public static int dryingRackTimeMultiplier;
     public static int eggTimeoutMultiplier;
     public static int breedingTimeoutMultiplier;
     public static int childDurationMultiplier;
@@ -172,6 +173,11 @@ public class IguanaConfig {
 		treeCropRegrowthMultiplierProperty.comment = "Multiplier on the time it takes a tree crop to grow";
 		treeCropRegrowthMultiplier = Math.max(treeCropRegrowthMultiplierProperty.getInt(2), 1);
 		treeCropRegrowthMultiplierProperty.set(treeCropRegrowthMultiplier);	
+
+        Property dryingRackTimeMultiplierProperty = config.get("delays", "dryingRackTimeMultiplier", 4);
+        dryingRackTimeMultiplierProperty.comment = "Multiplier on the time it takes cocoa to grow";
+        dryingRackTimeMultiplier = Math.max(dryingRackTimeMultiplierProperty.getInt(4), 1);
+        dryingRackTimeMultiplierProperty.set(dryingRackTimeMultiplier);	
 
         Property eggTimeoutMultiplierProperty = config.get("delays", "eggTimeoutMultiplier", 4);
         eggTimeoutMultiplierProperty.comment = "Multiplier applied to the delay between chicken egg laying";

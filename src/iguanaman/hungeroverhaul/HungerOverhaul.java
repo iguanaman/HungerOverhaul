@@ -131,6 +131,10 @@ public class HungerOverhaul {
             {
     			ModuleWeeeFlowers.init();
             }
+    		if(Loader.isModLoaded("TConstruct"))
+            {
+    			ModuleTConstruct.init();
+            }
     		if(Loader.isModLoaded("Natura"))
             {
     			ModuleNatura.init();

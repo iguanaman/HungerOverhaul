@@ -644,7 +644,7 @@ public class ModuleHarvestCraftCrops {
             PamHarvestCraft.caramelItem = (new IguanaFoodPam(HarvestConfigurationHandler.caramelID, 1, 0.1F, false, true)).setUnlocalizedName("PamHarvestCraft:caramelItem");
             PamHarvestCraft.taffyItem = (new IguanaFoodPam(HarvestConfigurationHandler.taffyID, 2, 0.05F, false, true)).setUnlocalizedName("PamHarvestCraft:taffyItem");
             PamHarvestCraft.spidereyesoupItem = (new IguanaFoodPam(HarvestConfigurationHandler.spidereyesoupID, 3, 0.15F, false, true)).setUnlocalizedName("PamHarvestCraft:spidereyesoupItem");
-            PamHarvestCraft.zombiejerkyItem = (new IguanaFoodPam(HarvestConfigurationHandler.zombiejerkyID, 3, 0.15F, false, true)).setUnlocalizedName("PamHarvestCraft:zombiejerkyItem");
+            PamHarvestCraft.zombiejerkyItem = (new IguanaFoodPam(HarvestConfigurationHandler.zombiejerkyID, 1, 0.05F, false, true)).setUnlocalizedName("PamHarvestCraft:zombiejerkyItem");
             PamHarvestCraft.chocolatebarItem = (new IguanaFoodPam(HarvestConfigurationHandler.chocolatebarID, 2, 0.05F, false, true)).setUnlocalizedName("PamHarvestCraft:chocolatebarItem");
             PamHarvestCraft.hotchocolateItem = (new IguanaFoodPam(HarvestConfigurationHandler.hotchocolateID, 2, 0.05F, false, true)).setUnlocalizedName("PamHarvestCraft:hotchocolateItem");
             PamHarvestCraft.chocolateicecreamItem = (new IguanaFoodPam(HarvestConfigurationHandler.chocolateicecreamID, 3, 0.1F, false, true)).setUnlocalizedName("PamHarvestCraft:chocolateicecreamItem");
