@@ -25,6 +25,7 @@ public class IguanaConfig {
     public static int cocoaRegrowthMultiplier;
     public static int sugarcaneRegrowthMultiplier;
     public static int treeCropRegrowthMultiplier;
+    public static int saplingRegrowthMultiplier;
     public static int dryingRackTimeMultiplier;
     public static int eggTimeoutMultiplier;
     public static int breedingTimeoutMultiplier;
@@ -170,11 +171,16 @@ public class IguanaConfig {
         cocoaRegrowthMultiplier = Math.max(cocoaRegrowthMultiplierProperty.getInt(4), 1);
         cocoaRegrowthMultiplierProperty.set(cocoaRegrowthMultiplier);	
 		
-        Property treeCropRegrowthMultiplierProperty = config.get("delays", "treeCropRegrowthMultiplier", 2);
+        Property treeCropRegrowthMultiplierProperty = config.get("delays", "treeCropRegrowthMultiplier", 4);
 		treeCropRegrowthMultiplierProperty.comment = "Multiplier on the time it takes a tree crop to grow";
-		treeCropRegrowthMultiplier = Math.max(treeCropRegrowthMultiplierProperty.getInt(2), 1);
+		treeCropRegrowthMultiplier = Math.max(treeCropRegrowthMultiplierProperty.getInt(4), 1);
 		treeCropRegrowthMultiplierProperty.set(treeCropRegrowthMultiplier);	
-
+		
+        Property saplingRegrowthMultiplierProperty = config.get("delays", "saplingRegrowthMultiplier", 4);
+        saplingRegrowthMultiplierProperty.comment = "Multiplier on the time it takes a sapling to grow into a tree";
+		saplingRegrowthMultiplier = Math.max(saplingRegrowthMultiplierProperty.getInt(4), 1);
+		saplingRegrowthMultiplierProperty.set(saplingRegrowthMultiplier);	
+		
         Property dryingRackTimeMultiplierProperty = config.get("delays", "dryingRackTimeMultiplier", 4);
         dryingRackTimeMultiplierProperty.comment = "Multiplier on the time it takes cocoa to grow";
         dryingRackTimeMultiplier = Math.max(dryingRackTimeMultiplierProperty.getInt(4), 1);

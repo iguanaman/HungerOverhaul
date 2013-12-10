@@ -28,6 +28,7 @@ import net.minecraft.entity.passive.EntityMooshroom;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EnumStatus;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBucket;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
@@ -43,6 +44,7 @@ import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.player.EntityInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
 import net.minecraftforge.event.entity.player.UseHoeEvent;
+import net.minecraftforge.event.terraingen.SaplingGrowTreeEvent;
 import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
 
 public class IguanaEventHook {
@@ -341,7 +343,9 @@ public class IguanaEventHook {
 			ItemStack equipped = player.getCurrentEquippedItem();
 			if (equipped != null && equipped.getItem() != null)
 			{
-				if (equipped.getItem() == Item.bucketEmpty || (cow instanceof EntityMooshroom && equipped.getItem() == Item.bowlEmpty))
+				Item item = equipped.getItem();
+				if ((item instanceof ItemBucket && ((ItemBucket)item).isFull == 0)
+						|| (cow instanceof EntityMooshroom && item.itemID == Item.bowlEmpty.itemID))
 				{
 					NBTTagCompound tags = cow.getEntityData();
 					if (tags.hasKey("Milked"))
@@ -350,7 +354,6 @@ public class IguanaEventHook {
 						if (!player.worldObj.isRemote) 
 						{
 							cow.playSound(cow.getHurtSound(), cow.getSoundVolume(), cow.getSoundPitch());
-							player.addChatMessage("These udders are dry");
 						}
 					}
 					else
@@ -359,6 +362,15 @@ public class IguanaEventHook {
 					}
 				}
 			}
+		}
+	}
+	
+	@ForgeSubscribe
+	public void onSaplingGrowTreeEvent(SaplingGrowTreeEvent event)
+	{
+		if (IguanaConfig.saplingRegrowthMultiplier > 1)
+		{
+			if (event.rand.nextInt(IguanaConfig.saplingRegrowthMultiplier) != 0) event.setResult(Result.DENY);
 		}
 	}
 	
