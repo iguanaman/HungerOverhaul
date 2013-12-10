@@ -29,6 +29,7 @@ public class IguanaConfig {
     public static int eggTimeoutMultiplier;
     public static int breedingTimeoutMultiplier;
     public static int childDurationMultiplier;
+    public static int milkedTimeout;
     
     // crop drops
     public static int seedsPerHarvestMin;
@@ -194,6 +195,12 @@ public class IguanaConfig {
         childDurationMultiplier = Math.max(childDurationMultiplierProperty.getInt(4), 1);
         childDurationMultiplierProperty.set(childDurationMultiplier);	
 
+        Property milkedTimeoutProperty = config.get("delays", "milkedTimeout", 20);
+        milkedTimeoutProperty.comment = "Delay (in minutes) after milking a cow before it can be milked again";
+        milkedTimeout = Math.max(milkedTimeoutProperty.getInt(20), 0);
+        milkedTimeoutProperty.set(milkedTimeout);	
+
+        
         // harvesting
 		config.getCategory("harvesting");
 		

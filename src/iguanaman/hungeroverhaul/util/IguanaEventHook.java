@@ -23,10 +23,13 @@ import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.passive.EntityChicken;
 import net.minecraft.entity.passive.EntityBat;
+import net.minecraft.entity.passive.EntityCow;
+import net.minecraft.entity.passive.EntityMooshroom;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EnumStatus;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.AxisAlignedBB;
@@ -38,6 +41,7 @@ import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.Event.Result;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.player.BonemealEvent;
+import net.minecraftforge.event.entity.player.EntityInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
 import net.minecraftforge.event.entity.player.UseHoeEvent;
 import net.minecraftforge.event.world.BlockEvent.HarvestDropsEvent;
@@ -46,6 +50,7 @@ public class IguanaEventHook {
 
 	@ForgeSubscribe
     public void onLivingUpdate(LivingUpdateEvent event) {
+		
 		Random rand = new Random();
 		
 		// Slow growth and egg rates
@@ -60,97 +65,121 @@ public class IguanaEventHook {
                 ageable.setGrowingAge(--growingAge);
         	}
         	
-			if (event.entityLiving instanceof EntityChicken && IguanaConfig.eggTimeoutMultiplier > 1) {
+			if (IguanaConfig.eggTimeoutMultiplier > 1 && event.entityLiving instanceof EntityChicken) {
 		    	int rnd = rand.nextInt(IguanaConfig.eggTimeoutMultiplier);
 				EntityChicken chicken = (EntityChicken)event.entityLiving;
 	        	if (chicken.timeUntilNextEgg > 0 && rnd != 0) chicken.timeUntilNextEgg += 1;
 			}
-		}
-		
-		// low stat effects
-		if (!event.entityLiving.worldObj.isRemote && event.entityLiving.entityAge % 10 == 0)
-		{
-			float healthPercent = event.entityLiving.getHealth() / event.entityLiving.getMaxHealth();
-			int foodLevel = 20;
-			boolean creative = false;
-			boolean isPlayer = false;
-			if (event.entityLiving instanceof EntityPlayer)
-			{
-				EntityPlayer player = (EntityPlayer)event.entityLiving;
-				creative = player.capabilities.isCreativeMode;
-				foodLevel = player.foodStats.foodLevel;
-				isPlayer = true;
-			} else {
-				healthPercent /= 2;
-			} 
-		
-			if (event.entityLiving instanceof EntityPlayer && IguanaConfig.constantHungerLoss) 
-			{
-				EntityPlayer player = (EntityPlayer)event.entityLiving;
-				if (!player.capabilities.isCreativeMode && !player.isDead) player.addExhaustion(0.01F);
-			}
 			
-
-			if (IguanaConfig.addLowStatEffects) 
-			{     
-				int difficultyModifierEffects = 2;
-				if (IguanaConfig.difficultyScaling && IguanaConfig.difficultyScalingEffects)
+			// Reduced milked value every second
+			if (IguanaConfig.milkedTimeout > 0 && event.entityLiving instanceof EntityCow && event.entityLiving.worldObj.getWorldTime() % 20 == 0)
+			{
+				NBTTagCompound tags = event.entityLiving.getEntityData();
+				if (tags.hasKey("Milked"))
 				{
-					difficultyModifierEffects = event.entityLiving.worldObj.difficultySetting;
+					int milked = tags.getInteger("Milked");
+					if (--milked <= 0) tags.removeTag("Milked");
+					else tags.setInteger("Milked", milked);
+				}
+			}
+		}
+
+		if (!event.entityLiving.worldObj.isRemote)
+		{
+			NBTTagCompound tags = event.entityLiving.getEntityData();
+			
+			// low stat effects
+			if (tags.hasKey("HungerOverhaulCheck"))
+			{
+				int lastCheck = tags.getInteger("HungerOverhaulCheck");
+				if (--lastCheck <= 0) tags.removeTag("HungerOverhaulCheck");
+				else tags.setInteger("HungerOverhaulCheck", lastCheck);
+			}
+			else
+			{
+				float healthPercent = event.entityLiving.getHealth() / event.entityLiving.getMaxHealth();
+				int foodLevel = 20;
+				boolean creative = false;
+				boolean isPlayer = false;
+				if (event.entityLiving instanceof EntityPlayer)
+				{
+					EntityPlayer player = (EntityPlayer)event.entityLiving;
+					creative = player.capabilities.isCreativeMode;
+					foodLevel = player.foodStats.foodLevel;
+					isPlayer = true;
+				} else {
+					healthPercent /= 2;
+				} 
+			
+				if (event.entityLiving instanceof EntityPlayer && IguanaConfig.constantHungerLoss) 
+				{
+					EntityPlayer player = (EntityPlayer)event.entityLiving;
+					if (!player.capabilities.isCreativeMode && !player.isDead) player.addExhaustion(0.01F);
+				}
+	
+				if (IguanaConfig.addLowStatEffects) 
+				{     
+					int difficultyModifierEffects = 2;
+					if (IguanaConfig.difficultyScaling && IguanaConfig.difficultyScalingEffects)
+					{
+						difficultyModifierEffects = event.entityLiving.worldObj.difficultySetting;
+						
+						if (!(event.entityLiving instanceof EntityPlayer))
+							difficultyModifierEffects = (difficultyModifierEffects * -1) + 3;
+					}
 					
-					if (!(event.entityLiving instanceof EntityPlayer))
-						difficultyModifierEffects = (difficultyModifierEffects * -1) + 3;
+		        	
+			  	   // low stat effects
+			        if (!creative && isPlayer && !event.entityLiving.isDead && healthPercent > 0f)
+			        {
+			        	
+			           if (IguanaConfig.addLowStatSlowness)
+			           {
+					       if (foodLevel <= 1 || healthPercent <= 0.05F)
+					            event.entityLiving.addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 19, 1 + difficultyModifierEffects, true));
+					       else if (foodLevel <= 2 || healthPercent <= 0.10F)
+					            event.entityLiving.addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 19, difficultyModifierEffects, true));
+					       else if ((foodLevel <= 3 || healthPercent <= 0.15F) && difficultyModifierEffects >= 1)
+					            event.entityLiving.addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 19, -1 + difficultyModifierEffects, true));
+					       else if ((foodLevel <= 4 || healthPercent <= 0.20F) && difficultyModifierEffects >= 2)
+					            event.entityLiving.addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 19, -2 + difficultyModifierEffects, true));
+					       else if ((foodLevel <= 5 || healthPercent <= 0.25F) && difficultyModifierEffects >= 3)
+					            event.entityLiving.addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 19, -3 + difficultyModifierEffects, true));
+			           }
+			       	
+			           if (IguanaConfig.addLowStatMiningSlowdown)
+			           {
+					       if (foodLevel <= 1 || healthPercent <= 0.05F)
+					            event.entityLiving.addPotionEffect(new PotionEffect(Potion.digSlowdown.id, 19, 1 + difficultyModifierEffects, true));
+					       else if (foodLevel <= 2 || healthPercent <= 0.10F)
+					            event.entityLiving.addPotionEffect(new PotionEffect(Potion.digSlowdown.id, 19, difficultyModifierEffects, true));
+					       else if ((foodLevel <= 3 || healthPercent <= 0.15F) && difficultyModifierEffects >= 1)
+					            event.entityLiving.addPotionEffect(new PotionEffect(Potion.digSlowdown.id, 19, -1 + difficultyModifierEffects, true));
+					       else if ((foodLevel <= 4 || healthPercent <= 0.20F) && difficultyModifierEffects >= 2)
+					            event.entityLiving.addPotionEffect(new PotionEffect(Potion.digSlowdown.id, 19, -2 + difficultyModifierEffects, true));
+					       else if ((foodLevel <= 5 || healthPercent <= 0.25F) && difficultyModifierEffects >= 3)
+					            event.entityLiving.addPotionEffect(new PotionEffect(Potion.digSlowdown.id, 19, -3 + difficultyModifierEffects, true));
+			           }
+			           
+			            if (IguanaConfig.addLowStatWeakness) 
+			            {
+			 		       //Weakness effect
+			 		       if ((foodLevel <= 1 || healthPercent <= 0.05F) && difficultyModifierEffects >= 1)
+			 		    	   event.entityLiving.addPotionEffect(new PotionEffect(Potion.weakness.id, 19, -1 + difficultyModifierEffects, true));
+			 		       else if ((foodLevel <= 2 || healthPercent <= 0.10F) && difficultyModifierEffects >= 2)
+			 		    	   event.entityLiving.addPotionEffect(new PotionEffect(Potion.weakness.id, 19, -2 + difficultyModifierEffects, true));
+			 		       else if ((foodLevel <= 3 || healthPercent <= 0.15F) && difficultyModifierEffects >= 3)
+			 		    	   event.entityLiving.addPotionEffect(new PotionEffect(Potion.weakness.id, 19, -3 + difficultyModifierEffects, true));
+			            }
+			
+			            if (IguanaConfig.addLowStatNausea && isPlayer && (foodLevel <= 1 || healthPercent <= 0.05F))
+			            {
+			 		    	   event.entityLiving.addPotionEffect(new PotionEffect(Potion.confusion.id, 19, 0, true));
+			            }
+			        }
 				}
 				
-	        	
-		  	   // low stat effects
-		        if (!creative && isPlayer && !event.entityLiving.isDead && healthPercent > 0f)
-		        {
-		        	
-		           if (IguanaConfig.addLowStatSlowness)
-		           {
-				       if (foodLevel <= 1 || healthPercent <= 0.05F)
-				            event.entityLiving.addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 19, 1 + difficultyModifierEffects, true));
-				       else if (foodLevel <= 2 || healthPercent <= 0.10F)
-				            event.entityLiving.addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 19, difficultyModifierEffects, true));
-				       else if ((foodLevel <= 3 || healthPercent <= 0.15F) && difficultyModifierEffects >= 1)
-				            event.entityLiving.addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 19, -1 + difficultyModifierEffects, true));
-				       else if ((foodLevel <= 4 || healthPercent <= 0.20F) && difficultyModifierEffects >= 2)
-				            event.entityLiving.addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 19, -2 + difficultyModifierEffects, true));
-				       else if ((foodLevel <= 5 || healthPercent <= 0.25F) && difficultyModifierEffects >= 3)
-				            event.entityLiving.addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 19, -3 + difficultyModifierEffects, true));
-		           }
-		       	
-		           if (IguanaConfig.addLowStatMiningSlowdown)
-		           {
-				       if (foodLevel <= 1 || healthPercent <= 0.05F)
-				            event.entityLiving.addPotionEffect(new PotionEffect(Potion.digSlowdown.id, 19, 1 + difficultyModifierEffects, true));
-				       else if (foodLevel <= 2 || healthPercent <= 0.10F)
-				            event.entityLiving.addPotionEffect(new PotionEffect(Potion.digSlowdown.id, 19, difficultyModifierEffects, true));
-				       else if ((foodLevel <= 3 || healthPercent <= 0.15F) && difficultyModifierEffects >= 1)
-				            event.entityLiving.addPotionEffect(new PotionEffect(Potion.digSlowdown.id, 19, -1 + difficultyModifierEffects, true));
-				       else if ((foodLevel <= 4 || healthPercent <= 0.20F) && difficultyModifierEffects >= 2)
-				            event.entityLiving.addPotionEffect(new PotionEffect(Potion.digSlowdown.id, 19, -2 + difficultyModifierEffects, true));
-				       else if ((foodLevel <= 5 || healthPercent <= 0.25F) && difficultyModifierEffects >= 3)
-				            event.entityLiving.addPotionEffect(new PotionEffect(Potion.digSlowdown.id, 19, -3 + difficultyModifierEffects, true));
-		           }
-		           
-		            if (IguanaConfig.addLowStatWeakness) 
-		            {
-		 		       //Weakness effect
-		 		       if ((foodLevel <= 1 || healthPercent <= 0.05F) && difficultyModifierEffects >= 1)
-		 		    	   event.entityLiving.addPotionEffect(new PotionEffect(Potion.weakness.id, 19, -1 + difficultyModifierEffects, true));
-		 		       else if ((foodLevel <= 2 || healthPercent <= 0.10F) && difficultyModifierEffects >= 2)
-		 		    	   event.entityLiving.addPotionEffect(new PotionEffect(Potion.weakness.id, 19, -2 + difficultyModifierEffects, true));
-		 		       else if ((foodLevel <= 3 || healthPercent <= 0.15F) && difficultyModifierEffects >= 3)
-		 		    	   event.entityLiving.addPotionEffect(new PotionEffect(Potion.weakness.id, 19, -3 + difficultyModifierEffects, true));
-		            }
-		
-		            if (IguanaConfig.addLowStatNausea && isPlayer && (foodLevel <= 1 || healthPercent <= 0.05F))
-		            {
-		 		    	   event.entityLiving.addPotionEffect(new PotionEffect(Potion.confusion.id, 19, 0, true));
-		            }
-		        }
+				tags.setInteger("HungerOverhaulCheck", 9);
 			}
 		}
 	}
@@ -303,8 +332,37 @@ public class IguanaEventHook {
 		}
 	}
     
-
-
+	@ForgeSubscribe
+	public void onEntityInteractEvent(EntityInteractEvent event)
+	{
+		if (IguanaConfig.milkedTimeout > 0 && event.entityPlayer != null && event.target != null && event.target instanceof EntityCow)
+		{
+			EntityCow cow = (EntityCow)event.target;
+			EntityPlayer player = (EntityPlayer)event.entityPlayer;
+			ItemStack equipped = player.getCurrentEquippedItem();
+			if (equipped != null && equipped.getItem() != null)
+			{
+				if (equipped.getItem() == Item.bucketEmpty || (cow instanceof EntityMooshroom && equipped.getItem() == Item.bowlEmpty))
+				{
+					NBTTagCompound tags = cow.getEntityData();
+					if (tags.hasKey("Milked"))
+					{
+						event.setCanceled(true);
+						if (!player.worldObj.isRemote) 
+						{
+							cow.playSound(cow.getHurtSound(), cow.getSoundVolume(), cow.getSoundPitch());
+							player.addChatMessage("These udders are dry");
+						}
+					}
+					else
+					{
+						tags.setInteger("Milked", IguanaConfig.milkedTimeout * 60);
+					}
+				}
+			}
+		}
+	}
+	
     /**
      * returns true if there's water nearby (x-4 to x+4, y to y+1, k-4 to k+4)
      */
