@@ -232,7 +232,7 @@ public class IguanaCropPam extends BlockPamCrop {
 	 	     
 	 	     if (rnd == 1 || par1World.rand.nextInt(rnd) == 0) 
 	 	     {
-		  		   tileentitypamcrop.setGrowthStage(Math.max(tileentitypamcrop.getGrowthStage() + 1, 2));
+		  		   tileentitypamcrop.setGrowthStage(Math.min(tileentitypamcrop.getGrowthStage() + 1, 2));
 		  		   par1World.markBlockForUpdate(par2, par3, par4);
 	 	     }
  	      }
