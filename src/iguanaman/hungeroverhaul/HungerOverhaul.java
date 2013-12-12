@@ -31,6 +31,7 @@ import org.modstats.Modstats;
 
 import tconstruct.util.config.PHConstruct;
 
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.FMLLog;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
@@ -144,6 +145,9 @@ public class HungerOverhaul {
        
         @EventHandler
         public void postInit(FMLPostInitializationEvent event) {
+        	
+        	if (IguanaConfig.removeTallGrassSeeds) ModuleGrassSeeds.init();
+        	
            GameRegistry.registerPlayerTracker(new IguanaPlayerHandler());
            MinecraftForge.EVENT_BUS.register(new IguanaEventHook());
         }
@@ -153,7 +157,7 @@ public class HungerOverhaul {
 		{			
 			if (IguanaConfig.addSetHungerCommand)
 			{
-				ICommandManager commandManager = ModLoader.getMinecraftServerInstance().getCommandManager();
+				ICommandManager commandManager = FMLCommonHandler.instance().getMinecraftServerInstance().getCommandManager();
 				ServerCommandManager serverCommandManager = ((ServerCommandManager) commandManager);
 				serverCommandManager.registerCommand(new IguanaCommandConfig());
 				serverCommandManager.registerCommand(new IguanaCommandHunger());

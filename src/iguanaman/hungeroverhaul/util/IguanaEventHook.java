@@ -1,6 +1,7 @@
 package iguanaman.hungeroverhaul.util;
 
 import iguanaman.hungeroverhaul.IguanaConfig;
+import iguanaman.hungeroverhaul.ModuleGrassSeeds;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -268,7 +269,8 @@ public class IguanaEventHook {
 	            	else if (event.world.difficultySetting == 3) seedChance = Math.max(Math.round((float)seedChance / 2f), 1);
 	            	
 	                if (event.world.rand.nextInt(100) <= seedChance) {
-		    			Block.blocksList[blockID].dropBlockAsItem_do(event.world, event.x, event.y, event.z, ForgeHooks.getGrassSeed(event.world));
+	                	ItemStack seed = IguanaConfig.removeTallGrassSeeds ? ModuleGrassSeeds.getGrassSeed(event.world) : ForgeHooks.getGrassSeed(event.world); 
+		    			if (seed != null) Block.blocksList[blockID].dropBlockAsItem_do(event.world, event.x, event.y, event.z, seed);
 	                }
 	    			event.world.setBlock(event.x, event.y, event.z, Block.dirt.blockID);
 	            }
@@ -279,21 +281,6 @@ public class IguanaEventHook {
 				event.setResult(Result.ALLOW);
 			} else {
 				event.setCanceled(true);
-			}
-		}
-	}
-	
-	public static List<Integer> BOPGrassMetas = Arrays.asList(1,2,3,10,11);
-	
-	@ForgeSubscribe
-	public void onBlockHarvested(HarvestDropsEvent event)
-	{
-		if (event.block != null && IguanaConfig.removeTallGrassSeeds)
-		{
-			if (event.block instanceof BlockTallGrass || 
-					(event.block.getClass().getName().equals("BlockBOPFoliage") && BOPGrassMetas.contains(event.blockMetadata)))
-			{
-				event.drops.clear();
 			}
 		}
 	}
