@@ -75,14 +75,14 @@ public class ModuleGrassSeeds {
         	try	{
         		Field weightField = entry.getClass().getSuperclass().getDeclaredField("itemWeight");
         		weightField.setAccessible(true);
-        		weight = (int) weightField.get(entry);
+        		weight = (Integer) weightField.get(entry);
             } catch (NoSuchFieldException e) {
             	throw new RuntimeException("Could not access itemWeight field, report please");
             } catch (IllegalAccessException e) {
             	throw new RuntimeException("Could not access itemWeight field, report please");
             }
         	
-        	IguanaLog.log("seed" + seed.getUnlocalizedName() + " weight" + weight);
+        	//IguanaLog.log("seed" + seed.getUnlocalizedName() + " weight" + weight);
         	
         	seedListNew.add(new SeedEntry(seed, weight));
         }
