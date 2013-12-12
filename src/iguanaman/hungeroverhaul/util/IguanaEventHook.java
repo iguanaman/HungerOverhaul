@@ -3,6 +3,7 @@ package iguanaman.hungeroverhaul.util;
 import iguanaman.hungeroverhaul.IguanaConfig;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -282,12 +283,18 @@ public class IguanaEventHook {
 		}
 	}
 	
+	public static List<Integer> BOPGrassMetas = Arrays.asList(1,2,3,10,11);
+	
 	@ForgeSubscribe
 	public void onBlockHarvested(HarvestDropsEvent event)
 	{
-		if (event.block != null && event.block instanceof BlockTallGrass && IguanaConfig.removeTallGrassSeeds)
+		if (event.block != null && IguanaConfig.removeTallGrassSeeds)
 		{
-			event.drops.clear();
+			if (event.block instanceof BlockTallGrass || 
+					(event.block.getClass().getName().equals("BlockBOPFoliage") && BOPGrassMetas.contains(event.blockMetadata)))
+			{
+				event.drops.clear();
+			}
 		}
 	}
 	
