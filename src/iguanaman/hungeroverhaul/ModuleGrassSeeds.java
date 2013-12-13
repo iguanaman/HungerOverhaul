@@ -71,13 +71,21 @@ public class ModuleGrassSeeds {
             	throw new RuntimeException("Could not access seed field, report please");
             }
         	
-        	int weight = -1;
+        	int weight = 1;
         	try	{
-        		Field weightField = entry.getClass().getSuperclass().getDeclaredField("itemWeight");
+        		Field weightField = entry.getClass().getSuperclass().getDeclaredField("field_76292_a");
         		weightField.setAccessible(true);
         		weight = (Integer) weightField.get(entry);
             } catch (NoSuchFieldException e) {
-            	throw new RuntimeException("Could not access itemWeight field, report please");
+            	try	{
+            		Field weightField = entry.getClass().getSuperclass().getDeclaredField("itemWeight");
+            		weightField.setAccessible(true);
+            		weight = (Integer) weightField.get(entry);
+                } catch (NoSuchFieldException e2) {
+                	IguanaLog.log("WARNING Could not access itemWeight field, report please");
+                } catch (IllegalAccessException e2) {
+                	throw new RuntimeException("Could not access itemWeight field, report please");
+                }
             } catch (IllegalAccessException e) {
             	throw new RuntimeException("Could not access itemWeight field, report please");
             }
