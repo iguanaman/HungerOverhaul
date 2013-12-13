@@ -9,6 +9,7 @@ import net.minecraftforge.common.Property;
 public class IguanaConfig {
     
     // seeds + hoes
+	public static boolean allSeedsEqual;
     public static boolean removeTallGrassSeeds;
     public static boolean modifyHoeUse;
     public static boolean removeHoeRecipes;
@@ -107,6 +108,11 @@ public class IguanaConfig {
         config.load();
         
         // seeds and hoes
+        
+        Property allSeedsEqualProperty = config.get("getting seeds", "allSeedsEqual", true);
+        allSeedsEqualProperty.comment = "Each seed has an equal chance to drop (grass drops and via hoes)";
+        allSeedsEqual = allSeedsEqualProperty.getBoolean(true);
+        
         Property removeHoeRecipesProperty = config.get("getting seeds", "removeHoeRecipes", true);
         removeHoeRecipesProperty.comment = "Whether wood and stone hoe recipes are removed";
         removeHoeRecipes = removeHoeRecipesProperty.getBoolean(true);

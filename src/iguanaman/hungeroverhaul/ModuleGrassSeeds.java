@@ -40,7 +40,7 @@ public class ModuleGrassSeeds {
 	public static void init() 
 	{
 
-    	IguanaLog.log("Removing tall grass seeds");
+		if (IguanaConfig.removeTallGrassSeeds) IguanaLog.log("Removing tall grass seeds");
     	
         ForgeHooks hooks = new ForgeHooks();
         Field f = null;
@@ -72,30 +72,36 @@ public class ModuleGrassSeeds {
             }
         	
         	int weight = 1;
-        	try	{
-        		Field weightField = entry.getClass().getSuperclass().getDeclaredField("field_76292_a");
-        		weightField.setAccessible(true);
-        		weight = (Integer) weightField.get(entry);
-            } catch (NoSuchFieldException e) {
-            	try	{
-            		Field weightField = entry.getClass().getSuperclass().getDeclaredField("itemWeight");
-            		weightField.setAccessible(true);
-            		weight = (Integer) weightField.get(entry);
-                } catch (NoSuchFieldException e2) {
-                	IguanaLog.log("WARNING Could not access itemWeight field, report please");
-                } catch (IllegalAccessException e2) {
-                	throw new RuntimeException("Could not access itemWeight field, report please");
-                }
-            } catch (IllegalAccessException e) {
-            	throw new RuntimeException("Could not access itemWeight field, report please");
-            }
+        	if (!IguanaConfig.allSeedsEqual)
+        	{
+	        	try	{
+	        		Field weightField = entry.getClass().getSuperclass().getDeclaredField("field_76292_a");
+	        		weightField.setAccessible(true);
+	        		weight = (Integer) weightField.get(entry);
+	            } catch (NoSuchFieldException e) {
+	            	try	{
+	            		Field weightField = entry.getClass().getSuperclass().getDeclaredField("itemWeight");
+	            		weightField.setAccessible(true);
+	            		weight = (Integer) weightField.get(entry);
+	                } catch (NoSuchFieldException e2) {
+	                	IguanaLog.log("WARNING Could not access itemWeight field, report please");
+	                } catch (IllegalAccessException e2) {
+	                	throw new RuntimeException("Could not access itemWeight field, report please");
+	                }
+	            } catch (IllegalAccessException e) {
+	            	throw new RuntimeException("Could not access itemWeight field, report please");
+	            }
+        	}
         	
         	//IguanaLog.log("seed" + seed.getUnlocalizedName() + " weight" + weight);
         	
         	seedListNew.add(new SeedEntry(seed, weight));
         }
-        
+
         seedList.clear();
-        MinecraftForge.addGrassSeed(null, 10);
+        
+    	if (IguanaConfig.removeTallGrassSeeds) MinecraftForge.addGrassSeed(null, 10);
+    	else for (SeedEntry entry : seedListNew) MinecraftForge.addGrassSeed(entry.seed, 1);
+    	
 	}
 }
