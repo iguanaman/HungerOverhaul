@@ -1,7 +1,6 @@
 package iguanaman.hungeroverhaul;
 
 import iguanaman.hungeroverhaul.RecipeRemover;
-import iguanaman.hungeroverhaul.commands.IguanaCommandConfig;
 import iguanaman.hungeroverhaul.commands.IguanaCommandHunger;
 import iguanaman.hungeroverhaul.util.IguanaEventHook;
 import iguanaman.hungeroverhaul.util.IguanaPlayerHandler;
@@ -159,7 +158,6 @@ public class HungerOverhaul {
 			{
 				ICommandManager commandManager = FMLCommonHandler.instance().getMinecraftServerInstance().getCommandManager();
 				ServerCommandManager serverCommandManager = ((ServerCommandManager) commandManager);
-				serverCommandManager.registerCommand(new IguanaCommandConfig());
 				serverCommandManager.registerCommand(new IguanaCommandHunger());
 			}
 		}
