@@ -46,11 +46,6 @@ public class IguanaCommandConfig extends CommandBase {
 				IguanaConfig.modifyFoodEatingSpeed = Boolean.parseBoolean(value);
 				worked = true;
 			}
-			else if (setting.equalsIgnoreCase("cropsNeedSunlight"))
-			{
-				IguanaConfig.cropsNeedSunlight = Boolean.parseBoolean(value);
-				worked = true;
-			}
 			else if (setting.equalsIgnoreCase("addGuiText"))
 			{
 				IguanaConfig.addGuiText = Boolean.parseBoolean(value);

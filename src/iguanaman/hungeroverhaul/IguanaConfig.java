@@ -17,7 +17,7 @@ public class IguanaConfig {
     public static int seedChance;
     
     // delays
-    public static boolean cropsNeedSunlight;
+    public static int noSunlightRegrowthMultiplier;
     public static int wrongBiomeRegrowthMultiplier;
     public static int wrongBiomeRegrowthMultiplierSugarcane;
     public static int flowerRegrowthMultiplier;
@@ -137,19 +137,20 @@ public class IguanaConfig {
 
         // delays
 		config.getCategory("delays");
-		
-        Property cropsNeedSunlightProperty = config.get("delays", "cropsNeedSunlight", true);
-		cropsNeedSunlightProperty.comment = "Make crops only grow in sunlight (not torchlight)";
-		cropsNeedSunlight = cropsNeedSunlightProperty.getBoolean(true);
-		
+
+        Property noSunlightRegrowthMultiplierProperty = config.get("delays", "noSunlightRegrowthMultiplier", 2);
+        noSunlightRegrowthMultiplierProperty.comment = "Multipier on crop growth time without sunlight (1 to disable feature, 0 to make crops only grow in sunlight)";
+		noSunlightRegrowthMultiplier = Math.max(noSunlightRegrowthMultiplierProperty.getInt(2), 0);
+		noSunlightRegrowthMultiplierProperty.set(noSunlightRegrowthMultiplier);	
+	
         Property wrongBiomeRegrowthMultiplierProperty = config.get("delays", "wrongBiomeRegrowthMultiplier", 2);
-		wrongBiomeRegrowthMultiplierProperty.comment = "Multipier on time it takes any crop (except sugarcane) to grow in the wrong biome";
-		wrongBiomeRegrowthMultiplier = Math.max(wrongBiomeRegrowthMultiplierProperty.getInt(2), 1);
+		wrongBiomeRegrowthMultiplierProperty.comment = "Multipier on crop growth time (except sugarcane) in the wrong biome (1 to disable feature, 0 to make crops only grow in correct biome)";
+		wrongBiomeRegrowthMultiplier = Math.max(wrongBiomeRegrowthMultiplierProperty.getInt(2), 0);
 		wrongBiomeRegrowthMultiplierProperty.set(wrongBiomeRegrowthMultiplier);	
 		
         Property wrongBiomeRegrowthMultiplierSugarcaneProperty = config.get("delays", "wrongBiomeRegrowthMultiplierSugarcane", 2);
-        wrongBiomeRegrowthMultiplierSugarcaneProperty.comment = "Multipier on time it takes sugarcane to grow in the wrong biome";
-		wrongBiomeRegrowthMultiplierSugarcane = Math.max(wrongBiomeRegrowthMultiplierSugarcaneProperty.getInt(2), 1);
+        wrongBiomeRegrowthMultiplierSugarcaneProperty.comment = "Multipier on sugarcane growth time in the wrong biome (1 to disable feature, 0 to make sugarcane only grow in correct biome)";
+		wrongBiomeRegrowthMultiplierSugarcane = Math.max(wrongBiomeRegrowthMultiplierSugarcaneProperty.getInt(2), 0);
 		wrongBiomeRegrowthMultiplierSugarcaneProperty.set(wrongBiomeRegrowthMultiplierSugarcane);	
 
         Property flowerRegrowthMultiplierProperty = config.get("delays", "flowerRegrowthMultiplier", 1);

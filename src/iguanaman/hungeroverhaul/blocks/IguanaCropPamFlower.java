@@ -44,7 +44,8 @@ public class IguanaCropPamFlower extends BlockPamFlowerCrop {
     @Override
     public void updateTick(World par1World, int par2, int par3, int par4, Random par5Random)
     {
-        if (IguanaConfig.cropsNeedSunlight && (!par1World.isDaytime() || !par1World.canBlockSeeTheSky(par2, par3, par4))) return;
+    	int sunlightModifier = par1World.isDaytime() && par1World.canBlockSeeTheSky(par2, par3, par4) ? 1 : IguanaConfig.noSunlightRegrowthMultiplier;
+        if (sunlightModifier == 0) return;
     	if (par5Random.nextInt(IguanaConfig.flowerRegrowthMultiplier) != 0) return;
     	super.updateTick(par1World, par2, par3, par4, par5Random);
     }
