@@ -72,21 +72,6 @@ public class HungerOverhaul {
         	
         	IguanaConfig.init(event.getSuggestedConfigurationFile());
 
-    		if(Loader.isModLoaded("TConstruct")) {
-    			try {
-    				if (!PHConstruct.enableHealthRegen)
-    				{
-    	    			PHConstruct.enableHealthRegen = true;
-    	    			IguanaConfig.healthRegenRatePercentage = 0;
-    				}
-    				if (PHConstruct.alphaRegen)
-    				{
-    	    			PHConstruct.alphaRegen = false;
-    	    			IguanaConfig.foodRegensHealth = true;
-    				}
-    			} catch (Exception ex) {}
-    		}
-
             potionWellFed = new Potion(IguanaConfig.wellFedId, false, 0).setIconIndex(7, 0).setPotionName("potion.wellfedPotion");
         	
             if (IguanaConfig.removeHoeRecipes) {

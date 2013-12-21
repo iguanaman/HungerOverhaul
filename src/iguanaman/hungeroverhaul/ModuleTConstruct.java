@@ -2,6 +2,7 @@ package iguanaman.hungeroverhaul;
 
 import tconstruct.common.TContent;
 import tconstruct.library.crafting.DryingRackRecipes;
+import tconstruct.util.config.PHConstruct;
 import iguanaman.hungeroverhaul.blocks.IguanaBerryBush;
 import iguanaman.hungeroverhaul.blocks.IguanaCactus;
 import iguanaman.hungeroverhaul.blocks.IguanaCropNatura;
@@ -31,6 +32,21 @@ public class ModuleTConstruct {
 	public static Block cactusNew;
 
 	public static void init() {
+
+		if(Loader.isModLoaded("TConstruct")) {
+			try {
+				if (!PHConstruct.enableHealthRegen)
+				{
+	    			PHConstruct.enableHealthRegen = true;
+	    			IguanaConfig.healthRegenRatePercentage = 0;
+				}
+				if (PHConstruct.alphaRegen)
+				{
+	    			PHConstruct.alphaRegen = false;
+	    			IguanaConfig.foodRegensHealth = true;
+				}
+			} catch (Exception ex) {}
+		}
 
 		if (IguanaConfig.dryingRackTimeMultiplier != 1)
 		{
