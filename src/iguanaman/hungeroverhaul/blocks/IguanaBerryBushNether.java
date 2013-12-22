@@ -16,57 +16,52 @@ public class IguanaBerryBushNether extends NetherBerryBush {
 	public IguanaBerryBushNether(int id) {
 		super(id);
 	}
-	
-    /* Bush growth */
-    /**
-     * Ticks the block if it's been scheduled
-     */
-    @Override
-    public void updateTick(World par1World, int par2, int par3, int par4, Random par5Random)
-    {
-        // biome modifier
-        int biomeModifier = IguanaConfig.wrongBiomeRegrowthMultiplier;
-    	try {
-    		BiomeGenBase biome = par1World.getWorldChunkManager().getBiomeGenAt(par2, par4);
-    		if(BiomeDictionary.isBiomeOfType(biome, Type.NETHER)) biomeModifier = 1;
+
+	/* Bush growth */
+	/**
+	 * Ticks the block if it's been scheduled
+	 */
+	@Override
+	public void updateTick(World par1World, int par2, int par3, int par4, Random par5Random)
+	{
+		// biome modifier
+		int biomeModifier = IguanaConfig.wrongBiomeRegrowthMultiplier;
+		try {
+			BiomeGenBase biome = par1World.getWorldChunkManager().getBiomeGenAt(par2, par4);
+			if(BiomeDictionary.isBiomeOfType(biome, Type.NETHER)) biomeModifier = 1;
 		} catch (Exception var5) { biomeModifier = 1; }
-    	
-    	if (par5Random.nextInt(IguanaConfig.cropRegrowthMultiplier * biomeModifier) != 0) return;
 
-    	super.updateTick(par1World, par2, par3, par4, par5Random);
-    }
+		if (par5Random.nextInt(IguanaConfig.cropRegrowthMultiplier * biomeModifier) != 0) return;
 
-    @Override
-    public boolean boneFertilize (World world, int x, int y, int z, Random random)
-    {
-   	   if (world.difficultySetting < 3 || IguanaConfig.difficultyScalingBoneMeal == false)
-   	   {
-	        int meta = world.getBlockMetadata(x, y, z);
-	        if (meta / 4 < 2)
-	        {
-	            if (random.nextBoolean())
-	            {
-	                int setMeta = random.nextInt(2) + 1 + meta / 4;
-		            if (setMeta > 2) setMeta = 2;
-		            if (world.difficultySetting == 2 && IguanaConfig.difficultyScalingBoneMeal) setMeta = 1;
-	                world.setBlockMetadataWithNotify(x, y, z, meta % 4 + setMeta * 4, 4);
-	            }
-	            return true;
-	        }
-	
-	        Block block = Block.blocksList[world.getBlockId(x, y + 1, z)];
-	        if (block == null || block.isAirBlock(world, x, y + 1, z))
-	        {
-	            if (random.nextBoolean())
-	            {
-	                if (random.nextInt(3) == 0)
-	                    world.setBlock(x, y + 1, z, this.blockID, meta % 4, 3);
-	            }
-	
-	            return true;
-	        }
-   	   }
+		super.updateTick(par1World, par2, par3, par4, par5Random);
+	}
 
-        return false;
-    }
+	@Override
+	public boolean boneFertilize (World world, int x, int y, int z, Random random)
+	{
+		if (world.difficultySetting < 3 || !IguanaConfig.difficultyScalingBoneMeal)
+		{
+			int meta = world.getBlockMetadata(x, y, z);
+			if (meta / 4 < 2)
+			{
+				if (random.nextBoolean())
+				{
+					int setMeta = random.nextInt(2) + 1 + meta / 4;
+					if (setMeta > 2) setMeta = 2;
+					if (world.difficultySetting == 2 && IguanaConfig.difficultyScalingBoneMeal) setMeta = 1;
+					world.setBlockMetadataWithNotify(x, y, z, meta % 4 + setMeta * 4, 4);
+				}
+				return true;
+			}
+
+			Block block = Block.blocksList[world.getBlockId(x, y + 1, z)];
+			if (block == null || block.isAirBlock(world, x, y + 1, z))
+			{
+				if (random.nextInt(6) == 0) world.setBlock(x, y + 1, z, blockID, meta % 4, 3);
+				return true;
+			}
+		}
+
+		return false;
+	}
 }

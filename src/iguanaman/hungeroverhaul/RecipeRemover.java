@@ -18,8 +18,7 @@ public class RecipeRemover {
 		{
 			IRecipe tmpRecipe = recipes.get(i);
 			ItemStack recipeResult = tmpRecipe.getRecipeOutput();
-			if (ItemStack.areItemStacksEqual(resultItem, recipeResult))
-				recipes.remove(i--);
+			if (ItemStack.areItemStacksEqual(resultItem, recipeResult)) recipes.remove(i--);
 		}
 	}
 

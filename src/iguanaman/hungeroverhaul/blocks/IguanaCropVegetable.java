@@ -11,43 +11,33 @@ public class IguanaCropVegetable extends IguanaCrop {
 		super(par1, veg);
 	}
 
-    @SideOnly(Side.CLIENT)
 
-    /**
-     * From the specified side and block metadata retrieves the blocks texture. Args: side, metadata
-     */
-    public Icon getIcon(int par1, int par2)
-    {
-        if (par2 < 7)
-        {
-            if (par2 == 6)
-            {
-                par2 = 5;
-            }
+	/**
+	 * From the specified side and block metadata retrieves the blocks texture. Args: side, metadata
+	 */
+	@SideOnly(Side.CLIENT)
+	@Override
+	public Icon getIcon(int par1, int par2)
+	{
+		if (par2 < 7)
+		{
+			if (par2 == 6) par2 = 5;
+			return iconArray[par2 >> 1];
+		} else
+			return iconArray[3];
+	}
 
-            return this.iconArray[par2 >> 1];
-        }
-        else
-        {
-            return this.iconArray[3];
-        }
-    }
-    
+	/**
+	 * When this method is called, your block should register all the icons it needs with the given IconRegister. This
+	 * is the only chance you get to register icons.
+	 */
+	@SideOnly(Side.CLIENT)
+	@Override
+	public void registerIcons(IconRegister par1IconRegister)
+	{
+		iconArray = new Icon[4];
 
-
-    @SideOnly(Side.CLIENT)
-
-    /**
-     * When this method is called, your block should register all the icons it needs with the given IconRegister. This
-     * is the only chance you get to register icons.
-     */
-    public void registerIcons(IconRegister par1IconRegister)
-    {
-        this.iconArray = new Icon[4];
-
-        for (int i = 0; i < this.iconArray.length; ++i)
-        {
-            this.iconArray[i] = par1IconRegister.registerIcon(this.getTextureName() + "_stage_" + i);
-        }
-    }
+		for (int i = 0; i < iconArray.length; ++i)
+			iconArray[i] = par1IconRegister.registerIcon(getTextureName() + "_stage_" + i);
+	}
 }
