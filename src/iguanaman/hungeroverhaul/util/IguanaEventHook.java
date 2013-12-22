@@ -43,6 +43,7 @@ import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.Event.Result;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.EntityInteractEvent;
 import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
 import net.minecraftforge.event.entity.player.UseHoeEvent;
@@ -365,6 +366,16 @@ public class IguanaEventHook {
 		if (IguanaConfig.saplingRegrowthMultiplier > 1)
 		{
 			if (event.rand.nextInt(IguanaConfig.saplingRegrowthMultiplier) != 0) event.setResult(Result.DENY);
+		}
+	}
+	
+	@ForgeSubscribe
+	public void onLivingHurtEvent(LivingHurtEvent event)
+	{
+		if (event.entityLiving instanceof EntityPlayer)
+		{
+			EntityPlayer player = (EntityPlayer)event.entityLiving;
+			player.foodStats.foodTimer = 0;
 		}
 	}
 	
