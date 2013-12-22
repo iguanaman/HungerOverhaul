@@ -1,10 +1,10 @@
 package iguanaman.hungeroverhaul.util;
 
 public class IguanaLog {
-	
+
 	public static void log(String text)
 	{
-        System.out.println("[HungerOverhaul] " + text);
+		System.out.println("[HungerOverhaul] " + text);
 	}
-	
+
 }

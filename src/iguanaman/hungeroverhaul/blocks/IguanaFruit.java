@@ -2,22 +2,18 @@ package iguanaman.hungeroverhaul.blocks;
 
 import iguanaman.hungeroverhaul.IguanaConfig;
 
-import java.util.ArrayList;
 import java.util.Random;
 
-import thaumcraft.api.ThaumcraftApi;
-import thaumcraft.api.aspects.Aspect;
-import thaumcraft.api.aspects.AspectList;
-import cpw.mods.fml.common.Loader;
-
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeDictionary.Type;
-import net.minecraftforge.oredict.OreDictionary;
+import thaumcraft.api.ThaumcraftApi;
+import thaumcraft.api.aspects.Aspect;
+import thaumcraft.api.aspects.AspectList;
 import assets.pamharvestcraft.BlockPamFruit;
+import cpw.mods.fml.common.Loader;
 
 public class IguanaFruit extends BlockPamFruit {
 

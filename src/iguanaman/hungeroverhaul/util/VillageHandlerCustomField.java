@@ -18,7 +18,7 @@ public class VillageHandlerCustomField implements IVillageCreationHandler {
 	@Override
 	public StructureVillagePieceWeight getVillagePieceWeight(Random random,
 			int i) {
-		return (new StructureVillagePieceWeight(ComponentVillageCustomField.class, 12, MathHelper.getRandomIntegerInRange(random, 1 + i, 2 + i)));
+		return new StructureVillagePieceWeight(ComponentVillageCustomField.class, 12, MathHelper.getRandomIntegerInRange(random, 1 + i, 2 + i));
 	}
 
 	@Override

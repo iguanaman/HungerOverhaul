@@ -1,12 +1,10 @@
 package iguanaman.hungeroverhaul;
 
-import assets.pamharvestcraft.HarvestConfigurationHandler;
-import assets.pamharvestcraft.PamHarvestCraft;
 import iguanaman.hungeroverhaul.blocks.IguanaFruit;
-
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
-import cpw.mods.fml.common.Loader;
+import assets.pamharvestcraft.HarvestConfigurationHandler;
+import assets.pamharvestcraft.PamHarvestCraft;
 
 public class ModuleHarvestCraftTrees {
 
@@ -59,5 +57,5 @@ public class ModuleHarvestCraftTrees {
 		PamHarvestCraft.pamWalnut = new IguanaFruit(HarvestConfigurationHandler.pamwalnutID, "walnut").setTreeDrop(PamHarvestCraft.walnutItem.itemID);
 
 	}
-	
+
 }

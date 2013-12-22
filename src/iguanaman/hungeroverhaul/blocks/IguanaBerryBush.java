@@ -4,12 +4,12 @@ import iguanaman.hungeroverhaul.IguanaConfig;
 
 import java.util.Random;
 
+import mods.natura.blocks.crops.BerryBush;
 import net.minecraft.block.Block;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeDictionary.Type;
-import mods.natura.blocks.crops.BerryBush;
 
 public class IguanaBerryBush extends BerryBush {
 	

@@ -4,10 +4,8 @@ import iguanaman.hungeroverhaul.util.IguanaLog;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.WeightedRandom;
 import net.minecraft.util.WeightedRandomItem;

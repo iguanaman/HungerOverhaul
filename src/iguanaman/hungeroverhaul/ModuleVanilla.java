@@ -7,25 +7,17 @@ import iguanaman.hungeroverhaul.blocks.IguanaCropVegetable;
 import iguanaman.hungeroverhaul.blocks.IguanaStem;
 import iguanaman.hungeroverhaul.items.IguanaFood;
 import iguanaman.hungeroverhaul.items.IguanaFoodBowl;
-import iguanaman.hungeroverhaul.items.IguanaFoodPam;
-import iguanaman.hungeroverhaul.items.IguanaFoodPamPotion;
-import iguanaman.hungeroverhaul.items.IguanaSeedFood;
 import iguanaman.hungeroverhaul.items.IguanaReed;
 import iguanaman.hungeroverhaul.items.IguanaSeed;
+import iguanaman.hungeroverhaul.items.IguanaSeedFood;
 import net.minecraft.block.Block;
-import net.minecraft.block.BlockCocoa;
-import net.minecraft.block.BlockTallGrass;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemFood;
 import net.minecraft.potion.Potion;
-import net.minecraft.src.ModLoader;
-import net.minecraftforge.common.BiomeDictionary.Type;
-import assets.pamharvestcraft.HarvestConfigurationHandler;
-import assets.pamharvestcraft.ItemPam;
-import assets.pamharvestcraft.ItemPamSeedFood;
-import assets.pamharvestcraft.PamHarvestCraft;
 import cpw.mods.fml.common.Loader;
+import cpw.mods.fml.common.registry.GameRegistry;
 
 public class ModuleVanilla {
     
@@ -42,21 +34,21 @@ public class ModuleVanilla {
     	//Base
     	Block.blocksList[Block.reed.blockID] = null;
     	reedNew = new IguanaCropReed(83).setHardness(0.0F).setStepSound(Block.soundGrassFootstep).setUnlocalizedName("reeds").setTextureName("reeds");
-        ModLoader.registerBlock(reedNew);
+        GameRegistry.registerBlock(reedNew, ItemBlock.class, null);
         Item.itemsList[Item.reed.itemID] = null;
         Item.reed = new IguanaReed(82, reedNew).setUnlocalizedName("reeds").setTextureName("reeds").setCreativeTab(CreativeTabs.tabMaterials);
         
     	Block.blocksList[Block.carrot.blockID] = null;
     	carrotNew = new IguanaCropVegetable(141, "carrots").setCropItem(Item.carrot.itemID).setSeedItem(Item.carrot.itemID).setUnlocalizedName("carrots").setTextureName("carrots");
-        ModLoader.registerBlock(carrotNew);
+    	GameRegistry.registerBlock(reedNew, ItemBlock.class, null);
         
     	Block.blocksList[Block.potato.blockID] = null;
     	potatoNew = new IguanaCropVegetable(142, "potatoes").setCropItem(Item.potato.itemID).setSeedItem(Item.potato.itemID).setUnlocalizedName("potatoes").setTextureName("potatoes");
-        ModLoader.registerBlock(potatoNew);
+    	GameRegistry.registerBlock(potatoNew, ItemBlock.class, null);
         
     	Block.blocksList[Block.crops.blockID] = null;
     	wheatNew = new IguanaCrop(59, "crops").setCropItem(Item.wheat.itemID).setSeedItem(Item.seeds.itemID).setUnlocalizedName("crops").setTextureName("wheat");
-        ModLoader.registerBlock(wheatNew);
+    	GameRegistry.registerBlock(wheatNew, ItemBlock.class, null);
         Item.itemsList[Item.seeds.itemID] = null;
         Item.seeds = (new IguanaSeed(39, Block.crops.blockID, Block.tilledField.blockID)).setUnlocalizedName("seeds").setTextureName("seeds_wheat");
 
@@ -64,8 +56,8 @@ public class ModuleVanilla {
     	Block.blocksList[Block.melonStem.blockID] = null;
         pumpkinStemNew = (new IguanaStem(104, Block.pumpkin)).setHardness(0.0F).setStepSound(Block.soundWoodFootstep).setUnlocalizedName("pumpkinStem").setTextureName("pumpkin_stem");
         melonStemNew = (new IguanaStem(105, Block.melon)).setHardness(0.0F).setStepSound(Block.soundWoodFootstep).setUnlocalizedName("pumpkinStem").setTextureName("melon_stem");
-        ModLoader.registerBlock(pumpkinStemNew);
-        ModLoader.registerBlock(melonStemNew);
+        GameRegistry.registerBlock(pumpkinStemNew, ItemBlock.class, null);
+        GameRegistry.registerBlock(melonStemNew, ItemBlock.class, null);
         Item.itemsList[Item.pumpkinSeeds.itemID] = null;
         Item.itemsList[Item.melonSeeds.itemID] = null;
         Item.pumpkinSeeds = (new IguanaSeed(105, Block.pumpkinStem.blockID, Block.tilledField.blockID)).setUnlocalizedName("seeds_pumpkin").setTextureName("seeds_pumpkin");
@@ -73,7 +65,7 @@ public class ModuleVanilla {
         
     	Block.blocksList[Block.cocoaPlant.blockID] = null;
     	cocoaNew = new IguanaCocoa(127).setHardness(0.2F).setResistance(5.0F).setStepSound(Block.soundWoodFootstep).setUnlocalizedName("cocoa").setTextureName("cocoa");
-        ModLoader.registerBlock(cocoaNew);
+    	GameRegistry.registerBlock(cocoaNew, ItemBlock.class, null);
 		
         Item.itemsList[Item.appleRed.itemID] = null;
         Item.itemsList[Item.bread.itemID] = null;

@@ -1,12 +1,11 @@
 package iguanaman.hungeroverhaul;
 
+import iguanaman.hungeroverhaul.blocks.IguanaCropPamFlower;
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
 import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
-import iguanaman.hungeroverhaul.blocks.IguanaCropPamFlower;
-import assets.pamweeeflowers.BlockPamFlowerCrop;
 import assets.pamweeeflowers.PamWeeeFlowers;
 import cpw.mods.fml.common.Loader;
 

@@ -4,23 +4,17 @@ import iguanaman.hungeroverhaul.IguanaConfig;
 
 import java.util.Random;
 
-import thaumcraft.api.ThaumcraftApi;
-import thaumcraft.api.aspects.Aspect;
-import thaumcraft.api.aspects.AspectList;
-import cpw.mods.fml.common.Loader;
-
-import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.BiomeGenBase;
-import net.minecraftforge.common.BiomeDictionary;
-import net.minecraftforge.common.BiomeDictionary.Type;
-import assets.pamharvestcraft.TileEntityPamCrop;
+import thaumcraft.api.ThaumcraftApi;
+import thaumcraft.api.aspects.Aspect;
+import thaumcraft.api.aspects.AspectList;
 import assets.pamweeeflowers.BlockPamFlowerCrop;
 import assets.pamweeeflowers.PamWeeeFlowers;
 import assets.pamweeeflowers.TileEntityPamFlowerCrop;
+import cpw.mods.fml.common.Loader;
 
 public class IguanaCropPamFlower extends BlockPamFlowerCrop {
 

@@ -13,11 +13,12 @@ public class IguanaFoodBowl extends IguanaFood {
 	public IguanaFoodBowl(int par1, int par2, float par3, boolean par4) {
 		super(par1, par2, par3, par4, false);
 	}
-	
-    public ItemStack onEaten(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
-    {
-        par3EntityPlayer.inventory.addItemStackToInventory(new ItemStack(Item.bowlEmpty));
-        return super.onEaten(par1ItemStack, par2World, par3EntityPlayer);
-    }
+
+	@Override
+	public ItemStack onEaten(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
+	{
+		par3EntityPlayer.inventory.addItemStackToInventory(new ItemStack(Item.bowlEmpty));
+		return super.onEaten(par1ItemStack, par2World, par3EntityPlayer);
+	}
 
 }
