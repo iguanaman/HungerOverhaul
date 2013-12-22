@@ -112,7 +112,7 @@ public class IguanaFood extends ItemFood {
     public ItemStack onEaten(ItemStack par1ItemStack, World par2World, EntityPlayer par3EntityPlayer)
     {
     	
-    	if (!par2World.isRemote) {
+    	if (!par2World.isRemote && par2World.getGameRules().getGameRuleBooleanValue("naturalRegeneration") && IguanaConfig.healthRegenRatePercentage > 0) {
 	    	if (IguanaConfig.addWellFedEffect == true)
 	    	{
 		    	int duration = 0;
@@ -121,12 +121,10 @@ public class IguanaFood extends ItemFood {
 		        } catch (Exception var5) {
 		        	duration = 0;
 		        }
-		        if (duration > 0)	
+		        if (duration >= 30)	
 		        {
 		        	PotionEffect currentEffect = par3EntityPlayer.getActivePotionEffect(HungerOverhaul.potionWellFed);
-		        	if (currentEffect != null) {
-		        		duration += currentEffect.duration;
-		        	}
+		        	if (currentEffect != null) duration += currentEffect.duration;
 		        	par3EntityPlayer.addPotionEffect(new PotionEffect(HungerOverhaul.potionWellFed.id, duration, 0, true));
 		        }
 	    	}
