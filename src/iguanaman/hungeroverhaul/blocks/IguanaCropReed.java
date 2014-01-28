@@ -30,7 +30,7 @@ public class IguanaCropReed extends BlockReed {
         if (sunlightModifier == 0) return;
     	
         // biome modifier
-        int biomeModifier = IguanaConfig.wrongBiomeRegrowthMultiplier;
+        int biomeModifier = IguanaConfig.wrongBiomeRegrowthMultiplierSugarcane;
     	try {
     		BiomeGenBase biome = par1World.getWorldChunkManager().getBiomeGenAt(par2, par4);
     		for (Type biomeType : this.biomes) {
@@ -43,7 +43,7 @@ public class IguanaCropReed extends BlockReed {
 		} catch (Exception var5) { biomeModifier = 1; }
     	if (biomeModifier == 0) return;
     	
-    	if (par5Random.nextInt(IguanaConfig.cropRegrowthMultiplier * biomeModifier) != 0) return;
+    	if (par5Random.nextInt(IguanaConfig.sugarcaneCropRegrowthMultiplier * biomeModifier) != 0) return;
 
     	super.updateTick(par1World, par2, par3, par4, par5Random);
     }
