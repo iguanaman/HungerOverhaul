@@ -9,28 +9,29 @@ import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.BiomeDictionary.Type;
 import net.minecraftforge.common.EnumPlantType;
-import net.minecraftforge.common.ForgeDirection;
 import net.minecraftforge.common.IPlantable;
+import net.minecraftforge.common.util.ForgeDirection;
 
 public class IguanaSeedFood extends IguanaFood implements IPlantable{
 
-	/** Block ID of the crop this seed food should place. */
-	private int cropId;
+	/** Crop this seed food should place. */
+	private Block crop;
 
 	private EnumPlantType PlantType;
 
-	public IguanaSeedFood(int par1, int par2, float par3, int par4, int par5)
+	public IguanaSeedFood(int par2, float par3, Block par4, int par5)
 	{
-		this(par1 ,par2, par3, par4, par5, false);
+		this(par2, par3, par4, par5, false);
 	}
 
-	public IguanaSeedFood(int par1, int par2, float par3, int par4, int par5, boolean integrate)
+	public IguanaSeedFood(int par2, float par3, Block par4, int par5, boolean integrate)
 	{
-		super(par1, par2, par3, false, integrate);
-		cropId = par4;
+		super(par2, par3, false, integrate);
+		crop = par4;
 		PlantType = EnumPlantType.Crop;
 	}
 
@@ -43,12 +44,11 @@ public class IguanaSeedFood extends IguanaFood implements IPlantable{
 	{
 		if (par7 == 1 && par2EntityPlayer.canPlayerEdit(par4, par5, par6, par7, par1ItemStack) && par2EntityPlayer.canPlayerEdit(par4, par5 + 1, par6, par7, par1ItemStack))
 		{
-			int var11 = par3World.getBlockId(par4, par5, par6);
-			Block soil = Block.blocksList[var11];
+			Block soil = par3World.getBlock(par4, par5, par6);
 
 			if (soil != null && soil.canSustainPlant(par3World, par4, par5, par6, ForgeDirection.UP, this) && par3World.isAirBlock(par4, par5 + 1, par6))
 			{
-				par3World.setBlock(par4, par5 + 1, par6, cropId);
+				par3World.setBlock(par4, par5 + 1, par6, crop);
 				--par1ItemStack.stackSize;
 				return true;
 			}
@@ -64,19 +64,19 @@ public class IguanaSeedFood extends IguanaFood implements IPlantable{
 	}
 
 	@Override
-	public EnumPlantType getPlantType(World world, int x, int y, int z)
+	public EnumPlantType getPlantType(IBlockAccess world, int x, int y, int z)
 	{
 		return PlantType;
 	}
 
 	@Override
-	public int getPlantID(World world, int x, int y, int z)
+	public Block getPlant(IBlockAccess world, int x, int y, int z)
 	{
-		return cropId;
+		return crop;
 	}
 
 	@Override
-	public int getPlantMetadata(World world, int x, int y, int z)
+	public int getPlantMetadata(IBlockAccess world, int x, int y, int z)
 	{
 		return 0;
 	}
@@ -84,14 +84,15 @@ public class IguanaSeedFood extends IguanaFood implements IPlantable{
 	/**
 	 * allows items to add custom lines of information to the mouseover description
 	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
 	{
 		if (IguanaConfig.wrongBiomeRegrowthMultiplier > 1)
 		{
 			Type[] theBiomes = null;
-			if (Block.blocksList[cropId] instanceof IguanaCrop)
-				theBiomes = ((IguanaCrop)Block.blocksList[cropId]).biomes;
+			if (crop instanceof IguanaCrop)
+				theBiomes = ((IguanaCrop)crop).biomes;
 
 			if (theBiomes != null) {
 				String tooltip = "";

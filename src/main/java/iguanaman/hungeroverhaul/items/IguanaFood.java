@@ -18,12 +18,12 @@ import cpw.mods.fml.common.registry.VillagerRegistry;
 
 public class IguanaFood extends ItemFood {
 
-	public IguanaFood(int par1, int par2, float par3, boolean par4) {
-		this(par1, par2, par3, par4, false);
+	public IguanaFood(int par2, float par3, boolean par4) {
+		this(par2, par3, par4, false);
 	}
 
-	public IguanaFood(int par1, int par2, float par3, boolean par4, boolean integrate) {
-		super(par1, par2, par3, par4);
+	public IguanaFood(int par2, float par3, boolean par4, boolean integrate) {
+		super(par2, par3, par4);
 
 		if (IguanaConfig.modifyFoodStackSize == true)
 			if (par2 <= 2) setMaxStackSize(16 * IguanaConfig.foodStackSizeMultiplier);
@@ -34,7 +34,7 @@ public class IguanaFood extends ItemFood {
 
 		if (integrate && par2 > 9) {
 			if (IguanaConfig.addTradesButcher)
-				VillagerRegistry.instance().registerVillageTradeHandler(4, new TradeHandlerFood(itemID, maxStackSize));
+				VillagerRegistry.instance().registerVillageTradeHandler(4, new TradeHandlerFood(this, maxStackSize));
 
 			if (IguanaConfig.addHarvestCraftChestLoot) {
 				ChestGenHooks.getInfo(ChestGenHooks.DUNGEON_CHEST).addItem(new WeightedRandomChestContent(new ItemStack(this), 0, maxStackSize, IguanaConfig.chestLootChance));
@@ -68,19 +68,19 @@ public class IguanaFood extends ItemFood {
 			{
 				int duration = 0;
 				try {
-					duration = (int)Math.pow(healAmount * 100, 1.2);
+					duration = (int)Math.pow(func_150905_g(par1ItemStack) * 100, 1.2);
 				} catch (Exception var5) {}
 
 				if (duration >= 30)
 				{
 					PotionEffect currentEffect = par3EntityPlayer.getActivePotionEffect(HungerOverhaul.potionWellFed);
-					if (currentEffect != null) duration += currentEffect.duration;
+					if (currentEffect != null) duration += currentEffect.getDuration();
 					par3EntityPlayer.addPotionEffect(new PotionEffect(HungerOverhaul.potionWellFed.id, duration, 0, true));
 				}
 			}
 
 		--par1ItemStack.stackSize;
-		par3EntityPlayer.getFoodStats().addStats(getHealAmount(), getSaturationModifier());
+		par3EntityPlayer.getFoodStats().addStats(func_150905_g(par1ItemStack), func_150906_h(par1ItemStack));
 		if (par2World.rand.nextInt(6) == 0)
 			par2World.playSoundAtEntity(par3EntityPlayer, "random.burp", 0.5F, par2World.rand.nextFloat() * 0.1F + 0.9F);
 		onFoodEaten(par1ItemStack, par2World, par3EntityPlayer);
@@ -94,21 +94,21 @@ public class IguanaFood extends ItemFood {
 	@Override
 	public int getMaxItemUseDuration(ItemStack par1ItemStack)
 	{
-		return IguanaConfig.modifyFoodEatingSpeed ? getHealAmount() * 8 + 8 : 32;
+		return IguanaConfig.modifyFoodEatingSpeed ? func_150905_g(par1ItemStack) * 8 + 8 : 32;
 	}
 
 	/**
 	 * allows items to add custom lines of information to the mouseover description
 	 */
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
 	{
 		super.addInformation(par1ItemStack, par2EntityPlayer, par3List, par4);
 
 		if (IguanaConfig.addFoodTooltips) {
-			int hungerFill = getHealAmount();
-			float satiation = getSaturationModifier() * 20 - hungerFill;
+			int hungerFill = func_150905_g(par1ItemStack);
+			float satiation = func_150906_h(par1ItemStack) * 20 - hungerFill;
 
 			String tooltip = "";
 

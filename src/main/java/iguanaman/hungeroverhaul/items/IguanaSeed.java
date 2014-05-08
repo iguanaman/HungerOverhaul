@@ -15,14 +15,15 @@ import net.minecraftforge.common.IPlantable;
 
 public class IguanaSeed extends ItemSeeds implements IPlantable {
 
-	public IguanaSeed(int par1, int par2, int par3)
+	public IguanaSeed(Block par1, Block par2)
 	{
-		super(par1, par2, par3);
+		super(par1, par2);
 	}
 
 	/**
 	 * allows items to add custom lines of information to the mouseover description
 	 */
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
 	{
