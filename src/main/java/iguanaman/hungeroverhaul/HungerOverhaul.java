@@ -6,7 +6,7 @@ import iguanaman.hungeroverhaul.util.IguanaPlayerHandler;
 import iguanaman.hungeroverhaul.util.VillageHandlerCustomField;
 import net.minecraft.command.ICommandManager;
 import net.minecraft.command.ServerCommandManager;
-import net.minecraft.crash.CallableMinecraftVersion;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
@@ -28,13 +28,11 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
-import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.VillagerRegistry;
 
 @Mod(modid="HungerOverhaul", name="Hunger Overhaul", version="1.6.X-2l",
 dependencies = "after:TConstruct;after:pamharvestcraft;after:pamtemperateplants;after:pamrandomplants;after:pamweeeflowers;after:Natura;after:Thaumcraft")
-@NetworkMod(clientSideRequired=true, serverSideRequired=true)
 @ModstatInfo(prefix="hngrovrhl")
 
 public class HungerOverhaul {
@@ -58,13 +56,13 @@ public class HungerOverhaul {
 		potionWellFed = new Potion(IguanaConfig.wellFedId, false, 0).setIconIndex(7, 0).setPotionName("potion.wellfedPotion");
 
 		if (IguanaConfig.removeHoeRecipes) {
-			RecipeRemover.removeAnyRecipe(new ItemStack(Item.hoeWood));
-			RecipeRemover.removeAnyRecipe(new ItemStack(Item.hoeStone));
+			RecipeRemover.removeAnyRecipe(new ItemStack(Items.wooden_hoe));
+			RecipeRemover.removeAnyRecipe(new ItemStack(Items.stone_hoe));
 		}
 
 	}
 
-
+	@SuppressWarnings("unchecked")
 	@EventHandler
 	public void load(FMLInitializationEvent event) {
 		Modstats.instance().getReporter().registerMod(this);
@@ -78,7 +76,7 @@ public class HungerOverhaul {
 		}
 
 		//RECIPES
-		CraftingManager.getInstance().getRecipeList().add(new ShapelessOreRecipe(Item.seeds, Item.wheat));
+		CraftingManager.getInstance().getRecipeList().add(new ShapelessOreRecipe(Items.wheat_seeds, Items.wheat));
 
 		ModuleVanilla.init();
 		if(Loader.isModLoaded("pamharvestcraft")) { ModuleHarvestCraftCrops.init(); ModuleHarvestCraftTrees.init(); }
