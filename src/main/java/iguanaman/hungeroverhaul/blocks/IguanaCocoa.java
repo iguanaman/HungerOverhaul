@@ -12,8 +12,8 @@ import net.minecraftforge.common.BiomeDictionary.Type;
 
 public class IguanaCocoa extends BlockCocoa {
 
-	public IguanaCocoa(int par1) {
-		super(par1);
+	public IguanaCocoa() {
+		super();
 	}
 
 	/**

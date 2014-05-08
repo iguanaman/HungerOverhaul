@@ -12,8 +12,8 @@ import net.minecraftforge.common.BiomeDictionary.Type;
 
 public class IguanaCactus extends BlockCactus {
 
-	public IguanaCactus(int par1) {
-		super(par1);
+	public IguanaCactus() {
+		super();
 	}
 
 	/**

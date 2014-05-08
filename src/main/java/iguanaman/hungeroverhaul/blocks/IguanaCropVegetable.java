@@ -1,23 +1,22 @@
 package iguanaman.hungeroverhaul.blocks;
 
-import net.minecraft.client.renderer.texture.IconRegister;
-import net.minecraft.util.Icon;
+import net.minecraft.client.renderer.texture.IIconRegister;
+import net.minecraft.util.IIcon;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class IguanaCropVegetable extends IguanaCrop {
 
-	public IguanaCropVegetable(int par1, String veg) {
-		super(par1, veg);
+	public IguanaCropVegetable(String veg) {
+		super(veg);
 	}
-
 
 	/**
 	 * From the specified side and block metadata retrieves the blocks texture. Args: side, metadata
 	 */
 	@SideOnly(Side.CLIENT)
 	@Override
-	public Icon getIcon(int par1, int par2)
+	public IIcon getIcon(int par1, int par2)
 	{
 		if (par2 < 7)
 		{
@@ -33,9 +32,9 @@ public class IguanaCropVegetable extends IguanaCrop {
 	 */
 	@SideOnly(Side.CLIENT)
 	@Override
-	public void registerIcons(IconRegister par1IconRegister)
+	public void registerBlockIcons(IIconRegister par1IconRegister)
 	{
-		iconArray = new Icon[4];
+		iconArray = new IIcon[4];
 
 		for (int i = 0; i < iconArray.length; ++i)
 			iconArray[i] = par1IconRegister.registerIcon(getTextureName() + "_stage_" + i);

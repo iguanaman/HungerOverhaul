@@ -18,8 +18,8 @@ public class IguanaStem extends BlockStem {
 
 	public Type[] biomes = new Type[]{Type.JUNGLE, Type.SWAMP};
 
-	public IguanaStem(int par1, Block par2Block) {
-		super(par1, par2Block);
+	public IguanaStem(Block par2Block) {
+		super(par2Block);
 	}
 
 	/**
@@ -51,7 +51,7 @@ public class IguanaStem extends BlockStem {
 	}
 
 	@Override
-	public void fertilizeStem(World par1World, int par2, int par3, int par4)
+	public void func_149874_m(World par1World, int par2, int par3, int par4)
 	{
 		int l = par1World.getBlockMetadata(par2, par3, par4) + 1;
 
@@ -63,7 +63,7 @@ public class IguanaStem extends BlockStem {
 
 
 	@Override
-	public ArrayList<ItemStack> getBlockDropped(World world, int x, int y, int z, int metadata, int fortune)
+	public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int metadata, int fortune)
 	{
 		ArrayList<ItemStack> ret = new ArrayList<ItemStack>();
 		ret.add(new ItemStack(fruitType == pumpkin ? Item.pumpkinSeeds : Item.melonSeeds));

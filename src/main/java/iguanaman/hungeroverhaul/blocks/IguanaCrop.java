@@ -5,10 +5,11 @@ import iguanaman.hungeroverhaul.IguanaConfig;
 import java.util.ArrayList;
 import java.util.Random;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockCrops;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.IIcon;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.BiomeDictionary;
@@ -16,29 +17,20 @@ import net.minecraftforge.common.BiomeDictionary.Type;
 
 public class IguanaCrop extends BlockCrops { // implements IFarmable, ICrop
 
-	int cropID;
+	Item crop;
 	int cropMeta;
-	int seedID;
+	Item seed;
+	protected IIcon[] iconArray;
 
 	public Type[] biomes = new Type[]{Type.FOREST, Type.PLAINS};
 
 	String veg;
 
 
-	public IguanaCrop(int par1, String veg)
+	public IguanaCrop(String veg)
 	{
-		super(par1);
+		super();
 		this.veg = veg;
-	}
-
-	/**
-	 * Gets passed in the blockID of the block below and supposed to return true if its allowed to grow on the type of
-	 * blockID passed in. Args: blockID
-	 */
-	@Override
-	protected boolean canThisPlantGrowOnThisBlockID(int par1)
-	{
-		return par1 == Block.tilledField.blockID;
 	}
 
 	/**
@@ -74,11 +66,11 @@ public class IguanaCrop extends BlockCrops { // implements IFarmable, ICrop
 	 * Apply bonemeal to the crops.
 	 */
 	@Override
-	public void fertilize(World par1World, int par2, int par3, int par4)
+	public void func_149863_m(World par1World, int par2, int par3, int par4)
 	{
-		if (par1World.difficultySetting < 3 || !IguanaConfig.difficultyScalingBoneMeal) {
+		if (par1World.difficultySetting.getDifficultyId() < 3 || !IguanaConfig.difficultyScalingBoneMeal) {
 			int r = 1;
-			if (par1World.difficultySetting < 1 && !IguanaConfig.difficultyScalingBoneMeal) r = par1World.rand.nextInt(3);
+			if (par1World.difficultySetting.getDifficultyId() < 1 && !IguanaConfig.difficultyScalingBoneMeal) r = par1World.rand.nextInt(3);
 			int l = Math.min(par1World.getBlockMetadata(par2, par3, par4) + r, 7);
 			par1World.setBlockMetadataWithNotify(par2, par3, par4, l, 2);
 		}
@@ -87,7 +79,7 @@ public class IguanaCrop extends BlockCrops { // implements IFarmable, ICrop
 
 
 	@Override
-	public ArrayList<ItemStack> getBlockDropped(World world, int x, int y, int z, int metadata, int fortune)
+	public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int metadata, int fortune)
 	{
 		ArrayList<ItemStack> ret = new ArrayList<ItemStack>();
 
@@ -95,12 +87,12 @@ public class IguanaCrop extends BlockCrops { // implements IFarmable, ICrop
 		{
 
 			int produce = IguanaConfig.producePerHarvestMin + world.rand.nextInt(1 + IguanaConfig.producePerHarvestMax - IguanaConfig.producePerHarvestMin);
-			if (produce > 0) ret.add(new ItemStack(getCropItem(), produce, getCropItemMeta()));
+			if (produce > 0) ret.add(new ItemStack(func_149865_P(), produce, getCropItemMeta()));
 
 			int seeds = IguanaConfig.seedsPerHarvestMin + world.rand.nextInt(1 + IguanaConfig.seedsPerHarvestMax - IguanaConfig.seedsPerHarvestMin);
-			if (seeds > 0) ret.add(new ItemStack(getSeedItem(), seeds, 0));
+			if (seeds > 0) ret.add(new ItemStack(func_149866_i(), seeds, 0));
 		} else
-			ret.add(new ItemStack(getSeedItem(), 1, 0));
+			ret.add(new ItemStack(func_149866_i(), 1, 0));
 
 		return ret;
 	}
@@ -109,9 +101,9 @@ public class IguanaCrop extends BlockCrops { // implements IFarmable, ICrop
 	 * Generate a crop produce ItemStack for this crop.
 	 */
 	 @Override
-	 protected int getCropItem()
+	 protected Item func_149865_P()
 	 {
-		 return cropID;
+		 return crop;
 	 }
 
 	 protected int getCropItemMeta()
@@ -119,14 +111,14 @@ public class IguanaCrop extends BlockCrops { // implements IFarmable, ICrop
 		 return cropMeta;
 	 }
 
-	 public IguanaCrop setCropItem(int id)
+	 public IguanaCrop setCropItem(Item item)
 	 {
-		 return this.setCropItem(id, 0);
+		 return this.setCropItem(item, 0);
 	 }
 
-	 protected IguanaCrop setCropItem(int id, int meta)
+	 protected IguanaCrop setCropItem(Item item, int meta)
 	 {
-		 cropID = id;
+		 crop = item;
 		 cropMeta = meta;
 		 return this;
 	 }
@@ -135,14 +127,14 @@ public class IguanaCrop extends BlockCrops { // implements IFarmable, ICrop
 	  * Generate a seed ItemStack for this crop.
 	  */
 	 @Override
-	 protected int getSeedItem()
+	 protected Item func_149866_i()
 	 {
-		 return seedID;
+		 return seed;
 	 }
 
-	 public IguanaCrop setSeedItem(int par1)
+	 public IguanaCrop setSeedItem(Item par1)
 	 {
-		 seedID = par1;
+		 seed = par1;
 		 return this;
 	 }
 

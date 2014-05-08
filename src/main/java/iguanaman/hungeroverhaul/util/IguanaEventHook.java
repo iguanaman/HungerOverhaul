@@ -245,7 +245,7 @@ public class IguanaEventHook {
 
 					if (event.world.rand.nextInt(100) <= seedChance) {
 						ItemStack seed = IguanaConfig.removeTallGrassSeeds ? ModuleGrassSeeds.getGrassSeed(event.world) : ForgeHooks.getGrassSeed(event.world);
-						if (seed != null) block1.dropBlockAsItem(event.world, event.x, event.y, event.z, seed);
+						if (seed != null) block.dropBlockAsItem(event.world, event.x, event.y, event.z, seed);
 					}
 					event.world.setBlock(event.x, event.y, event.z, Blocks.dirt);
 				}

@@ -5,16 +5,18 @@ import java.util.List;
 import java.util.Random;
 
 import net.minecraft.block.Block;
+import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraft.world.gen.structure.StructureBoundingBox;
 import net.minecraft.world.gen.structure.StructureComponent;
+import net.minecraft.world.gen.structure.StructureVillagePieces;
 import net.minecraft.world.gen.structure.StructureVillagePieces.Start;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeDictionary.Type;
 import cpw.mods.fml.common.Loader;
 
-public class ComponentVillageCustomField extends ComponentVillage
+public class ComponentVillageCustomField extends StructureVillagePieces.Village
 {
 	private int averageGroundLevel = -1;
 	private fieldType typeA;
@@ -34,38 +36,40 @@ public class ComponentVillageCustomField extends ComponentVillage
 	/**
 	 * Returns a crop type to be planted on this field.
 	 */
-	private int getRandomStemCrop(Random par1Random)
+	private Block getRandomStemCrop(Random par1Random)
 	{
-		ArrayList<Integer> crops = new ArrayList<Integer>();
-		crops.add(ModuleVanilla.pumpkinStemNew.blockID);
-		crops.add(ModuleVanilla.melonStemNew.blockID);
+		ArrayList<Block> crops = new ArrayList<Block>();
+		crops.add(ModuleVanilla.pumpkinStemNew);
+		crops.add(ModuleVanilla.melonStemNew);
 		return crops.get(par1Random.nextInt(crops.size() - 1));
 	}
 
-	private int getRandomCrop(Random random)
+	private Block getRandomCrop(Random random)
 	{
-		return Loader.isModLoaded("pamharvestcraft") ? getRandomCropHarvestCraft(random) : getRandomCropVanilla(random);
+		return getRandomCropVanilla(random);
+//		return Loader.isModLoaded("pamharvestcraft") ? getRandomCropHarvestCraft(random) : getRandomCropVanilla(random);
 	}
 
-	private int getRandomCropVanilla(Random random)
+	private Block getRandomCropVanilla(Random random)
 	{
-		ArrayList<Integer> crops = new ArrayList<Integer>();
+		ArrayList<Block> crops = new ArrayList<Block>();
 
-		crops.add(ModuleVanilla.wheatNew.blockID);
-		crops.add(ModuleVanilla.carrotNew.blockID);
-		crops.add(ModuleVanilla.potatoNew.blockID);
+		crops.add(ModuleVanilla.wheatNew);
+		crops.add(ModuleVanilla.carrotNew);
+		crops.add(ModuleVanilla.potatoNew);
 
 		return crops.get(random.nextInt(crops.size()));
 	}
 
-	private int getRandomCropHarvestCraft(Random random)
-	{
-		return random.nextInt(60) <= 56 ? PamHarvestCraft.pamCrop.blockID : getRandomCropVanilla(random);
-	}
+//	private int getRandomCropHarvestCraft(Random random)
+//	{
+//		return random.nextInt(60) <= 56 ? PamHarvestCraft.pamCrop.blockID : getRandomCropVanilla(random);
+//	}
 
-	private int getCropMeta(int blockID, Random random)
+	private int getCropMeta(Block block, Random random)
 	{
-		return Loader.isModLoaded("pamharvestcraft") ? getCropMetaHarvestCraft(blockID, random) : getCropMetaVanilla(random);
+		return getCropMetaVanilla(random);
+//		return Loader.isModLoaded("pamharvestcraft") ? getCropMetaHarvestCraft(blockID, random) : getCropMetaVanilla(random);
 	}
 
 	private int getCropMetaVanilla(Random random)
@@ -73,11 +77,12 @@ public class ComponentVillageCustomField extends ComponentVillage
 		return random.nextInt(5);
 	}
 
-	private int getCropMetaHarvestCraft(int blockID, Random random)
-	{
-		return blockID == PamHarvestCraft.pamCrop.blockID ? 0 : getCropMetaVanilla(random);
-	}
+//	private int getCropMetaHarvestCraft(int blockID, Random random)
+//	{
+//		return blockID == PamHarvestCraft.pamCrop.blockID ? 0 : getCropMetaVanilla(random);
+//	}
 
+	@SuppressWarnings("rawtypes")
 	public static ComponentVillageCustomField buildComponent(Start par0Start, List par1List, Random par2Random, int par3, int par4, int par5, int par6, int par7)
 	{
 		StructureBoundingBox var8 = StructureBoundingBox.getComponentToAddBoundingBox(par3, par4, par5, 0, 0, 0, 13, 4, 9, par6);
@@ -126,21 +131,23 @@ public class ComponentVillageCustomField extends ComponentVillage
 		typeA = randomFieldType(biome, par2Random);
 		typeB = randomFieldType(biome, par2Random);
 
-		int blockOutA = Block.tilledField.blockID;
-		int blockInA = Block.waterMoving.blockID;
-		int blockOutB = Block.tilledField.blockID;
-		int blockInB = Block.waterMoving.blockID;
+		Block blockOutA = Blocks.farmland;
+		Block blockInA = Blocks.flowing_water;
+		Block blockOutB = Blocks.farmland;
+		Block blockInB = Blocks.flowing_water;
 
-		int crop1A = 0;
-		int crop2A = 0;
-		int crop1B = 0;
-		int crop2B = 0;
+		Block crop1A;
+		Block crop2A;
+		Block crop1B;
+		Block crop2B;
 
 		if (typeA == fieldType.REED) {
-			if (BiomeDictionary.isBiomeOfType(biome, Type.DESERT)) blockOutA = Block.sand.blockID;
-			else blockOutA = Block.dirt.blockID;
-			crop1A = ModuleVanilla.reedNew.blockID;
-			crop2A = ModuleVanilla.reedNew.blockID;
+			if (BiomeDictionary.isBiomeOfType(biome, Type.DESERT))
+				blockOutA = Blocks.sand;
+			else
+				blockOutA = Blocks.dirt;
+			crop1A = ModuleVanilla.reedNew;
+			crop2A = ModuleVanilla.reedNew;
 		} else if (typeA == fieldType.STEM) {
 			crop1A = getRandomStemCrop(par2Random);
 			crop2A = getRandomStemCrop(par2Random);
@@ -150,10 +157,12 @@ public class ComponentVillageCustomField extends ComponentVillage
 		}
 
 		if (typeB == fieldType.REED) {
-			if (BiomeDictionary.isBiomeOfType(biome, Type.DESERT)) blockOutB = Block.sand.blockID;
-			else blockOutB = Block.dirt.blockID;
-			crop1B = ModuleVanilla.reedNew.blockID;
-			crop2B = ModuleVanilla.reedNew.blockID;
+			if (BiomeDictionary.isBiomeOfType(biome, Type.DESERT))
+				blockOutB = Blocks.sand;
+			else
+				blockOutB = Blocks.dirt;
+			crop1B = ModuleVanilla.reedNew;
+			crop2B = ModuleVanilla.reedNew;
 		} else if (typeA == fieldType.STEM) {
 			crop1B = getRandomStemCrop(par2Random);
 			crop2B = getRandomStemCrop(par2Random);
@@ -167,10 +176,14 @@ public class ComponentVillageCustomField extends ComponentVillage
 		int cropMeta1B = getCropMeta(crop1B, par2Random);
 		int cropMeta2B = getCropMeta(crop2B, par2Random);
 
-		int cropId1A = getCropID(crop1A, par2Random);
-		int cropId2A = getCropID(crop2A, par2Random);
-		int cropId1B = getCropID(crop1B, par2Random);
-		int cropId2B = getCropID(crop2B, par2Random);
+//		int cropId1A = getCropID(crop1A, par2Random);
+//		int cropId2A = getCropID(crop2A, par2Random);
+//		int cropId1B = getCropID(crop1B, par2Random);
+//		int cropId2B = getCropID(crop2B, par2Random);
+		int cropId1A = 0;
+		int cropId2A = 0;
+		int cropId1B = 0;
+		int cropId2B = 0;
 
 		//BASE
 		fillWithBlocks(par1World, par3StructureBoundingBox, 0, 1, 0, 12, 4, 8, 0, 0, false);
@@ -208,7 +221,7 @@ public class ComponentVillageCustomField extends ComponentVillage
 			for (int var5 = 0; var5 < 13; ++var5)
 			{
 				clearCurrentPositionBlocksUpwards(par1World, var5, 4, var4, par3StructureBoundingBox);
-				fillCurrentPositionBlocksDownwards(par1World, Block.dirt.blockID, 0, var5, -1, var4, par3StructureBoundingBox);
+				fillCurrentPositionBlocksDownwards(par1World, 0, 0, var5, -1, var4, par3StructureBoundingBox); //Block.dirt.blockID
 			}
 
 		return true;
@@ -216,39 +229,40 @@ public class ComponentVillageCustomField extends ComponentVillage
 
 	private int getCropID(int blockID, Random rand)
 	{
-		return Loader.isModLoaded("pamharvestcraft") ? getHarvestCraftCropID(blockID, rand) : 0;
+		return 0;
+//		return Loader.isModLoaded("pamharvestcraft") ? getHarvestCraftCropID(blockID, rand) : 0;
 	}
 
-	private int getHarvestCraftCropID(int blockID, Random rand)
+//	private int getHarvestCraftCropID(int blockID, Random rand)
+//	{
+//		return blockID == PamHarvestCraft.pamCrop.blockID ? rand.nextInt(57) : 0;
+//	}
+
+	private void placeCropAtCurrentPosition(World world, Block block, int meta, int cropID, int offsetX, int offsetY, int offsetZ, StructureBoundingBox box)
 	{
-		return blockID == PamHarvestCraft.pamCrop.blockID ? rand.nextInt(57) : 0;
+//		if (Loader.isModLoaded("pamharvestcraft"))
+//			placeHarvestCraftCropAtCurrentPosition(world, blockID, meta, cropID, offsetX, offsetY, offsetZ, box);
+//		else
+		placeBlockAtCurrentPosition(world, block, meta, offsetX, offsetY, offsetZ, box);
 	}
 
-	private void placeCropAtCurrentPosition(World world, int blockID, int meta, int cropID, int offsetX, int offsetY, int offsetZ, StructureBoundingBox box)
-	{
-		if (Loader.isModLoaded("pamharvestcraft"))
-			placeHarvestCraftCropAtCurrentPosition(world, blockID, meta, cropID, offsetX, offsetY, offsetZ, box);
-		else
-			placeBlockAtCurrentPosition(world, blockID, meta, offsetX, offsetY, offsetZ, box);
-	}
-
-	private void placeHarvestCraftCropAtCurrentPosition(World world, int blockID, int meta, int cropID, int offsetX, int offsetY, int offsetZ, StructureBoundingBox box)
-	{
-		int x = getXWithOffset(offsetX, offsetZ);
-		int y = getYWithOffset(offsetY);
-		int z = getZWithOffset(offsetX, offsetZ);
-
-		if (box.isVecInside(x, y, z))
-		{
-			world.setBlock(x, y, z, blockID, meta, 2);
-			if (blockID == PamHarvestCraft.pamCrop.blockID)
-			{
-				TileEntityPamCrop tileentitypamcrop = (TileEntityPamCrop)world.getBlockTileEntity(x, y, z);
-				if(tileentitypamcrop != null) {
-					tileentitypamcrop.setCropID(cropID);
-					tileentitypamcrop.setGrowthStage(world.rand.nextInt(2));
-				}
-			}
-		}
-	}
+//	private void placeHarvestCraftCropAtCurrentPosition(World world, int blockID, int meta, int cropID, int offsetX, int offsetY, int offsetZ, StructureBoundingBox box)
+//	{
+//		int x = getXWithOffset(offsetX, offsetZ);
+//		int y = getYWithOffset(offsetY);
+//		int z = getZWithOffset(offsetX, offsetZ);
+//
+//		if (box.isVecInside(x, y, z))
+//		{
+//			world.setBlock(x, y, z, blockID, meta, 2);
+//			if (blockID == PamHarvestCraft.pamCrop.blockID)
+//			{
+//				TileEntityPamCrop tileentitypamcrop = (TileEntityPamCrop)world.getBlockTileEntity(x, y, z);
+//				if(tileentitypamcrop != null) {
+//					tileentitypamcrop.setCropID(cropID);
+//					tileentitypamcrop.setGrowthStage(world.rand.nextInt(2));
+//				}
+//			}
+//		}
+//	}
 }

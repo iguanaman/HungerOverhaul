@@ -62,7 +62,7 @@ public class HungerOverhaul {
 
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "unused" })
 	@EventHandler
 	public void load(FMLInitializationEvent event) {
 		Modstats.instance().getReporter().registerMod(this);
@@ -70,8 +70,7 @@ public class HungerOverhaul {
 
 		if (IguanaConfig.addCustomVillageField && IguanaConfig.fieldNormalWeight + IguanaConfig.fieldReedWeight + IguanaConfig.fieldStemWeight > 0)
 		{
-			if (new CallableMinecraftVersion(null).minecraftVersion() != "1.6.2")
-				MapGenStructureIO.func_143031_a(ComponentVillageCustomField.class, "IguanaField");
+			MapGenStructureIO.func_143031_a(ComponentVillageCustomField.class, "IguanaField");
 			VillagerRegistry.instance().registerVillageCreationHandler(new VillageHandlerCustomField());
 		}
 
