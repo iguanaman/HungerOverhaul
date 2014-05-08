@@ -1,4 +1,4 @@
-package iguanaman.hungeroverhaul;
+package iguanaman.hungeroverhaul.module;
 
 import iguanaman.hungeroverhaul.blocks.IguanaFruit;
 import net.minecraft.block.Block;

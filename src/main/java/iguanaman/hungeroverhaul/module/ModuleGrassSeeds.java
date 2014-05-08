@@ -1,5 +1,6 @@
-package iguanaman.hungeroverhaul;
+package iguanaman.hungeroverhaul.module;
 
+import iguanaman.hungeroverhaul.IguanaConfig;
 import iguanaman.hungeroverhaul.util.IguanaLog;
 
 import java.lang.reflect.Field;

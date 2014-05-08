@@ -1,6 +1,16 @@
 package iguanaman.hungeroverhaul;
 
 import iguanaman.hungeroverhaul.commands.IguanaCommandHunger;
+import iguanaman.hungeroverhaul.module.ModuleGrassSeeds;
+import iguanaman.hungeroverhaul.module.ModuleHarvestCraftCrops;
+import iguanaman.hungeroverhaul.module.ModuleHarvestCraftTrees;
+import iguanaman.hungeroverhaul.module.ModuleNatura;
+import iguanaman.hungeroverhaul.module.ModuleRandomPlants;
+import iguanaman.hungeroverhaul.module.ModuleTConstruct;
+import iguanaman.hungeroverhaul.module.ModuleTemperatePlants;
+import iguanaman.hungeroverhaul.module.ModuleVanilla;
+import iguanaman.hungeroverhaul.module.ModuleWeeeFlowers;
+import iguanaman.hungeroverhaul.proxy.CommonProxy;
 import iguanaman.hungeroverhaul.util.IguanaEventHook;
 import iguanaman.hungeroverhaul.util.IguanaPlayerHandler;
 import iguanaman.hungeroverhaul.util.VillageHandlerCustomField;
@@ -42,7 +52,7 @@ public class HungerOverhaul {
 	public static HungerOverhaul instance;
 
 	// Says where the client and server 'proxy' code is loaded.
-	@SidedProxy(clientSide="iguanaman.hungeroverhaul.ClientProxy", serverSide="iguanaman.hungeroverhaul.CommonProxy")
+	@SidedProxy(clientSide="iguanaman.hungeroverhaul.proxy.ClientProxy", serverSide="iguanaman.hungeroverhaul.proxy.CommonProxy")
 	public static CommonProxy proxy;
 
 	public static IguanaPlayerHandler playerTracker;

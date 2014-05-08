@@ -1,5 +1,6 @@
-package iguanaman.hungeroverhaul;
+package iguanaman.hungeroverhaul.module;
 
+import iguanaman.hungeroverhaul.IguanaConfig;
 import iguanaman.hungeroverhaul.blocks.IguanaCocoa;
 import iguanaman.hungeroverhaul.blocks.IguanaCrop;
 import iguanaman.hungeroverhaul.blocks.IguanaCropReed;

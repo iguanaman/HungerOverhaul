@@ -1,4 +1,4 @@
-package iguanaman.hungeroverhaul;
+package iguanaman.hungeroverhaul.module;
 
 import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aspects.Aspect;

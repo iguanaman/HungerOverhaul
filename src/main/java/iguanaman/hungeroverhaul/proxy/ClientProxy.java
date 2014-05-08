@@ -1,4 +1,4 @@
-package iguanaman.hungeroverhaul;
+package iguanaman.hungeroverhaul.proxy;
 
 import cpw.mods.fml.common.registry.LanguageRegistry;
 

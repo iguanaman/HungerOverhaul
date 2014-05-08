@@ -1,5 +1,6 @@
-package iguanaman.hungeroverhaul;
+package iguanaman.hungeroverhaul.module;
 
+import iguanaman.hungeroverhaul.RecipeRemover;
 import iguanaman.hungeroverhaul.blocks.IguanaBerryBush;
 import iguanaman.hungeroverhaul.blocks.IguanaBerryBushNether;
 import iguanaman.hungeroverhaul.blocks.IguanaCactus;

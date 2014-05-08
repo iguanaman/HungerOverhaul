@@ -1,5 +1,6 @@
-package iguanaman.hungeroverhaul;
+package iguanaman.hungeroverhaul.module;
 
+import iguanaman.hungeroverhaul.IguanaConfig;
 import iguanaman.hungeroverhaul.blocks.IguanaCropPam;
 import iguanaman.hungeroverhaul.items.IguanaFoodPam;
 import iguanaman.hungeroverhaul.items.IguanaFoodPamPotion;

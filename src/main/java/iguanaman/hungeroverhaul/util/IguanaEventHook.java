@@ -1,7 +1,7 @@
 package iguanaman.hungeroverhaul.util;
 
 import iguanaman.hungeroverhaul.IguanaConfig;
-import iguanaman.hungeroverhaul.ModuleGrassSeeds;
+import iguanaman.hungeroverhaul.module.ModuleGrassSeeds;
 
 import java.util.Random;
 
