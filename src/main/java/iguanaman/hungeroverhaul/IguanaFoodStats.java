@@ -13,12 +13,13 @@ public class IguanaFoodStats extends FoodStats {
 	public int starveTimer = 0;
 
 	public IguanaFoodStats(int hungerLevel) {
-		if (hungerLevel < 20) super.foodLevel = hungerLevel;
+		if (hungerLevel < 20)
+			super.setFoodLevel(hungerLevel);
 	}
 
 	public IguanaFoodStats(FoodStats stats) {
-		super.foodLevel = stats.foodLevel;
-		super.foodSaturationLevel = stats.foodSaturationLevel;
+		super.setFoodLevel(stats.getFoodLevel());
+		super.setFoodSaturationLevel(stats.getSaturationLevel());
 		super.foodExhaustionLevel = stats.foodExhaustionLevel;
 		super.foodTimer = stats.foodTimer;
 		super.prevFoodLevel = stats.prevFoodLevel;
@@ -39,8 +40,8 @@ public class IguanaFoodStats extends FoodStats {
 	{
 		if (IguanaConfig.hungerLossRatePercentage > 0)
 		{
-			foodLevel = Math.min(par1 + foodLevel, 20);
-			foodSaturationLevel = Math.min(foodSaturationLevel + par1 * par2 * 2.0F, foodLevel);
+			setFoodLevel(Math.min(par1 + getFoodLevel(), 20));
+			setFoodSaturationLevel(Math.min(getSaturationLevel() + par1 * par2 * 2.0F, getFoodLevel()));
 		}
 
 		if (IguanaConfig.foodRegensHealth)
@@ -70,7 +71,7 @@ public class IguanaFoodStats extends FoodStats {
 	@Override
 	public void onUpdate(EntityPlayer par1EntityPlayer)
 	{
-		int i = par1EntityPlayer.worldObj.difficultySetting;
+		int i = par1EntityPlayer.worldObj.difficultySetting.getDifficultyId();
 		float hungerLossRate = 3f;
 		float difficultyModifierHealing = 1.0F;
 		if (IguanaConfig.difficultyScaling == true)
@@ -83,20 +84,20 @@ public class IguanaFoodStats extends FoodStats {
 				else if (i == 1) hungerLossRate = 4F;
 		}
 
-		super.prevFoodLevel = super.foodLevel;
+		super.prevFoodLevel = super.getFoodLevel();
 
 		if (IguanaConfig.hungerLossRatePercentage == 0)
 		{
 			super.foodExhaustionLevel = 0.0F;
-			super.foodSaturationLevel = 0.0F;
-			super.foodLevel = 19;
+			super.setFoodSaturationLevel(0.0F);
+			super.setFoodLevel(19);
 		}
 		else if (super.foodExhaustionLevel > hungerLossRate / (IguanaConfig.hungerLossRatePercentage / 100F))
 		{
 			super.foodExhaustionLevel = 0.0F;
 
-			if (super.foodSaturationLevel > 0.0F)
-				super.foodSaturationLevel = Math.max(super.foodSaturationLevel - 1.0F, 0.0F);
+			if (super.getSaturationLevel() > 0.0F)
+				super.setFoodSaturationLevel(Math.max(super.getSaturationLevel() - 1.0F, 0.0F));
 			else
 				super.foodLevel = Math.max(super.foodLevel - 1, 0);
 		}

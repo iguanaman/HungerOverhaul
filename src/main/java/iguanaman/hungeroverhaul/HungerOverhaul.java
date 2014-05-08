@@ -92,7 +92,7 @@ public class HungerOverhaul {
 	public void postInit(FMLPostInitializationEvent event) {
 
 		if (IguanaConfig.removeTallGrassSeeds || IguanaConfig.allSeedsEqual) ModuleGrassSeeds.init();
-		GameRegistry.registerPlayerTracker(new IguanaPlayerHandler());
+		FMLCommonHandler.instance().bus().register(new IguanaPlayerHandler());
 		MinecraftForge.EVENT_BUS.register(new IguanaEventHook());
 
 	}

@@ -2,7 +2,6 @@ package iguanaman.hungeroverhaul.util;
 
 import iguanaman.hungeroverhaul.IguanaConfig;
 import iguanaman.hungeroverhaul.IguanaFoodStats;
-import net.minecraft.entity.player.EntityPlayer;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerLoggedInEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent.PlayerRespawnEvent;
@@ -11,7 +10,7 @@ public class IguanaPlayerHandler {
 
 	@SubscribeEvent
 	public void onPlayerLogin(PlayerLoggedInEvent event) {
-		IguanaFoodStats food = new IguanaFoodStats(event.player.getFoodStats());
+		IguanaFoodStats food = new IguanaFoodStats(event.player.foodStats);
 		food.initPlayer(event.player);
 		event.player.foodStats = food;
 	}
