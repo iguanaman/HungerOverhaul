@@ -8,14 +8,13 @@ import java.util.List;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.WeightedRandom;
-import net.minecraft.util.WeightedRandomItem;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.common.MinecraftForge;
 
 public class ModuleGrassSeeds {
 
-	static class SeedEntry extends WeightedRandomItem
+	static class SeedEntry extends WeightedRandom.Item
 	{
 		public final ItemStack seed;
 		public SeedEntry(ItemStack seed, int weight)
@@ -35,6 +34,7 @@ public class ModuleGrassSeeds {
 
 	public static List<SeedEntry> seedListNew = new ArrayList<SeedEntry>();
 
+	@SuppressWarnings("unchecked")
 	public static void init()
 	{
 

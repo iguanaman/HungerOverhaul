@@ -4,6 +4,7 @@ import java.lang.ref.WeakReference;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemFood;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.FoodStats;
 import cpw.mods.fml.common.Loader;
@@ -55,14 +56,14 @@ public class IguanaFoodStats extends FoodStats {
 	}
 
 	@Override
-	public void addStats(ItemFood par1ItemFood)
+	public void func_151686_a(ItemFood par1ItemFood, ItemStack par2ItemStack)
 	{
 		if (Loader.isModLoaded("pamharvestcraft") && IguanaConfig.modifyFoodValues) {
-			int foodValue = Math.max(Math.round((float)par1ItemFood.getHealAmount() / (float)IguanaConfig.modFoodValueDivider), 1);
+			int foodValue = Math.max(Math.round((float)par1ItemFood.func_150905_g(par2ItemStack) / (float)IguanaConfig.modFoodValueDivider), 1);
 			float saturationValue = Math.max(Math.round(foodValue / 20F), 0F);
 			super.addStats(foodValue, saturationValue);
 		} else
-			super.addStats(par1ItemFood.getHealAmount(), par1ItemFood.getSaturationModifier());
+			super.addStats(par1ItemFood.func_150905_g(par2ItemStack), par1ItemFood.func_150906_h(par2ItemStack));
 	}
 
 	/**
@@ -99,10 +100,10 @@ public class IguanaFoodStats extends FoodStats {
 			if (super.getSaturationLevel() > 0.0F)
 				super.setFoodSaturationLevel(Math.max(super.getSaturationLevel() - 1.0F, 0.0F));
 			else
-				super.foodLevel = Math.max(super.foodLevel - 1, 0);
+				super.setFoodLevel(Math.max(super.getFoodLevel() - 1, 0));
 		}
 
-		if (super.foodLevel >= IguanaConfig.minHungerToHeal && par1EntityPlayer.shouldHeal()
+		if (super.getFoodLevel() >= IguanaConfig.minHungerToHeal && par1EntityPlayer.shouldHeal()
 				&& par1EntityPlayer.worldObj.getGameRules().getGameRuleBooleanValue("naturalRegeneration")
 				&& IguanaConfig.healthRegenRatePercentage > 0)
 		{
@@ -128,13 +129,12 @@ public class IguanaFoodStats extends FoodStats {
 		} else
 			super.foodTimer = 0;
 
-		if (super.foodLevel <= 0 && ++starveTimer >= 80)
+		if (super.getFoodLevel() <= 0 && ++starveTimer >= 80)
 		{
 			par1EntityPlayer.attackEntityFrom(DamageSource.starve, IguanaConfig.damageOnStarve);
 			starveTimer = 0;
-		} else
+		} else {
 			starveTimer = 0;
-
+		}
 	}
-
 }

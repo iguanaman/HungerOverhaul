@@ -11,6 +11,7 @@ import net.minecraft.item.crafting.IRecipe;
 
 public class RecipeRemover {
 
+	@SuppressWarnings("unchecked")
 	public static void removeAnyRecipe (ItemStack resultItem)
 	{
 		List<IRecipe> recipes = CraftingManager.getInstance().getRecipeList();
@@ -22,9 +23,10 @@ public class RecipeRemover {
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public static void removeFurnaceRecipe (int itemID, int metadata)
 	{
-		Map<List<Integer>, ItemStack> recipes = FurnaceRecipes.smelting().getMetaSmeltingList();
+		Map<List<Integer>, ItemStack> recipes = FurnaceRecipes.smelting().getSmeltingList();
 		recipes.remove(Arrays.asList(itemID, metadata));
 	}
 

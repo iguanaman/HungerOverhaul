@@ -7,14 +7,11 @@ import java.util.Random;
 import net.minecraft.block.Block;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
-import net.minecraft.world.gen.structure.ComponentVillage;
-import net.minecraft.world.gen.structure.ComponentVillageStartPiece;
 import net.minecraft.world.gen.structure.StructureBoundingBox;
 import net.minecraft.world.gen.structure.StructureComponent;
+import net.minecraft.world.gen.structure.StructureVillagePieces.Start;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeDictionary.Type;
-import assets.pamharvestcraft.PamHarvestCraft;
-import assets.pamharvestcraft.TileEntityPamCrop;
 import cpw.mods.fml.common.Loader;
 
 public class ComponentVillageCustomField extends ComponentVillage
@@ -25,7 +22,7 @@ public class ComponentVillageCustomField extends ComponentVillage
 
 	public ComponentVillageCustomField() {}
 
-	public ComponentVillageCustomField(ComponentVillageStartPiece par1ComponentVillageStartPiece, int par2, Random par3Random, StructureBoundingBox par4StructureBoundingBox, int par5)
+	public ComponentVillageCustomField(Start par1ComponentVillageStartPiece, int par2, Random par3Random, StructureBoundingBox par4StructureBoundingBox, int par5)
 	{
 		super(par1ComponentVillageStartPiece, par2);
 		coordBaseMode = par5;
@@ -81,10 +78,10 @@ public class ComponentVillageCustomField extends ComponentVillage
 		return blockID == PamHarvestCraft.pamCrop.blockID ? 0 : getCropMetaVanilla(random);
 	}
 
-	public static ComponentVillageCustomField buildComponent(ComponentVillageStartPiece par0ComponentVillageStartPiece, List par1List, Random par2Random, int par3, int par4, int par5, int par6, int par7)
+	public static ComponentVillageCustomField buildComponent(Start par0Start, List par1List, Random par2Random, int par3, int par4, int par5, int par6, int par7)
 	{
 		StructureBoundingBox var8 = StructureBoundingBox.getComponentToAddBoundingBox(par3, par4, par5, 0, 0, 0, 13, 4, 9, par6);
-		return canVillageGoDeeper(var8) && StructureComponent.findIntersecting(par1List, var8) == null ? new ComponentVillageCustomField(par0ComponentVillageStartPiece, par7, par2Random, var8, par6) : null;
+		return canVillageGoDeeper(var8) && StructureComponent.findIntersecting(par1List, var8) == null ? new ComponentVillageCustomField(par0Start, par7, par2Random, var8, par6) : null;
 	}
 
 	private fieldType randomFieldType(BiomeGenBase biome, Random random) {

@@ -32,11 +32,9 @@ public class ModuleVanilla {
 	public static void init() {
 
 		// BLOCKS
-		Block.blocksList[Block.reed.blockID] = null;
-		reedNew = new IguanaCropReed(83).setHardness(0.0F).setStepSound(Block.soundGrassFootstep).setUnlocalizedName("reeds").setTextureName("reeds");
-		GameRegistry.registerBlock(reedNew, ItemBlock.class, null);
-		Item.itemsList[Item.reed.itemID] = null;
-		Item.reed = new IguanaReed(82, reedNew).setUnlocalizedName("reeds").setTextureName("reeds").setCreativeTab(CreativeTabs.tabMaterials);
+		Block.blockRegistry.addObject(83, "reeds", new IguanaCropReed().setHardness(0.0F).setStepSound(Block.soundTypeGrass).setBlockName("reeds").setBlockTextureName("reeds"));
+//		GameRegistry.registerBlock(reedNew, ItemBlock.class, null);
+		Item.itemRegistry.addObject(338, "reeds", new IguanaReed(reedNew).setUnlocalizedName("reeds").setTextureName("reeds").setCreativeTab(CreativeTabs.tabMaterials));
 
 		Block.blocksList[Block.carrot.blockID] = null;
 		carrotNew = new IguanaCropVegetable(141, "carrots").setCropItem(Item.carrot.itemID).setSeedItem(Item.carrot.itemID).setUnlocalizedName("carrots").setTextureName("carrots");

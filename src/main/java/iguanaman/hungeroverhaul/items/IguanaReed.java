@@ -13,14 +13,15 @@ import net.minecraftforge.common.BiomeDictionary.Type;
 
 public class IguanaReed extends ItemReed {
 
-	public IguanaReed(int par1, Block par2Block) {
-		super(par1, par2Block);
+	public IguanaReed(Block par1Block) {
+		super(par1Block);
 		// TODO Auto-generated constructor stub
 	}
 
 	/**
 	 * allows items to add custom lines of information to the mouseover description
 	 */
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
 	{

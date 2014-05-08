@@ -14,6 +14,8 @@ import net.minecraft.entity.passive.EntityChicken;
 import net.minecraft.entity.passive.EntityCow;
 import net.minecraft.entity.passive.EntityMooshroom;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBucket;
 import net.minecraft.item.ItemStack;
@@ -23,19 +25,19 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.event.Event.Result;
-import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.EntityInteractEvent;
 import net.minecraftforge.event.entity.player.UseHoeEvent;
 import net.minecraftforge.event.terraingen.SaplingGrowTreeEvent;
+import cpw.mods.fml.common.eventhandler.Event.Result;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 public class IguanaEventHook {
 
-	@ForgeSubscribe
+	@SubscribeEvent
 	public void onLivingUpdate(LivingUpdateEvent event) {
 
 		Random rand = new Random();
@@ -91,7 +93,7 @@ public class IguanaEventHook {
 				{
 					EntityPlayer player = (EntityPlayer)event.entityLiving;
 					creative = player.capabilities.isCreativeMode;
-					foodLevel = player.foodStats.foodLevel;
+					foodLevel = player.foodStats.getFoodLevel();
 					isPlayer = true;
 				} else
 					healthPercent /= 2;
@@ -107,7 +109,7 @@ public class IguanaEventHook {
 					int difficultyModifierEffects = 2;
 					if (IguanaConfig.difficultyScaling && IguanaConfig.difficultyScalingEffects)
 					{
-						difficultyModifierEffects = event.entityLiving.worldObj.difficultySetting;
+						difficultyModifierEffects = event.entityLiving.worldObj.difficultySetting.getDifficultyId();
 
 						if (!(event.entityLiving instanceof EntityPlayer))
 							difficultyModifierEffects = difficultyModifierEffects * -1 + 3;
@@ -224,28 +226,28 @@ public class IguanaEventHook {
 	}
 	 */
 
-	@ForgeSubscribe
+	@SubscribeEvent
 	public void onUseHoe(UseHoeEvent event) {
 		if (IguanaConfig.modifyHoeUse) {
-			int blockID = event.world.getBlockId(event.x, event.y, event.z);
+			Block block = event.world.getBlock(event.x, event.y, event.z);
 
-			if ((blockID == Block.dirt.blockID || blockID == Block.grass.blockID) && isWaterNearby(event.world, event.x, event.y, event.z) ) {
+			if ((block == Blocks.dirt || block == Blocks.grass) && isWaterNearby(event.world, event.x, event.y, event.z) ) {
 				if (IguanaConfig.hoeToolDamageMultiplier > 1)
 					event.current.damageItem(IguanaConfig.hoeToolDamageMultiplier - 1, event.entityPlayer);
-			} else if (blockID == Block.grass.blockID && ! isWaterNearby(event.world, event.x, event.y, event.z)) {
+			} else if (block == Blocks.grass && ! isWaterNearby(event.world, event.x, event.y, event.z)) {
 
-				Block block = Block.tilledField;
-				event.world.playSoundEffect(event.x + 0.5F, event.y + 0.5F, event.z + 0.5F, block.stepSound.getStepSound(), (block.stepSound.getVolume() + 1.0F) / 2.0F, block.stepSound.getPitch() * 0.8F);
+				Block block1 = Blocks.farmland;
+				event.world.playSoundEffect(event.x + 0.5F, event.y + 0.5F, event.z + 0.5F, block1.stepSound.soundName, (block1.stepSound.getVolume() + 1.0F) / 2.0F, block1.stepSound.getPitch() * 0.8F);
 				if (!event.world.isRemote) {
 					int seedChance = IguanaConfig.seedChance;
-					if (event.world.difficultySetting < 2) seedChance *= 2;
-					else if (event.world.difficultySetting == 3) seedChance = Math.max(Math.round(seedChance / 2f), 1);
+					if (event.world.difficultySetting.getDifficultyId() < 2) seedChance *= 2;
+					else if (event.world.difficultySetting.getDifficultyId() == 3) seedChance = Math.max(Math.round(seedChance / 2f), 1);
 
 					if (event.world.rand.nextInt(100) <= seedChance) {
 						ItemStack seed = IguanaConfig.removeTallGrassSeeds ? ModuleGrassSeeds.getGrassSeed(event.world) : ForgeHooks.getGrassSeed(event.world);
-						if (seed != null) Block.blocksList[blockID].dropBlockAsItem_do(event.world, event.x, event.y, event.z, seed);
+						if (seed != null) block1.dropBlockAsItem(event.world, event.x, event.y, event.z, seed);
 					}
-					event.world.setBlock(event.x, event.y, event.z, Block.dirt.blockID);
+					event.world.setBlock(event.x, event.y, event.z, Blocks.dirt);
 				}
 
 				if (IguanaConfig.hoeToolDamageMultiplier > 1)
@@ -257,7 +259,7 @@ public class IguanaEventHook {
 	}
 
 	@SideOnly(Side.CLIENT)
-	@ForgeSubscribe
+	@SubscribeEvent
 	public void onRenderGameOverlay(RenderGameOverlayEvent.Text event) {
 		if (IguanaConfig.addGuiText)
 		{
@@ -296,7 +298,7 @@ public class IguanaEventHook {
 		}
 	}
 
-	@ForgeSubscribe
+	@SubscribeEvent
 	public void onEntityInteractEvent(EntityInteractEvent event)
 	{
 		if (IguanaConfig.milkedTimeout > 0 && event.entityPlayer != null && event.target != null && event.target instanceof EntityCow)
@@ -307,15 +309,14 @@ public class IguanaEventHook {
 			if (equipped != null && equipped.getItem() != null)
 			{
 				Item item = equipped.getItem();
-				if (item instanceof ItemBucket && ((ItemBucket)item).isFull == 0
-						|| cow instanceof EntityMooshroom && item.itemID == Item.bowlEmpty.itemID)
+				if (item instanceof ItemBucket && ((ItemBucket)item).isFull == Blocks.air || cow instanceof EntityMooshroom && item == Items.bowl)
 				{
 					NBTTagCompound tags = cow.getEntityData();
 					if (tags.hasKey("Milked"))
 					{
 						event.setCanceled(true);
 						if (!player.worldObj.isRemote)
-							cow.playSound(cow.getHurtSound(), cow.getSoundVolume(), cow.getSoundPitch());
+							cow.playSound("mob.cow.hurt", 0.4F, (event.entity.worldObj.rand.nextFloat() - event.entity.worldObj.rand.nextFloat()) * 0.2F + 1.0F);
 					} else
 						tags.setInteger("Milked", IguanaConfig.milkedTimeout * 60);
 				}
@@ -323,14 +324,14 @@ public class IguanaEventHook {
 		}
 	}
 
-	@ForgeSubscribe
+	@SubscribeEvent
 	public void onSaplingGrowTreeEvent(SaplingGrowTreeEvent event)
 	{
 		if (IguanaConfig.saplingRegrowthMultiplier > 1)
 			if (event.rand.nextInt(IguanaConfig.saplingRegrowthMultiplier) != 0) event.setResult(Result.DENY);
 	}
 
-	@ForgeSubscribe
+	@SubscribeEvent
 	public void onLivingHurtEvent(LivingHurtEvent event)
 	{
 		if (event.entityLiving instanceof EntityPlayer)
@@ -348,7 +349,7 @@ public class IguanaEventHook {
 		for (int l = par2 - 4; l <= par2 + 4; ++l)
 			for (int i1 = par3; i1 <= par3 + 1; ++i1)
 				for (int j1 = par4 - 4; j1 <= par4 + 4; ++j1)
-					if (par1World.getBlockMaterial(l, i1, j1) == Material.water)
+					if (par1World.getBlock(l, i1, j1).getMaterial() == Material.water)
 						return true;
 
 		return false;

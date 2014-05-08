@@ -14,8 +14,8 @@ public class IguanaCropReed extends BlockReed {
 
 	public static Type[] biomes = new Type[]{Type.JUNGLE, Type.SWAMP};
 
-	public IguanaCropReed(int par1) {
-		super(par1);
+	public IguanaCropReed() {
+		super();
 		disableStats();
 	}
 
@@ -43,7 +43,7 @@ public class IguanaCropReed extends BlockReed {
 		} catch (Exception var5) { biomeModifier = 1; }
     	if (biomeModifier == 0) return;
     	
-    	if (par5Random.nextInt(IguanaConfig.sugarcaneCropRegrowthMultiplier * biomeModifier) != 0) return;
+    	if (par5Random.nextInt(IguanaConfig.sugarcaneRegrowthMultiplier * biomeModifier) != 0) return;
 
 
 }
