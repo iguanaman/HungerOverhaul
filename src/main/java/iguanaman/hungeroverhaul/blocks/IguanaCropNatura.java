@@ -8,6 +8,7 @@ import java.util.Random;
 import mods.natura.Natura;
 import mods.natura.blocks.crops.CropBlock;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
@@ -18,8 +19,8 @@ public class IguanaCropNatura extends CropBlock {
 
 	public Type[] biomes = new Type[]{Type.FOREST, Type.PLAINS};
 
-	public IguanaCropNatura(int id) {
-		super(id);
+	public IguanaCropNatura() {
+		super();
 	}
 
 	/**
@@ -68,23 +69,23 @@ public class IguanaCropNatura extends CropBlock {
 	 * Apply bonemeal to the crops.
 	 */
 	@Override
-	public void fertilize (World world, int x, int y, int z)
+	public void func_149863_m(World world, int x, int y, int z)
 	{
-		if (world.difficultySetting < 3 || IguanaConfig.difficultyScalingBoneMeal == false)
+		if (world.difficultySetting.getDifficultyId() < 3 || IguanaConfig.difficultyScalingBoneMeal == false)
 		{
 			int meta = world.getBlockMetadata(x, y, z);
 			if (meta != 3 && meta != 8)
 				if (meta < 3)
 				{
 					int output = Natura.random.nextInt(3) + 1 + meta;
-					if (world.difficultySetting == 2 && IguanaConfig.difficultyScalingBoneMeal) output = 1 + meta;
+					if (world.difficultySetting.getDifficultyId() == 2 && IguanaConfig.difficultyScalingBoneMeal) output = 1 + meta;
 					if (output > 3) output = 3;
 					world.setBlockMetadataWithNotify(x, y, z, output, 3);
 				}
 				else
 				{
 					int output = Natura.random.nextInt(4) + 1 + meta;
-					if (world.difficultySetting == 2 && IguanaConfig.difficultyScalingBoneMeal) output = 1 + meta;
+					if (world.difficultySetting.getDifficultyId() == 2 && IguanaConfig.difficultyScalingBoneMeal) output = 1 + meta;
 					if (output > 8) output = 8;
 					world.setBlockMetadataWithNotify(x, y, z, output, 3);
 				}
@@ -93,7 +94,7 @@ public class IguanaCropNatura extends CropBlock {
 
 
 	@Override
-	public ArrayList<ItemStack> getBlockDropped (World world, int x, int y, int z, int metadata, int fortune)
+	public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int metadata, int fortune)
 	{
 		ArrayList<ItemStack> ret = new ArrayList<ItemStack>();
 
@@ -102,8 +103,9 @@ public class IguanaCropNatura extends CropBlock {
 			int count = IguanaConfig.producePerHarvestMin + world.rand.nextInt(IguanaConfig.producePerHarvestMax - IguanaConfig.producePerHarvestMin);
 			for (int i = 0; i < count; i++)
 			{
-				int id = idDropped(metadata, world.rand, 0);
-				if (id > 0) ret.add(new ItemStack(id, 1, damageDropped(metadata)));
+				Item item = getItemDropped(metadata, world.rand, 0);
+				if (item != null)
+					ret.add(new ItemStack(item, 1, damageDropped(metadata)));
 			}
 		} else
 			ret.add(new ItemStack(this.getSeedItem(metadata), 1, seedDamageDropped(metadata)));

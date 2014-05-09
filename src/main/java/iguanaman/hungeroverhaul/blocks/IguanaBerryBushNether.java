@@ -13,8 +13,8 @@ import net.minecraftforge.common.BiomeDictionary.Type;
 
 public class IguanaBerryBushNether extends NetherBerryBush {
 
-	public IguanaBerryBushNether(int id) {
-		super(id);
+	public IguanaBerryBushNether() {
+		super();
 	}
 
 	/* Bush growth */
@@ -39,7 +39,7 @@ public class IguanaBerryBushNether extends NetherBerryBush {
 	@Override
 	public boolean boneFertilize (World world, int x, int y, int z, Random random)
 	{
-		if (world.difficultySetting < 3 || !IguanaConfig.difficultyScalingBoneMeal)
+		if (world.difficultySetting.getDifficultyId() < 3 || !IguanaConfig.difficultyScalingBoneMeal)
 		{
 			int meta = world.getBlockMetadata(x, y, z);
 			if (meta / 4 < 2)
@@ -48,20 +48,19 @@ public class IguanaBerryBushNether extends NetherBerryBush {
 				{
 					int setMeta = random.nextInt(2) + 1 + meta / 4;
 					if (setMeta > 2) setMeta = 2;
-					if (world.difficultySetting == 2 && IguanaConfig.difficultyScalingBoneMeal) setMeta = 1;
+					if (world.difficultySetting.getDifficultyId() == 2 && IguanaConfig.difficultyScalingBoneMeal) setMeta = 1;
 					world.setBlockMetadataWithNotify(x, y, z, meta % 4 + setMeta * 4, 4);
 				}
 				return true;
 			}
 
-			Block block = Block.blocksList[world.getBlockId(x, y + 1, z)];
-			if (block == null || block.isAirBlock(world, x, y + 1, z))
+			Block block = world.getBlock(x, y + 1, z);
+			if (block == null || block.isAir(world, x, y + 1, z))
 			{
-				if (random.nextInt(6) == 0) world.setBlock(x, y + 1, z, blockID, meta % 4, 3);
+				if (random.nextInt(6) == 0) world.setBlock(x, y + 1, z, block, meta % 4, 3);
 				return true;
 			}
 		}
-
 		return false;
 	}
 }

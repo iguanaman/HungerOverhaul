@@ -15,8 +15,8 @@ public class IguanaBerryBush extends BerryBush {
 
 	public Type[] biomes = new Type[]{Type.FOREST, Type.PLAINS};
 
-	public IguanaBerryBush(int id) {
-		super(id);
+	public IguanaBerryBush() {
+		super();
 	}
 
 	/* Bush growth */
@@ -50,7 +50,7 @@ public class IguanaBerryBush extends BerryBush {
 	@Override
 	public boolean boneFertilize (World world, int x, int y, int z, Random random)
 	{
-		if (world.difficultySetting < 3 || IguanaConfig.difficultyScalingBoneMeal == false)
+		if (world.difficultySetting.getDifficultyId() < 3 || IguanaConfig.difficultyScalingBoneMeal == false)
 		{
 			int meta = world.getBlockMetadata(x, y, z);
 
@@ -58,20 +58,18 @@ public class IguanaBerryBush extends BerryBush {
 			{
 				int setMeta = random.nextInt(2) + 1 + meta / 4;
 				if (setMeta > 2) setMeta = 2;
-				if (world.difficultySetting == 2 && IguanaConfig.difficultyScalingBoneMeal) setMeta = 1;
+				if (world.difficultySetting.getDifficultyId() == 2 && IguanaConfig.difficultyScalingBoneMeal) setMeta = 1;
 				world.setBlockMetadataWithNotify(x, y, z, meta % 4 + setMeta * 4, 4);
 				return true;
 			}
 
-			Block block = Block.blocksList[world.getBlockId(x, y + 1, z)];
-			if (block == null || block.isAirBlock(world, x, y + 1, z))
+			Block block = world.getBlock(x, y + 1, z);
+			if (block == null || block.isAir(world, x, y + 1, z))
 			{
-				if (random.nextInt(3) == 0) world.setBlock(x, y + 1, z, blockID, meta % 4, 3);
+				if (random.nextInt(3) == 0) world.setBlock(x, y + 1, z, block, meta % 4, 3);
 				return true;
 			}
 		}
-
 		return false;
 	}
-
 }

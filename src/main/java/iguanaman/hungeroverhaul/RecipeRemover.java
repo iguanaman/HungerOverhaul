@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.FurnaceRecipes;
@@ -24,10 +25,10 @@ public class RecipeRemover {
 	}
 
 	@SuppressWarnings("unchecked")
-	public static void removeFurnaceRecipe (int itemID, int metadata)
+	public static void removeFurnaceRecipe (Item item, int metadata)
 	{
-		Map<List<Integer>, ItemStack> recipes = FurnaceRecipes.smelting().getSmeltingList();
-		recipes.remove(Arrays.asList(itemID, metadata));
+		Map<ItemStack, ItemStack> recipes = FurnaceRecipes.smelting().getSmeltingList();
+		recipes.remove(Arrays.asList(item, metadata));
 	}
 
 }

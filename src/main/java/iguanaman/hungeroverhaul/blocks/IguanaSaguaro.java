@@ -12,8 +12,8 @@ import net.minecraftforge.common.BiomeDictionary.Type;
 
 public class IguanaSaguaro extends SaguaroBlock {
 
-	public IguanaSaguaro(int id) {
-		super(id);
+	public IguanaSaguaro() {
+		super();
 	}
 
 	/**

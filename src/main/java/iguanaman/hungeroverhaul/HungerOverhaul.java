@@ -42,7 +42,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.VillagerRegistry;
 
 @Mod(modid="HungerOverhaul", name="Hunger Overhaul", version="1.6.X-2l",
-dependencies = "after:TConstruct;after:pamharvestcraft;after:pamtemperateplants;after:pamrandomplants;after:pamweeeflowers;after:Natura;after:Thaumcraft")
+dependencies = "after:TConstruct;after:pamharvestcraft;after:temperateplants;after:randomplants;after:weeeflowers;after:Natura")
 @ModstatInfo(prefix="hngrovrhl")
 
 public class HungerOverhaul {
@@ -89,9 +89,9 @@ public class HungerOverhaul {
 
 		ModuleVanilla.init();
 		if(Loader.isModLoaded("pamharvestcraft")) { ModuleHarvestCraftCrops.init(); ModuleHarvestCraftTrees.init(); }
-		if(Loader.isModLoaded("pamtemperateplants")) ModuleTemperatePlants.init();
-		if(Loader.isModLoaded("pamrandomplants")) ModuleRandomPlants.init();
-		if(Loader.isModLoaded("pamweeeflowers")) ModuleWeeeFlowers.init();
+		if(Loader.isModLoaded("temperateplants")) ModuleTemperatePlants.init();
+		if(Loader.isModLoaded("randomplants")) ModuleRandomPlants.init();
+		if(Loader.isModLoaded("weeeflowers")) ModuleWeeeFlowers.init();
 		if(Loader.isModLoaded("TConstruct")) ModuleTConstruct.init();
 		if(Loader.isModLoaded("Natura")) ModuleNatura.init();
 

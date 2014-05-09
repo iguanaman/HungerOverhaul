@@ -7,7 +7,8 @@ import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockStem;
-import net.minecraft.item.Item;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
@@ -66,7 +67,7 @@ public class IguanaStem extends BlockStem {
 	public ArrayList<ItemStack> getDrops(World world, int x, int y, int z, int metadata, int fortune)
 	{
 		ArrayList<ItemStack> ret = new ArrayList<ItemStack>();
-		ret.add(new ItemStack(fruitType == pumpkin ? Item.pumpkinSeeds : Item.melonSeeds));
+		ret.add(new ItemStack(field_149877_a == Blocks.pumpkin ? Items.pumpkin_seeds : Items.melon_seeds));
 		return ret;
 	}
 }

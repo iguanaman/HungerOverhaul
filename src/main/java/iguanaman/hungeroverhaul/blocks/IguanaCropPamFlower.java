@@ -11,15 +11,16 @@ import net.minecraft.world.World;
 import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
-import assets.pamweeeflowers.BlockPamFlowerCrop;
-import assets.pamweeeflowers.PamWeeeFlowers;
-import assets.pamweeeflowers.TileEntityPamFlowerCrop;
+
+import com.pam.weeeflowers.BlockPamFlowerCrop;
+import com.pam.weeeflowers.weeeflowers;
+
 import cpw.mods.fml.common.Loader;
 
 public class IguanaCropPamFlower extends BlockPamFlowerCrop {
 
-	public IguanaCropPamFlower(int par1) {
-		super(par1);
+	public IguanaCropPamFlower() {
+		super();
 
 		if (Loader.isModLoaded("Thaumcraft"))
 			if (!ThaumcraftApi.exists(blockID, -1))
@@ -46,7 +47,7 @@ public class IguanaCropPamFlower extends BlockPamFlowerCrop {
 
 		if(!par1World.isRemote) {
 			Random random = new Random();
-			TileEntityPamFlowerCrop tileentitypamflowercrop = (TileEntityPamFlowerCrop)par1World.getBlockTileEntity(par2, par3, par4);
+			TileEntityPamFlowerCrop tileentitypamflowercrop = (TileEntityPamFlowerCrop)par1World.getTileEntity(par2, par3, par4);
 			if(tileentitypamflowercrop != null) {
 				int cropID = tileentitypamflowercrop.getCropID();
 				int stage = tileentitypamflowercrop.getGrowthStage();
@@ -54,7 +55,7 @@ public class IguanaCropPamFlower extends BlockPamFlowerCrop {
 					int cropDrops = random.nextInt(2) + 1;
 					if(stage == 2) {
 						tileentitypamflowercrop.setGrowthStage(0);
-						par1World.spawnEntityInWorld(new EntityItem(par1World, par2 + 0.5D, par3 + 0.7D, par4 + 0.5D, new ItemStack(PamWeeeFlowers.pamFlower, cropDrops, cropID)));
+						par1World.spawnEntityInWorld(new EntityItem(par1World, par2 + 0.5D, par3 + 0.7D, par4 + 0.5D, new ItemStack(weeeflowers.pamFlower, cropDrops, cropID)));
 					}
 					return true;
 				}
@@ -62,6 +63,4 @@ public class IguanaCropPamFlower extends BlockPamFlowerCrop {
 		}
 		return false;
 	}
-
-
 }

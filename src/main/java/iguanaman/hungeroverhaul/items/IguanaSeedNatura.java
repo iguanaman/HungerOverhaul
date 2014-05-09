@@ -13,21 +13,22 @@ import net.minecraftforge.common.BiomeDictionary.Type;
 
 public class IguanaSeedNatura extends NaturaSeeds {
 
-	public IguanaSeedNatura(int id, int cropID, int soilID) {
-		super(id, cropID, soilID);
+	public IguanaSeedNatura(Block crop, Block soil) {
+		super(crop, soil);
 	}
 
 	/**
 	 * allows items to add custom lines of information to the mouseover description
 	 */
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
 	public void addInformation(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, List par3List, boolean par4)
 	{
 		if (IguanaConfig.wrongBiomeRegrowthMultiplier > 1)
 		{
 			Type[] theBiomes = null;
-			if (Block.blocksList[blockType] instanceof IguanaCropNatura)
-				theBiomes = ((IguanaCropNatura)Block.blocksList[blockType]).biomes;
+			if (blockType instanceof IguanaCropNatura)
+				theBiomes = ((IguanaCropNatura)blockType).biomes;
 
 			if (theBiomes != null) {
 				String tooltip = "";

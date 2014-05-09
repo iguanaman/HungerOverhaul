@@ -2,9 +2,9 @@ package iguanaman.hungeroverhaul.module;
 
 import iguanaman.hungeroverhaul.IguanaConfig;
 import net.minecraft.block.Block;
-import net.minecraft.item.Item;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
-import tconstruct.common.TContent;
+import tconstruct.common.TRepo;
 import tconstruct.library.crafting.DryingRackRecipes;
 import tconstruct.util.config.PHConstruct;
 import cpw.mods.fml.common.Loader;
@@ -35,11 +35,11 @@ public class ModuleTConstruct {
 
 			int dryingTime = 20 * 60 * 20; //in minutes
 
-			DryingRackRecipes.addDryingRecipe(Item.beefRaw, dryingTime, new ItemStack(TContent.jerky, 1, 0));
-			DryingRackRecipes.addDryingRecipe(Item.chickenRaw, dryingTime, new ItemStack(TContent.jerky, 1, 1));
-			DryingRackRecipes.addDryingRecipe(Item.porkRaw, dryingTime, new ItemStack(TContent.jerky, 1, 2));
-			DryingRackRecipes.addDryingRecipe(Item.fishRaw, dryingTime, new ItemStack(TContent.jerky, 1, 4));
-			DryingRackRecipes.addDryingRecipe(Item.rottenFlesh, dryingTime, new ItemStack(TContent.jerky, 1, 5));
+			DryingRackRecipes.addDryingRecipe(Items.beef, dryingTime, new ItemStack(TRepo.jerky, 1, 0));
+			DryingRackRecipes.addDryingRecipe(Items.chicken, dryingTime, new ItemStack(TRepo.jerky, 1, 1));
+			DryingRackRecipes.addDryingRecipe(Items.porkchop, dryingTime, new ItemStack(TRepo.jerky, 1, 2));
+			DryingRackRecipes.addDryingRecipe(Items.fish, dryingTime, new ItemStack(TRepo.jerky, 1, 4));
+			DryingRackRecipes.addDryingRecipe(Items.rotten_flesh, dryingTime, new ItemStack(TRepo.jerky, 1, 5));
 		}
 
 	}

@@ -39,8 +39,8 @@ public class ModuleNatura {
 
 		RecipeRemover.removeAnyRecipe(new ItemStack(NContent.plantItem, 1, 1));
 		RecipeRemover.removeAnyRecipe(new ItemStack(NContent.plantItem, 1, 2));
-		RecipeRemover.removeFurnaceRecipe(NContent.plantItem.itemID, 1);
-		RecipeRemover.removeFurnaceRecipe(NContent.plantItem.itemID, 2);
+		RecipeRemover.removeFurnaceRecipe(NContent.plantItem, 1);
+		RecipeRemover.removeFurnaceRecipe(NContent.plantItem, 2);
 
 	}
 
