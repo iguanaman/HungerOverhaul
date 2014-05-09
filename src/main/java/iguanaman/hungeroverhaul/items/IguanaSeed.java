@@ -30,10 +30,10 @@ public class IguanaSeed extends ItemSeeds implements IPlantable {
 		if (IguanaConfig.wrongBiomeRegrowthMultiplier > 1)
 		{
 			Type[] theBiomes = null;
-			if (Block.blocksList[blockType] instanceof IguanaCrop)
-				theBiomes = ((IguanaCrop)Block.blocksList[blockType]).biomes;
-			else if (Block.blocksList[blockType] instanceof IguanaStem)
-				theBiomes = ((IguanaStem)Block.blocksList[blockType]).biomes;
+			if (getPlant(null, 0, 0, 0) instanceof IguanaCrop)
+				theBiomes = ((IguanaCrop)getPlant(null, 0, 0, 0)).biomes;
+			else if (getPlant(null, 0, 0, 0) instanceof IguanaStem)
+				theBiomes = ((IguanaStem)getPlant(null, 0, 0, 0)).biomes;
 
 			if (theBiomes != null) {
 				String tooltip = "";

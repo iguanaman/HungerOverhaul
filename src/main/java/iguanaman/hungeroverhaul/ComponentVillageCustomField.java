@@ -16,7 +16,6 @@ import net.minecraft.world.gen.structure.StructureVillagePieces;
 import net.minecraft.world.gen.structure.StructureVillagePieces.Start;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeDictionary.Type;
-import cpw.mods.fml.common.Loader;
 
 public class ComponentVillageCustomField extends StructureVillagePieces.Village
 {
@@ -223,7 +222,7 @@ public class ComponentVillageCustomField extends StructureVillagePieces.Village
 			for (int var5 = 0; var5 < 13; ++var5)
 			{
 				clearCurrentPositionBlocksUpwards(par1World, var5, 4, var4, par3StructureBoundingBox);
-				fillCurrentPositionBlocksDownwards(par1World, 0, 0, var5, -1, var4, par3StructureBoundingBox); //Block.dirt.blockID
+				func_151554_b(par1World, Blocks.dirt, 0, var5, -1, var4, par3StructureBoundingBox);
 			}
 
 		return true;
