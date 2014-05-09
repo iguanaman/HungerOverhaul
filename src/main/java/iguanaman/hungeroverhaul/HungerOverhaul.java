@@ -10,6 +10,7 @@ import iguanaman.hungeroverhaul.module.ModuleTConstruct;
 import iguanaman.hungeroverhaul.module.ModuleTemperatePlants;
 import iguanaman.hungeroverhaul.module.ModuleVanilla;
 import iguanaman.hungeroverhaul.module.ModuleWeeeFlowers;
+import iguanaman.hungeroverhaul.potion.PotionWellFed;
 import iguanaman.hungeroverhaul.proxy.CommonProxy;
 import iguanaman.hungeroverhaul.util.IguanaEventHook;
 import iguanaman.hungeroverhaul.util.IguanaPlayerHandler;
@@ -17,7 +18,6 @@ import iguanaman.hungeroverhaul.util.VillageHandlerCustomField;
 import net.minecraft.command.ICommandManager;
 import net.minecraft.command.ServerCommandManager;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.potion.Potion;
@@ -38,7 +38,6 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
-import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.VillagerRegistry;
 
 @Mod(modid="HungerOverhaul", name="Hunger Overhaul", version="1.6.X-2l",
@@ -63,7 +62,7 @@ public class HungerOverhaul {
 
 		IguanaConfig.init(event.getSuggestedConfigurationFile());
 
-		potionWellFed = new Potion(IguanaConfig.wellFedId, false, 0).setIconIndex(7, 0).setPotionName("potion.wellfedPotion");
+		potionWellFed = new PotionWellFed();
 
 		if (IguanaConfig.removeHoeRecipes) {
 			RecipeRemover.removeAnyRecipe(new ItemStack(Items.wooden_hoe));
@@ -72,7 +71,7 @@ public class HungerOverhaul {
 
 	}
 
-	@SuppressWarnings({ "unchecked", "unused" })
+	@SuppressWarnings({ "unchecked" })
 	@EventHandler
 	public void load(FMLInitializationEvent event) {
 		Modstats.instance().getReporter().registerMod(this);
