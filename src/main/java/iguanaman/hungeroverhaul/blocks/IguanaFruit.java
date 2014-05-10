@@ -5,6 +5,8 @@ import iguanaman.hungeroverhaul.IguanaConfig;
 import java.util.Random;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.BiomeGenBase;
 import net.minecraftforge.common.BiomeDictionary;
@@ -12,19 +14,21 @@ import net.minecraftforge.common.BiomeDictionary.Type;
 import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
-import assets.pamharvestcraft.BlockPamFruit;
+
+import com.pam.harvestcraft.BlockPamFruit;
+
 import cpw.mods.fml.common.Loader;
 
 public class IguanaFruit extends BlockPamFruit {
 
 	Type[] biomes = new Type[]{Type.JUNGLE, Type.SWAMP};
 
-	public IguanaFruit(int i, String fruit) {
-		super(i, fruit);
+	public IguanaFruit(String fruit) {
+		super(fruit);
 
 		if (Loader.isModLoaded("Thaumcraft"))
-			if (!ThaumcraftApi.exists(blockID, -1))
-				ThaumcraftApi.registerObjectTag(blockID, -1, new AspectList().add(Aspect.CROP, 2).add(Aspect.HUNGER, 1));
+			if (!ThaumcraftApi.exists(Item.getItemFromBlock(this), -1))
+				ThaumcraftApi.registerObjectTag(new ItemStack(this), new int[] {-1}, new AspectList().add(Aspect.CROP, 2).add(Aspect.HUNGER, 1));
 	}
 
 	/**
@@ -72,7 +76,7 @@ public class IguanaFruit extends BlockPamFruit {
 	public void fertilize(World par1World, int par2, int par3, int par4)
 	{
 		int meta = Math.min(par1World.getBlockMetadata(par2, par3, par4) + 1, 2);
-		if (par1World.difficultySetting < 3 || !IguanaConfig.difficultyScalingBoneMeal)
+		if (par1World.difficultySetting.getDifficultyId() < 3 || !IguanaConfig.difficultyScalingBoneMeal)
 			par1World.setBlockMetadataWithNotify(par2, par3, par4, meta, 2);
 	}
 }

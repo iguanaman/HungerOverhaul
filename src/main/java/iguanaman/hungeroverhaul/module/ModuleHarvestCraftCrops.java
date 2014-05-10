@@ -12,9 +12,6 @@ import net.minecraft.potion.Potion;
 import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
-import assets.pamharvestcraft.HarvestConfigurationHandler;
-import assets.pamharvestcraft.ItemPamSeedFood;
-import assets.pamharvestcraft.PamHarvestCraft;
 import cpw.mods.fml.common.Loader;
 
 public class ModuleHarvestCraftCrops {
@@ -1607,9 +1604,9 @@ public class ModuleHarvestCraftCrops {
 		}
 	}
 
-	public static void registerAspects(int id, AspectList aspects)
+	public static void registerAspects(Item item, AspectList aspects)
 	{
-		if (!ThaumcraftApi.exists(id, -1)) ThaumcraftApi.registerObjectTag(id, -1, aspects);
+		if (!ThaumcraftApi.exists(item, -1)) ThaumcraftApi.registerObjectTag(id, -1, aspects);
 	}
 
 }

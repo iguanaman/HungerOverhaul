@@ -6,6 +6,7 @@ import java.util.Random;
 
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import thaumcraft.api.ThaumcraftApi;
@@ -23,8 +24,8 @@ public class IguanaCropPamFlower extends BlockPamFlowerCrop {
 		super();
 
 		if (Loader.isModLoaded("Thaumcraft"))
-			if (!ThaumcraftApi.exists(blockID, -1))
-				ThaumcraftApi.registerObjectTag(blockID, -1, new AspectList().add(Aspect.CROP, 2).add(Aspect.HUNGER, 1));
+			if (!ThaumcraftApi.exists(Item.getItemFromBlock(this), -1))
+				ThaumcraftApi.registerObjectTag(new ItemStack(this), new int[] {-1}, new AspectList().add(Aspect.CROP, 2).add(Aspect.HUNGER, 1));
 	}
 
 	/**
