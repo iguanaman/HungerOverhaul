@@ -8,3 +8,5 @@
 .project
 *.command
 /run/
+/src/api/java/com/pam
+src/api/resources
