@@ -9,13 +9,9 @@ import iguanaman.hungeroverhaul.blocks.IguanaSaguaro;
 import iguanaman.hungeroverhaul.items.IguanaSeedNatura;
 import iguanaman.hungeroverhaul.util.Utils;
 import mods.natura.common.NContent;
-import mods.natura.common.PHNatura;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import cpw.mods.fml.common.registry.GameRegistry;
 
 public class ModuleNatura {
 
@@ -23,7 +19,7 @@ public class ModuleNatura {
 
 	public static void init() {
 
-		cactusNew = new IguanaCactus().setHardness(0.4F).setStepSound(Block.soundClothFootstep).setUnlocalizedName("cactus").setTextureName("cactus");
+		cactusNew = new IguanaCactus().setHardness(0.4F).setStepSound(Block.soundTypeCloth).setBlockName("cactus").setBlockTextureName("cactus");
 		Utils.replace(Blocks.cactus, cactusNew);
 		//GameRegistry.registerBlock(cactusNew, ItemBlock.class, null);
 
