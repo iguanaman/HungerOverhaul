@@ -68,26 +68,6 @@ public class ModuleVanilla {
 //		GameRegistry.registerBlock(cocoaNew, ItemBlock.class, null);
 
 		// ITEMS
-//		Item.itemsList[Item.appleRed.itemID] = null;
-//		Item.itemsList[Item.bread.itemID] = null;
-//		Item.itemsList[Item.porkRaw.itemID] = null;
-//		Item.itemsList[Item.porkCooked.itemID] = null;
-//		Item.itemsList[Item.fishRaw.itemID] = null;
-//		Item.itemsList[Item.fishCooked.itemID] = null;
-//		Item.itemsList[Item.cookie.itemID] = null;
-//		Item.itemsList[Item.melon.itemID] = null;
-//		Item.itemsList[Item.beefRaw.itemID] = null;
-//		Item.itemsList[Item.beefCooked.itemID] = null;
-//		Item.itemsList[Item.chickenRaw.itemID] = null;
-//		Item.itemsList[Item.chickenCooked.itemID] = null;
-//		Item.itemsList[Item.rottenFlesh.itemID] = null;
-//		Item.itemsList[Item.bakedPotato.itemID] = null;
-//		Item.itemsList[Item.poisonousPotato.itemID] = null;
-//		Item.itemsList[Item.pumpkinPie.itemID] = null;
-//		Item.itemsList[Item.bowlSoup.itemID] = null;
-//		Item.itemsList[Item.carrot.itemID] = null;
-//		Item.itemsList[Item.potato.itemID] = null;
-
 		if(!Loader.isModLoaded("pamharvestcraft") || !IguanaConfig.modifyFoodValues)
 		{
 			Utils.replace(Items.apple, new IguanaFood(((ItemFood)Items.apple).func_150905_g(null), ((ItemFood)Items.apple).func_150906_h(null), false).setUnlocalizedName("apple").setTextureName("apple"));
