@@ -8,6 +8,7 @@ import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 
+import com.pam.harvestcraft.ItemRegistry;
 import com.pam.weeeflowers.weeeflowers;
 
 import cpw.mods.fml.common.Loader;
@@ -16,15 +17,13 @@ public class ModuleWeeeFlowers {
 
 	public static void init()
 	{
-
 		// Overwrite flower crop block
-		Block.blocksList[weeeflowers.pamflowerCrop.blockID] = null;
-		weeeflowers.pamflowerCrop = new IguanaCropPamFlower(weeeflowers.flowercropID).setUnlocalizedName("flowerCrop");
+		weeeflowers.pamflowerCrop = new IguanaCropPamFlower().setBlockName("flowerCrop");
 
 		// Add Thaumcraft aspects
 		if (Loader.isModLoaded("Thaumcraft"))
 			// Flower seeds
-			for(Item flowerSeed : weeeflowers.PamFlowerSeeds)
+			for(Item flowerSeed : ItemRegistry.PamSeeds)
 				if (!ThaumcraftApi.exists(flowerSeed, -1))
 					ThaumcraftApi.registerObjectTag(flowerSeed, -1, new AspectList().add(Aspect.SEED, 1));
 

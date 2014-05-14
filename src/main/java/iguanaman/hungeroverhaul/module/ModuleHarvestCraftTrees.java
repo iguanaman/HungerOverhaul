@@ -10,29 +10,28 @@ public class ModuleHarvestCraftTrees {
 
 	public static void init()
 	{
-
-		Block.blocksList[PamHarvestCraft.pamApple.blockID] = null;
-		Block.blocksList[PamHarvestCraft.pamAvocado.blockID] = null;
-		Block.blocksList[PamHarvestCraft.pamBanana.blockID] = null;
-		Block.blocksList[PamHarvestCraft.pamCherry.blockID] = null;
-		Block.blocksList[PamHarvestCraft.pamCinnamon.blockID] = null;
-		Block.blocksList[PamHarvestCraft.pamCoconut.blockID] = null;
-		Block.blocksList[PamHarvestCraft.pamDragonfruit.blockID] = null;
-		Block.blocksList[PamHarvestCraft.pamLemon.blockID] = null;
-		Block.blocksList[PamHarvestCraft.pamLime.blockID] = null;
-		Block.blocksList[PamHarvestCraft.pamMango.blockID] = null;
-		Block.blocksList[PamHarvestCraft.pamNutmeg.blockID] = null;
-		Block.blocksList[PamHarvestCraft.pamOlive.blockID] = null;
-		Block.blocksList[PamHarvestCraft.pamOrange.blockID] = null;
-		Block.blocksList[PamHarvestCraft.pamPapaya.blockID] = null;
-		Block.blocksList[PamHarvestCraft.pamPeach.blockID] = null;
-		Block.blocksList[PamHarvestCraft.pamPear.blockID] = null;
-		Block.blocksList[PamHarvestCraft.pamPeppercorn.blockID] = null;
-		Block.blocksList[PamHarvestCraft.pamPlum.blockID] = null;
-		Block.blocksList[PamHarvestCraft.pamPomegranate.blockID] = null;
-		Block.blocksList[PamHarvestCraft.pamStarfruit.blockID] = null;
-		Block.blocksList[PamHarvestCraft.pamVanillabean.blockID] = null;
-		Block.blocksList[PamHarvestCraft.pamWalnut.blockID] = null;
+//		Block.blocksList[PamHarvestCraft.pamApple.blockID] = null;
+//		Block.blocksList[PamHarvestCraft.pamAvocado.blockID] = null;
+//		Block.blocksList[PamHarvestCraft.pamBanana.blockID] = null;
+//		Block.blocksList[PamHarvestCraft.pamCherry.blockID] = null;
+//		Block.blocksList[PamHarvestCraft.pamCinnamon.blockID] = null;
+//		Block.blocksList[PamHarvestCraft.pamCoconut.blockID] = null;
+//		Block.blocksList[PamHarvestCraft.pamDragonfruit.blockID] = null;
+//		Block.blocksList[PamHarvestCraft.pamLemon.blockID] = null;
+//		Block.blocksList[PamHarvestCraft.pamLime.blockID] = null;
+//		Block.blocksList[PamHarvestCraft.pamMango.blockID] = null;
+//		Block.blocksList[PamHarvestCraft.pamNutmeg.blockID] = null;
+//		Block.blocksList[PamHarvestCraft.pamOlive.blockID] = null;
+//		Block.blocksList[PamHarvestCraft.pamOrange.blockID] = null;
+//		Block.blocksList[PamHarvestCraft.pamPapaya.blockID] = null;
+//		Block.blocksList[PamHarvestCraft.pamPeach.blockID] = null;
+//		Block.blocksList[PamHarvestCraft.pamPear.blockID] = null;
+//		Block.blocksList[PamHarvestCraft.pamPeppercorn.blockID] = null;
+//		Block.blocksList[PamHarvestCraft.pamPlum.blockID] = null;
+//		Block.blocksList[PamHarvestCraft.pamPomegranate.blockID] = null;
+//		Block.blocksList[PamHarvestCraft.pamStarfruit.blockID] = null;
+//		Block.blocksList[PamHarvestCraft.pamVanillabean.blockID] = null;
+//		Block.blocksList[PamHarvestCraft.pamWalnut.blockID] = null;
 		PamHarvestCraft.pamApple = new IguanaFruit(HarvestConfigurationHandler.pamappleID, "apple").setTreeDrop(Item.appleRed.itemID);
 		PamHarvestCraft.pamAvocado = new IguanaFruit(HarvestConfigurationHandler.pamavocadoID, "avocado").setTreeDrop(PamHarvestCraft.avocadoItem.itemID);
 		PamHarvestCraft.pamBanana = new IguanaFruit(HarvestConfigurationHandler.pambananaID, "banana").setTreeDrop(PamHarvestCraft.bananaItem.itemID);
