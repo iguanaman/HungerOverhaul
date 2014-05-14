@@ -23,12 +23,12 @@ public class IguanaSeedFood extends IguanaFood implements IPlantable{
 
 	private EnumPlantType PlantType;
 
-	public IguanaSeedFood(int par2, float par3, Block par4, int par5)
+	public IguanaSeedFood(int par2, float par3, Block par4, Block par5)
 	{
 		this(par2, par3, par4, par5, false);
 	}
 
-	public IguanaSeedFood(int par2, float par3, Block par4, int par5, boolean integrate)
+	public IguanaSeedFood(int par2, float par3, Block par4, Block par5, boolean integrate)
 	{
 		super(par2, par3, false, integrate);
 		crop = par4;
