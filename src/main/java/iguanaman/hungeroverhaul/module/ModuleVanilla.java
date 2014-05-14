@@ -19,7 +19,6 @@ import net.minecraft.init.Items;
 import net.minecraft.item.ItemFood;
 import net.minecraft.potion.Potion;
 import cpw.mods.fml.common.Loader;
-import cpw.mods.fml.common.registry.GameRegistry;
 
 public class ModuleVanilla
 {
@@ -122,25 +121,25 @@ public class ModuleVanilla
         }
         else
         {
-            Items.apple = new IguanaFood(1, 0.05F, false).setUnlocalizedName("apple").setTextureName("apple");
-            Items.bread = new IguanaFood(3, 0.2F, false).setUnlocalizedName("bread").setTextureName("bread");
-            Items.porkRaw = new IguanaFood(1, 0.05F, true).setUnlocalizedName("porkchopRaw").setTextureName("porkchop_raw");
-            Items.porkCooked = new IguanaFood(2, 0.15F, true).setUnlocalizedName("porkchopCooked").setTextureName("porkchop_cooked");
-            Items.fishRaw = new IguanaFood(1, 0.05F, false).setUnlocalizedName("fishRaw").setTextureName("fish_raw");
-            Items.fishCooked = new IguanaFood(2, 0.1F, false).setUnlocalizedName("fishCooked").setTextureName("fish_cooked");
-            Items.cookie = new IguanaFood(1, 0.05F, false).setUnlocalizedName("cookie").setTextureName("cookie");
-            Items.melon = new IguanaFood(1, 0.05F, false).setUnlocalizedName("melon").setTextureName("melon");
-            Items.beef = new IguanaFood(1, 0.05F, true).setUnlocalizedName("beefRaw").setTextureName("beef_raw");
-            Items.beefCooked = new IguanaFood(2, 0.15F, true).setUnlocalizedName("beefCooked").setTextureName("beef_cooked");
-            Items.chicken = new IguanaFood(1, 0.05F, true).setPotionEffect(Potion.hunger.id, 30, 0, 0.15F).setUnlocalizedName("chickenRaw").setTextureName("chicken_raw");
-            Items.chickenCooked = new IguanaFood(2, 0.15F, true).setUnlocalizedName("chickenCooked").setTextureName("chicken_cooked");
-            Items.rotten_flesh = new IguanaFood(1, 0.05F, true).setPotionEffect(Potion.hunger.id, 30, 0, 0.4F).setUnlocalizedName("rottenFlesh").setTextureName("rotten_flesh");
-            Items.bakedPotato = new IguanaFood(2, 0.15F, false).setUnlocalizedName("potatoBaked").setTextureName("potato_baked");
-            Items.poisonousPotato = new IguanaFood(1, 0.05F, false).setPotionEffect(Potion.poison.id, 5, 0, 0.3F).setUnlocalizedName("potatoPoisonous").setTextureName("potato_poisonous");
-            Items.pumpkinPie = new IguanaFood(3, 0.15F, false).setUnlocalizedName("pumpkinPie").setTextureName("pumpkin_pie").setCreativeTab(CreativeTabs.tabFood);
-            Items.bowlSoup = new IguanaFoodBowl(2, 0.1F, false).setUnlocalizedName("mushroomStew").setTextureName("mushroom_stew");
-            Items.carrot = new IguanaSeedFood(1, 0.05F, Items.carrot, Blocks.farmland).setUnlocalizedName("carrots").setTextureName("carrot");
-            Items.potato = new IguanaSeedFood(1, 0.05F, Items.potato, Blocks.farmland).setUnlocalizedName("potato").setTextureName("potato");
+			Utils.replace(Items.apple, new IguanaFood(1, 0.05F, false).setUnlocalizedName("apple").setTextureName("apple"));
+			Utils.replace(Items.bread, new IguanaFood(3, 0.2F, false).setUnlocalizedName("bread").setTextureName("bread"));
+			Utils.replace(Items.porkchop, new IguanaFood(1, 0.05F, true).setUnlocalizedName("porkchopRaw").setTextureName("porkchop_raw"));
+			Utils.replace(Items.cooked_porkchop, new IguanaFood(2, 0.15F, true).setUnlocalizedName("porkchopCooked").setTextureName("porkchop_cooked"));
+			Utils.replace(Items.fish, new IguanaFood(1, 0.05F, false).setUnlocalizedName("fishRaw").setTextureName("fish_raw"));
+			Utils.replace(Items.cooked_fished, new IguanaFood(2, 0.1F, false).setUnlocalizedName("fishCooked").setTextureName("fish_cooked"));
+			Utils.replace(Items.cookie, new IguanaFood(1, 0.05F, false).setUnlocalizedName("cookie").setTextureName("cookie"));
+			Utils.replace(Items.melon, new IguanaFood(1, 0.05F, false).setUnlocalizedName("melon").setTextureName("melon"));
+			Utils.replace(Items.beef, new IguanaFood(1, 0.05F, true).setUnlocalizedName("beefRaw").setTextureName("beef_raw"));
+			Utils.replace(Items.cooked_beef, new IguanaFood(2, 0.15F, true).setUnlocalizedName("beefCooked").setTextureName("beef_cooked"));
+			Utils.replace(Items.chicken, new IguanaFood(1, 0.05F, true).setPotionEffect(Potion.hunger.id, 30, 0, 0.15F).setUnlocalizedName("chickenRaw").setTextureName("chicken_raw"));
+			Utils.replace(Items.cooked_chicken, new IguanaFood(2, 0.15F, true).setUnlocalizedName("chickenCooked").setTextureName("chicken_cooked"));
+			Utils.replace(Items.rotten_flesh, new IguanaFood(1, 0.05F, true).setPotionEffect(Potion.hunger.id, 30, 0, 0.4F).setUnlocalizedName("rottenFlesh").setTextureName("rotten_flesh"));
+			Utils.replace(Items.baked_potato, new IguanaFood(2, 0.15F, false).setUnlocalizedName("potatoBaked").setTextureName("potato_baked"));
+			Utils.replace(Items.poisonous_potato, new IguanaFood(1, 0.05F, false).setPotionEffect(Potion.poison.id, 5, 0, 0.3F).setUnlocalizedName("potatoPoisonous").setTextureName("potato_poisonous"));
+			Utils.replace(Items.pumpkin_pie, new IguanaFood(3, 0.15F, false).setUnlocalizedName("pumpkinPie").setTextureName("pumpkin_pie").setCreativeTab(CreativeTabs.tabFood));
+			Utils.replace(Items.mushroom_stew, new IguanaFoodBowl(2, 0.1F, false).setUnlocalizedName("mushroomStew").setTextureName("mushroom_stew"));
+			Utils.replace(Items.carrot, new IguanaSeedFood(1, 0.05F, Blocks.carrots, Blocks.farmland).setUnlocalizedName("carrots").setTextureName("carrot"));
+			Utils.replace(Items.potato, new IguanaSeedFood(1, 0.05F, Blocks.potatoes, Blocks.farmland).setUnlocalizedName("potato").setTextureName("potato"));
         }
 
     }
