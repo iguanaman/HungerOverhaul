@@ -1,10 +1,9 @@
 package iguanaman.hungeroverhaul.util;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class IguanaLog {
 
-	public static void log(String text)
-	{
-		System.out.println("[HungerOverhaul] " + text);
-	}
-
+    public static Logger log = LogManager.getLogger("HungerOverhaul");
 }

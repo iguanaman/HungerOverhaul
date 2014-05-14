@@ -27,7 +27,7 @@ public class ModuleGrassSeeds {
 
 	public static ItemStack getGrassSeed(World world)
 	{
-		IguanaLog.log("get grass seed");
+		IguanaLog.log.info("get grass seed");
 		SeedEntry entry = (SeedEntry)WeightedRandom.getRandomItem(world.rand, seedListNew);
 		if (entry == null || entry.seed == null) return null;
 		return entry.seed.copy();
@@ -39,7 +39,7 @@ public class ModuleGrassSeeds {
 	public static void init()
 	{
 
-		if (IguanaConfig.removeTallGrassSeeds) IguanaLog.log("Removing tall grass seeds");
+		if (IguanaConfig.removeTallGrassSeeds) IguanaLog.log.info("Removing tall grass seeds");
 
 		ForgeHooks hooks = new ForgeHooks();
 		Field f = null;
@@ -82,7 +82,7 @@ public class ModuleGrassSeeds {
 						weightField.setAccessible(true);
 						weight = (Integer) weightField.get(entry);
 					} catch (NoSuchFieldException e2) {
-						IguanaLog.log("WARNING Could not access itemWeight field, report please");
+						IguanaLog.log.warn("WARNING Could not access itemWeight field, report please");
 					} catch (IllegalAccessException e2) {
 						throw new RuntimeException("Could not access itemWeight field, report please");
 					}

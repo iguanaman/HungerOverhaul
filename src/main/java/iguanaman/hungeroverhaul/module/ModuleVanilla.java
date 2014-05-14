@@ -11,8 +11,11 @@ import iguanaman.hungeroverhaul.items.IguanaFoodBowl;
 import iguanaman.hungeroverhaul.items.IguanaReed;
 import iguanaman.hungeroverhaul.items.IguanaSeed;
 import iguanaman.hungeroverhaul.items.IguanaSeedFood;
+import iguanaman.hungeroverhaul.util.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemFood;
@@ -33,30 +36,29 @@ public class ModuleVanilla {
 	public static void init() {
 
 		// BLOCKS
-		Block.blocksList[Block.reed.blockID] = null;
-		reedNew = new IguanaCropReed(83).setHardness(0.0F).setStepSound(Block.soundGrassFootstep).setUnlocalizedName("reeds").setTextureName("reeds");
-		GameRegistry.registerBlock(reedNew, ItemBlock.class, null);
-		Item.itemsList[Item.reed.itemID] = null;
-		Item.reed = new IguanaReed(82, reedNew).setUnlocalizedName("reeds").setTextureName("reeds").setCreativeTab(CreativeTabs.tabMaterials);
+	    reedNew = new IguanaCropReed().setHardness(0.0F).setStepSound(Block.soundGrassFootstep).setUnlocalizedName("reeds").setTextureName("reeds"));
+	    Utils.replace(Blocks.reeds, reedNew);
+		//GameRegistry.registerBlock(reedNew, ItemBlock.class, null);
+		Utils.replace(Items.reeds, new IguanaReed(reedNew).setUnlocalizedName("reeds").setTextureName("reeds").setCreativeTab(CreativeTabs.tabMaterials);
 
 		Block.blocksList[Block.carrot.blockID] = null;
-		carrotNew = new IguanaCropVegetable(141, "carrots").setCropItem(Item.carrot.itemID).setSeedItem(Item.carrot.itemID).setUnlocalizedName("carrots").setTextureName("carrots");
+		carrotNew = new IguanaCropVegetable("carrots").setCropItem(Item.carrot.itemID).setSeedItem(Item.carrot.itemID).setUnlocalizedName("carrots").setTextureName("carrots");
 		GameRegistry.registerBlock(reedNew, ItemBlock.class, null);
 
 		Block.blocksList[Block.potato.blockID] = null;
-		potatoNew = new IguanaCropVegetable(142, "potatoes").setCropItem(Item.potato.itemID).setSeedItem(Item.potato.itemID).setUnlocalizedName("potatoes").setTextureName("potatoes");
+		potatoNew = new IguanaCropVegetable("potatoes").setCropItem(Item.potato.itemID).setSeedItem(Item.potato.itemID).setUnlocalizedName("potatoes").setTextureName("potatoes");
 		GameRegistry.registerBlock(potatoNew, ItemBlock.class, null);
 
 		Block.blocksList[Block.crops.blockID] = null;
-		wheatNew = new IguanaCrop(59, "crops").setCropItem(Item.wheat.itemID).setSeedItem(Item.seeds.itemID).setUnlocalizedName("crops").setTextureName("wheat");
+		wheatNew = new IguanaCrop( "crops").setCropItem(Item.wheat.itemID).setSeedItem(Item.seeds.itemID).setUnlocalizedName("crops").setTextureName("wheat");
 		GameRegistry.registerBlock(wheatNew, ItemBlock.class, null);
 		Item.itemsList[Item.seeds.itemID] = null;
 		Item.seeds = new IguanaSeed(39, Block.crops.blockID, Block.tilledField.blockID).setUnlocalizedName("seeds").setTextureName("seeds_wheat");
 
 		Block.blocksList[Block.pumpkinStem.blockID] = null;
 		Block.blocksList[Block.melonStem.blockID] = null;
-		pumpkinStemNew = new IguanaStem(104, Block.pumpkin).setHardness(0.0F).setStepSound(Block.soundWoodFootstep).setUnlocalizedName("pumpkinStem").setTextureName("pumpkin_stem");
-		melonStemNew = new IguanaStem(105, Block.melon).setHardness(0.0F).setStepSound(Block.soundWoodFootstep).setUnlocalizedName("pumpkinStem").setTextureName("melon_stem");
+		pumpkinStemNew = new IguanaStem(Block.pumpkin).setHardness(0.0F).setStepSound(Block.soundWoodFootstep).setUnlocalizedName("pumpkinStem").setTextureName("pumpkin_stem");
+		melonStemNew = new IguanaStem(Block.melon).setHardness(0.0F).setStepSound(Block.soundWoodFootstep).setUnlocalizedName("pumpkinStem").setTextureName("melon_stem");
 		GameRegistry.registerBlock(pumpkinStemNew, ItemBlock.class, null);
 		GameRegistry.registerBlock(melonStemNew, ItemBlock.class, null);
 		Item.itemsList[Item.pumpkinSeeds.itemID] = null;
@@ -91,11 +93,11 @@ public class ModuleVanilla {
 
 		if(!Loader.isModLoaded("pamharvestcraft") || !IguanaConfig.modifyFoodValues)
 		{
-			Item.appleRed = new IguanaFood(4, ((ItemFood)Item.appleRed).getHealAmount(), ((ItemFood)Item.appleRed).getSaturationModifier(), false).setUnlocalizedName("apple").setTextureName("apple");
-			Item.bread = new IguanaFood(41, ((ItemFood)Item.bread).getHealAmount(), ((ItemFood)Item.bread).getSaturationModifier(), false).setUnlocalizedName("bread").setTextureName("bread");
-			Item.porkRaw = new IguanaFood(63, ((ItemFood)Item.porkRaw).getHealAmount(), ((ItemFood)Item.porkRaw).getSaturationModifier(), true).setUnlocalizedName("porkchopRaw").setTextureName("porkchop_raw");
-			Item.porkCooked = new IguanaFood(64, ((ItemFood)Item.porkCooked).getHealAmount(), ((ItemFood)Item.porkCooked).getSaturationModifier(), true).setUnlocalizedName("porkchopCooked").setTextureName("porkchop_cooked");
-			Item.fishRaw = new IguanaFood(93, ((ItemFood)Item.fishRaw).getHealAmount(), ((ItemFood)Item.fishRaw).getSaturationModifier(), false).setUnlocalizedName("fishRaw").setTextureName("fish_raw");
+			Item.appleRed = new IguanaFood(4, ((ItemFood)Items.apple).getHealAmount(), ((ItemFood)Items.apple).getSaturationModifier(), false).setUnlocalizedName("apple").setTextureName("apple");
+			Item.bread = new IguanaFood(41, ((ItemFood)Items.bread).getHealAmount(), ((ItemFood)Items.bread).getSaturationModifier(), false).setUnlocalizedName("bread").setTextureName("bread");
+			Item.porkRaw = new IguanaFood(63, ((ItemFood)Items.porkRaw).getHealAmount(), ((ItemFood)Items.porkRaw).getSaturationModifier(), true).setUnlocalizedName("porkchopRaw").setTextureName("porkchop_raw");
+			Item.porkCooked = new IguanaFood(64, ((ItemFood)Items.porkCooked).getHealAmount(), ((ItemFood)Items.porkCooked).getSaturationModifier(), true).setUnlocalizedName("porkchopCooked").setTextureName("porkchop_cooked");
+			Item.fishRaw = new IguanaFood(93, ((ItemFood)Item.fishRaw).getHealAmount(), ((ItemFood)Items.fishRaw).getSaturationModifier(), false).setUnlocalizedName("fishRaw").setTextureName("fish_raw");
 			Item.fishCooked = new IguanaFood(94, ((ItemFood)Item.fishCooked).getHealAmount(), ((ItemFood)Item.fishCooked).getSaturationModifier(), false).setUnlocalizedName("fishCooked").setTextureName("fish_cooked");
 			Item.cookie = new IguanaFood(101, ((ItemFood)Item.cookie).getHealAmount(), ((ItemFood)Item.cookie).getSaturationModifier(), false).setUnlocalizedName("cookie").setTextureName("cookie");
 			Item.melon = new IguanaFood(104, ((ItemFood)Item.melon).getHealAmount(), ((ItemFood)Item.melon).getSaturationModifier(), false).setUnlocalizedName("melon").setTextureName("melon");

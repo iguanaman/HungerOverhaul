@@ -25,9 +25,6 @@ import net.minecraft.world.gen.structure.MapGenStructureIO;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
 
-import org.modstats.ModstatInfo;
-import org.modstats.Modstats;
-
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
@@ -42,7 +39,6 @@ import cpw.mods.fml.common.registry.VillagerRegistry;
 
 @Mod(modid="HungerOverhaul", name="Hunger Overhaul", version="1.6.X-2l",
 dependencies = "after:TConstruct;after:pamharvestcraft;after:temperateplants;after:randomplants;after:weeeflowers;after:Natura")
-@ModstatInfo(prefix="hngrovrhl")
 
 public class HungerOverhaul {
 
@@ -74,7 +70,6 @@ public class HungerOverhaul {
 	@SuppressWarnings({ "unchecked" })
 	@EventHandler
 	public void load(FMLInitializationEvent event) {
-		Modstats.instance().getReporter().registerMod(this);
 		proxy.registerLocalization();
 
 		if (IguanaConfig.addCustomVillageField && IguanaConfig.fieldNormalWeight + IguanaConfig.fieldReedWeight + IguanaConfig.fieldStemWeight > 0)
