@@ -67,7 +67,7 @@ public class ModuleVanilla
         //		GameRegistry.registerBlock(cocoaNew, ItemBlock.class, null);
 
         // ITEMS
-        if (!Loader.isModLoaded("pamharvestcraft") || !IguanaConfig.modifyFoodValues)
+        if (!Loader.isModLoaded("harvestcraft") || !IguanaConfig.modifyFoodValues)
         {
             Utils.replace(Items.apple,
                     new IguanaFood(((ItemFood) Items.apple).func_150905_g(null), ((ItemFood) Items.apple).func_150906_h(null), false).setUnlocalizedName("apple").setTextureName("apple"));
