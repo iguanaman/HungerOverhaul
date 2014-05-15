@@ -1,6 +1,7 @@
 package iguanaman.hungeroverhaul;
 
 import iguanaman.hungeroverhaul.commands.IguanaCommandHunger;
+import iguanaman.hungeroverhaul.module.HarvestCraftHelper;
 import iguanaman.hungeroverhaul.module.ModuleGrassSeeds;
 import iguanaman.hungeroverhaul.module.ModuleHarvestCraftCrops;
 import iguanaman.hungeroverhaul.module.ModuleHarvestCraftTrees;
@@ -24,7 +25,6 @@ import net.minecraft.potion.Potion;
 import net.minecraft.world.gen.structure.MapGenStructureIO;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
-
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
@@ -82,7 +82,7 @@ public class HungerOverhaul {
 		CraftingManager.getInstance().getRecipeList().add(new ShapelessOreRecipe(Items.wheat_seeds, Items.wheat));
 
 		ModuleVanilla.init();
-		if(Loader.isModLoaded("pamharvestcraft")) { ModuleHarvestCraftCrops.init(); ModuleHarvestCraftTrees.init(); }
+		if(Loader.isModLoaded("harvestcraft")) { HarvestCraftHelper.load(); ModuleHarvestCraftCrops.init(); ModuleHarvestCraftTrees.init(); }
 		if(Loader.isModLoaded("temperateplants")) ModuleTemperatePlants.init();
 		if(Loader.isModLoaded("randomplants")) ModuleRandomPlants.init();
 		if(Loader.isModLoaded("weeeflowers")) ModuleWeeeFlowers.init();

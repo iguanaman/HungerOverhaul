@@ -1,5 +1,6 @@
 package iguanaman.hungeroverhaul;
 
+import iguanaman.hungeroverhaul.module.HarvestCraftHelper;
 import iguanaman.hungeroverhaul.module.ModuleVanilla;
 
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ import net.minecraft.world.gen.structure.StructureVillagePieces;
 import net.minecraft.world.gen.structure.StructureVillagePieces.Start;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.BiomeDictionary.Type;
+import cpw.mods.fml.common.Loader;
 
 public class ComponentVillageCustomField extends StructureVillagePieces.Village
 {
@@ -47,8 +49,7 @@ public class ComponentVillageCustomField extends StructureVillagePieces.Village
 
 	private Block getRandomCrop(Random random)
 	{
-		return getRandomCropVanilla(random);
-//		return Loader.isModLoaded("pamharvestcraft") ? getRandomCropHarvestCraft(random) : getRandomCropVanilla(random);
+		return Loader.isModLoaded("harvestcraft") ? getRandomCropHarvestCraft(random) : getRandomCropVanilla(random);
 	}
 
 	private Block getRandomCropVanilla(Random random)
@@ -62,26 +63,16 @@ public class ComponentVillageCustomField extends StructureVillagePieces.Village
 		return crops.get(random.nextInt(crops.size()));
 	}
 
-//	private int getRandomCropHarvestCraft(Random random)
-//	{
-//		return random.nextInt(60) <= 56 ? PamHarvestCraft.pamCrop.blockID : getRandomCropVanilla(random);
-//	}
+	private Block getRandomCropHarvestCraft(Random random)
+	{
+		int length = HarvestCraftHelper.PamCrops.length;
+		return random.nextInt(length + 3) <= length ? HarvestCraftHelper.PamCrops[random.nextInt(length)] : getRandomCropVanilla(random);
+	}
 
 	private int getCropMeta(Block block, Random random)
 	{
-		return getCropMetaVanilla(random);
-//		return Loader.isModLoaded("pamharvestcraft") ? getCropMetaHarvestCraft(blockID, random) : getCropMetaVanilla(random);
-	}
-
-	private int getCropMetaVanilla(Random random)
-	{
 		return random.nextInt(5);
 	}
-
-//	private int getCropMetaHarvestCraft(int blockID, Random random)
-//	{
-//		return blockID == PamHarvestCraft.pamCrop.blockID ? 0 : getCropMetaVanilla(random);
-//	}
 
 	@SuppressWarnings("rawtypes")
 	public static ComponentVillageCustomField buildComponent(Start par0Start, List par1List, Random par2Random, int par3, int par4, int par5, int par6, int par7)
@@ -177,15 +168,6 @@ public class ComponentVillageCustomField extends StructureVillagePieces.Village
 		int cropMeta1B = getCropMeta(crop1B, par2Random);
 		int cropMeta2B = getCropMeta(crop2B, par2Random);
 
-//		int cropId1A = getCropID(crop1A, par2Random);
-//		int cropId2A = getCropID(crop2A, par2Random);
-//		int cropId1B = getCropID(crop1B, par2Random);
-//		int cropId2B = getCropID(crop2B, par2Random);
-		int cropId1A = 0;
-		int cropId2A = 0;
-		int cropId1B = 0;
-		int cropId2B = 0;
-
 		//BASE
 		fillWithBlocks(par1World, par3StructureBoundingBox, 0, 1, 0, 12, 4, 8, Blocks.air, Blocks.air, false);
 		fillWithBlocks(par1World, par3StructureBoundingBox, 0, 0, 0, 0, 0, 8, Blocks.log, Blocks.log, false);
@@ -207,14 +189,14 @@ public class ComponentVillageCustomField extends StructureVillagePieces.Village
 		//CROPS
 		for (int tmp = 1; tmp <= 7; tmp++)
 		{
-			if (typeA == fieldType.NORMAL) placeCropAtCurrentPosition(par1World, crop1A, cropMeta1A, cropId1A, 1, 1, tmp, par3StructureBoundingBox);
-			placeCropAtCurrentPosition(par1World, crop1A, cropMeta1A, cropId1A, 2, 1, tmp, par3StructureBoundingBox);
-			placeCropAtCurrentPosition(par1World, crop2A, cropMeta2A, cropId2A, 4, 1, tmp, par3StructureBoundingBox);
-			if (typeA == fieldType.NORMAL) placeCropAtCurrentPosition(par1World, crop2A, cropMeta2A, cropId2A, 5, 1, tmp, par3StructureBoundingBox);
-			if (typeA == fieldType.NORMAL) placeCropAtCurrentPosition(par1World, crop1B, cropMeta1B, cropId1B, 7, 1, tmp, par3StructureBoundingBox);
-			placeCropAtCurrentPosition(par1World, crop1B, cropMeta1B, cropId1B, 8, 1, tmp, par3StructureBoundingBox);
-			placeCropAtCurrentPosition(par1World, crop2B, cropMeta2B, cropId2B, 10, 1, tmp, par3StructureBoundingBox);
-			if (typeA == fieldType.NORMAL) placeCropAtCurrentPosition(par1World, crop2B, cropMeta2B, cropId2B, 11, 1, tmp, par3StructureBoundingBox);
+			if (typeA == fieldType.NORMAL) placeCropAtCurrentPosition(par1World, crop1A, cropMeta1A, 1, 1, tmp, par3StructureBoundingBox);
+			placeCropAtCurrentPosition(par1World, crop1A, cropMeta1A, 2, 1, tmp, par3StructureBoundingBox);
+			placeCropAtCurrentPosition(par1World, crop2A, cropMeta2A, 4, 1, tmp, par3StructureBoundingBox);
+			if (typeA == fieldType.NORMAL) placeCropAtCurrentPosition(par1World, crop2A, cropMeta2A, 5, 1, tmp, par3StructureBoundingBox);
+			if (typeA == fieldType.NORMAL) placeCropAtCurrentPosition(par1World, crop1B, cropMeta1B, 7, 1, tmp, par3StructureBoundingBox);
+			placeCropAtCurrentPosition(par1World, crop1B, cropMeta1B, 8, 1, tmp, par3StructureBoundingBox);
+			placeCropAtCurrentPosition(par1World, crop2B, cropMeta2B, 10, 1, tmp, par3StructureBoundingBox);
+			if (typeA == fieldType.NORMAL) placeCropAtCurrentPosition(par1World, crop2B, cropMeta2B, 11, 1, tmp, par3StructureBoundingBox);
 		}
 
 		//FILLER
@@ -228,43 +210,23 @@ public class ComponentVillageCustomField extends StructureVillagePieces.Village
 		return true;
 	}
 
-	@SuppressWarnings("unused")
-	private int getCropID(int blockID, Random rand)
+	private void placeCropAtCurrentPosition(World world, Block block, int meta, int offsetX, int offsetY, int offsetZ, StructureBoundingBox box)
 	{
-		return 0;
-//		return Loader.isModLoaded("pamharvestcraft") ? getHarvestCraftCropID(blockID, rand) : 0;
+		if (Loader.isModLoaded("harvestcraft"))
+			placeHarvestCraftCropAtCurrentPosition(world, block, meta, offsetX, offsetY, offsetZ, box);
+		else
+			placeBlockAtCurrentPosition(world, block, meta, offsetX, offsetY, offsetZ, box);
 	}
 
-//	private int getHarvestCraftCropID(int blockID, Random rand)
-//	{
-//		return blockID == PamHarvestCraft.pamCrop.blockID ? rand.nextInt(57) : 0;
-//	}
-
-	private void placeCropAtCurrentPosition(World world, Block block, int meta, int cropID, int offsetX, int offsetY, int offsetZ, StructureBoundingBox box)
+	private void placeHarvestCraftCropAtCurrentPosition(World world, Block block, int meta, int offsetX, int offsetY, int offsetZ, StructureBoundingBox box)
 	{
-//		if (Loader.isModLoaded("pamharvestcraft"))
-//			placeHarvestCraftCropAtCurrentPosition(world, blockID, meta, cropID, offsetX, offsetY, offsetZ, box);
-//		else
-		placeBlockAtCurrentPosition(world, block, meta, offsetX, offsetY, offsetZ, box);
-	}
+		int x = getXWithOffset(offsetX, offsetZ);
+		int y = getYWithOffset(offsetY);
+		int z = getZWithOffset(offsetX, offsetZ);
 
-//	private void placeHarvestCraftCropAtCurrentPosition(World world, int blockID, int meta, int cropID, int offsetX, int offsetY, int offsetZ, StructureBoundingBox box)
-//	{
-//		int x = getXWithOffset(offsetX, offsetZ);
-//		int y = getYWithOffset(offsetY);
-//		int z = getZWithOffset(offsetX, offsetZ);
-//
-//		if (box.isVecInside(x, y, z))
-//		{
-//			world.setBlock(x, y, z, blockID, meta, 2);
-//			if (blockID == PamHarvestCraft.pamCrop.blockID)
-//			{
-//				TileEntityPamCrop tileentitypamcrop = (TileEntityPamCrop)world.getBlockTileEntity(x, y, z);
-//				if(tileentitypamcrop != null) {
-//					tileentitypamcrop.setCropID(cropID);
-//					tileentitypamcrop.setGrowthStage(world.rand.nextInt(2));
-//				}
-//			}
-//		}
-//	}
+		if (box.isVecInside(x, y, z))
+		{
+			world.setBlock(x, y, z, block, meta, 2);
+		}
+	}
 }

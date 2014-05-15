@@ -22,7 +22,6 @@ import cpw.mods.fml.common.Loader;
 
 public class ModuleVanilla
 {
-
     public static Block carrotNew;
     public static Block potatoNew;
     public static Block wheatNew;
@@ -33,11 +32,9 @@ public class ModuleVanilla
 
     public static void init ()
     {
-
         // BLOCKS
         reedNew = new IguanaCropReed().setHardness(0.0F).setStepSound(Block.soundTypeGrass).setBlockName("reeds").setBlockTextureName("reeds");
         Utils.replace(Blocks.reeds, reedNew);
-        //GameRegistry.registerBlock(reedNew, ItemBlock.class, null);
         Utils.replace(Items.reeds, new IguanaReed(reedNew).setUnlocalizedName("reeds").setTextureName("reeds").setCreativeTab(CreativeTabs.tabMaterials));
 
         carrotNew = new IguanaCropVegetable("carrots").setCropItem(Items.carrot).setSeedItem(Items.carrot).setBlockName("carrots").setBlockTextureName("carrots");
