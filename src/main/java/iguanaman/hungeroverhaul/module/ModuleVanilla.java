@@ -40,30 +40,33 @@ public class ModuleVanilla
         Utils.replace(Items.reeds, new IguanaReed(reedNew).setUnlocalizedName("reeds").setTextureName("reeds").setCreativeTab(CreativeTabs.tabMaterials));
 
         carrotNew = new IguanaCropVegetable("carrots").setCropItem(Items.carrot).setSeedItem(Items.carrot).setBlockName("carrots").setBlockTextureName("carrots");
+        Blocks.carrots = carrotNew;
         Utils.replace(Blocks.carrots, carrotNew);
-        //		GameRegistry.registerBlock(reedNew, ItemBlock.class, null);
-
+        
         potatoNew = new IguanaCropVegetable("potatoes").setCropItem(Items.potato).setSeedItem(Items.potato).setBlockName("potatoes").setBlockTextureName("potatoes");
+        Blocks.potatoes = potatoNew;
         Utils.replace(Blocks.potatoes, potatoNew);
-        //		GameRegistry.registerBlock(potatoNew, ItemBlock.class, null);
 
         wheatNew = new IguanaCrop("crops").setCropItem(Items.wheat).setSeedItem(Items.wheat_seeds).setBlockName("crops").setBlockTextureName("wheat");
+        Blocks.wheat = wheatNew;
         Utils.replace(Blocks.wheat, wheatNew);
-        //		GameRegistry.registerBlock(wheatNew, ItemBlock.class, null);
+        Items.wheat_seeds = new IguanaSeed(Blocks.wheat, Blocks.farmland).setUnlocalizedName("seeds").setTextureName("seeds_wheat");
         Utils.replace(Items.wheat_seeds, new IguanaSeed(Blocks.wheat, Blocks.farmland).setUnlocalizedName("seeds").setTextureName("seeds_wheat"));
 
         pumpkinStemNew = new IguanaStem(Blocks.pumpkin).setHardness(0.0F).setStepSound(Block.soundTypeWood).setBlockName("pumpkinStem").setBlockTextureName("pumpkin_stem");
         melonStemNew = new IguanaStem(Blocks.melon_block).setHardness(0.0F).setStepSound(Block.soundTypeWood).setBlockName("pumpkinStem").setBlockTextureName("melon_stem");
+        Blocks.pumpkin_stem = pumpkinStemNew;
+        Blocks.melon_stem = melonStemNew;
         Utils.replace(Blocks.pumpkin_stem, pumpkinStemNew);
         Utils.replace(Blocks.melon_stem, melonStemNew);
-        //		GameRegistry.registerBlock(pumpkinStemNew, ItemBlock.class, null);
-        //		GameRegistry.registerBlock(melonStemNew, ItemBlock.class, null);
+        Items.pumpkin_seeds = new IguanaSeed(Blocks.pumpkin_stem, Blocks.farmland).setUnlocalizedName("seeds_pumpkin").setTextureName("seeds_pumpkin");
+        Items.melon_seeds = new IguanaSeed(Blocks.melon_stem, Blocks.farmland).setUnlocalizedName("seeds_melon").setTextureName("seeds_melon");
         Utils.replace(Items.pumpkin_seeds, new IguanaSeed(Blocks.pumpkin_stem, Blocks.farmland).setUnlocalizedName("seeds_pumpkin").setTextureName("seeds_pumpkin"));
         Utils.replace(Items.melon_seeds, new IguanaSeed(Blocks.melon_stem, Blocks.farmland).setUnlocalizedName("seeds_melon").setTextureName("seeds_melon"));
 
         cocoaNew = new IguanaCocoa().setHardness(0.2F).setResistance(5.0F).setStepSound(Block.soundTypeWood).setBlockName("cocoa").setBlockTextureName("cocoa");
+        Blocks.cocoa = cocoaNew;
         Utils.replace(Blocks.cocoa, cocoaNew);
-        //		GameRegistry.registerBlock(cocoaNew, ItemBlock.class, null);
 
         // ITEMS
         if (!Loader.isModLoaded("harvestcraft") || !IguanaConfig.modifyFoodValues)
