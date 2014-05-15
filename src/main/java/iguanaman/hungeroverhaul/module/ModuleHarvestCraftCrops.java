@@ -8,6 +8,7 @@ import iguanaman.hungeroverhaul.items.IguanaSeedPam;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
+import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aspects.Aspect;
@@ -1606,7 +1607,7 @@ public class ModuleHarvestCraftCrops {
 
 	public static void registerAspects(Item item, AspectList aspects)
 	{
-		if (!ThaumcraftApi.exists(item, -1)) ThaumcraftApi.registerObjectTag(id, -1, aspects);
+		if (!ThaumcraftApi.exists(item, -1)) ThaumcraftApi.registerObjectTag(new ItemStack(item,1), -1, aspects);
 	}
 
 }

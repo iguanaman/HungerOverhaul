@@ -2,6 +2,7 @@ package iguanaman.hungeroverhaul.module;
 
 import iguanaman.hungeroverhaul.blocks.IguanaFruit;
 import net.minecraft.block.Block;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import assets.pamharvestcraft.HarvestConfigurationHandler;
 import assets.pamharvestcraft.PamHarvestCraft;
@@ -32,7 +33,7 @@ public class ModuleHarvestCraftTrees {
 //		Block.blocksList[PamHarvestCraft.pamStarfruit.blockID] = null;
 //		Block.blocksList[PamHarvestCraft.pamVanillabean.blockID] = null;
 //		Block.blocksList[PamHarvestCraft.pamWalnut.blockID] = null;
-		PamHarvestCraft.pamApple = new IguanaFruit(HarvestConfigurationHandler.pamappleID, "apple").setTreeDrop(Item.appleRed.itemID);
+		PamHarvestCraft.pamApple = new IguanaFruit(HarvestConfigurationHandler.pamappleID, "apple").setTreeDrop(Items.apple);
 		PamHarvestCraft.pamAvocado = new IguanaFruit(HarvestConfigurationHandler.pamavocadoID, "avocado").setTreeDrop(PamHarvestCraft.avocadoItem.itemID);
 		PamHarvestCraft.pamBanana = new IguanaFruit(HarvestConfigurationHandler.pambananaID, "banana").setTreeDrop(PamHarvestCraft.bananaItem.itemID);
 		PamHarvestCraft.pamCherry = new IguanaFruit(HarvestConfigurationHandler.pamcherryID, "cherry").setTreeDrop(PamHarvestCraft.cherryItem.itemID);
