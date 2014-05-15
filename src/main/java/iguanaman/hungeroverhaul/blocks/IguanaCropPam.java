@@ -131,7 +131,7 @@ public class IguanaCropPam extends BlockPamCrop {
 		int biomeModifier = IguanaConfig.wrongBiomeRegrowthMultiplier;
 		try {
 			BiomeGenBase biome = par1World.getWorldChunkManager().getBiomeGenAt(par2, par4);
-			for (Type biomeType : IguanaCropPam.biomes[crop])
+			for (Type biomeType : IguanaCropPam.biomes[cropID])
 				if(BiomeDictionary.isBiomeOfType(biome, biomeType)) {
 					//FMLLog.warning("biome is type: " + biomeType.toString(), new Object());
 					biomeModifier = 1;

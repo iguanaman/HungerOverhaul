@@ -4,7 +4,6 @@ import iguanaman.hungeroverhaul.IguanaConfig;
 
 import java.util.Random;
 
-import net.minecraft.block.Block;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -49,13 +48,12 @@ public class IguanaCropPamFlower extends BlockPamFlowerCrop {
 
 		if(!par1World.isRemote) {
 			Random random = new Random();
-			Block crop = par1World.getBlock(par2, par3, par4);
 			int meta = par1World.getBlockMetadata(par2, par3, par4);
 			{
 				int cropDrops = random.nextInt(2) + 1;
 				if(meta == 2) {
 					par1World.setBlockMetadataWithNotify(par2, par3, par4, 0, 2);
-					par1World.spawnEntityInWorld(new EntityItem(par1World, par2 + 0.5D, par3 + 0.7D, par4 + 0.5D, new ItemStack(weeeflowers.pamFlower, cropDrops, crop)));
+					par1World.spawnEntityInWorld(new EntityItem(par1World, par2 + 0.5D, par3 + 0.7D, par4 + 0.5D, new ItemStack(weeeflowers.pamFlower, cropDrops, meta)));
 				}
 				return true;
 			}
