@@ -20,19 +20,20 @@ public class ModuleNatura {
 	public static void init() {
 
 		cactusNew = new IguanaCactus().setHardness(0.4F).setStepSound(Block.soundTypeCloth).setBlockName("cactus").setBlockTextureName("cactus");
+		Blocks.cactus = cactusNew;
 		Utils.replace(Blocks.cactus, cactusNew);
-		//GameRegistry.registerBlock(cactusNew, ItemBlock.class, null);
 
-		/*Block.blocksList[NContent.crops.blockID] = null;
-		Block.blocksList[NContent.berryBush.blockID] = null;
-		Block.blocksList[NContent.netherBerryBush.blockID] = null;
-		Block.blocksList[NContent.saguaro.blockID] = null;*/
 		NContent.crops = new IguanaCropNatura();
 		NContent.berryBush = new IguanaBerryBush();
 		NContent.netherBerryBush = new IguanaBerryBushNether();
 		NContent.saguaro = new IguanaSaguaro().setBlockName("saguaro.block");
-
 		NContent.seeds = new IguanaSeedNatura(NContent.crops, Blocks.farmland).setUnlocalizedName("barley.seed");
+		
+		Utils.replace(NContent.crops, new IguanaCropNatura());
+		Utils.replace(NContent.berryBush, new IguanaBerryBush());
+		Utils.replace(NContent.netherBerryBush, new IguanaBerryBushNether());
+		Utils.replace(NContent.saguaro, new IguanaSaguaro().setBlockName("saguaro.block"));
+		Utils.replace(NContent.seeds, new IguanaSeedNatura(NContent.crops, Blocks.farmland).setUnlocalizedName("barley.seed"));
 
 		RecipeRemover.removeAnyRecipe(new ItemStack(NContent.plantItem, 1, 1));
 		RecipeRemover.removeAnyRecipe(new ItemStack(NContent.plantItem, 1, 2));

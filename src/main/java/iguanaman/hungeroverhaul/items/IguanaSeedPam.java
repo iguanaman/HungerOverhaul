@@ -2,6 +2,7 @@ package iguanaman.hungeroverhaul.items;
 
 import iguanaman.hungeroverhaul.IguanaConfig;
 import iguanaman.hungeroverhaul.blocks.IguanaCropPam;
+import iguanaman.hungeroverhaul.module.HarvestCraftHelper;
 
 import java.util.List;
 
@@ -38,15 +39,17 @@ public class IguanaSeedPam extends ItemSeeds {
 		if (IguanaConfig.wrongBiomeRegrowthMultiplier > 1)
 		{
 			Type[] theBiomes = null;
-			if (ItemRegistry.pamCrop instanceof IguanaCropPam)
-				theBiomes = IguanaCropPam.biomes[cropID];
+			for(Block block : HarvestCraftHelper.PamCrops) {
+				if (block instanceof IguanaCropPam)
+					theBiomes = IguanaCropPam.biomes[cropID];
 
-			if (theBiomes != null) {
-				String tooltip = "";
-				for(Type biomeType : theBiomes)
-					tooltip += biomeType.toString().substring(0, 1).toUpperCase() + biomeType.toString().substring(1).toLowerCase() + ", ";
-				par3List.add("Crop grows best in:");
-				par3List.add(tooltip.substring(0, tooltip.length() - 2));
+				if (theBiomes != null) {
+					String tooltip = "";
+					for(Type biomeType : theBiomes)
+						tooltip += biomeType.toString().substring(0, 1).toUpperCase() + biomeType.toString().substring(1).toLowerCase() + ", ";
+					par3List.add("Crop grows best in:");
+					par3List.add(tooltip.substring(0, tooltip.length() - 2));
+				}
 			}
 		}
 	}
