@@ -36,7 +36,6 @@ public class ModuleHarvestCraftCrops {
 		float foodSaturation = 0.1F;
 		if (IguanaConfig.modifyFoodValues) {
 			ItemRegistry.cropfoodRestore = 1;
-			ItemRegistry.cropfoodRestore = 1;
 		}
 
 		// ITEM CHANGES
@@ -199,15 +198,15 @@ public class ModuleHarvestCraftCrops {
 		ItemRegistry.soybeanseedItem = new IguanaSeedPam(BlockRegistry.pamsoybeanCrop, Blocks.farmland).setUnlocalizedName("ItemRegistry:soybeanseedItem");
 		ItemRegistry.spiceleafItem = new ItemSeedFood(ItemRegistry.cropfoodRestore, foodSaturation, BlockRegistry.pamspiceleafCrop, Blocks.farmland).setUnlocalizedName("ItemRegistry:spiceleafItem");
 		ItemRegistry.spiceleafseedItem = new IguanaSeedPam(BlockRegistry.pamspiceleafCrop, Blocks.farmland).setUnlocalizedName("ItemRegistry:spiceleafseedItem");
-		ItemRegistry.sunflowerseedsItem = new ItemSeedFood(ItemRegistry.cropfoodRestore, foodSaturation, Blocks.double_plant, Blocks.farmland).setUnlocalizedName("ItemRegistry:sunflowerseedsItem");
+		ItemRegistry.sunflowerseedsItem = new ItemFood(ItemRegistry.cropfoodRestore, foodSaturation, false).setUnlocalizedName("ItemRegistry:sunflowerseedsItem");
 		ItemRegistry.sweetpotatoItem = new ItemSeedFood(ItemRegistry.cropfoodRestore, foodSaturation, BlockRegistry.pamsweetpotatoCrop, Blocks.farmland).setUnlocalizedName("ItemRegistry:sweetpotatoItem");
-		ItemRegistry.sweetpotatoseedItem = new IguanaSeedPam(HarvestConfigurationHandler.sweetpotatoseedID, 25).setUnlocalizedName("ItemRegistry:sweetpotatoseedItem");
-		ItemRegistry.tealeafItem = new ItemSeedFood(HarvestConfigurationHandler.tealeafID, ItemRegistry.cropfoodRestore, foodSaturation, 26).setUnlocalizedName("ItemRegistry:tealeafItem");
-		ItemRegistry.teaseedItem = new IguanaSeedPam(HarvestConfigurationHandler.teaseedID, 26).setUnlocalizedName("ItemRegistry:teaseedItem");
-		ItemRegistry.turnipItem = new ItemSeedFood(HarvestConfigurationHandler.turnipID, ItemRegistry.cropfoodRestore, foodSaturation, 27).setUnlocalizedName("ItemRegistry:turnipItem");
-		ItemRegistry.turnipseedItem = new IguanaSeedPam(HarvestConfigurationHandler.turnipseedID, 27).setUnlocalizedName("ItemRegistry:turnipseedItem");
-		ItemRegistry.whitemushroomItem = new ItemSeedFood(HarvestConfigurationHandler.whitemushroomID, ItemRegistry.cropfoodRestore, foodSaturation, 28).setUnlocalizedName("ItemRegistry:whitemushroomItem");
-		ItemRegistry.whitemushroomseedItem = new IguanaSeedPam(HarvestConfigurationHandler.whitemushroomseedID, 28).setUnlocalizedName("ItemRegistry:whitemushroomseedItem");
+		ItemRegistry.sweetpotatoseedItem = new IguanaSeedPam(BlockRegistry.pamsweetpotatoCrop, Blocks.farmland).setUnlocalizedName("ItemRegistry:sweetpotatoseedItem");
+		ItemRegistry.tealeafItem = new ItemSeedFood(ItemRegistry.cropfoodRestore, foodSaturation, BlockRegistry.pamtealeafCrop, Blocks.farmland).setUnlocalizedName("ItemRegistry:tealeafItem");
+		ItemRegistry.teaseedItem = new IguanaSeedPam(BlockRegistry.pamtealeafCrop, Blocks.farmland).setUnlocalizedName("ItemRegistry:teaseedItem");
+		ItemRegistry.turnipItem = new ItemSeedFood(ItemRegistry.cropfoodRestore, foodSaturation, BlockRegistry.pamturnipCrop, Blocks.farmland).setUnlocalizedName("ItemRegistry:turnipItem");
+		ItemRegistry.turnipseedItem = new IguanaSeedPam(BlockRegistry.pamturnipCrop, Blocks.farmland).setUnlocalizedName("ItemRegistry:turnipseedItem");
+		ItemRegistry.whitemushroomItem = new ItemSeedFood(ItemRegistry.cropfoodRestore, foodSaturation, BlockRegistry.pamwhitemushroomCrop, Blocks.farmland).setUnlocalizedName("ItemRegistry:whitemushroomItem");
+		ItemRegistry.whitemushroomseedItem = new IguanaSeedPam(BlockRegistry.pamwhitemushroomCrop, Blocks.farmland).setUnlocalizedName("ItemRegistry:whitemushroomseedItem");
 
 		ItemRegistry.artichokeItem = new ItemSeedFood(HarvestConfigurationHandler.artichokeID, ItemRegistry.cropfoodRestore, foodSaturation, 29).setUnlocalizedName("ItemRegistry:artichokeItem");
 		ItemRegistry.artichokeseedItem = new IguanaSeedPam(HarvestConfigurationHandler.artichokeseedID, 29).setUnlocalizedName("ItemRegistry:artichokeseedItem");
