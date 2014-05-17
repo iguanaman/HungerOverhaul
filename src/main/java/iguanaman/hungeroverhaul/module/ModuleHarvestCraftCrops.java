@@ -1708,224 +1708,101 @@ public class ModuleHarvestCraftCrops {
 			Utils.replace(ItemRegistry.silkentofuItem, new IguanaFoodPam(((ItemFood)ItemRegistry.silkentofuItem).func_150905_g(null), ((ItemFood)ItemRegistry.silkentofuItem).func_150906_h(null), false).setUnlocalizedName("ItemRegistry:silkentofuItem"));
 		}
 
-		if (IguanaConfig.modifyFoodValues == false)
-			PamHarvestCraft.grilledasparagusItem = new IguanaFoodPam(HarvestConfigurationHandler.grilledasparagusID, ((ItemFood)PamHarvestCraft.grilledasparagusItem).func_150905_g(null), ((ItemFood)PamHarvestCraft.grilledasparagusItem).func_150906_h(null), false, true).setUnlocalizedName("PamHarvestCraft:grilledasparagusItem");
-		else
-			PamHarvestCraft.grilledasparagusItem = new IguanaFoodPam(HarvestConfigurationHandler.grilledasparagusID, 2, 0.1F, false, true).setUnlocalizedName("PamHarvestCraft:grilledasparagusItem");
-
-		if (IguanaConfig.modifyFoodValues == false)
-			PamHarvestCraft.avocadoItem = new IguanaFoodPam(HarvestConfigurationHandler.avocadoID, ((ItemFood)PamHarvestCraft.avocadoItem).func_150905_g(null), ((ItemFood)PamHarvestCraft.avocadoItem).func_150906_h(null), false).setUnlocalizedName("PamHarvestCraft:avocadoItem");
-		else
-			PamHarvestCraft.avocadoItem = new IguanaFoodPam(HarvestConfigurationHandler.avocadoID, 1, 0.05F, false).setUnlocalizedName("PamHarvestCraft:avocadoItem");
-
-		if (IguanaConfig.modifyFoodValues == false)
-			PamHarvestCraft.bananaItem = new IguanaFoodPam(HarvestConfigurationHandler.bananaID, ((ItemFood)PamHarvestCraft.bananaItem).func_150905_g(null), ((ItemFood)PamHarvestCraft.bananaItem).func_150906_h(null), false).setUnlocalizedName("PamHarvestCraft:bananaItem");
-		else
-			PamHarvestCraft.bananaItem = new IguanaFoodPam(HarvestConfigurationHandler.bananaID, 1, 0.05F, false).setUnlocalizedName("PamHarvestCraft:bananaItem");
-
-		if (IguanaConfig.modifyFoodValues == false)
-			PamHarvestCraft.bellpepperItem = new IguanaFoodPam(HarvestConfigurationHandler.bellpepperID, ((ItemFood)PamHarvestCraft.bellpepperItem).func_150905_g(null), ((ItemFood)PamHarvestCraft.bellpepperItem).func_150906_h(null), false, true).setUnlocalizedName("PamHarvestCraft:bellpepperItem");
-		else
-			PamHarvestCraft.bellpepperItem = new IguanaFoodPam(HarvestConfigurationHandler.bellpepperID, 1, 0.05F, false, true).setUnlocalizedName("PamHarvestCraft:bellpepperItem");
-
-		if (IguanaConfig.modifyFoodValues == false)
-			PamHarvestCraft.blackberryItem = new IguanaFoodPam(HarvestConfigurationHandler.blackberryID, ((ItemFood)PamHarvestCraft.blackberryItem).func_150905_g(null), ((ItemFood)PamHarvestCraft.blackberryItem).func_150906_h(null), false).setUnlocalizedName("PamHarvestCraft:blackberryItem");
-		else
-			PamHarvestCraft.blackberryItem = new IguanaFoodPam(HarvestConfigurationHandler.blackberryID, 1, 0.05F, false).setUnlocalizedName("PamHarvestCraft:blackberryItem");
-
-		if (IguanaConfig.modifyFoodValues == false)
-			PamHarvestCraft.blueberryItem = new IguanaFoodPam(HarvestConfigurationHandler.blueberryID, ((ItemFood)PamHarvestCraft.blueberryItem).func_150905_g(null), ((ItemFood)PamHarvestCraft.blueberryItem).func_150906_h(null), false).setUnlocalizedName("PamHarvestCraft:blueberryItem");
-		else
-			PamHarvestCraft.blueberryItem = new IguanaFoodPam(HarvestConfigurationHandler.blueberryID, 1, 0.05F, false).setUnlocalizedName("PamHarvestCraft:blueberryItem");
-
-		if (IguanaConfig.modifyFoodValues == false)
-			PamHarvestCraft.cactusfruitItem = new IguanaFoodPam(HarvestConfigurationHandler.cactusfruitID, ((ItemFood)PamHarvestCraft.cactusfruitItem).func_150905_g(null), ((ItemFood)PamHarvestCraft.cactusfruitItem).func_150906_h(null), false).setUnlocalizedName("PamHarvestCraft:cactusfruitItem");
-		else
-			PamHarvestCraft.cactusfruitItem = new IguanaFoodPam(HarvestConfigurationHandler.cactusfruitID, 1, 0.05F, false).setUnlocalizedName("PamHarvestCraft:cactusfruitItem");
-
-		if (IguanaConfig.modifyFoodValues == false)
-			PamHarvestCraft.cantaloupeItem = new IguanaFoodPam(HarvestConfigurationHandler.cantaloupeID, ((ItemFood)PamHarvestCraft.cantaloupeItem).func_150905_g(null), ((ItemFood)PamHarvestCraft.cantaloupeItem).func_150906_h(null), false, true).setUnlocalizedName("PamHarvestCraft:cantaloupeItem");
-		else
-			PamHarvestCraft.cantaloupeItem = new IguanaFoodPam(HarvestConfigurationHandler.cantaloupeID, 2, 0.1F, false, true).setUnlocalizedName("PamHarvestCraft:cantaloupeItem");
-
-		if (IguanaConfig.modifyFoodValues == false)
-			PamHarvestCraft.cherryItem = new IguanaFoodPam(HarvestConfigurationHandler.cherryID, ((ItemFood)PamHarvestCraft.cherryItem).func_150905_g(null), ((ItemFood)PamHarvestCraft.cherryItem).func_150906_h(null), false, true).setUnlocalizedName("PamHarvestCraft:cherryItem");
-		else
-			PamHarvestCraft.cherryItem = new IguanaFoodPam(HarvestConfigurationHandler.cherryID, 1, 0.05F, false, true).setUnlocalizedName("PamHarvestCraft:cherryItem");
-
-		if (IguanaConfig.modifyFoodValues == false)
-			PamHarvestCraft.chilipepperItem = new IguanaFoodPam(HarvestConfigurationHandler.chilipepperID, ((ItemFood)PamHarvestCraft.chilipepperItem).func_150905_g(null), ((ItemFood)PamHarvestCraft.chilipepperItem).func_150906_h(null), false, true).setUnlocalizedName("PamHarvestCraft:chilipepperItem");
-		else
-			PamHarvestCraft.chilipepperItem = new IguanaFoodPam(HarvestConfigurationHandler.chilipepperID, 1, 0.05F, false, true).setUnlocalizedName("PamHarvestCraft:chilipepperItem");
-
 		if (IguanaConfig.modifyFoodValues == false) {
-			PamHarvestCraft.coconutItem = new IguanaFoodPam(HarvestConfigurationHandler.coconutID, ((ItemFood)PamHarvestCraft.coconutItem).func_150905_g(null), ((ItemFood)PamHarvestCraft.coconutItem).func_150906_h(null), false, true).setUnlocalizedName("PamHarvestCraft:coconutItem");
-			PamHarvestCraft.toastedcoconutItem = new IguanaFoodPam(HarvestConfigurationHandler.toastedcoconutID, ((ItemFood)PamHarvestCraft.toastedcoconutItem).func_150905_g(null), ((ItemFood)PamHarvestCraft.toastedcoconutItem).func_150906_h(null), false, true).setUnlocalizedName("PamHarvestCraft:toastedcoconutItem");
+			ItemRegistry.grilledasparagusItem = new IguanaFoodPam(HarvestConfigurationHandler.grilledasparagusID, ((ItemFood)ItemRegistry.grilledasparagusItem).func_150905_g(null), ((ItemFood)ItemRegistry.grilledasparagusItem).func_150906_h(null), false, true).setUnlocalizedName("ItemRegistry:grilledasparagusItem");
+			ItemRegistry.avocadoItem = new IguanaFoodPam(HarvestConfigurationHandler.avocadoID, ((ItemFood)ItemRegistry.avocadoItem).func_150905_g(null), ((ItemFood)ItemRegistry.avocadoItem).func_150906_h(null), false).setUnlocalizedName("ItemRegistry:avocadoItem");
+			ItemRegistry.bananaItem = new IguanaFoodPam(HarvestConfigurationHandler.bananaID, ((ItemFood)ItemRegistry.bananaItem).func_150905_g(null), ((ItemFood)ItemRegistry.bananaItem).func_150906_h(null), false).setUnlocalizedName("ItemRegistry:bananaItem");
+			ItemRegistry.bellpepperItem = new IguanaFoodPam(HarvestConfigurationHandler.bellpepperID, ((ItemFood)ItemRegistry.bellpepperItem).func_150905_g(null), ((ItemFood)ItemRegistry.bellpepperItem).func_150906_h(null), false, true).setUnlocalizedName("ItemRegistry:bellpepperItem");
+			ItemRegistry.blackberryItem = new IguanaFoodPam(HarvestConfigurationHandler.blackberryID, ((ItemFood)ItemRegistry.blackberryItem).func_150905_g(null), ((ItemFood)ItemRegistry.blackberryItem).func_150906_h(null), false).setUnlocalizedName("ItemRegistry:blackberryItem");
+			ItemRegistry.blueberryItem = new IguanaFoodPam(HarvestConfigurationHandler.blueberryID, ((ItemFood)ItemRegistry.blueberryItem).func_150905_g(null), ((ItemFood)ItemRegistry.blueberryItem).func_150906_h(null), false).setUnlocalizedName("ItemRegistry:blueberryItem");
+			ItemRegistry.cactusfruitItem = new IguanaFoodPam(HarvestConfigurationHandler.cactusfruitID, ((ItemFood)ItemRegistry.cactusfruitItem).func_150905_g(null), ((ItemFood)ItemRegistry.cactusfruitItem).func_150906_h(null), false).setUnlocalizedName("ItemRegistry:cactusfruitItem");
+			ItemRegistry.cantaloupeItem = new IguanaFoodPam(HarvestConfigurationHandler.cantaloupeID, ((ItemFood)ItemRegistry.cantaloupeItem).func_150905_g(null), ((ItemFood)ItemRegistry.cantaloupeItem).func_150906_h(null), false, true).setUnlocalizedName("ItemRegistry:cantaloupeItem");
+			ItemRegistry.cherryItem = new IguanaFoodPam(HarvestConfigurationHandler.cherryID, ((ItemFood)ItemRegistry.cherryItem).func_150905_g(null), ((ItemFood)ItemRegistry.cherryItem).func_150906_h(null), false, true).setUnlocalizedName("ItemRegistry:cherryItem");
+			ItemRegistry.chilipepperItem = new IguanaFoodPam(HarvestConfigurationHandler.chilipepperID, ((ItemFood)ItemRegistry.chilipepperItem).func_150905_g(null), ((ItemFood)ItemRegistry.chilipepperItem).func_150906_h(null), false, true).setUnlocalizedName("ItemRegistry:chilipepperItem");
+			ItemRegistry.coconutItem = new IguanaFoodPam(HarvestConfigurationHandler.coconutID, ((ItemFood)ItemRegistry.coconutItem).func_150905_g(null), ((ItemFood)ItemRegistry.coconutItem).func_150906_h(null), false, true).setUnlocalizedName("ItemRegistry:coconutItem");
+			ItemRegistry.toastedcoconutItem = new IguanaFoodPam(HarvestConfigurationHandler.toastedcoconutID, ((ItemFood)ItemRegistry.toastedcoconutItem).func_150905_g(null), ((ItemFood)ItemRegistry.toastedcoconutItem).func_150906_h(null), false, true).setUnlocalizedName("ItemRegistry:toastedcoconutItem");
+			ItemRegistry.coffeeItem = new IguanaFoodPam(HarvestConfigurationHandler.coffeeID, ((ItemFood)ItemRegistry.coffeeItem).func_150905_g(null), ((ItemFood)ItemRegistry.coffeeItem).func_150906_h(null), false, true).setPotionEffect(Potion.moveSpeed.id, 30, 0, 0.5F).setPotionEffect(Potion.jump.id, 30, 0, 0.5F).setUnlocalizedName("ItemRegistry:coffeeItem");
+			ItemRegistry.cornItem = new IguanaFoodPam(HarvestConfigurationHandler.cornID, ((ItemFood)ItemRegistry.cornItem).func_150905_g(null), ((ItemFood)ItemRegistry.cornItem).func_150906_h(null), false, true).setUnlocalizedName("ItemRegistry:cornItem");
+			ItemRegistry.popcornItem = new IguanaFoodPam(HarvestConfigurationHandler.popcornID, ((ItemFood)ItemRegistry.popcornItem).func_150905_g(null), ((ItemFood)ItemRegistry.popcornItem).func_150906_h(null), false, true).setUnlocalizedName("ItemRegistry:popcornItem");
+			ItemRegistry.cranberryItem = new IguanaFoodPam(HarvestConfigurationHandler.cranberryID, ((ItemFood)ItemRegistry.cranberryItem).func_150905_g(null), ((ItemFood)ItemRegistry.cranberryItem).func_150906_h(null), false).setUnlocalizedName("ItemRegistry:cranberryItem");
+			ItemRegistry.cucumberItem = new IguanaFoodPam(HarvestConfigurationHandler.cucumberID, ((ItemFood)ItemRegistry.cucumberItem).func_150905_g(null), ((ItemFood)ItemRegistry.cucumberItem).func_150906_h(null), false, true).setUnlocalizedName("ItemRegistry:cucumberItem");
+			ItemRegistry.dragonfruitItem = new IguanaFoodPam(HarvestConfigurationHandler.dragonfruitID, ((ItemFood)ItemRegistry.dragonfruitItem).func_150905_g(null), ((ItemFood)ItemRegistry.dragonfruitItem).func_150906_h(null), false, true).setUnlocalizedName("ItemRegistry:dragonfruitItem");
+			ItemRegistry.eggplantItem = new IguanaFoodPam(HarvestConfigurationHandler.eggplantID, ((ItemFood)ItemRegistry.eggplantItem).func_150905_g(null), ((ItemFood)ItemRegistry.eggplantItem).func_150906_h(null), false, true).setUnlocalizedName("ItemRegistry:eggplantItem");
+			ItemRegistry.grilledeggplantItem = new IguanaFoodPam(HarvestConfigurationHandler.grilledeggplantID, ((ItemFood)ItemRegistry.grilledeggplantItem).func_150905_g(null), ((ItemFood)ItemRegistry.grilledeggplantItem).func_150906_h(null), false, true).setUnlocalizedName("ItemRegistry:grilledeggplantItem");
+			ItemRegistry.grapeItem = new IguanaFoodPam(HarvestConfigurationHandler.grapeID, ((ItemFood)ItemRegistry.grapeItem).func_150905_g(null), ((ItemFood)ItemRegistry.grapeItem).func_150906_h(null), false).setUnlocalizedName("ItemRegistry:grapeItem");
+			ItemRegistry.raisinsItem = new IguanaFoodPam(HarvestConfigurationHandler.raisinsID, ((ItemFood)ItemRegistry.raisinsItem).func_150905_g(null), ((ItemFood)ItemRegistry.raisinsItem).func_150906_h(null), false, true).setUnlocalizedName("ItemRegistry:raisinsItem");
+			ItemRegistry.kiwiItem = new IguanaFoodPam(HarvestConfigurationHandler.kiwiID, ((ItemFood)ItemRegistry.kiwiItem).func_150905_g(null), ((ItemFood)ItemRegistry.kiwiItem).func_150906_h(null), false).setUnlocalizedName("ItemRegistry:kiwiItem");
+			ItemRegistry.lemonItem = new IguanaFoodPam(HarvestConfigurationHandler.lemonID, ((ItemFood)ItemRegistry.lemonItem).func_150905_g(null), ((ItemFood)ItemRegistry.lemonItem).func_150906_h(null), false).setUnlocalizedName("ItemRegistry:lemonItem");
+			ItemRegistry.limeItem = new IguanaFoodPam(HarvestConfigurationHandler.limeID, ((ItemFood)ItemRegistry.limeItem).func_150905_g(null), ((ItemFood)ItemRegistry.limeItem).func_150906_h(null), false).setUnlocalizedName("ItemRegistry:limeItem");
+			ItemRegistry.lettuceItem = new IguanaFoodPam(HarvestConfigurationHandler.lettuceID, ((ItemFood)ItemRegistry.lettuceItem).func_150905_g(null), ((ItemFood)ItemRegistry.lettuceItem).func_150906_h(null), false, true).setUnlocalizedName("ItemRegistry:lettuceItem");
+			ItemRegistry.mangoItem = new IguanaFoodPam(HarvestConfigurationHandler.mangoID, ((ItemFood)ItemRegistry.mangoItem).func_150905_g(null), ((ItemFood)ItemRegistry.mangoItem).func_150906_h(null), false).setUnlocalizedName("ItemRegistry:mangoItem");
+			ItemRegistry.nutmegItem = new IguanaFoodPam(HarvestConfigurationHandler.nutmegID, ((ItemFood)ItemRegistry.nutmegItem).func_150905_g(null), ((ItemFood)ItemRegistry.nutmegItem).func_150906_h(null), false, true).setUnlocalizedName("ItemRegistry:nutmegItem");
+			ItemRegistry.oliveItem = new IguanaFoodPam(HarvestConfigurationHandler.oliveID, ((ItemFood)ItemRegistry.oliveItem).func_150905_g(null), ((ItemFood)ItemRegistry.oliveItem).func_150906_h(null), false, true).setUnlocalizedName("ItemRegistry:oliveItem");
+			ItemRegistry.orangeItem = new IguanaFoodPam(HarvestConfigurationHandler.orangeID, ((ItemFood)ItemRegistry.orangeItem).func_150905_g(null), ((ItemFood)ItemRegistry.orangeItem).func_150906_h(null), false).setUnlocalizedName("ItemRegistry:orangeItem");
+			ItemRegistry.papayaItem = new IguanaFoodPam(HarvestConfigurationHandler.papayaID, ((ItemFood)ItemRegistry.papayaItem).func_150905_g(null), ((ItemFood)ItemRegistry.papayaItem).func_150906_h(null), false).setUnlocalizedName("ItemRegistry:papayaItem");
+			ItemRegistry.peachItem = new IguanaFoodPam(HarvestConfigurationHandler.peachID, ((ItemFood)ItemRegistry.peachItem).func_150905_g(null), ((ItemFood)ItemRegistry.peachItem).func_150906_h(null), false).setUnlocalizedName("ItemRegistry:peachItem");
+			ItemRegistry.pearItem = new IguanaFoodPam(HarvestConfigurationHandler.pearID, ((ItemFood)ItemRegistry.pearItem).func_150905_g(null), ((ItemFood)ItemRegistry.pearItem).func_150906_h(null), false).setUnlocalizedName("ItemRegistry:pearItem");
+			ItemRegistry.plumItem = new IguanaFoodPam(HarvestConfigurationHandler.plumID, ((ItemFood)ItemRegistry.plumItem).func_150905_g(null), ((ItemFood)ItemRegistry.plumItem).func_150906_h(null), false).setUnlocalizedName("ItemRegistry:plumItem");
+			ItemRegistry.pomegranateItem = new IguanaFoodPam(HarvestConfigurationHandler.pomegranateID, ((ItemFood)ItemRegistry.pomegranateItem).func_150905_g(null), ((ItemFood)ItemRegistry.pomegranateItem).func_150906_h(null), false).setUnlocalizedName("ItemRegistry:pomegranateItem");
+			ItemRegistry.raspberryItem = new IguanaFoodPam(HarvestConfigurationHandler.raspberryID, ((ItemFood)ItemRegistry.raspberryItem).func_150905_g(null), ((ItemFood)ItemRegistry.raspberryItem).func_150906_h(null), false).setUnlocalizedName("ItemRegistry:raspberryItem");
+			ItemRegistry.riceItem = new IguanaFoodPam(HarvestConfigurationHandler.riceID, ((ItemFood)ItemRegistry.riceItem).func_150905_g(null), ((ItemFood)ItemRegistry.riceItem).func_150906_h(null), true).setUnlocalizedName("ItemRegistry:riceItem");
+			ItemRegistry.ricecakeItem = new IguanaFoodPam(HarvestConfigurationHandler.ricecakeID, ((ItemFood)ItemRegistry.ricecakeItem).func_150905_g(null), ((ItemFood)ItemRegistry.ricecakeItem).func_150906_h(null), false, true).setUnlocalizedName("ItemRegistry:ricecakeItem");
+			ItemRegistry.spiceleafItem = new IguanaFoodPam(HarvestConfigurationHandler.spiceleafID, ((ItemFood)ItemRegistry.spiceleafItem).func_150905_g(null), ((ItemFood)ItemRegistry.spiceleafItem).func_150906_h(null), false, true).setUnlocalizedName("ItemRegistry:spiceleafItem");
+			ItemRegistry.starfruitItem = new IguanaFoodPam(HarvestConfigurationHandler.starfruitID, ((ItemFood)ItemRegistry.starfruitItem).func_150905_g(null), ((ItemFood)ItemRegistry.starfruitItem).func_150906_h(null), false).setUnlocalizedName("ItemRegistry:starfruitItem");
+			ItemRegistry.strawberryItem = new IguanaFoodPam(HarvestConfigurationHandler.strawberryID, ((ItemFood)ItemRegistry.strawberryItem).func_150905_g(null), ((ItemFood)ItemRegistry.strawberryItem).func_150906_h(null), false).setUnlocalizedName("ItemRegistry:strawberryItem");
+			ItemRegistry.tealeafItem = new IguanaFoodPam(HarvestConfigurationHandler.tealeafID, ((ItemFood)ItemRegistry.tealeafItem).func_150905_g(null), ((ItemFood)ItemRegistry.tealeafItem).func_150906_h(null), false, true).setUnlocalizedName("ItemRegistry:tealeafItem");
+			ItemRegistry.teaItem = new IguanaFoodPam(HarvestConfigurationHandler.teaID, ((ItemFood)ItemRegistry.teaItem).func_150905_g(null), ((ItemFood)ItemRegistry.teaItem).func_150906_h(null), false, true).setUnlocalizedName("ItemRegistry:teaItem");
+			ItemRegistry.tomatoItem = new IguanaFoodPam(HarvestConfigurationHandler.tomatoID, ((ItemFood)ItemRegistry.tomatoItem).func_150905_g(null), ((ItemFood)ItemRegistry.tomatoItem).func_150906_h(null), false).setUnlocalizedName("ItemRegistry:tomatoItem");
+			ItemRegistry.walnutItem = new IguanaFoodPam(HarvestConfigurationHandler.walnutID, ((ItemFood)ItemRegistry.walnutItem).func_150905_g(null), ((ItemFood)ItemRegistry.walnutItem).func_150906_h(null), false, true).setUnlocalizedName("ItemRegistry:walnutItem");
+			ItemRegistry.zucchiniItem = new IguanaFoodPam(HarvestConfigurationHandler.zucchiniID, ((ItemFood)ItemRegistry.zucchiniItem).func_150905_g(null), ((ItemFood)ItemRegistry.zucchiniItem).func_150906_h(null), false, true).setUnlocalizedName("ItemRegistry:zucchiniItem");
 		} else {
-			PamHarvestCraft.coconutItem = new IguanaFoodPam(HarvestConfigurationHandler.coconutID, 1, 0.05F, false, true).setUnlocalizedName("PamHarvestCraft:coconutItem");
-			PamHarvestCraft.toastedcoconutItem = new IguanaFoodPam(HarvestConfigurationHandler.toastedcoconutID, 2, 0.1F, false, true).setUnlocalizedName("PamHarvestCraft:toastedcoconutItem");
+			ItemRegistry.grilledasparagusItem = new IguanaFoodPam(HarvestConfigurationHandler.grilledasparagusID, 2, 0.1F, false, true).setUnlocalizedName("ItemRegistry:grilledasparagusItem");
+			ItemRegistry.avocadoItem = new IguanaFoodPam(HarvestConfigurationHandler.avocadoID, 1, 0.05F, false).setUnlocalizedName("ItemRegistry:avocadoItem");
+			ItemRegistry.bananaItem = new IguanaFoodPam(HarvestConfigurationHandler.bananaID, 1, 0.05F, false).setUnlocalizedName("ItemRegistry:bananaItem");
+			ItemRegistry.bellpepperItem = new IguanaFoodPam(HarvestConfigurationHandler.bellpepperID, 1, 0.05F, false, true).setUnlocalizedName("ItemRegistry:bellpepperItem");
+			ItemRegistry.blackberryItem = new IguanaFoodPam(HarvestConfigurationHandler.blackberryID, 1, 0.05F, false).setUnlocalizedName("ItemRegistry:blackberryItem");
+			ItemRegistry.blueberryItem = new IguanaFoodPam(HarvestConfigurationHandler.blueberryID, 1, 0.05F, false).setUnlocalizedName("ItemRegistry:blueberryItem");
+			ItemRegistry.cactusfruitItem = new IguanaFoodPam(HarvestConfigurationHandler.cactusfruitID, 1, 0.05F, false).setUnlocalizedName("ItemRegistry:cactusfruitItem");
+			ItemRegistry.cantaloupeItem = new IguanaFoodPam(HarvestConfigurationHandler.cantaloupeID, 2, 0.1F, false, true).setUnlocalizedName("ItemRegistry:cantaloupeItem");
+			ItemRegistry.cherryItem = new IguanaFoodPam(HarvestConfigurationHandler.cherryID, 1, 0.05F, false, true).setUnlocalizedName("ItemRegistry:cherryItem");
+			ItemRegistry.chilipepperItem = new IguanaFoodPam(HarvestConfigurationHandler.chilipepperID, 1, 0.05F, false, true).setUnlocalizedName("ItemRegistry:chilipepperItem");
+			ItemRegistry.coconutItem = new IguanaFoodPam(HarvestConfigurationHandler.coconutID, 1, 0.05F, false, true).setUnlocalizedName("ItemRegistry:coconutItem");
+			ItemRegistry.toastedcoconutItem = new IguanaFoodPam(HarvestConfigurationHandler.toastedcoconutID, 2, 0.1F, false, true).setUnlocalizedName("ItemRegistry:toastedcoconutItem");
+			ItemRegistry.coffeeItem = new IguanaFoodPam(HarvestConfigurationHandler.coffeeID, 0, 0.0F, false, true).setPotionEffect(Potion.moveSpeed.id, 30, 0, 0.5F).setPotionEffect(Potion.jump.id, 30, 0, 0.5F).setUnlocalizedName("ItemRegistry:coffeeItem");
+			ItemRegistry.cornItem = new IguanaFoodPam(HarvestConfigurationHandler.cornID, 1, 0.05F, false, true).setUnlocalizedName("ItemRegistry:cornItem");
+			ItemRegistry.popcornItem = new IguanaFoodPam(HarvestConfigurationHandler.popcornID, 2, 0.1F, false, true).setUnlocalizedName("ItemRegistry:popcornItem");
+			ItemRegistry.cranberryItem = new IguanaFoodPam(HarvestConfigurationHandler.cranberryID, 1, 0.05F, false).setUnlocalizedName("ItemRegistry:cranberryItem");
+			ItemRegistry.cucumberItem = new IguanaFoodPam(HarvestConfigurationHandler.cucumberID, 1, 0.05F, false, true).setUnlocalizedName("ItemRegistry:cucumberItem");
+			ItemRegistry.dragonfruitItem = new IguanaFoodPam(HarvestConfigurationHandler.dragonfruitID, 1, 0.05F, false, true).setUnlocalizedName("ItemRegistry:dragonfruitItem");
+			ItemRegistry.eggplantItem = new IguanaFoodPam(HarvestConfigurationHandler.eggplantID, 1, 0.05F, false, true).setUnlocalizedName("ItemRegistry:eggplantItem");
+			ItemRegistry.grilledeggplantItem = new IguanaFoodPam(HarvestConfigurationHandler.grilledeggplantID, 2, 0.05F, false, true).setUnlocalizedName("ItemRegistry:grilledeggplantItem");
+			ItemRegistry.grapeItem = new IguanaFoodPam(HarvestConfigurationHandler.grapeID, 1, 0.05F, false).setUnlocalizedName("ItemRegistry:grapeItem");
+			ItemRegistry.raisinsItem = new IguanaFoodPam(HarvestConfigurationHandler.raisinsID, 2, 0.1F, false, true).setUnlocalizedName("ItemRegistry:raisinsItem");
+			ItemRegistry.kiwiItem = new IguanaFoodPam(HarvestConfigurationHandler.kiwiID, 1, 0.05F, false).setUnlocalizedName("ItemRegistry:kiwiItem");
+			ItemRegistry.lemonItem = new IguanaFoodPam(HarvestConfigurationHandler.lemonID, 1, 0.05F, false).setUnlocalizedName("ItemRegistry:lemonItem");
+			ItemRegistry.limeItem = new IguanaFoodPam(HarvestConfigurationHandler.limeID, 1, 0.05F, false).setUnlocalizedName("ItemRegistry:limeItem");
+			ItemRegistry.lettuceItem = new IguanaFoodPam(HarvestConfigurationHandler.lettuceID, 1, 0.05F, false, true).setUnlocalizedName("ItemRegistry:lettuceItem");
+			ItemRegistry.mangoItem = new IguanaFoodPam(HarvestConfigurationHandler.mangoID, 1, 0.05F, false).setUnlocalizedName("ItemRegistry:mangoItem");
+			ItemRegistry.nutmegItem = new IguanaFoodPam(HarvestConfigurationHandler.nutmegID, 1, 0.05F, false, true).setUnlocalizedName("ItemRegistry:nutmegItem");
+			ItemRegistry.oliveItem = new IguanaFoodPam(HarvestConfigurationHandler.oliveID, 1, 0.05F, false, true).setUnlocalizedName("ItemRegistry:oliveItem");
+			ItemRegistry.orangeItem = new IguanaFoodPam(HarvestConfigurationHandler.orangeID, 1, 0.05F, false).setUnlocalizedName("ItemRegistry:orangeItem");
+			ItemRegistry.papayaItem = new IguanaFoodPam(HarvestConfigurationHandler.papayaID, 1, 0.05F, false).setUnlocalizedName("ItemRegistry:papayaItem");
+			ItemRegistry.peachItem = new IguanaFoodPam(HarvestConfigurationHandler.peachID, 1, 0.05F, false).setUnlocalizedName("ItemRegistry:peachItem");
+			ItemRegistry.pearItem = new IguanaFoodPam(HarvestConfigurationHandler.pearID, 1, 0.05F, false).setUnlocalizedName("ItemRegistry:pearItem");
+			ItemRegistry.plumItem = new IguanaFoodPam(HarvestConfigurationHandler.plumID, 1, 0.05F, false).setUnlocalizedName("ItemRegistry:plumItem");
+			ItemRegistry.pomegranateItem = new IguanaFoodPam(HarvestConfigurationHandler.pomegranateID, 1, 0.05F, false).setUnlocalizedName("ItemRegistry:pomegranateItem");
+			ItemRegistry.raspberryItem = new IguanaFoodPam(HarvestConfigurationHandler.raspberryID, 1, 0.05F, false).setUnlocalizedName("ItemRegistry:raspberryItem");
+			ItemRegistry.riceItem = new IguanaFoodPam(HarvestConfigurationHandler.riceID, 1, 0.05F, true).setUnlocalizedName("ItemRegistry:riceItem");
+			ItemRegistry.ricecakeItem = new IguanaFoodPam(HarvestConfigurationHandler.ricecakeID, 2, 0.1F, false, true).setUnlocalizedName("ItemRegistry:ricecakeItem");
+			ItemRegistry.spiceleafItem = new IguanaFoodPam(HarvestConfigurationHandler.spiceleafID, 1, 0.05F, false, true).setUnlocalizedName("ItemRegistry:spiceleafItem");
+			ItemRegistry.starfruitItem = new IguanaFoodPam(HarvestConfigurationHandler.starfruitID, 1, 0.05F, false).setUnlocalizedName("ItemRegistry:starfruitItem");
+			ItemRegistry.strawberryItem = new IguanaFoodPam(HarvestConfigurationHandler.strawberryID, 1, 0.05F, false).setUnlocalizedName("ItemRegistry:strawberryItem");
+			ItemRegistry.tealeafItem = new IguanaFoodPam(HarvestConfigurationHandler.tealeafID, 1, 0.05F, false, true).setUnlocalizedName("ItemRegistry:tealeafItem");
+			ItemRegistry.teaItem = new IguanaFoodPam(HarvestConfigurationHandler.teaID, 2, 0.1F, false, true).setUnlocalizedName("ItemRegistry:teaItem");
+			ItemRegistry.tomatoItem = new IguanaFoodPam(HarvestConfigurationHandler.tomatoID, 1, 0.05F, false).setUnlocalizedName("ItemRegistry:tomatoItem");
+			ItemRegistry.walnutItem = new IguanaFoodPam(HarvestConfigurationHandler.walnutID, 1, 0.05F, false, true).setUnlocalizedName("ItemRegistry:walnutItem");
+			ItemRegistry.zucchiniItem = new IguanaFoodPam(HarvestConfigurationHandler.zucchiniID, 1, 0.05F, false, true).setUnlocalizedName("ItemRegistry:zucchiniItem");
 		}
-		
-		if (IguanaConfig.modifyFoodValues == false)
-			PamHarvestCraft.coffeeItem = new IguanaFoodPam(HarvestConfigurationHandler.coffeeID, ((ItemFood)PamHarvestCraft.coffeeItem).func_150905_g(null), ((ItemFood)PamHarvestCraft.coffeeItem).func_150906_h(null), false, true).setPotionEffect(Potion.moveSpeed.id, 30, 0, 0.5F).setPotionEffect(Potion.jump.id, 30, 0, 0.5F).setUnlocalizedName("PamHarvestCraft:coffeeItem");
-		else
-			PamHarvestCraft.coffeeItem = new IguanaFoodPam(HarvestConfigurationHandler.coffeeID, 0, 0.0F, false, true).setPotionEffect(Potion.moveSpeed.id, 30, 0, 0.5F).setPotionEffect(Potion.jump.id, 30, 0, 0.5F).setUnlocalizedName("PamHarvestCraft:coffeeItem");
-
-		if (IguanaConfig.modifyFoodValues == false) {
-			PamHarvestCraft.cornItem = new IguanaFoodPam(HarvestConfigurationHandler.cornID, ((ItemFood)PamHarvestCraft.cornItem).func_150905_g(null), ((ItemFood)PamHarvestCraft.cornItem).func_150906_h(null), false, true).setUnlocalizedName("PamHarvestCraft:cornItem");
-			PamHarvestCraft.popcornItem = new IguanaFoodPam(HarvestConfigurationHandler.popcornID, ((ItemFood)PamHarvestCraft.popcornItem).func_150905_g(null), ((ItemFood)PamHarvestCraft.popcornItem).func_150906_h(null), false, true).setUnlocalizedName("PamHarvestCraft:popcornItem");
-		} else {
-			PamHarvestCraft.cornItem = new IguanaFoodPam(HarvestConfigurationHandler.cornID, 1, 0.05F, false, true).setUnlocalizedName("PamHarvestCraft:cornItem");
-			PamHarvestCraft.popcornItem = new IguanaFoodPam(HarvestConfigurationHandler.popcornID, 2, 0.1F, false, true).setUnlocalizedName("PamHarvestCraft:popcornItem");
-		}
-
-		if (IguanaConfig.modifyFoodValues == false)
-			PamHarvestCraft.cranberryItem = new IguanaFoodPam(HarvestConfigurationHandler.cranberryID, ((ItemFood)PamHarvestCraft.cranberryItem).func_150905_g(null), ((ItemFood)PamHarvestCraft.cranberryItem).func_150906_h(null), false).setUnlocalizedName("PamHarvestCraft:cranberryItem");
-		else
-			PamHarvestCraft.cranberryItem = new IguanaFoodPam(HarvestConfigurationHandler.cranberryID, 1, 0.05F, false).setUnlocalizedName("PamHarvestCraft:cranberryItem");
-
-		if (IguanaConfig.modifyFoodValues == false)
-			PamHarvestCraft.cucumberItem = new IguanaFoodPam(HarvestConfigurationHandler.cucumberID, ((ItemFood)PamHarvestCraft.cucumberItem).func_150905_g(null), ((ItemFood)PamHarvestCraft.cucumberItem).func_150906_h(null), false, true).setUnlocalizedName("PamHarvestCraft:cucumberItem");
-		else
-			PamHarvestCraft.cucumberItem = new IguanaFoodPam(HarvestConfigurationHandler.cucumberID, 1, 0.05F, false, true).setUnlocalizedName("PamHarvestCraft:cucumberItem");
-
-		if (IguanaConfig.modifyFoodValues == false)
-			PamHarvestCraft.dragonfruitItem = new IguanaFoodPam(HarvestConfigurationHandler.dragonfruitID, ((ItemFood)PamHarvestCraft.dragonfruitItem).func_150905_g(null), ((ItemFood)PamHarvestCraft.dragonfruitItem).func_150906_h(null), false, true).setUnlocalizedName("PamHarvestCraft:dragonfruitItem");
-		else
-			PamHarvestCraft.dragonfruitItem = new IguanaFoodPam(HarvestConfigurationHandler.dragonfruitID, 1, 0.05F, false, true).setUnlocalizedName("PamHarvestCraft:dragonfruitItem");
-
-		if (IguanaConfig.modifyFoodValues == false) {
-			PamHarvestCraft.eggplantItem = new IguanaFoodPam(HarvestConfigurationHandler.eggplantID, ((ItemFood)PamHarvestCraft.eggplantItem).func_150905_g(null), ((ItemFood)PamHarvestCraft.eggplantItem).func_150906_h(null), false, true).setUnlocalizedName("PamHarvestCraft:eggplantItem");
-			PamHarvestCraft.grilledeggplantItem = new IguanaFoodPam(HarvestConfigurationHandler.grilledeggplantID, ((ItemFood)PamHarvestCraft.grilledeggplantItem).func_150905_g(null), ((ItemFood)PamHarvestCraft.grilledeggplantItem).func_150906_h(null), false, true).setUnlocalizedName("PamHarvestCraft:grilledeggplantItem");
-		} else {
-			PamHarvestCraft.eggplantItem = new IguanaFoodPam(HarvestConfigurationHandler.eggplantID, 1, 0.05F, false, true).setUnlocalizedName("PamHarvestCraft:eggplantItem");
-			PamHarvestCraft.grilledeggplantItem = new IguanaFoodPam(HarvestConfigurationHandler.grilledeggplantID, 2, 0.05F, false, true).setUnlocalizedName("PamHarvestCraft:grilledeggplantItem");
-		}
-
-		if (IguanaConfig.modifyFoodValues == false) {
-			PamHarvestCraft.grapeItem = new IguanaFoodPam(HarvestConfigurationHandler.grapeID, ((ItemFood)PamHarvestCraft.grapeItem).func_150905_g(null), ((ItemFood)PamHarvestCraft.grapeItem).func_150906_h(null), false).setUnlocalizedName("PamHarvestCraft:grapeItem");
-			PamHarvestCraft.raisinsItem = new IguanaFoodPam(HarvestConfigurationHandler.raisinsID, ((ItemFood)PamHarvestCraft.raisinsItem).func_150905_g(null), ((ItemFood)PamHarvestCraft.raisinsItem).func_150906_h(null), false, true).setUnlocalizedName("PamHarvestCraft:raisinsItem");
-		} else {
-			PamHarvestCraft.grapeItem = new IguanaFoodPam(HarvestConfigurationHandler.grapeID, 1, 0.05F, false).setUnlocalizedName("PamHarvestCraft:grapeItem");
-			PamHarvestCraft.raisinsItem = new IguanaFoodPam(HarvestConfigurationHandler.raisinsID, 2, 0.1F, false, true).setUnlocalizedName("PamHarvestCraft:raisinsItem");
-		}
-
-		if (IguanaConfig.modifyFoodValues == false)
-			PamHarvestCraft.kiwiItem = new IguanaFoodPam(HarvestConfigurationHandler.kiwiID, ((ItemFood)PamHarvestCraft.kiwiItem).func_150905_g(null), ((ItemFood)PamHarvestCraft.kiwiItem).func_150906_h(null), false).setUnlocalizedName("PamHarvestCraft:kiwiItem");
-		else
-			PamHarvestCraft.kiwiItem = new IguanaFoodPam(HarvestConfigurationHandler.kiwiID, 1, 0.05F, false).setUnlocalizedName("PamHarvestCraft:kiwiItem");
-
-		if (IguanaConfig.modifyFoodValues == false)
-			PamHarvestCraft.lemonItem = new IguanaFoodPam(HarvestConfigurationHandler.lemonID, ((ItemFood)PamHarvestCraft.lemonItem).func_150905_g(null), ((ItemFood)PamHarvestCraft.lemonItem).func_150906_h(null), false).setUnlocalizedName("PamHarvestCraft:lemonItem");
-		else
-			PamHarvestCraft.lemonItem = new IguanaFoodPam(HarvestConfigurationHandler.lemonID, 1, 0.05F, false).setUnlocalizedName("PamHarvestCraft:lemonItem");
-
-		if (IguanaConfig.modifyFoodValues == false)
-			PamHarvestCraft.limeItem = new IguanaFoodPam(HarvestConfigurationHandler.limeID, ((ItemFood)PamHarvestCraft.limeItem).func_150905_g(null), ((ItemFood)PamHarvestCraft.limeItem).func_150906_h(null), false).setUnlocalizedName("PamHarvestCraft:limeItem");
-		else
-			PamHarvestCraft.limeItem = new IguanaFoodPam(HarvestConfigurationHandler.limeID, 1, 0.05F, false).setUnlocalizedName("PamHarvestCraft:limeItem");
-
-		if (IguanaConfig.modifyFoodValues == false)
-			PamHarvestCraft.lettuceItem = new IguanaFoodPam(HarvestConfigurationHandler.lettuceID, ((ItemFood)PamHarvestCraft.lettuceItem).func_150905_g(null), ((ItemFood)PamHarvestCraft.lettuceItem).func_150906_h(null), false, true).setUnlocalizedName("PamHarvestCraft:lettuceItem");
-		else
-			PamHarvestCraft.lettuceItem = new IguanaFoodPam(HarvestConfigurationHandler.lettuceID, 1, 0.05F, false, true).setUnlocalizedName("PamHarvestCraft:lettuceItem");
-
-		if (IguanaConfig.modifyFoodValues == false)
-			PamHarvestCraft.mangoItem = new IguanaFoodPam(HarvestConfigurationHandler.mangoID, ((ItemFood)PamHarvestCraft.mangoItem).func_150905_g(null), ((ItemFood)PamHarvestCraft.mangoItem).func_150906_h(null), false).setUnlocalizedName("PamHarvestCraft:mangoItem");
-		else
-			PamHarvestCraft.mangoItem = new IguanaFoodPam(HarvestConfigurationHandler.mangoID, 1, 0.05F, false).setUnlocalizedName("PamHarvestCraft:mangoItem");
-
-		if (IguanaConfig.modifyFoodValues == false)
-			PamHarvestCraft.nutmegItem = new IguanaFoodPam(HarvestConfigurationHandler.nutmegID, ((ItemFood)PamHarvestCraft.nutmegItem).func_150905_g(null), ((ItemFood)PamHarvestCraft.nutmegItem).func_150906_h(null), false, true).setUnlocalizedName("PamHarvestCraft:nutmegItem");
-		else
-			PamHarvestCraft.nutmegItem = new IguanaFoodPam(HarvestConfigurationHandler.nutmegID, 1, 0.05F, false, true).setUnlocalizedName("PamHarvestCraft:nutmegItem");
-
-		if (IguanaConfig.modifyFoodValues == false)
-			PamHarvestCraft.oliveItem = new IguanaFoodPam(HarvestConfigurationHandler.oliveID, ((ItemFood)PamHarvestCraft.oliveItem).func_150905_g(null), ((ItemFood)PamHarvestCraft.oliveItem).func_150906_h(null), false, true).setUnlocalizedName("PamHarvestCraft:oliveItem");
-		else
-			PamHarvestCraft.oliveItem = new IguanaFoodPam(HarvestConfigurationHandler.oliveID, 1, 0.05F, false, true).setUnlocalizedName("PamHarvestCraft:oliveItem");
-
-		if (IguanaConfig.modifyFoodValues == false)
-			PamHarvestCraft.orangeItem = new IguanaFoodPam(HarvestConfigurationHandler.orangeID, ((ItemFood)PamHarvestCraft.orangeItem).func_150905_g(null), ((ItemFood)PamHarvestCraft.orangeItem).func_150906_h(null), false).setUnlocalizedName("PamHarvestCraft:orangeItem");
-		else
-			PamHarvestCraft.orangeItem = new IguanaFoodPam(HarvestConfigurationHandler.orangeID, 1, 0.05F, false).setUnlocalizedName("PamHarvestCraft:orangeItem");
-
-		if (IguanaConfig.modifyFoodValues == false)
-			PamHarvestCraft.papayaItem = new IguanaFoodPam(HarvestConfigurationHandler.papayaID, ((ItemFood)PamHarvestCraft.papayaItem).func_150905_g(null), ((ItemFood)PamHarvestCraft.papayaItem).func_150906_h(null), false).setUnlocalizedName("PamHarvestCraft:papayaItem");
-		else
-			PamHarvestCraft.papayaItem = new IguanaFoodPam(HarvestConfigurationHandler.papayaID, 1, 0.05F, false).setUnlocalizedName("PamHarvestCraft:papayaItem");
-
-		if (IguanaConfig.modifyFoodValues == false)
-			PamHarvestCraft.peachItem = new IguanaFoodPam(HarvestConfigurationHandler.peachID, ((ItemFood)PamHarvestCraft.peachItem).func_150905_g(null), ((ItemFood)PamHarvestCraft.peachItem).func_150906_h(null), false).setUnlocalizedName("PamHarvestCraft:peachItem");
-		else
-			PamHarvestCraft.peachItem = new IguanaFoodPam(HarvestConfigurationHandler.peachID, 1, 0.05F, false).setUnlocalizedName("PamHarvestCraft:peachItem");
-
-		if (IguanaConfig.modifyFoodValues == false)
-			PamHarvestCraft.pearItem = new IguanaFoodPam(HarvestConfigurationHandler.pearID, ((ItemFood)PamHarvestCraft.pearItem).func_150905_g(null), ((ItemFood)PamHarvestCraft.pearItem).func_150906_h(null), false).setUnlocalizedName("PamHarvestCraft:pearItem");
-		else
-			PamHarvestCraft.pearItem = new IguanaFoodPam(HarvestConfigurationHandler.pearID, 1, 0.05F, false).setUnlocalizedName("PamHarvestCraft:pearItem");
-
-		if (IguanaConfig.modifyFoodValues == false)
-			PamHarvestCraft.plumItem = new IguanaFoodPam(HarvestConfigurationHandler.plumID, ((ItemFood)PamHarvestCraft.plumItem).func_150905_g(null), ((ItemFood)PamHarvestCraft.plumItem).func_150906_h(null), false).setUnlocalizedName("PamHarvestCraft:plumItem");
-		else
-			PamHarvestCraft.plumItem = new IguanaFoodPam(HarvestConfigurationHandler.plumID, 1, 0.05F, false).setUnlocalizedName("PamHarvestCraft:plumItem");
-
-		if (IguanaConfig.modifyFoodValues == false)
-			PamHarvestCraft.pomegranateItem = new IguanaFoodPam(HarvestConfigurationHandler.pomegranateID, ((ItemFood)PamHarvestCraft.pomegranateItem).func_150905_g(null), ((ItemFood)PamHarvestCraft.pomegranateItem).func_150906_h(null), false).setUnlocalizedName("PamHarvestCraft:pomegranateItem");
-		else
-			PamHarvestCraft.pomegranateItem = new IguanaFoodPam(HarvestConfigurationHandler.pomegranateID, 1, 0.05F, false).setUnlocalizedName("PamHarvestCraft:pomegranateItem");
-
-		if (IguanaConfig.modifyFoodValues == false)
-			PamHarvestCraft.raspberryItem = new IguanaFoodPam(HarvestConfigurationHandler.raspberryID, ((ItemFood)PamHarvestCraft.raspberryItem).func_150905_g(null), ((ItemFood)PamHarvestCraft.raspberryItem).func_150906_h(null), false).setUnlocalizedName("PamHarvestCraft:raspberryItem");
-		else
-			PamHarvestCraft.raspberryItem = new IguanaFoodPam(HarvestConfigurationHandler.raspberryID, 1, 0.05F, false).setUnlocalizedName("PamHarvestCraft:raspberryItem");
-
-		if (IguanaConfig.modifyFoodValues == false) {
-			PamHarvestCraft.riceItem = new IguanaFoodPam(HarvestConfigurationHandler.riceID, ((ItemFood)PamHarvestCraft.riceItem).func_150905_g(null), ((ItemFood)PamHarvestCraft.riceItem).func_150906_h(null), true).setUnlocalizedName("PamHarvestCraft:riceItem");
-			PamHarvestCraft.ricecakeItem = new IguanaFoodPam(HarvestConfigurationHandler.ricecakeID, ((ItemFood)PamHarvestCraft.ricecakeItem).func_150905_g(null), ((ItemFood)PamHarvestCraft.ricecakeItem).func_150906_h(null), false, true).setUnlocalizedName("PamHarvestCraft:ricecakeItem");
-		} else {
-			PamHarvestCraft.riceItem = new IguanaFoodPam(HarvestConfigurationHandler.riceID, 1, 0.05F, true).setUnlocalizedName("PamHarvestCraft:riceItem");
-			PamHarvestCraft.ricecakeItem = new IguanaFoodPam(HarvestConfigurationHandler.ricecakeID, 2, 0.1F, false, true).setUnlocalizedName("PamHarvestCraft:ricecakeItem");
-		}
-
-		if (IguanaConfig.modifyFoodValues == false)
-			PamHarvestCraft.spiceleafItem = new IguanaFoodPam(HarvestConfigurationHandler.spiceleafID, ((ItemFood)PamHarvestCraft.spiceleafItem).func_150905_g(null), ((ItemFood)PamHarvestCraft.spiceleafItem).func_150906_h(null), false, true).setUnlocalizedName("PamHarvestCraft:spiceleafItem");
-		else
-			PamHarvestCraft.spiceleafItem = new IguanaFoodPam(HarvestConfigurationHandler.spiceleafID, 1, 0.05F, false, true).setUnlocalizedName("PamHarvestCraft:spiceleafItem");
-
-		if (IguanaConfig.modifyFoodValues == false)
-			PamHarvestCraft.starfruitItem = new IguanaFoodPam(HarvestConfigurationHandler.starfruitID, ((ItemFood)PamHarvestCraft.starfruitItem).func_150905_g(null), ((ItemFood)PamHarvestCraft.starfruitItem).func_150906_h(null), false).setUnlocalizedName("PamHarvestCraft:starfruitItem");
-		else
-			PamHarvestCraft.starfruitItem = new IguanaFoodPam(HarvestConfigurationHandler.starfruitID, 1, 0.05F, false).setUnlocalizedName("PamHarvestCraft:starfruitItem");
-
-		if (IguanaConfig.modifyFoodValues == false)
-			PamHarvestCraft.strawberryItem = new IguanaFoodPam(HarvestConfigurationHandler.strawberryID, ((ItemFood)PamHarvestCraft.strawberryItem).func_150905_g(null), ((ItemFood)PamHarvestCraft.strawberryItem).func_150906_h(null), false).setUnlocalizedName("PamHarvestCraft:strawberryItem");
-		else
-			PamHarvestCraft.strawberryItem = new IguanaFoodPam(HarvestConfigurationHandler.strawberryID, 1, 0.05F, false).setUnlocalizedName("PamHarvestCraft:strawberryItem");
-
-		if (IguanaConfig.modifyFoodValues == false) {
-			PamHarvestCraft.tealeafItem = new IguanaFoodPam(HarvestConfigurationHandler.tealeafID, ((ItemFood)PamHarvestCraft.tealeafItem).func_150905_g(null), ((ItemFood)PamHarvestCraft.tealeafItem).func_150906_h(null), false, true).setUnlocalizedName("PamHarvestCraft:tealeafItem");
-			PamHarvestCraft.teaItem = new IguanaFoodPam(HarvestConfigurationHandler.teaID, ((ItemFood)PamHarvestCraft.teaItem).func_150905_g(null), ((ItemFood)PamHarvestCraft.teaItem).func_150906_h(null), false, true).setUnlocalizedName("PamHarvestCraft:teaItem");
-		} else {
-			PamHarvestCraft.tealeafItem = new IguanaFoodPam(HarvestConfigurationHandler.tealeafID, 1, 0.05F, false, true).setUnlocalizedName("PamHarvestCraft:tealeafItem");
-			PamHarvestCraft.teaItem = new IguanaFoodPam(HarvestConfigurationHandler.teaID, 2, 0.1F, false, true).setUnlocalizedName("PamHarvestCraft:teaItem");
-		}
-
-		if (IguanaConfig.modifyFoodValues == false)
-			PamHarvestCraft.tomatoItem = new IguanaFoodPam(HarvestConfigurationHandler.tomatoID, ((ItemFood)PamHarvestCraft.tomatoItem).func_150905_g(null), ((ItemFood)PamHarvestCraft.tomatoItem).func_150906_h(null), false).setUnlocalizedName("PamHarvestCraft:tomatoItem");
-		else
-			PamHarvestCraft.tomatoItem = new IguanaFoodPam(HarvestConfigurationHandler.tomatoID, 1, 0.05F, false).setUnlocalizedName("PamHarvestCraft:tomatoItem");
-
-		if (IguanaConfig.modifyFoodValues == false)
-			PamHarvestCraft.walnutItem = new IguanaFoodPam(HarvestConfigurationHandler.walnutID, ((ItemFood)PamHarvestCraft.walnutItem).func_150905_g(null), ((ItemFood)PamHarvestCraft.walnutItem).func_150906_h(null), false, true).setUnlocalizedName("PamHarvestCraft:walnutItem");
-		else
-			PamHarvestCraft.walnutItem = new IguanaFoodPam(HarvestConfigurationHandler.walnutID, 1, 0.05F, false, true).setUnlocalizedName("PamHarvestCraft:walnutItem");
-
-		if (IguanaConfig.modifyFoodValues == false)
-			PamHarvestCraft.zucchiniItem = new IguanaFoodPam(HarvestConfigurationHandler.zucchiniID, ((ItemFood)PamHarvestCraft.zucchiniItem).func_150905_g(null), ((ItemFood)PamHarvestCraft.zucchiniItem).func_150906_h(null), false, true).setUnlocalizedName("PamHarvestCraft:zucchiniItem");
-		else
-			PamHarvestCraft.zucchiniItem = new IguanaFoodPam(HarvestConfigurationHandler.zucchiniID, 1, 0.05F, false, true).setUnlocalizedName("PamHarvestCraft:zucchiniItem");
-
 
 		// SAPLING ASPECTS
 		if (Loader.isModLoaded("Thaumcraft"))
