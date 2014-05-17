@@ -22,8 +22,8 @@ public class IguanaSeedFoodPam extends ItemSeeds {
 
 		if (Loader.isModLoaded("Thaumcraft"))
 			if (!ThaumcraftApi.exists(this, -1))
-				ThaumcraftApi.registerObjectTag(new ItemStack(this), -1, new AspectList()
-				.add(Aspect.SEED, 1)
+				ThaumcraftApi.registerObjectTag(new ItemStack(this), new int[] {-1}, new AspectList()
+				.add(Aspect.PLANT, 1)
 						);
 	}
 

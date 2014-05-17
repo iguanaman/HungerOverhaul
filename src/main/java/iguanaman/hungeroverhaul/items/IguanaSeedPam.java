@@ -2,7 +2,7 @@ package iguanaman.hungeroverhaul.items;
 
 import iguanaman.hungeroverhaul.IguanaConfig;
 import iguanaman.hungeroverhaul.blocks.IguanaCropPam;
-import iguanaman.hungeroverhaul.module.HarvestCraftHelper;
+import iguanaman.hungeroverhaul.module.PamsModsHelper;
 
 import java.util.List;
 
@@ -26,7 +26,7 @@ public class IguanaSeedPam extends ItemSeeds {
 
 		if (Loader.isModLoaded("Thaumcraft"))
 			if (!ThaumcraftApi.exists(this, -1))
-				ThaumcraftApi.registerObjectTag(new ItemStack(this), -1, new AspectList().add(Aspect.SEED, 1));
+				ThaumcraftApi.registerObjectTag(new ItemStack(this), new int[] {-1}, new AspectList().add(Aspect.PLANT, 1));
 	}
 
 	/**
@@ -39,7 +39,7 @@ public class IguanaSeedPam extends ItemSeeds {
 		if (IguanaConfig.wrongBiomeRegrowthMultiplier > 1)
 		{
 			Type[] theBiomes = null;
-			for(Block block : HarvestCraftHelper.PamCrops) {
+			for(Block block : PamsModsHelper.PamCrops) {
 				if (block instanceof IguanaCropPam)
 					theBiomes = IguanaCropPam.biomes[cropID];
 

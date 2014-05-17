@@ -1,7 +1,7 @@
 package iguanaman.hungeroverhaul;
 
 import iguanaman.hungeroverhaul.commands.IguanaCommandHunger;
-import iguanaman.hungeroverhaul.module.HarvestCraftHelper;
+import iguanaman.hungeroverhaul.module.PamsModsHelper;
 import iguanaman.hungeroverhaul.module.ModuleGrassSeeds;
 import iguanaman.hungeroverhaul.module.ModuleHarvestCraftCrops;
 import iguanaman.hungeroverhaul.module.ModuleHarvestCraftTrees;
@@ -82,10 +82,10 @@ public class HungerOverhaul {
 		CraftingManager.getInstance().getRecipeList().add(new ShapelessOreRecipe(Items.wheat_seeds, Items.wheat));
 
 		ModuleVanilla.init();
-		if(Loader.isModLoaded("harvestcraft")) { HarvestCraftHelper.load(); ModuleHarvestCraftCrops.init(); ModuleHarvestCraftTrees.init(); }
+		if(Loader.isModLoaded("harvestcraft")) { PamsModsHelper.loadHC(); ModuleHarvestCraftCrops.init(); ModuleHarvestCraftTrees.init(); }
 		if(Loader.isModLoaded("temperateplants")) ModuleTemperatePlants.init();
 		if(Loader.isModLoaded("randomplants")) ModuleRandomPlants.init();
-		if(Loader.isModLoaded("weeeflowers")) ModuleWeeeFlowers.init();
+		if(Loader.isModLoaded("weeeflowers")) { PamsModsHelper.loadWF(); ModuleWeeeFlowers.init(); };
 		if(Loader.isModLoaded("TConstruct")) ModuleTConstruct.init();
 		if(Loader.isModLoaded("Natura")) ModuleNatura.init();
 

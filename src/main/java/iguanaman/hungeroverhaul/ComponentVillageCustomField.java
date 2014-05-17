@@ -1,6 +1,6 @@
 package iguanaman.hungeroverhaul;
 
-import iguanaman.hungeroverhaul.module.HarvestCraftHelper;
+import iguanaman.hungeroverhaul.module.PamsModsHelper;
 import iguanaman.hungeroverhaul.module.ModuleVanilla;
 
 import java.util.ArrayList;
@@ -65,8 +65,8 @@ public class ComponentVillageCustomField extends StructureVillagePieces.Village
 
 	private Block getRandomCropHarvestCraft(Random random)
 	{
-		int length = HarvestCraftHelper.PamCrops.length;
-		return random.nextInt(length + 3) <= length ? HarvestCraftHelper.PamCrops[random.nextInt(length)] : getRandomCropVanilla(random);
+		int length = PamsModsHelper.PamCrops.length;
+		return random.nextInt(length + 3) <= length ? PamsModsHelper.PamCrops[random.nextInt(length)] : getRandomCropVanilla(random);
 	}
 
 	private int getCropMeta(Block block, Random random)

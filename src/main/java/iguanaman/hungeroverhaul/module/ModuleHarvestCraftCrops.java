@@ -29,7 +29,7 @@ public class ModuleHarvestCraftCrops {
 	{
 
 		// CROP BLOCK
-		for(Block block : HarvestCraftHelper.PamCrops) {
+		for(Block block : PamsModsHelper.PamCrops) {
 			String unloc = block.getUnlocalizedName();
 			block = new IguanaCropPam().setBlockName(unloc);
 		}
