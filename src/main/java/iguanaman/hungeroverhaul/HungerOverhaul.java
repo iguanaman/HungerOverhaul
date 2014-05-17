@@ -70,7 +70,6 @@ public class HungerOverhaul {
 	@SuppressWarnings({ "unchecked" })
 	@EventHandler
 	public void load(FMLInitializationEvent event) {
-		proxy.registerLocalization();
 
 		if (IguanaConfig.addCustomVillageField && IguanaConfig.fieldNormalWeight + IguanaConfig.fieldReedWeight + IguanaConfig.fieldStemWeight > 0)
 		{
