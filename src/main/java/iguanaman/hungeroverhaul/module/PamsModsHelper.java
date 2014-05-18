@@ -1,5 +1,7 @@
 package iguanaman.hungeroverhaul.module;
 
+import java.util.HashMap;
+
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 
@@ -13,6 +15,8 @@ public class PamsModsHelper {
 	public static Block[] PamCrops;
 	public static Block[] PamFlowerCrops;
 	public static Item[] PamFlowerSeeds;
+	
+	public static HashMap<Block, Integer> crops = new HashMap<Block, Integer>();
 
 	public static void loadHC() {
 		if(Loader.isModLoaded("harvestcraft")) {
@@ -29,6 +33,63 @@ public class PamsModsHelper {
 					BlockRegistry.pameggplantCrop, BlockRegistry.pamokraCrop, BlockRegistry.pampeasCrop, BlockRegistry.pamtomatoCrop, BlockRegistry.pamcottonCrop,
 					BlockRegistry.pampineappleCrop, BlockRegistry.pamgrapeCrop, BlockRegistry.pamkiwiCrop, BlockRegistry.pamcranberryCrop, BlockRegistry.pamriceCrop, BlockRegistry.pamseaweedCrop
 			};
+			
+			crops.put(BlockRegistry.pamasparagusCrop, 0);
+			crops.put(BlockRegistry.pambarleyCrop, 1);
+			crops.put(BlockRegistry.pambeanCrop, 2);
+			crops.put(BlockRegistry.pambeetCrop, 3);
+			crops.put(BlockRegistry.pambroccoliCrop, 4);
+			crops.put(BlockRegistry.pamcauliflowerCrop, 5);
+			crops.put(BlockRegistry.pamceleryCrop, 6);
+			crops.put(BlockRegistry.pamcranberryCrop, 7);
+			crops.put(BlockRegistry.pamgarlicCrop, 8);
+			crops.put(BlockRegistry.pamgingerCrop, 9);
+			crops.put(BlockRegistry.pamleekCrop, 10);
+			crops.put(BlockRegistry.pamlettuceCrop, 11);
+			crops.put(BlockRegistry.pamoatsCrop, 12);
+			crops.put(BlockRegistry.pamonionCrop, 13);
+			crops.put(BlockRegistry.pamparsnipCrop, 14);
+			crops.put(BlockRegistry.pampeanutCrop, 15);
+			crops.put(BlockRegistry.pampineappleCrop, 16);
+			crops.put(BlockRegistry.pamradishCrop, 17);
+			crops.put(BlockRegistry.pamriceCrop, 18);
+			crops.put(BlockRegistry.pamrutabagaCrop, 19);
+			crops.put(BlockRegistry.pamryeCrop, 20);
+			crops.put(BlockRegistry.pamscallionCrop, 21);
+			crops.put(BlockRegistry.pamsoybeanCrop, 22);
+			crops.put(BlockRegistry.pamspiceleafCrop, 23);
+			crops.put(BlockRegistry.pamsweetpotatoCrop, 24);
+			crops.put(BlockRegistry.pamtealeafCrop, 25);
+			crops.put(BlockRegistry.pamturnipCrop, 26);
+			crops.put(BlockRegistry.pamwhitemushroomCrop, 27);
+			crops.put(BlockRegistry.pamartichokeCrop, 28);
+			crops.put(BlockRegistry.pambellpepperCrop, 29);
+			crops.put(BlockRegistry.pamblackberryCrop, 30);
+			crops.put(BlockRegistry.pamblueberryCrop, 31);
+			crops.put(BlockRegistry.pambrusselsproutCrop, 32);
+			crops.put(BlockRegistry.pamcabbageCrop, 33);
+			crops.put(BlockRegistry.pamcactusfruitCrop, 34);
+			crops.put(BlockRegistry.pamcandleberryCrop, 35);
+			crops.put(BlockRegistry.pamcantaloupeCrop, 36);
+			crops.put(BlockRegistry.pamchilipepperCrop, 37);
+			crops.put(BlockRegistry.pamcoffeebeanCrop, 38);
+			crops.put(BlockRegistry.pamcornCrop, 39);
+			crops.put(BlockRegistry.pamcottonCrop, 40);
+			crops.put(BlockRegistry.pamcucumberCrop, 41);
+			crops.put(BlockRegistry.pameggplantCrop, 42);
+			crops.put(BlockRegistry.pamgrapeCrop, 43);
+			crops.put(BlockRegistry.pamkiwiCrop, 44);
+			crops.put(BlockRegistry.pammustardseedsCrop, 45);
+			crops.put(BlockRegistry.pamokraCrop, 46);
+			crops.put(BlockRegistry.pampeasCrop, 47);
+			crops.put(BlockRegistry.pamraspberryCrop, 48);
+			crops.put(BlockRegistry.pamrhubarbCrop, 49);
+			crops.put(BlockRegistry.pamseaweedCrop, 50);
+			crops.put(BlockRegistry.pamstrawberryCrop, 51);
+			crops.put(BlockRegistry.pamtomatoCrop, 52);
+			crops.put(BlockRegistry.pamwintersquashCrop, 53);
+			crops.put(BlockRegistry.pamzucchiniCrop, 54);
+			crops.put(BlockRegistry.pambambooshootCrop, 55);
 		}
 	}
 

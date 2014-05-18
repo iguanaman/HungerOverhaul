@@ -14,9 +14,6 @@ import net.minecraftforge.common.BiomeDictionary.Type;
 import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
-
-import com.pam.harvestcraft.ItemRegistry;
-
 import cpw.mods.fml.common.Loader;
 
 public class IguanaSeedPam extends ItemSeeds {
@@ -40,8 +37,10 @@ public class IguanaSeedPam extends ItemSeeds {
 		{
 			Type[] theBiomes = null;
 			for(Block block : PamsModsHelper.PamCrops) {
-				if (block instanceof IguanaCropPam)
+				if (block instanceof IguanaCropPam) {
+					int cropID = PamsModsHelper.crops.get(block);
 					theBiomes = IguanaCropPam.biomes[cropID];
+				}
 
 				if (theBiomes != null) {
 					String tooltip = "";

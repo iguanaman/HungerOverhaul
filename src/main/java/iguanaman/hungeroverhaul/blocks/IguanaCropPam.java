@@ -1,6 +1,7 @@
 package iguanaman.hungeroverhaul.blocks;
 
 import iguanaman.hungeroverhaul.IguanaConfig;
+import iguanaman.hungeroverhaul.module.PamsModsHelper;
 
 import java.util.Random;
 
@@ -18,9 +19,7 @@ import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 
 import com.pam.harvestcraft.BlockPamCrop;
-import com.pam.harvestcraft.BlockRegistry;
 import com.pam.harvestcraft.ItemRegistry;
-import com.pam.harvestcraft.harvestcraft;
 
 import cpw.mods.fml.common.Loader;
 
@@ -59,24 +58,24 @@ public class IguanaCropPam extends BlockPamCrop {
 		{
 			new Random();
 			Block block = par1World.getBlock(par2, par3, par4);
+			int cropID = PamsModsHelper.crops.get(block);
 			int cropMeta = par1World.getBlockMetadata(par2, par3, par4);
-			{
-				int produce = IguanaConfig.producePerHarvestMin;
-				if (IguanaConfig.producePerHarvestMax - IguanaConfig.producePerHarvestMin > 0)
-					produce += par1World.rand.nextInt(IguanaConfig.producePerHarvestMax - IguanaConfig.producePerHarvestMin);
-				int seeds = 1 + IguanaConfig.seedsPerHarvestMin;
-				if (IguanaConfig.seedsPerHarvestMax - IguanaConfig.seedsPerHarvestMin > 0)
-					seeds += par1World.rand.nextInt(IguanaConfig.seedsPerHarvestMax - IguanaConfig.seedsPerHarvestMin);
+			
+			int produce = IguanaConfig.producePerHarvestMin;
+			if (IguanaConfig.producePerHarvestMax - IguanaConfig.producePerHarvestMin > 0)
+				produce += par1World.rand.nextInt(IguanaConfig.producePerHarvestMax - IguanaConfig.producePerHarvestMin);
+			int seeds = 1 + IguanaConfig.seedsPerHarvestMin;
+			if (IguanaConfig.seedsPerHarvestMax - IguanaConfig.seedsPerHarvestMin > 0)
+				seeds += par1World.rand.nextInt(IguanaConfig.seedsPerHarvestMax - IguanaConfig.seedsPerHarvestMin);
 
-				if (cropMeta < 2)
-					par1World.spawnEntityInWorld(new EntityItem(par1World, par2 + 0.5D, par3 + 0.7D, par4 + 0.5D, new ItemStack(ItemRegistry.PamSeeds[cropID], 1, 0)));
-				else if(cropMeta == 2)
-				{
-					if (produce > 0)
-						par1World.spawnEntityInWorld(new EntityItem(par1World, par2 + 0.5D, par3 + 0.7D, par4 + 0.5D, new ItemStack(ItemRegistry.PamCropItems[cropID], produce, 0)));
-					if (seeds > 0)
-						par1World.spawnEntityInWorld(new EntityItem(par1World, par2 + 0.5D, par3 + 0.7D, par4 + 0.5D, new ItemStack(ItemRegistry.PamSeeds[cropID], seeds, 0)));
-				}
+			if (cropMeta < 2)
+				par1World.spawnEntityInWorld(new EntityItem(par1World, par2 + 0.5D, par3 + 0.7D, par4 + 0.5D, new ItemStack(ItemRegistry.PamSeeds[cropID], 1, 0)));
+			else if(cropMeta == 2)
+			{
+				if (produce > 0)
+					par1World.spawnEntityInWorld(new EntityItem(par1World, par2 + 0.5D, par3 + 0.7D, par4 + 0.5D, new ItemStack(ItemRegistry.PamCropItems[cropID], produce, 0)));
+				if (seeds > 0)
+					par1World.spawnEntityInWorld(new EntityItem(par1World, par2 + 0.5D, par3 + 0.7D, par4 + 0.5D, new ItemStack(ItemRegistry.PamSeeds[cropID], seeds, 0)));
 			}
 		}
 	}
@@ -88,6 +87,7 @@ public class IguanaCropPam extends BlockPamCrop {
 		/*if (world.isRemote)
 			return false;*/
 		Block i1 = world.getBlock(par2, par3, par4);
+		int cropID = PamsModsHelper.crops.get(i1);
 		if(i1 instanceof BlockPamCrop) {
 			int stage = world.getBlockMetadata(par2, par3, par4);
 
@@ -126,6 +126,7 @@ public class IguanaCropPam extends BlockPamCrop {
 		if (sunlightModifier == 0) return;
 		
 		Block crop = par1World.getBlock(par2, par3, par4);
+		int cropID = PamsModsHelper.crops.get(crop);
 
 		// biome modifier
 		int biomeModifier = IguanaConfig.wrongBiomeRegrowthMultiplier;
@@ -156,10 +157,11 @@ public class IguanaCropPam extends BlockPamCrop {
 			Block i1 = par1World.getBlock(par2, par3, par4);
 			if(i1 instanceof BlockPamCrop)
 			{
+				int cropID = PamsModsHelper.crops.get(i1);
 				int meta = par1World.getBlockMetadata(par2, par3, par4);
 				int rnd = 1;
 				if (par1World.difficultySetting.getDifficultyId() == 2  && IguanaConfig.difficultyScalingBoneMeal) rnd = 3;
-				if (tileentitypamcrop.cropID > 28) rnd *= 2;
+				if (cropID > 28) rnd *= 2;
 
 				if (rnd == 1 || par1World.rand.nextInt(rnd) == 0)
 				{
