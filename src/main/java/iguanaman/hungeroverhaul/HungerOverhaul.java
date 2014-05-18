@@ -15,6 +15,7 @@ import iguanaman.hungeroverhaul.potion.PotionWellFed;
 import iguanaman.hungeroverhaul.proxy.CommonProxy;
 import iguanaman.hungeroverhaul.util.IguanaEventHook;
 import iguanaman.hungeroverhaul.util.IguanaPlayerHandler;
+import iguanaman.hungeroverhaul.util.RecipeRemover;
 import iguanaman.hungeroverhaul.util.VillageHandlerCustomField;
 import net.minecraft.command.ICommandManager;
 import net.minecraft.command.ServerCommandManager;
@@ -37,9 +38,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.registry.VillagerRegistry;
 
-@Mod(modid="HungerOverhaul", name="Hunger Overhaul", version="1.6.X-2l",
-dependencies = "after:TConstruct;after:pamharvestcraft;after:temperateplants;after:randomplants;after:weeeflowers;after:Natura")
-
+@Mod(modid="HungerOverhaul", name="Hunger Overhaul", version="${version}", dependencies = "after:TConstruct;after:pamharvestcraft;after:temperateplants;after:randomplants;after:weeeflowers;after:Natura")
 public class HungerOverhaul {
 
 	// The instance of your mod that Forge uses.

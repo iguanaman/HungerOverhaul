@@ -454,7 +454,8 @@ public class IguanaConfig {
 		foodHealDivider = Math.max(foodHealDividerProperty.getInt(4), 0);
 		foodHealDividerProperty.set(foodHealDivider);
 
-		config.save();
+		if(config.hasChanged())
+			config.save();
 	}
 
 }

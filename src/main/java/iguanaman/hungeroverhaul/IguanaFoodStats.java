@@ -58,7 +58,7 @@ public class IguanaFoodStats extends FoodStats {
 	@Override
 	public void func_151686_a(ItemFood par1ItemFood, ItemStack par2ItemStack)
 	{
-		if (Loader.isModLoaded("pamharvestcraft") && IguanaConfig.modifyFoodValues) {
+		if (Loader.isModLoaded("harvestcraft") && IguanaConfig.modifyFoodValues) {
 			int foodValue = Math.max(Math.round((float)par1ItemFood.func_150905_g(par2ItemStack) / (float)IguanaConfig.modFoodValueDivider), 1);
 			float saturationValue = Math.max(Math.round(foodValue / 20F), 0F);
 			super.addStats(foodValue, saturationValue);

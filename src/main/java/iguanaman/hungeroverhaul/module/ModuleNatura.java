@@ -1,12 +1,12 @@
 package iguanaman.hungeroverhaul.module;
 
-import iguanaman.hungeroverhaul.RecipeRemover;
 import iguanaman.hungeroverhaul.blocks.IguanaBerryBush;
 import iguanaman.hungeroverhaul.blocks.IguanaBerryBushNether;
 import iguanaman.hungeroverhaul.blocks.IguanaCactus;
 import iguanaman.hungeroverhaul.blocks.IguanaCropNatura;
 import iguanaman.hungeroverhaul.blocks.IguanaSaguaro;
 import iguanaman.hungeroverhaul.items.IguanaSeedNatura;
+import iguanaman.hungeroverhaul.util.RecipeRemover;
 import iguanaman.hungeroverhaul.util.Utils;
 import mods.natura.common.NContent;
 import net.minecraft.block.Block;
