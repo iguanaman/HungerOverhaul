@@ -9,28 +9,28 @@ public class ModuleHarvestCraftTrees {
 
 	public static void init()
 	{
-		BlockRegistry.pamApple = new IguanaFruit("apple");
-		BlockRegistry.pamAvocado = new IguanaFruit("avocado");
-		BlockRegistry.pamBanana = new IguanaFruit("banana");
-		BlockRegistry.pamCherry = new IguanaFruit("cherry");
-		BlockRegistry.pamCinnamon = new IguanaFruit("cinnamon");
-		BlockRegistry.pamCoconut = new IguanaFruit("coconut");
-		BlockRegistry.pamDragonfruit = new IguanaFruit("dragonfruit");
-		BlockRegistry.pamLemon = new IguanaFruit("lemon");
-		BlockRegistry.pamLime = new IguanaFruit("lime");
-		BlockRegistry.pamMango = new IguanaFruit("mango");
-		BlockRegistry.pamNutmeg = new IguanaFruit("nutmeg");
-		BlockRegistry.pamOlive = new IguanaFruit("olive");
-		BlockRegistry.pamOrange = new IguanaFruit("orange");
-		BlockRegistry.pamPapaya = new IguanaFruit("papaya");
-		BlockRegistry.pamPeach = new IguanaFruit("peach");
-		BlockRegistry.pamPear = new IguanaFruit("pear");
-		BlockRegistry.pamPeppercorn = new IguanaFruit("peppercorn");
-		BlockRegistry.pamPlum = new IguanaFruit("plum");
-		BlockRegistry.pamPomegranate = new IguanaFruit("pomegranate");
-		BlockRegistry.pamStarfruit = new IguanaFruit("starfruit");
-		BlockRegistry.pamVanillabean = new IguanaFruit("vanillabean");
-		BlockRegistry.pamWalnut = new IguanaFruit("walnut");
+//		BlockRegistry.pamApple = new IguanaFruit("apple");
+//		BlockRegistry.pamAvocado = new IguanaFruit("avocado");
+//		BlockRegistry.pamBanana = new IguanaFruit("banana");
+//		BlockRegistry.pamCherry = new IguanaFruit("cherry");
+//		BlockRegistry.pamCinnamon = new IguanaFruit("cinnamon");
+//		BlockRegistry.pamCoconut = new IguanaFruit("coconut");
+//		BlockRegistry.pamDragonfruit = new IguanaFruit("dragonfruit");
+//		BlockRegistry.pamLemon = new IguanaFruit("lemon");
+//		BlockRegistry.pamLime = new IguanaFruit("lime");
+//		BlockRegistry.pamMango = new IguanaFruit("mango");
+//		BlockRegistry.pamNutmeg = new IguanaFruit("nutmeg");
+//		BlockRegistry.pamOlive = new IguanaFruit("olive");
+//		BlockRegistry.pamOrange = new IguanaFruit("orange");
+//		BlockRegistry.pamPapaya = new IguanaFruit("papaya");
+//		BlockRegistry.pamPeach = new IguanaFruit("peach");
+//		BlockRegistry.pamPear = new IguanaFruit("pear");
+//		BlockRegistry.pamPeppercorn = new IguanaFruit("peppercorn");
+//		BlockRegistry.pamPlum = new IguanaFruit("plum");
+//		BlockRegistry.pamPomegranate = new IguanaFruit("pomegranate");
+//		BlockRegistry.pamStarfruit = new IguanaFruit("starfruit");
+//		BlockRegistry.pamVanillabean = new IguanaFruit("vanillabean");
+//		BlockRegistry.pamWalnut = new IguanaFruit("walnut");
 		
 		Utils.replace(BlockRegistry.pamApple, new IguanaFruit("apple"));
 		Utils.replace(BlockRegistry.pamAvocado, new IguanaFruit("avocado"));
