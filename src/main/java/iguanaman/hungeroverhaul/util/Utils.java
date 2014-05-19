@@ -19,12 +19,16 @@ public class Utils
         overwriteEntry(Item.itemRegistry, Item.itemRegistry.getNameForObject(current), newItem);
     }
 
-    /*
-        @Author Skyboy & Team CoFH
-        used to replace entries in the registry
+    /**
+     * Used to replace entries in the registry
+     * 
+     * @param registry The registry the thing to replace is in
+     * @param name The name that the thing to replace is registered as
+     * @param object The thing that will replace the previous object
+     * @author Skyboy & Team CoFH
     */
     @SuppressWarnings({ "rawtypes", "unchecked" })
-	public static void overwriteEntry(RegistryNamespaced registry, String name, Object object)
+	private static void overwriteEntry(RegistryNamespaced registry, String name, Object object)
     {
 		Object oldThing = registry.getObject(name);
 		int id = registry.getIDForObject(oldThing);
