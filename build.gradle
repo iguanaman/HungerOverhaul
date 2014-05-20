@@ -1,7 +1,7 @@
 buildscript {
     repositories {
         mavenCentral()
-        maven {
+		maven {
             name = "forge"
             url = "http://files.minecraftforge.net/maven"
         }
@@ -26,6 +26,15 @@ repositories {
         name 'DVS1 Maven FS'
         url 'http://dvs1.progwml6.com/files/maven'
     }
+    maven {
+        name 'CB Maven FS'
+        url "http://chickenbones.net/maven/"
+    }
+	maven {
+         name "ProfMobius Maven FS"
+         url "http://mobiusstrip.eu/maven"
+    }
+
 
 }
 

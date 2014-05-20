@@ -9,14 +9,28 @@ import net.minecraft.util.RegistryNamespaced;
 public class Utils
 {
 
-    public static void replace (Block current, Block newBlock)
+    public static void replace (Block current, String name)
     {
-        overwriteEntry(Block.blockRegistry, Block.blockRegistry.getNameForObject(current), newBlock);
+        overwriteEntry(Block.blockRegistry, name, current);
     }
 
-    public static void replace (Item current, Item newItem)
+    public static void replace (Item current, String name)
     {
-        overwriteEntry(Item.itemRegistry, Item.itemRegistry.getNameForObject(current), newItem);
+        overwriteEntry(Item.itemRegistry, name, current);
+
+    }
+
+    @Deprecated
+    public static void replace (Block current, Block name)
+    {
+        overwriteEntry(Block.blockRegistry, Block.blockRegistry.getNameForObject(name), current);
+    }
+
+    @Deprecated
+    public static void replace (Item current, Item name)
+    {
+        overwriteEntry(Item.itemRegistry, Item.itemRegistry.getNameForObject(name), current);
+
     }
 
     /**
@@ -28,13 +42,16 @@ public class Utils
      * @author Skyboy & Team CoFH
     */
     @SuppressWarnings({ "rawtypes", "unchecked" })
-	private static void overwriteEntry(RegistryNamespaced registry, String name, Object object)
+    private static void overwriteEntry (RegistryNamespaced registry, String name, Object object)
     {
-		Object oldThing = registry.getObject(name);
-		int id = registry.getIDForObject(oldThing);
-		BiMap map = ((BiMap)registry.registryObjects);
-		registry.underlyingIntegerMap.func_148746_a(object, id);
-		map.remove(name);
-		map.forcePut(name, object);
-	}
+        boolean bl = object instanceof Block;
+        Object oldThing = registry.getObject(name);
+        int id = registry.getIDForObject(oldThing);
+        IguanaLog.log.info("Replacing " + (bl ? "Block" : "Item") + ": " + name + " @id " + id);
+
+        BiMap map = ((BiMap) registry.registryObjects);
+        registry.underlyingIntegerMap.func_148746_a(object, id);
+        map.remove(name);
+        map.forcePut(name, object);
+    }
 }
