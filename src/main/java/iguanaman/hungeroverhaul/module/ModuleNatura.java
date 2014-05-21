@@ -11,6 +11,7 @@ import iguanaman.hungeroverhaul.util.Utils;
 import mods.natura.common.NContent;
 import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 public class ModuleNatura {
@@ -18,22 +19,32 @@ public class ModuleNatura {
 	public static Block cactusNew;
 
 	public static void init() {
-
-		cactusNew = new IguanaCactus().setHardness(0.4F).setStepSound(Block.soundTypeCloth).setBlockName("cactus").setBlockTextureName("cactus");
-		Blocks.cactus = cactusNew;
-		Utils.replace(Blocks.cactus, cactusNew);
-
-		NContent.crops = new IguanaCropNatura();
-		NContent.berryBush = new IguanaBerryBush();
-		NContent.netherBerryBush = new IguanaBerryBushNether();
-		NContent.saguaro = new IguanaSaguaro().setBlockName("saguaro.block");
-		NContent.seeds = new IguanaSeedNatura(NContent.crops, Blocks.farmland).setUnlocalizedName("barley.seed");
+		String tempName;
 		
-		Utils.replace(NContent.crops, new IguanaCropNatura());
-		Utils.replace(NContent.berryBush, new IguanaBerryBush());
-		Utils.replace(NContent.netherBerryBush, new IguanaBerryBushNether());
-		Utils.replace(NContent.saguaro, new IguanaSaguaro().setBlockName("saguaro.block"));
-		Utils.replace(NContent.seeds, new IguanaSeedNatura(NContent.crops, Blocks.farmland).setUnlocalizedName("barley.seed"));
+		cactusNew = new IguanaCactus().setHardness(0.4F).setStepSound(Block.soundTypeCloth).setBlockName("cactus").setBlockTextureName("cactus");
+		tempName = Block.blockRegistry.getNameForObject(Blocks.cactus);
+		Blocks.cactus = cactusNew;
+		Utils.replace(Blocks.cactus, tempName);
+
+		tempName = Block.blockRegistry.getNameForObject(NContent.crops);
+		NContent.crops = new IguanaCropNatura();
+		Utils.replace(NContent.crops, tempName);
+		
+		tempName = Block.blockRegistry.getNameForObject(NContent.berryBush);
+		NContent.berryBush = new IguanaBerryBush();
+		Utils.replace(NContent.berryBush, tempName);
+		
+		tempName = Block.blockRegistry.getNameForObject(NContent.netherBerryBush);
+		NContent.netherBerryBush = new IguanaBerryBushNether();
+		Utils.replace(NContent.netherBerryBush, tempName);
+		
+		tempName = Block.blockRegistry.getNameForObject(NContent.saguaro);
+		NContent.saguaro = new IguanaSaguaro().setBlockName("saguaro.block");
+		Utils.replace(NContent.saguaro, tempName);
+		
+		tempName = Item.itemRegistry.getNameForObject(NContent.seeds);
+		NContent.seeds = new IguanaSeedNatura(NContent.crops, Blocks.farmland).setUnlocalizedName("barley.seed");
+		Utils.replace(NContent.seeds, tempName);
 
 		RecipeRemover.removeAnyRecipe(new ItemStack(NContent.plantItem, 1, 1));
 		RecipeRemover.removeAnyRecipe(new ItemStack(NContent.plantItem, 1, 2));
