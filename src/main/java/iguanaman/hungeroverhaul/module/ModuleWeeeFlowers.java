@@ -1,6 +1,7 @@
 package iguanaman.hungeroverhaul.module;
 
 import iguanaman.hungeroverhaul.blocks.IguanaCropPamFlower;
+import iguanaman.hungeroverhaul.util.Utils;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -18,8 +19,10 @@ public class ModuleWeeeFlowers {
 	{
 		// Overwrite flower crop block
 		for(Block block : PamsModsHelper.PamFlowerCrops) {
+			String tempName = Block.blockRegistry.getNameForObject(block);
 			String unloc = block.getUnlocalizedName();
 			block = new IguanaCropPamFlower().setBlockName(unloc);
+			Utils.replace(block, tempName);
 		}
 
 		// Add Thaumcraft aspects
