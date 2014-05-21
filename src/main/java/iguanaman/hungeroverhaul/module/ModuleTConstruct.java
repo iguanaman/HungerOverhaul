@@ -11,8 +11,6 @@ import cpw.mods.fml.common.Loader;
 
 public class ModuleTConstruct {
 
-	public static Block cactusNew;
-
 	public static void init() {
 
 		if(Loader.isModLoaded("TConstruct"))
