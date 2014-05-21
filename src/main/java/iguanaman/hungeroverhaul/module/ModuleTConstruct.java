@@ -1,7 +1,6 @@
 package iguanaman.hungeroverhaul.module;
 
 import iguanaman.hungeroverhaul.IguanaConfig;
-import net.minecraft.block.Block;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import tconstruct.common.TRepo;
