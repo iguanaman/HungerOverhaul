@@ -43,14 +43,38 @@ public class ModuleHarvestCraftCrops {
 		}
 
 		// ITEM CHANGES
+		tempName = Item.itemRegistry.getNameForObject(ItemRegistry.asparagusItem);
 		ItemRegistry.asparagusItem = new ItemSeedFood(ItemRegistry.cropfoodRestore, foodSaturation, BlockRegistry.pamasparagusCrop, Blocks.farmland).setUnlocalizedName("asparagusItem");
+		Utils.replace(ItemRegistry.asparagusItem, tempName);
+		
+		tempName = Item.itemRegistry.getNameForObject(ItemRegistry.asparagusseedItem);
 		ItemRegistry.asparagusseedItem = new IguanaSeedPam(BlockRegistry.pamasparagusCrop, Blocks.farmland).setUnlocalizedName("asparagusseedItem");
+		Utils.replace(ItemRegistry.asparagusseedItem, tempName);
+		
+		tempName = Item.itemRegistry.getNameForObject(ItemRegistry.barleyItem);
 		ItemRegistry.barleyItem = new ItemSeedFood(ItemRegistry.cropfoodRestore, foodSaturation, BlockRegistry.pambarleyCrop, Blocks.farmland).setUnlocalizedName("barleyItem");
+		Utils.replace(ItemRegistry.barleyItem, tempName);
+		
+		tempName = Item.itemRegistry.getNameForObject(ItemRegistry.barleyseedItem);
 		ItemRegistry.barleyseedItem = new IguanaSeedPam(BlockRegistry.pambarleyCrop, Blocks.farmland).setUnlocalizedName("barleyseedItem");
+		Utils.replace(ItemRegistry.barleyseedItem, tempName);
+		
+		tempName = Item.itemRegistry.getNameForObject(ItemRegistry.beanItem);
 		ItemRegistry.beanItem = new ItemSeedFood(ItemRegistry.cropfoodRestore, foodSaturation, BlockRegistry.pambeanCrop, Blocks.farmland).setUnlocalizedName("beanItem");
+		Utils.replace(ItemRegistry.beanItem, tempName);
+		
+		tempName = Item.itemRegistry.getNameForObject(ItemRegistry.beanseedItem);
 		ItemRegistry.beanseedItem = new IguanaSeedPam(BlockRegistry.pambeanCrop, Blocks.farmland).setUnlocalizedName("beanseedItem");
+		Utils.replace(ItemRegistry.beanseedItem, tempName);
+		
+		tempName = Item.itemRegistry.getNameForObject(ItemRegistry.beetItem);
 		ItemRegistry.beetItem = new ItemSeedFood(ItemRegistry.cropfoodRestore, foodSaturation, BlockRegistry.pambeetCrop, Blocks.farmland).setUnlocalizedName("beetItem");
+		Utils.replace(ItemRegistry.beetItem, tempName);
+		
+		tempName = Item.itemRegistry.getNameForObject(ItemRegistry.beetseedItem);
 		ItemRegistry.beetseedItem = new IguanaSeedPam(BlockRegistry.pambeetCrop, Blocks.farmland).setUnlocalizedName("beetseedItem");
+		Utils.replace(ItemRegistry.beetseedItem, tempName);
+		
 		ItemRegistry.broccoliItem = new ItemSeedFood(ItemRegistry.cropfoodRestore, foodSaturation, BlockRegistry.pambroccoliCrop, Blocks.farmland).setUnlocalizedName("broccoliItem");
 		ItemRegistry.broccoliseedItem = new IguanaSeedPam(BlockRegistry.pambroccoliCrop, Blocks.farmland).setUnlocalizedName("broccoliseedItem");
 		ItemRegistry.cauliflowerItem = new ItemSeedFood(ItemRegistry.cropfoodRestore, foodSaturation, BlockRegistry.pamcauliflowerCrop, Blocks.farmland).setUnlocalizedName("cauliflowerItem");
