@@ -60,7 +60,7 @@ public class IguanaFoodStats extends FoodStats {
 	{
 		if (Loader.isModLoaded("harvestcraft") && IguanaConfig.modifyFoodValues) {
 			int foodValue = Math.max(Math.round((float)par1ItemFood.func_150905_g(par2ItemStack) / (float)IguanaConfig.modFoodValueDivider), 1);
-			float saturationValue = Math.max(Math.round(foodValue / 20F), 0F);
+			float saturationValue = Math.max(foodValue / 20F, 0F);
 			super.addStats(foodValue, saturationValue);
 		} else
 			super.addStats(par1ItemFood.func_150905_g(par2ItemStack), par1ItemFood.func_150906_h(par2ItemStack));
