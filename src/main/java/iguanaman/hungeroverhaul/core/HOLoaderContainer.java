@@ -21,7 +21,7 @@ import cpw.mods.fml.relauncher.IFMLLoadingPlugin;
 public class HOLoaderContainer extends DummyModContainer implements IFMLLoadingPlugin
 {
 
-    private final String[] asmTransformers = new String[] { "iguanaman.hungeroverhaul.core.AccessTransformers" };
+    private final String[] asmTransformers = new String[] { ClassTransformer.class.getName() };
     private final ModMetadata md = new ModMetadata();
 
     public static Logger logger = LogManager.getLogger("HO-Core");
