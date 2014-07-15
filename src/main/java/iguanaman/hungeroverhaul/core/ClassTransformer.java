@@ -1,9 +1,8 @@
 package iguanaman.hungeroverhaul.core;
 
 import static org.objectweb.asm.Opcodes.*;
-import iguanaman.hungeroverhaul.util.FoodValues;
+import iguanaman.hungeroverhaul.api.FoodValues;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemFood;
 import net.minecraft.launchwrapper.IClassTransformer;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
@@ -43,11 +42,11 @@ public class ClassTransformer implements IClassTransformer
 			MethodNode methodNode = findMethodNodeOfClass(classNode, isObfuscated ? "a" : "func_151686_a", isObfuscated ? "(Lacx;Ladd;)V" : "(Lnet/minecraft/item/ItemFood;Lnet/minecraft/item/ItemStack;)V");
 			if (methodNode != null)
 			{
-				addFoodStatsHook(methodNode, Hooks.class, "modifyFoodValues", "(Lnet/minecraft/util/FoodStats;Lnet/minecraft/item/ItemFood;Lnet/minecraft/item/ItemStack;Liguanaman/hungeroverhaul/util/FoodValues;Lnet/minecraft/entity/player/EntityPlayer;)Z");
+				addItemStackAwareFoodStatsHook(methodNode, Hooks.class, "onFoodStatsAdded", "(Lnet/minecraft/util/FoodStats;Lnet/minecraft/item/ItemFood;Lnet/minecraft/item/ItemStack;Lnet/minecraft/entity/player/EntityPlayer;)Liguanaman/hungeroverhaul/api/FoodValues;");
 			}
 			else
-				throw new RuntimeException("FoodStats: addStats method not found");
-			
+				throw new RuntimeException("FoodStats: ItemStack-aware addStats method not found");
+
 			return writeClassToBytes(classNode);
 		}
 
@@ -102,65 +101,115 @@ public class ClassTransformer implements IClassTransformer
 		classNode.methods.add(constructor);
 	}
 
-	public void addFoodStatsHook(MethodNode method, Class<?> hookClass, String hookMethod, String hookDesc)
+	public void addItemStackAwareFoodStatsHook(MethodNode method, Class<?> hookClass, String hookMethod, String hookDesc)
 	{
-		AbstractInsnNode targetNode = findFirstInstruction(method);
-
-		InsnList toInject = new InsnList();
-
-		// equivalent to:
+		// injected code:
 		/*
-		ItemFood par1=null; ItemStack par2=null;
-		
-		iguanaman.hungeroverhaul.util.FoodValues modifiedFoodValues = new iguanaman.hungeroverhaul.util.FoodValues(par1.func_150905_g(par2), par1.func_150906_h(par2));
-		if (Hooks.modifyFoodValues(null, null, null, modifiedFoodValues))
+		FoodValues modifiedFoodValues;
+		if ((modifiedFoodValues = Hooks.onFoodStatsAdded(this, par1, par2, this.player)) != null)
 		{
+			int prevFoodLevel = this.foodLevel;
+			float prevSaturationLevel = this.foodSaturationLevel;
+			
 			this.addStats(modifiedFoodValues.hunger, modifiedFoodValues.saturationModifier);
+			
+			Hooks.onPostFoodStatsAdded(this, modifiedFoodValues, this.foodLevel - prevFoodLevel, this.foodSaturationLevel - prevSaturationLevel, this.player);
 			return;
 		}
 		*/
 
-		LabelNode varStartLabel = new LabelNode();
+		AbstractInsnNode targetNode = findFirstInstruction(method);
+
+		InsnList toInject = new InsnList();
+
+		// create modifiedFoodValues variable
+		LabelNode modifiedFoodValuesStart = new LabelNode();
 		LabelNode end = findEndLabel(method);
-		LocalVariableNode localVar = new LocalVariableNode("modifiedFoodValues", Type.getDescriptor(FoodValues.class), null, varStartLabel, end, method.maxLocals);
+		LocalVariableNode modifiedFoodValues = new LocalVariableNode("modifiedFoodValues", Type.getDescriptor(FoodValues.class), null, modifiedFoodValuesStart, end, method.maxLocals);
 		method.maxLocals += 1;
-		method.localVariables.add(localVar);
-		
-		// initialize modifiedFoodValues
-		toInject.add(new TypeInsnNode(NEW, Type.getInternalName(FoodValues.class)));
-		toInject.add(new InsnNode(DUP));
-		toInject.add(new VarInsnNode(ALOAD, 1)); // param 1: ItemFood
-		toInject.add(new VarInsnNode(ALOAD, 2)); // param 2: ItemStack
-		toInject.add(new MethodInsnNode(INVOKEVIRTUAL, Type.getInternalName(ItemFood.class), "func_150905_g", "(Lnet/minecraft/item/ItemStack;)I"));
-		toInject.add(new VarInsnNode(ALOAD, 1)); // param 1: ItemFood
-		toInject.add(new VarInsnNode(ALOAD, 2)); // param 2: ItemStack
-		toInject.add(new MethodInsnNode(INVOKEVIRTUAL, Type.getInternalName(ItemFood.class), "func_150906_h", "(Lnet/minecraft/item/ItemStack;)F"));
-		toInject.add(new MethodInsnNode(INVOKESPECIAL, Type.getInternalName(FoodValues.class), "<init>", "(IF)V"));
-		toInject.add(new VarInsnNode(ASTORE, localVar.index));
-		toInject.add(varStartLabel);			// variable scope start
+		method.localVariables.add(modifiedFoodValues);
 
 		LabelNode ifJumpLabel = new LabelNode();
 		
+		// create prevFoodLevel variable
+		LabelNode prevFoodLevelStart = new LabelNode();
+		LocalVariableNode prevFoodLevel = new LocalVariableNode("prevFoodLevel", "I", null, prevFoodLevelStart, ifJumpLabel, method.maxLocals);
+		method.maxLocals += 1;
+		method.localVariables.add(prevFoodLevel);
+
+		// create prevSaturationLevel variable
+		LabelNode prevSaturationLevelStart = new LabelNode();
+		LocalVariableNode prevSaturationLevel = new LocalVariableNode("prevSaturationLevel", "F", null, prevSaturationLevelStart, ifJumpLabel, method.maxLocals);
+		method.maxLocals += 1;
+		method.localVariables.add(prevSaturationLevel);
+
 		// get modifiedFoodValues
 		toInject.add(new VarInsnNode(ALOAD, 0));					// this
 		toInject.add(new VarInsnNode(ALOAD, 1));					// param 1: ItemFood
 		toInject.add(new VarInsnNode(ALOAD, 2));					// param 2: ItemStack
-		toInject.add(new VarInsnNode(ALOAD, localVar.index));		// food values
-		toInject.add(new VarInsnNode(ALOAD, 0));					// this.player
+		toInject.add(new VarInsnNode(ALOAD, 0));					// this.player (together with below line)
 		toInject.add(new FieldInsnNode(GETFIELD, "net/minecraft/util/FoodStats", "player", Type.getDescriptor(EntityPlayer.class)));
 		toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(hookClass), hookMethod, hookDesc));
-		toInject.add(new JumpInsnNode(IFEQ, ifJumpLabel));			// modifiedFoodValues = hookClass.hookMethod(...)
+		toInject.add(new InsnNode(DUP));
+		toInject.add(new VarInsnNode(ASTORE, modifiedFoodValues.index));		// modifiedFoodValues = hookClass.hookMethod(...)
+		toInject.add(modifiedFoodValuesStart);								// variable scope start
+		toInject.add(new JumpInsnNode(IFNULL, ifJumpLabel));		// if (modifiedFoodValues != null)
 
-		// if true, then call addStats with the modified values
+		// if true
+		// save current hunger/saturation levels
 		toInject.add(new VarInsnNode(ALOAD, 0));
-		toInject.add(new VarInsnNode(ALOAD, localVar.index));		// modifiedFoodValues
+		toInject.add(new FieldInsnNode(GETFIELD, "net/minecraft/util/FoodStats", "foodLevel", "I"));
+		toInject.add(new VarInsnNode(ISTORE, prevFoodLevel.index));
+		toInject.add(new VarInsnNode(ALOAD, 0));
+		toInject.add(new FieldInsnNode(GETFIELD, "net/minecraft/util/FoodStats", "foodSaturationLevel", "F"));
+		toInject.add(new VarInsnNode(FSTORE, prevSaturationLevel.index));
+
+		// call this.addStats(IF)V with the modified values
+		toInject.add(new VarInsnNode(ALOAD, 0));					// this
+		toInject.add(new VarInsnNode(ALOAD, modifiedFoodValues.index));		// modifiedFoodValues
 		toInject.add(new FieldInsnNode(GETFIELD, Type.getInternalName(FoodValues.class), "hunger", "I"));
-		toInject.add(new VarInsnNode(ALOAD, localVar.index));		// modifiedFoodValues
+		toInject.add(new VarInsnNode(ALOAD, modifiedFoodValues.index));		// modifiedFoodValues
 		toInject.add(new FieldInsnNode(GETFIELD, Type.getInternalName(FoodValues.class), "saturationModifier", "F"));
 		toInject.add(new MethodInsnNode(INVOKEVIRTUAL, "net/minecraft/util/FoodStats", "addStats", "(IF)V"));
+
+		/*
+		 * Start onPostFoodStatsAdded call
+		 */
+		// this
+		toInject.add(new VarInsnNode(ALOAD, 0));
+
+		// par1 (ItemFood)
+		toInject.add(new VarInsnNode(ALOAD, 1));
+
+		// par2 (ItemStack)
+		toInject.add(new VarInsnNode(ALOAD, 2));
+
+		// modifiedFoodValues
+		toInject.add(new VarInsnNode(ALOAD, modifiedFoodValues.index));
+
+		// prevFoodLevel - this.foodLevel
+		toInject.add(new VarInsnNode(ALOAD, 0));
+		toInject.add(new FieldInsnNode(GETFIELD, "net/minecraft/util/FoodStats", "foodLevel", "I"));
+		toInject.add(new VarInsnNode(ILOAD, prevFoodLevel.index));
+		toInject.add(new InsnNode(ISUB));
+
+		// prevSaturationLevel - this.foodSaturationLevel
+		toInject.add(new VarInsnNode(ALOAD, 0));
+		toInject.add(new FieldInsnNode(GETFIELD, "net/minecraft/util/FoodStats", "foodSaturationLevel", "F"));
+		toInject.add(new VarInsnNode(FLOAD, prevSaturationLevel.index));
+		toInject.add(new InsnNode(FSUB));
+
+		// player
+		toInject.add(new VarInsnNode(ALOAD, 0));
+		toInject.add(new FieldInsnNode(GETFIELD, "net/minecraft/util/FoodStats", "player", Type.getDescriptor(EntityPlayer.class)));
+		toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(hookClass), "onPostFoodStatsAdded", "(Lnet/minecraft/util/FoodStats;Lnet/minecraft/item/ItemFood;Lnet/minecraft/item/ItemStack;Liguanaman/hungeroverhaul/api/FoodValues;IFLnet/minecraft/entity/player/EntityPlayer;)V"));
+		/*
+		 * End onPostFoodStatsAdded call
+		 */
+
+		// return
 		toInject.add(new InsnNode(RETURN));
-		
-		toInject.add(ifJumpLabel);			// if hook returned false, will jump here
+		toInject.add(ifJumpLabel);			// if hook returned null, will jump here
 
 		method.instructions.insertBefore(targetNode, toInject);
 	}
@@ -233,5 +282,16 @@ public class ClassTransformer implements IClassTransformer
 				lastLabel = (LabelNode) instruction;
 		}
 		return lastLabel;
+	}
+
+	@SuppressWarnings("unused")
+	private AbstractInsnNode findLastInstructionOfType(MethodNode method, int bytecode)
+	{
+		for (AbstractInsnNode instruction = method.instructions.getLast(); instruction != null; instruction = instruction.getPrevious())
+		{
+			if (instruction.getOpcode() == bytecode)
+				return instruction;
+		}
+		return null;
 	}
 }

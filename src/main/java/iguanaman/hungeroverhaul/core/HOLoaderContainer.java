@@ -18,6 +18,7 @@ import cpw.mods.fml.common.LoadController;
 import cpw.mods.fml.common.ModMetadata;
 import cpw.mods.fml.relauncher.IFMLLoadingPlugin;
 
+@IFMLLoadingPlugin.SortingIndex(-100) // make sure the class transformer acts before most others
 public class HOLoaderContainer extends DummyModContainer implements IFMLLoadingPlugin
 {
 

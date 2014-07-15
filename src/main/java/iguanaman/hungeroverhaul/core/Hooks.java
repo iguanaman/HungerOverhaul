@@ -1,26 +1,30 @@
 package iguanaman.hungeroverhaul.core;
 
-import iguanaman.hungeroverhaul.util.FoodValues;
+import iguanaman.hungeroverhaul.api.FoodEvent;
+import iguanaman.hungeroverhaul.api.FoodValues;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.FoodStats;
+import net.minecraftforge.common.MinecraftForge;
 
 public class Hooks
 {
 	/**
 	 * Hooks into ItemStack-aware FoodStats.addStats method
 	 * @param foodStats The food stats being added to
-	 * @param itemFood The food that is being eaten
+	 * @param itemFood The item of food that is being eaten
 	 * @param itemStack The ItemStack of the food that is being eaten
-	 * @param foodValues The food values to be modified
 	 * @param player The player eating the food
-	 * @return false if the default values should be used; true if the modified food values should be used
+	 * @return The modified food values or null if the default code should be executed
 	 */
-	public static boolean modifyFoodValues(FoodStats foodStats, ItemFood itemFood, ItemStack itemStack, FoodValues foodValues, EntityPlayer player)
+	public static FoodValues onFoodStatsAdded(FoodStats foodStats, ItemFood itemFood, ItemStack itemStack, EntityPlayer player)
 	{
-		System.out.println(player.getDisplayName() + " ate " + itemStack.getDisplayName());
-		foodValues.hunger = 0;
-		return true;
+		return FoodValues.getActual(itemFood, itemStack, player);
+	}
+
+	public static void onPostFoodStatsAdded(FoodStats foodStats, ItemFood itemFood, ItemStack itemStack, FoodValues foodValues, int hungerAdded, float saturationAdded, EntityPlayer player)
+	{
+		MinecraftForge.EVENT_BUS.post(new FoodEvent.FoodEaten(player, itemFood, itemStack, foodValues, hungerAdded, saturationAdded));
 	}
 }

@@ -1,15 +1,45 @@
 package iguanaman.hungeroverhaul;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import iguanaman.hungeroverhaul.api.FoodModifierRegistry;
+import iguanaman.hungeroverhaul.commands.IguanaCommandHunger;
+import iguanaman.hungeroverhaul.food.FoodEventHandler;
+import iguanaman.hungeroverhaul.food.FoodModifier;
+import net.minecraft.command.ICommandManager;
+import net.minecraft.command.ServerCommandManager;
+import net.minecraftforge.common.MinecraftForge;
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
+import cpw.mods.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.event.FMLServerStartingEvent;
 
-@Mod(modid="HungerOverhaul", name="Hunger Overhaul", version="${version}", dependencies = "after:TConstruct;after:pamharvestcraft;after:temperateplants;after:randomplants;after:weeeflowers;after:Natura")
-public class HungerOverhaul {
+@Mod(modid = "HungerOverhaul", name = "Hunger Overhaul", version = "${version}", dependencies = "after:TConstruct;after:pamharvestcraft;after:temperateplants;after:randomplants;after:weeeflowers;after:Natura")
+public class HungerOverhaul
+{
+
+	public static final Logger Log = LogManager.getLogger("HungerOverhaul");
 
 	// The instance of your mod that Forge uses.
 	@Instance("HungerOverhaul")
 	public static HungerOverhaul instance;
-	
+
+	@EventHandler
+	public void preInit(FMLPreInitializationEvent event)
+	{
+		IguanaConfig.init(event.getSuggestedConfigurationFile());
+	}
+
+	@EventHandler
+	public void init(FMLInitializationEvent event)
+	{
+		MinecraftForge.EVENT_BUS.register(new FoodEventHandler());
+		FoodModifierRegistry.registerFoodValueModifier(new FoodModifier());
+	}
+
 	/*
 	// Says where the client and server 'proxy' code is loaded.
 	@SidedProxy(clientSide="iguanaman.hungeroverhaul.proxy.ClientProxy", serverSide="iguanaman.hungeroverhaul.proxy.CommonProxy")
@@ -60,6 +90,7 @@ public class HungerOverhaul {
 		MinecraftForge.EVENT_BUS.register(new IguanaEventHook());
 
 	}
+	*/
 
 	@EventHandler
 	public void serverStarting(FMLServerStartingEvent event)
@@ -71,5 +102,4 @@ public class HungerOverhaul {
 			serverCommandManager.registerCommand(new IguanaCommandHunger());
 		}
 	}
-	*/
 }

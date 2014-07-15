@@ -27,7 +27,7 @@ public class IguanaCommandHunger extends CommandBase {
 		{
 			EntityPlayerMP entityplayermp = astring.length >= 2 ? getPlayer(icommandsender, astring[0]) : getCommandSenderAsPlayer(icommandsender);
 			int foodValue = astring.length >= 2 ? parseIntWithMinMax(icommandsender, astring[1], 0, 20) : parseIntWithMinMax(icommandsender, astring[0], 0, 20);
-			entityplayermp.foodStats.setFoodLevel(foodValue);
+			entityplayermp.getFoodStats().setFoodLevel(foodValue);
 			func_152374_a(icommandsender, this, 1, "Set " + icommandsender.getCommandSenderName() + "'s hunger to " + foodValue, new Object[0]);
 		} else {
 			throw new WrongUsageException("hunger [player] <value>", new Object[0]);
