@@ -27,11 +27,11 @@ public class FoodModifierRegistry
 
 	public static IDefaultFoodValueModifier[] getDefaultFoodModifiers()
 	{
-		return (IDefaultFoodValueModifier[]) defaultFoodModifiers.toArray();
+		return defaultFoodModifiers.toArray(new IDefaultFoodValueModifier[0]);
 	}
 
 	public static IContextualFoodValueModifier[] getContextualFoodModifiers()
 	{
-		return (IContextualFoodValueModifier[]) contextualFoodModifiers.toArray();
+		return contextualFoodModifiers.toArray(new IContextualFoodValueModifier[0]);
 	}
 }
