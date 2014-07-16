@@ -5,7 +5,6 @@ import org.apache.logging.log4j.Logger;
 import iguanaman.hungeroverhaul.api.FoodModifierRegistry;
 import iguanaman.hungeroverhaul.commands.IguanaCommandHunger;
 import iguanaman.hungeroverhaul.food.FoodEventHandler;
-import iguanaman.hungeroverhaul.food.FoodModifier;
 import net.minecraft.command.ICommandManager;
 import net.minecraft.command.ServerCommandManager;
 import net.minecraftforge.common.MinecraftForge;
@@ -16,8 +15,9 @@ import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
+import iguanaman.hungeroverhaul.module.ModuleVanilla;
 
-@Mod(modid = "HungerOverhaul", name = "Hunger Overhaul", version = "${version}", dependencies = "after:TConstruct;after:pamharvestcraft;after:temperateplants;after:randomplants;after:weeeflowers;after:Natura")
+@Mod(modid = "HungerOverhaul", name = "Hunger Overhaul", version = "${version}", dependencies = "required-after:HO-Core;after:TConstruct;after:harvestcraft;after:temperateplants;after:randomplants;after:weeeflowers;after:Natura")
 public class HungerOverhaul
 {
 
@@ -37,7 +37,7 @@ public class HungerOverhaul
 	public void init(FMLInitializationEvent event)
 	{
 		MinecraftForge.EVENT_BUS.register(new FoodEventHandler());
-		FoodModifierRegistry.registerFoodValueModifier(new FoodModifier());
+        FoodModifierRegistry.registerFoodValueModifier(new ModuleVanilla());
 	}
 
 	/*

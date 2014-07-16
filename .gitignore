@@ -1,12 +1,25 @@
-/bin
-.DS_Store
+# ForgeGradle
 /.gradle
-/APIs
 /build
-/.settings
+/run
+
+# Eclipse
 .classpath
 .project
+/.settings
+/bin
+
+# IntelliJ
+/.idea
+*.iml
+*.ipr
+*.iws
+/out
+
+# Mac Stuff
+.DS_Store
 *.command
-/run/
+
+# Pam's Sources
 /src/api/java/com/pam
 src/api/resources
