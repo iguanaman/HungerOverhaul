@@ -4,7 +4,7 @@ Incomplete list of things that need to be done. Will be added to/edited as thing
 - [x] Player field
 - [x] Food value modification support
 - [ ] Food value modifications
- - [ ] Vanilla
+ - [x] Vanilla
  - [ ] HarvestCraft
  - [ ] TConstruct
  - [ ] Natura
