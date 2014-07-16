@@ -13,6 +13,7 @@ import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
+import iguanaman.hungeroverhaul.food.FoodModifier;
 import iguanaman.hungeroverhaul.module.ModuleVanilla;
 
 @Mod(modid = "HungerOverhaul", name = "Hunger Overhaul", version = "${version}", dependencies = "required-after:HO-Core;after:TConstruct;after:harvestcraft;after:temperateplants;after:randomplants;after:weeeflowers;after:Natura")
@@ -35,7 +36,7 @@ public class HungerOverhaul
 	{
 		MinecraftForge.EVENT_BUS.register(new FoodEventHandler());
         ModuleVanilla.init();
-        FoodModifierRegistry.registerFoodValueModifier(new ModuleVanilla());
+        FoodModifierRegistry.registerFoodValueModifier(new FoodModifier());
 	}
 
 	/*

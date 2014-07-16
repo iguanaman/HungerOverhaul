@@ -7,7 +7,7 @@ import iguanaman.hungeroverhaul.api.FoodValues;
 import iguanaman.hungeroverhaul.food.FoodModifier;
 import iguanaman.hungeroverhaul.helper.FoodValueHelper;
 
-public class ModuleVanilla extends FoodModifier
+public class ModuleVanilla
 {
     public static void init() {
         //ITEMS
