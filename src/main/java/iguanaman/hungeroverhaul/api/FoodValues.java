@@ -78,7 +78,7 @@ public class FoodValues
 		FoodValues newDefaultFoodValues = this;
 		for (IDefaultFoodValueModifier modifier : FoodModifierRegistry.getDefaultFoodModifiers())
 		{
-			FoodValues modifiedFoodValues = modifier.getModifiedFoodValues(newDefaultFoodValues, itemFood, itemStack);
+			FoodValues modifiedFoodValues = modifier.getModifiedFoodValues(newDefaultFoodValues, itemStack);
 			if (modifiedFoodValues != null)
 				newDefaultFoodValues = modifiedFoodValues;
 		}
@@ -90,7 +90,7 @@ public class FoodValues
 		FoodValues actualFoodValues = this;
 		for (IContextualFoodValueModifier modifier : FoodModifierRegistry.getContextualFoodModifiers())
 		{
-			FoodValues modifiedFoodValues = modifier.getModifiedFoodValues(actualFoodValues, itemFood, itemStack, player);
+			FoodValues modifiedFoodValues = modifier.getModifiedFoodValues(actualFoodValues, itemStack, player);
 			if (modifiedFoodValues != null)
 				actualFoodValues = modifiedFoodValues;
 		}

@@ -2,7 +2,6 @@ package iguanaman.hungeroverhaul.food;
 
 import iguanaman.hungeroverhaul.api.FoodValues;
 import iguanaman.hungeroverhaul.api.IDefaultFoodValueModifier;
-import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 
 public class FoodModifier implements IDefaultFoodValueModifier
@@ -16,7 +15,7 @@ public class FoodModifier implements IDefaultFoodValueModifier
 	}
 
 	@Override
-	public FoodValues getModifiedFoodValues(FoodValues foodValues, ItemFood itemFood, ItemStack itemStack)
+	public FoodValues getModifiedFoodValues(FoodValues foodValues, ItemStack itemStack)
 	{
 		return null;
 	}
