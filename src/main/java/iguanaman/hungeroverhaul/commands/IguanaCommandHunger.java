@@ -35,7 +35,6 @@ public class IguanaCommandHunger extends CommandBase {
 		} else {
 			throw new WrongUsageException("/hunger [player] <value>");
 		}
-
 	}
 
 	@Override

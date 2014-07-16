@@ -5,10 +5,8 @@ import org.apache.logging.log4j.Logger;
 import iguanaman.hungeroverhaul.api.FoodModifierRegistry;
 import iguanaman.hungeroverhaul.commands.IguanaCommandHunger;
 import iguanaman.hungeroverhaul.food.FoodEventHandler;
-import net.minecraft.command.ICommandManager;
-import net.minecraft.command.ServerCommandManager;
 import net.minecraftforge.common.MinecraftForge;
-import cpw.mods.fml.common.FMLCommonHandler;
+
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -20,7 +18,6 @@ import iguanaman.hungeroverhaul.module.ModuleVanilla;
 @Mod(modid = "HungerOverhaul", name = "Hunger Overhaul", version = "${version}", dependencies = "required-after:HO-Core;after:TConstruct;after:harvestcraft;after:temperateplants;after:randomplants;after:weeeflowers;after:Natura")
 public class HungerOverhaul
 {
-
 	public static final Logger Log = LogManager.getLogger("HungerOverhaul");
 
 	// The instance of your mod that Forge uses.
@@ -37,6 +34,7 @@ public class HungerOverhaul
 	public void init(FMLInitializationEvent event)
 	{
 		MinecraftForge.EVENT_BUS.register(new FoodEventHandler());
+        ModuleVanilla.init();
         FoodModifierRegistry.registerFoodValueModifier(new ModuleVanilla());
 	}
 
@@ -97,9 +95,7 @@ public class HungerOverhaul
 	{
 		if (IguanaConfig.addSetHungerCommand)
 		{
-			ICommandManager commandManager = FMLCommonHandler.instance().getMinecraftServerInstance().getCommandManager();
-			ServerCommandManager serverCommandManager = (ServerCommandManager) commandManager;
-			serverCommandManager.registerCommand(new IguanaCommandHunger());
+			event.registerServerCommand(new IguanaCommandHunger());
 		}
 	}
 }
