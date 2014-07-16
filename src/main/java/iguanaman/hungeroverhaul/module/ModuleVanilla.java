@@ -32,11 +32,6 @@ public class ModuleVanilla extends FoodModifier
         FoodValueHelper.addModifiedFoodValues(Items.potato, new FoodValues(1, 0.05F));
     }
 
-    @Override
-    public FoodValues getModifiedFoodValues(FoodValues foodValues, ItemStack itemStack) {
-        return FoodValueHelper.getModifiedFoodValues(itemStack);
-    }
-
     /*public static Block carrotNew;
     public static Block potatoNew;
     public static Block wheatNew;
