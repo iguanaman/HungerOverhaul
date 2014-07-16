@@ -8,7 +8,7 @@ Incomplete list of things that need to be done. Will be added to/edited as thing
  - [ ] HarvestCraft
  - [ ] TConstruct
  - [ ] Natura
- - [ ] Catch-all food value division for anything not specifically modified (IguanaConfig.modFoodValueDivider)
+ - [x] Catch-all food value division for anything not specifically modified (IguanaConfig.modFoodValueDivider)
 - [x] Food regens health (config option)
 - [ ] Configurable damage on starve
 - [ ] Configurable max foodExhaustionLevel
