@@ -2,6 +2,8 @@ package iguanaman.hungeroverhaul;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import iguanaman.hungeroverhaul.api.FoodModifierRegistry;
 import iguanaman.hungeroverhaul.commands.IguanaCommandHunger;
 import iguanaman.hungeroverhaul.food.FoodEventHandler;
@@ -15,6 +17,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import iguanaman.hungeroverhaul.food.FoodModifier;
 import iguanaman.hungeroverhaul.module.ModuleVanilla;
+import iguanaman.hungeroverhaul.util.IguanaEventHook;
 
 @Mod(modid = "HungerOverhaul", name = "Hunger Overhaul", version = "${version}", dependencies = "required-after:HO-Core;after:TConstruct;after:harvestcraft;after:temperateplants;after:randomplants;after:weeeflowers;after:Natura")
 public class HungerOverhaul
@@ -38,6 +41,12 @@ public class HungerOverhaul
         ModuleVanilla.init();
         FoodModifierRegistry.registerFoodValueModifier(new FoodModifier());
 	}
+
+    @EventHandler
+    public void postInit(FMLPostInitializationEvent event)
+    {
+        MinecraftForge.EVENT_BUS.register(new IguanaEventHook());
+    }
 
 	/*
 	// Says where the client and server 'proxy' code is loaded.
