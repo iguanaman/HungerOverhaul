@@ -27,4 +27,9 @@ public class Hooks
 	{
 		MinecraftForge.EVENT_BUS.post(new FoodEvent.FoodEaten(player, itemFood, itemStack, foodValues, hungerAdded, saturationAdded));
 	}
+	
+	public static int getModifiedFoodEatingSpeed(ItemFood itemFood, ItemStack itemStack)
+	{
+		return FoodValues.getModified(itemFood, itemStack).hunger * 8 + 8;
+	}
 }

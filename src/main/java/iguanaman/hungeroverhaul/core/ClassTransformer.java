@@ -1,6 +1,7 @@
 package iguanaman.hungeroverhaul.core;
 
 import static org.objectweb.asm.Opcodes.*;
+import iguanaman.hungeroverhaul.IguanaConfig;
 import iguanaman.hungeroverhaul.api.FoodValues;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.launchwrapper.IClassTransformer;
@@ -43,6 +44,22 @@ public class ClassTransformer implements IClassTransformer
 			if (methodNode != null)
 			{
 				addItemStackAwareFoodStatsHook(methodNode, Hooks.class, "onFoodStatsAdded", "(Lnet/minecraft/util/FoodStats;Lnet/minecraft/item/ItemFood;Lnet/minecraft/item/ItemStack;Lnet/minecraft/entity/player/EntityPlayer;)Liguanaman/hungeroverhaul/api/FoodValues;");
+			}
+			else
+				throw new RuntimeException("FoodStats: ItemStack-aware addStats method not found");
+
+			return writeClassToBytes(classNode);
+		}
+		if (transformedName.equals("net.minecraft.item.ItemFood"))
+		{
+			boolean isObfuscated = !name.equals(transformedName);
+
+			ClassNode classNode = readClassFromBytes(basicClass);
+
+			MethodNode methodNode = findMethodNodeOfClass(classNode, isObfuscated ? "d_" : "getMaxItemUseDuration", isObfuscated ? "(Ladd;)I" : "(Lnet/minecraft/item/ItemStack;)I");
+			if (methodNode != null)
+			{
+				addFoodEatingSpeedHook(methodNode, Hooks.class, "getModifiedFoodEatingSpeed", "(Lnet/minecraft/item/ItemFood;Lnet/minecraft/item/ItemStack;)I");
 			}
 			else
 				throw new RuntimeException("FoodStats: ItemStack-aware addStats method not found");
@@ -130,7 +147,7 @@ public class ClassTransformer implements IClassTransformer
 		method.localVariables.add(modifiedFoodValues);
 
 		LabelNode ifJumpLabel = new LabelNode();
-		
+
 		// create prevFoodLevel variable
 		LabelNode prevFoodLevelStart = new LabelNode();
 		LocalVariableNode prevFoodLevel = new LocalVariableNode("prevFoodLevel", "I", null, prevFoodLevelStart, ifJumpLabel, method.maxLocals);
@@ -214,6 +231,34 @@ public class ClassTransformer implements IClassTransformer
 		method.instructions.insertBefore(targetNode, toInject);
 	}
 
+	private void addFoodEatingSpeedHook(MethodNode method, Class<?> hookClass, String hookMethod, String hookDesc)
+	{
+		// modified code:
+		/*
+		return IguanaConfig.modifyFoodEatingSpeed ? Hooks.getModifiedFoodEatingSpeed(this, par1) : 32;
+		*/
+
+		AbstractInsnNode targetNode = findFirstInstruction(method);
+
+		LabelNode ifShouldntModify = new LabelNode();
+		LabelNode beforeReturn = new LabelNode();
+
+		InsnList toInject = new InsnList();
+		toInject.add(new FieldInsnNode(GETSTATIC, Type.getInternalName(IguanaConfig.class), "modifyFoodEatingSpeed", "Z"));
+		toInject.add(new JumpInsnNode(IFEQ, ifShouldntModify));
+		toInject.add(new VarInsnNode(ALOAD, 0)); // this (ItemFood)
+		toInject.add(new VarInsnNode(ALOAD, 1)); // par1 (ItemStack)
+		toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(hookClass), hookMethod, hookDesc));
+		toInject.add(new JumpInsnNode(GOTO, beforeReturn));
+		toInject.add(ifShouldntModify);
+
+		method.instructions.insertBefore(targetNode, toInject);
+
+		targetNode = findLastInstructionOfType(method, IRETURN);
+
+		method.instructions.insertBefore(targetNode, beforeReturn);
+	}
+
 	private ClassNode readClassFromBytes(byte[] bytes)
 	{
 		ClassNode classNode = new ClassNode();
@@ -284,7 +329,6 @@ public class ClassTransformer implements IClassTransformer
 		return lastLabel;
 	}
 
-	@SuppressWarnings("unused")
 	private AbstractInsnNode findLastInstructionOfType(MethodNode method, int bytecode)
 	{
 		for (AbstractInsnNode instruction = method.instructions.getLast(); instruction != null; instruction = instruction.getPrevious())
