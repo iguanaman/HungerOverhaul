@@ -23,3 +23,6 @@ Incomplete list of things that need to be done. Will be added to/edited as thing
 - [ ] Village trading/chest loot additions
 - [x] Food eating speed modification
 - [x] Food value tooltips (should use Forge's ItemTooltipEvent)
+
+#### Misc Stuff
+- [ ] Figure out why bonemeal is so OP
