@@ -7,6 +7,8 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import iguanaman.hungeroverhaul.api.FoodModifierRegistry;
 import iguanaman.hungeroverhaul.commands.IguanaCommandHunger;
 import iguanaman.hungeroverhaul.food.FoodEventHandler;
+
+import net.minecraft.potion.Potion;
 import net.minecraftforge.common.MinecraftForge;
 
 import cpw.mods.fml.common.Mod;
@@ -17,7 +19,9 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import iguanaman.hungeroverhaul.food.FoodModifier;
 import iguanaman.hungeroverhaul.module.ModuleVanilla;
+import iguanaman.hungeroverhaul.potion.PotionWellFed;
 import iguanaman.hungeroverhaul.util.IguanaEventHook;
+import iguanaman.hungeroverhaul.util.StackSizeTweaks;
 
 @Mod(modid = "HungerOverhaul", name = "Hunger Overhaul", version = "${version}", dependencies = "required-after:HO-Core;after:TConstruct;after:harvestcraft;after:temperateplants;after:randomplants;after:weeeflowers;after:Natura")
 public class HungerOverhaul
@@ -28,10 +32,14 @@ public class HungerOverhaul
 	@Instance("HungerOverhaul")
 	public static HungerOverhaul instance;
 
+    public static Potion potionWellFed;
+
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event)
 	{
 		IguanaConfig.init(event.getSuggestedConfigurationFile());
+
+        potionWellFed = new PotionWellFed();
 	}
 
 	@EventHandler
@@ -45,6 +53,7 @@ public class HungerOverhaul
     @EventHandler
     public void postInit(FMLPostInitializationEvent event)
     {
+        StackSizeTweaks.init();
         MinecraftForge.EVENT_BUS.register(new IguanaEventHook());
     }
 

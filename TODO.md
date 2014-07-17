@@ -18,8 +18,8 @@ Incomplete list of things that need to be done. Will be added to/edited as thing
 - [ ] Separate starve timer from food timer
 
 #### From IguanaFood
-- [ ] Well fed buff (should be added to FoodEventHandler.onFoodEaten)
-- [ ] Stacksize modifications
+- [x] Well fed buff (should be added to FoodEventHandler.onFoodEaten)
+- [x] Stacksize modifications
 - [ ] Village trading/chest loot additions
 - [ ] Food eating speed modification
-- [ ] Food value tooltips (should use Forge's ItemTooltipEvent)
+- [x] Food value tooltips (should use Forge's ItemTooltipEvent)

@@ -44,15 +44,15 @@ public class FoodValues
 	/**
 	 * Get the default food values of a food item
 	 */
-	public static FoodValues getDefault(ItemStack itemStack)
+	public static FoodValues getModified(ItemStack itemStack)
 	{
 		if (itemStack.getItem() instanceof ItemFood)
-			return FoodValues.getDefault((ItemFood) itemStack.getItem(), itemStack);
+			return FoodValues.getModified((ItemFood)itemStack.getItem(), itemStack);
 		else
 			return null;
 	}
 
-	public static FoodValues getDefault(ItemFood itemFood, ItemStack itemStack)
+	public static FoodValues getModified(ItemFood itemFood, ItemStack itemStack)
 	{
 		return FoodValues.getUnmodified(itemFood, itemStack).applyDefaultModifiers(itemFood, itemStack);
 	}
@@ -60,17 +60,17 @@ public class FoodValues
 	/**
 	 * Get the actual food values of a food item for a given player
 	 */
-	public static FoodValues getActual(ItemStack itemStack, EntityPlayer player)
+	public static FoodValues getPlayerSpecific(ItemStack itemStack, EntityPlayer player)
 	{
 		if (itemStack.getItem() instanceof ItemFood)
-			return FoodValues.getActual((ItemFood) itemStack.getItem(), itemStack, player);
+			return FoodValues.getPlayerSpecific((ItemFood)itemStack.getItem(), itemStack, player);
 		else
 			return null;
 	}
 
-	public static FoodValues getActual(ItemFood itemFood, ItemStack itemStack, EntityPlayer player)
+	public static FoodValues getPlayerSpecific(ItemFood itemFood, ItemStack itemStack, EntityPlayer player)
 	{
-		return FoodValues.getDefault(itemFood, itemStack).applyContextualModifiers(itemFood, itemStack, player);
+		return FoodValues.getModified(itemFood, itemStack).applyContextualModifiers(itemFood, itemStack, player);
 	}
 
 	FoodValues applyDefaultModifiers(ItemFood itemFood, ItemStack itemStack)

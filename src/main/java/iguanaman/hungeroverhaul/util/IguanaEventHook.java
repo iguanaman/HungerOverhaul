@@ -1,6 +1,7 @@
 package iguanaman.hungeroverhaul.util;
 
 import iguanaman.hungeroverhaul.IguanaConfig;
+import iguanaman.hungeroverhaul.api.FoodValues;
 import iguanaman.hungeroverhaul.module.ModuleGrassSeeds;
 
 import java.util.Random;
@@ -19,6 +20,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBucket;
+import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
@@ -28,10 +30,7 @@ import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.event.entity.player.BonemealEvent;
-import net.minecraftforge.event.entity.player.EntityInteractEvent;
-import net.minecraftforge.event.entity.player.PlayerInteractEvent;
-import net.minecraftforge.event.entity.player.UseHoeEvent;
+import net.minecraftforge.event.entity.player.*;
 import net.minecraftforge.event.terraingen.SaplingGrowTreeEvent;
 import cpw.mods.fml.common.eventhandler.Event.Result;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
@@ -368,6 +367,34 @@ public class IguanaEventHook {
             if (event.world.difficultySetting.getDifficultyId() < 1 && !IguanaConfig.difficultyScalingBoneMeal) r = event.world.rand.nextInt(3);
             int l = Math.min(event.world.getBlockMetadata(event.x, event.y, event.z) + r, 7);
             event.world.setBlockMetadataWithNotify(event.x, event.y, event.z, l, 2);
+        }
+    }
+
+    @SubscribeEvent
+    public void renderTooltips(ItemTooltipEvent event)
+    {
+        if(event.itemStack.getItem() instanceof ItemFood) {
+            if (IguanaConfig.addFoodTooltips) {
+                FoodValues values = FoodValues.getModified(event.itemStack);
+                int hungerFill = values.hunger;
+                float satiation = values.saturationModifier * 20 - hungerFill;
+
+                String tooltip = "";
+
+                if (satiation  >= 3.0F) tooltip += "Hearty ";
+                else if (satiation  >= 2.0F) tooltip += "Wholesome ";
+                else if (satiation  > 0.0F) tooltip += "Nourishing ";
+                else if (satiation < 0.0F) tooltip += "Unfulfilling ";
+
+                if (hungerFill <= 1) tooltip += "morsel";
+                else if (hungerFill <= 2) tooltip += "snack";
+                else if (hungerFill <= 5) tooltip += "light meal";
+                else if (hungerFill <= 8) tooltip += "meal";
+                else if (hungerFill <= 11) tooltip += "large meal";
+                else tooltip += "feast";
+
+                event.toolTip.add(tooltip);
+            }
         }
     }
 

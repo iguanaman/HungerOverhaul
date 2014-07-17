@@ -20,7 +20,7 @@ public class Hooks
 	 */
 	public static FoodValues onFoodStatsAdded(FoodStats foodStats, ItemFood itemFood, ItemStack itemStack, EntityPlayer player)
 	{
-		return FoodValues.getActual(itemFood, itemStack, player);
+		return FoodValues.getPlayerSpecific(itemFood, itemStack, player);
 	}
 
 	public static void onPostFoodStatsAdded(FoodStats foodStats, ItemFood itemFood, ItemStack itemStack, FoodValues foodValues, int hungerAdded, float saturationAdded, EntityPlayer player)
