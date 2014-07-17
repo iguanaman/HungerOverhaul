@@ -4,6 +4,7 @@ import iguanaman.hungeroverhaul.IguanaConfig;
 import iguanaman.hungeroverhaul.api.FoodValues;
 import iguanaman.hungeroverhaul.module.ModuleGrassSeeds;
 
+import java.text.DecimalFormat;
 import java.util.Random;
 
 import net.minecraft.block.Block;
@@ -381,10 +382,10 @@ public class IguanaEventHook {
 
                 String tooltip = "";
 
-                if (satiation  >= 3.0F) tooltip += "Hearty ";
-                else if (satiation  >= 2.0F) tooltip += "Wholesome ";
-                else if (satiation  > 0.0F) tooltip += "Nourishing ";
-                else if (satiation < 0.0F) tooltip += "Unfulfilling ";
+                if (satiation  >= 3.0F) tooltip += "hearty ";
+                else if (satiation  >= 2.0F) tooltip += "wholesome ";
+                else if (satiation  > 0.0F) tooltip += "nourishing ";
+                else if (satiation < 0.0F) tooltip += "unfulfilling ";
 
                 if (hungerFill <= 1) tooltip += "morsel";
                 else if (hungerFill <= 2) tooltip += "snack";
@@ -393,7 +394,12 @@ public class IguanaEventHook {
                 else if (hungerFill <= 11) tooltip += "large meal";
                 else tooltip += "feast";
 
-                event.toolTip.add(tooltip);
+                event.toolTip.add(tooltip.substring(0, 1).toUpperCase() + tooltip.substring(1));
+
+                if (event.showAdvancedItemTooltips)
+                {
+                    event.toolTip.add("Hunger: " + values.hunger + " Sat: " + values.saturationModifier + " (+" + new DecimalFormat("##.##").format(values.getSaturationIncrement()) + ")");
+                }
             }
         }
     }
