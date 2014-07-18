@@ -25,7 +25,16 @@ Incomplete list of things that need to be done. Will be added to/edited as thing
 - [x] Food value tooltips (should use Forge's ItemTooltipEvent)
 
 #### From Block* Classes
-- [ ] updateTick (Tick Events?)
+- [ ] Stop updateTick from running depending on biome/sunlight/regrowthMultiplier
+ - [ ] Separate regrowthMultipliers for cactus/cocoa (cactusRegrowthMultiplier/cocoaRegrowthMultiplier)
 - [x] Bonemealing
 - [x] getDrops
 - [x] Right-click to Harvest
+
+#### All seeds
+- [ ] Add 'crop grows best in' tooltips
+ - [x] Vanilla seeds
+ - [ ] HarvestCraft seeds
+
+#### All foods/seeds
+- [ ] Add Thaumcraft aspects
