@@ -40,6 +40,12 @@ public class ClassTransformer implements IClassTransformer
 			injectFoodStatsPlayerField(classNode);
 			injectFoodStatsConstructor(classNode);
 
+            MethodNode addStatsMethodNode = findMethodNodeOfClass(classNode, isObfuscated ? "a" : "addStats", "(IF)V");
+            if(addStatsMethodNode != null)
+            {
+                addHungerLossRateCheck(addStatsMethodNode);
+            }
+
 			MethodNode methodNode = findMethodNodeOfClass(classNode, isObfuscated ? "a" : "func_151686_a", isObfuscated ? "(Lacx;Ladd;)V" : "(Lnet/minecraft/item/ItemFood;Lnet/minecraft/item/ItemStack;)V");
 			if (methodNode != null)
 			{
@@ -268,6 +274,31 @@ public class ClassTransformer implements IClassTransformer
 
 		method.instructions.insertBefore(targetNode, beforeReturn);
 	}
+
+    private void addHungerLossRateCheck(MethodNode method)
+    {
+        // injected code:
+        /*
+        if(IguanaConfig.hungerLossRatePercentage > 0)
+        {
+            // default code
+        }
+        */
+
+        AbstractInsnNode targetNode = findFirstInstruction(method);
+
+        LabelNode ifGreaterThan = new LabelNode();
+
+        InsnList toInject = new InsnList();
+        toInject.add(new FieldInsnNode(GETSTATIC, Type.getInternalName(IguanaConfig.class), "hungerLossRatePercentage", "I"));
+        toInject.add(new JumpInsnNode(IFLE, ifGreaterThan));
+
+        method.instructions.insertBefore(targetNode, toInject);
+
+        targetNode = findLastInstructionOfType(method, PUTFIELD).getNext().getNext();
+
+        method.instructions.insertBefore(targetNode, ifGreaterThan);
+    }
 
     private void addMinHungerToHeal(MethodNode method, boolean isObfuscated)
     {
