@@ -51,7 +51,7 @@ public class ClassTransformer implements IClassTransformer
             MethodNode methodNode1 = findMethodNodeOfClass(classNode, isObfuscated ? "a" : "onUpdate", isObfuscated ? "(Lyz;)V" : "(Lnet/minecraft/entity/player/EntityPlayer;)V");
             if (methodNode1 != null)
             {
-                addMinHungerToHeal(methodNode1);
+                addMinHungerToHeal(methodNode1, isObfuscated);
                 addConfigurableDamageOnStarve(methodNode1);
             }
             else
@@ -268,14 +268,14 @@ public class ClassTransformer implements IClassTransformer
 		method.instructions.insertBefore(targetNode, beforeReturn);
 	}
 
-    private void addMinHungerToHeal(MethodNode method)
+    private void addMinHungerToHeal(MethodNode method, boolean isObfuscated)
     {
         // modified code:
         /*
         this.foodLevel >= 18 -> this.foodLevel >= IguanaConfig.minHungerToHeal
         */
 
-        AbstractInsnNode targetNode = findField(method, "foodLevel", "I", 3).getNext().getNext();
+        AbstractInsnNode targetNode = findField(method, isObfuscated ? "a" : "foodLevel", "I", 3).getNext().getNext();
 
         method.instructions.remove(targetNode.getPrevious());
         method.instructions.insertBefore(targetNode, new FieldInsnNode(GETSTATIC, Type.getInternalName(IguanaConfig.class), "minHungerToHeal", "I"));
