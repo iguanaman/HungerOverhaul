@@ -83,6 +83,8 @@ minecraft {
 }
 
 dependencies {
+    compile "mantle:Mantle:${config.minecraft_version}-${config.mantle_version}:deobf"
+    compile "tconstruct:TConstruct:${config.minecraft_version}-${config.tcon_version}:deobf"
 }
 
 processResources

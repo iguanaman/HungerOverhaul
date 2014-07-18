@@ -23,6 +23,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import iguanaman.hungeroverhaul.food.FoodModifier;
 import iguanaman.hungeroverhaul.module.ModuleGrassSeeds;
+import iguanaman.hungeroverhaul.module.ModuleTConstruct;
 import iguanaman.hungeroverhaul.module.ModuleVanilla;
 import iguanaman.hungeroverhaul.potion.PotionWellFed;
 import iguanaman.hungeroverhaul.util.IguanaEventHook;
@@ -61,6 +62,7 @@ public class HungerOverhaul
 
 		MinecraftForge.EVENT_BUS.register(new FoodEventHandler());
         ModuleVanilla.init();
+        ModuleTConstruct.init();
         FoodModifierRegistry.registerFoodValueModifier(new FoodModifier());
 	}
 
