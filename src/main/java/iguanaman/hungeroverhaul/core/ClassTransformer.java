@@ -48,6 +48,14 @@ public class ClassTransformer implements IClassTransformer
 			else
 				throw new RuntimeException("FoodStats: ItemStack-aware addStats method not found");
 
+            MethodNode methodNode1 = findMethodNodeOfClass(classNode, isObfuscated ? "a" : "onUpdate", isObfuscated ? "(Lyz;)V" : "(Lnet/minecraft/entity/player/EntityPlayer;)V");
+            if (methodNode1 != null)
+            {
+                addConfigurableDamageOnStarve(methodNode1);
+            }
+            else
+                throw new RuntimeException("FoodStats: onUpdate method not found");
+
 			return writeClassToBytes(classNode);
 		}
 		if (transformedName.equals("net.minecraft.item.ItemFood"))
@@ -258,6 +266,24 @@ public class ClassTransformer implements IClassTransformer
 
 		method.instructions.insertBefore(targetNode, beforeReturn);
 	}
+
+    private void addConfigurableDamageOnStarve(MethodNode method)
+    {
+        // modified code:
+        /*
+        p_75118_1_.attackEntityFrom(DamageSource.starve, 1.0F); -> p_75118_1_.attackEntityFrom(DamageSource.starve, IguanaConfig.damageOnStarve);
+        */
+
+        AbstractInsnNode targetNode = findLastInstructionOfType(method, INVOKEVIRTUAL);
+
+        InsnList toInject = new InsnList();
+        toInject.add(new FieldInsnNode(GETSTATIC, Type.getInternalName(IguanaConfig.class), "damageOnStarve", "I"));
+        toInject.add(new InsnNode(I2F));
+
+        method.instructions.remove(targetNode.getPrevious());
+
+        method.instructions.insertBefore(targetNode, toInject);
+    }
 
 	private ClassNode readClassFromBytes(byte[] bytes)
 	{

@@ -10,7 +10,7 @@ Incomplete list of things that need to be done. Will be added to/edited as thing
  - [ ] Natura
  - [x] Catch-all food value division for anything not specifically modified (IguanaConfig.modFoodValueDivider)
 - [x] Food regens health (config option)
-- [ ] Configurable damage on starve
+- [x] Configurable damage on starve
 - [ ] Configurable max foodExhaustionLevel
 - [ ] IguanaConfig.hungerLossRatePercentage being zero stopping food stats from changing/keeping it at a specific level (19/0/0)
 - [ ] Configurable minimum hunger to theal (IguanaConfig.minHungerToHeal)
