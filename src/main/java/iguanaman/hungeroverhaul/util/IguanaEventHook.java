@@ -372,6 +372,11 @@ public class IguanaEventHook {
                 event.world.setBlockMetadataWithNotify(event.x, event.y, event.z, l, 2);
                 event.setResult(Result.ALLOW);
             }
+        } else if(event.block instanceof BlockStem) {
+            int l = event.world.getBlockMetadata(event.x, event.y, event.z) + 1;
+            if (l > 7) l = 7;
+            event.world.setBlockMetadataWithNotify(event.x, event.y, event.z, l, 2);
+            event.setResult(Result.ALLOW);
         }
     }
 
