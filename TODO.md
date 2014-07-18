@@ -6,7 +6,7 @@ Incomplete list of things that need to be done. Will be added to/edited as thing
 - [ ] Food value modifications
  - [x] Vanilla
  - [ ] HarvestCraft
- - [ ] TConstruct
+ - [x] TConstruct
  - [ ] Natura
  - [x] Catch-all food value division for anything not specifically modified (IguanaConfig.modFoodValueDivider)
 - [x] Food regens health (config option)
