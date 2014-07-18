@@ -9,6 +9,7 @@ import java.util.Random;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockCrops;
+import net.minecraft.block.BlockStem;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityAgeable;
@@ -19,15 +20,13 @@ import net.minecraft.entity.passive.EntityMooshroom;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemBucket;
-import net.minecraft.item.ItemFood;
-import net.minecraft.item.ItemStack;
+import net.minecraft.item.*;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
+import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
@@ -404,6 +403,23 @@ public class IguanaEventHook {
                 if (event.showAdvancedItemTooltips)
                 {
                     event.toolTip.add("Hunger: " + values.hunger + " Sat: " + values.saturationModifier + " (+" + new DecimalFormat("##.##").format(values.getSaturationIncrement()) + ")");
+                }
+            }
+        } else if(event.itemStack.getItem() instanceof ItemSeeds) {
+            if (IguanaConfig.wrongBiomeRegrowthMultiplier > 1)
+            {
+                BiomeDictionary.Type[] theBiomes = null;
+                if (((ItemSeeds)event.itemStack.getItem()).getPlant(null, 0, 0, 0) instanceof BlockCrops)
+                    theBiomes = new BiomeDictionary.Type[]{BiomeDictionary.Type.FOREST, BiomeDictionary.Type.PLAINS};
+                else if (((ItemSeeds)event.itemStack.getItem()).getPlant(null, 0, 0, 0) instanceof BlockStem)
+                    theBiomes = new BiomeDictionary.Type[]{BiomeDictionary.Type.JUNGLE, BiomeDictionary.Type.SWAMP};
+
+                if (theBiomes != null) {
+                    String tooltip = "";
+                    for(BiomeDictionary.Type biomeType : theBiomes)
+                        tooltip += biomeType.toString().substring(0, 1).toUpperCase() + biomeType.toString().substring(1).toLowerCase() + ", ";
+                    event.toolTip.add("Crop grows best in:");
+                    event.toolTip.add(tooltip.substring(0, tooltip.length() - 2));
                 }
             }
         }
