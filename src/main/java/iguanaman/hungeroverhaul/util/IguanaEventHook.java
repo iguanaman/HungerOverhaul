@@ -368,6 +368,7 @@ public class IguanaEventHook {
             if (event.world.difficultySetting.getDifficultyId() < 1 && !IguanaConfig.difficultyScalingBoneMeal) r = event.world.rand.nextInt(3);
             int l = Math.min(event.world.getBlockMetadata(event.x, event.y, event.z) + r, 7);
             event.world.setBlockMetadataWithNotify(event.x, event.y, event.z, l, 2);
+            event.setResult(Result.ALLOW);
         }
     }
 
