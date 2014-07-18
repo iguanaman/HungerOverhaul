@@ -48,11 +48,12 @@ public class ClassTransformer implements IClassTransformer
 			else
 				throw new RuntimeException("FoodStats: ItemStack-aware addStats method not found");
 
-            MethodNode methodNode1 = findMethodNodeOfClass(classNode, isObfuscated ? "a" : "onUpdate", isObfuscated ? "(Lyz;)V" : "(Lnet/minecraft/entity/player/EntityPlayer;)V");
-            if (methodNode1 != null)
+            MethodNode updateMethodNode = findMethodNodeOfClass(classNode, isObfuscated ? "a" : "onUpdate", isObfuscated ? "(Lyz;)V" : "(Lnet/minecraft/entity/player/EntityPlayer;)V");
+            if (updateMethodNode != null)
             {
-                addMinHungerToHeal(methodNode1, isObfuscated);
-                addConfigurableDamageOnStarve(methodNode1);
+                addMinHungerToHeal(updateMethodNode, isObfuscated);
+                addConfigurableDamageOnStarve(updateMethodNode);
+                addConfigurableHungerLoss(classNode, updateMethodNode, isObfuscated);
             }
             else
                 throw new RuntimeException("FoodStats: onUpdate method not found");
@@ -272,13 +273,27 @@ public class ClassTransformer implements IClassTransformer
     {
         // modified code:
         /*
-        this.foodLevel >= 18 -> this.foodLevel >= IguanaConfig.minHungerToHeal
+        this.foodLevel >= 18
+        	modified to:
+        this.foodLevel >= IguanaConfig.minHungerToHeal && IguanaConfig.healthRegenRatePercentage > 0
         */
 
         AbstractInsnNode targetNode = findField(method, isObfuscated ? "a" : "foodLevel", "I", 3).getNext().getNext();
 
         method.instructions.remove(targetNode.getPrevious());
         method.instructions.insertBefore(targetNode, new FieldInsnNode(GETSTATIC, Type.getInternalName(IguanaConfig.class), "minHungerToHeal", "I"));
+        
+        LabelNode ifLabel = null;
+        if (targetNode.getOpcode() == IF_ICMPLT)
+        	ifLabel = ((JumpInsnNode) targetNode).label;
+        else
+        	throw new RuntimeException("IF_ICMPLT node not found");
+        
+        InsnList ifRegenRateInstructions = new InsnList();
+        ifRegenRateInstructions.add(new FieldInsnNode(GETSTATIC, Type.getInternalName(IguanaConfig.class), "healthRegenRatePercentage", "I"));
+        ifRegenRateInstructions.add(new JumpInsnNode(IFLE, ifLabel));
+        
+        method.instructions.insert(targetNode, ifRegenRateInstructions);
     }
 
     private void addConfigurableDamageOnStarve(MethodNode method)
@@ -299,6 +314,86 @@ public class ClassTransformer implements IClassTransformer
         method.instructions.insertBefore(targetNode, toInject);
     }
 
+	private void addConfigurableHungerLoss(ClassNode classNode, MethodNode method, boolean isObfuscated)
+	{
+		// code modified to:
+		/*
+    	if (IguanaConfig.hungerLossRatePercentage == 0)
+    	{
+	    	foodExhaustionLevel = 0.0F;
+	    	foodSaturationLevel = 0.0F;
+	    	foodLevel = 19;
+    	}
+    	else if (this.foodExhaustionLevel > Hooks.getMaxExhaustion(player))
+        {
+            this.foodExhaustionLevel = 0.0F;
+
+			// default code
+        }
+		 */
+
+		AbstractInsnNode firstInjectPoint = findFirstInstructionOfType(method, PUTFIELD);
+		AbstractInsnNode maxExhaustionReplacePoint = findFirstInstructionOfType(method, LDC);
+
+		LabelNode afterFoodExhaustionCheck = null;
+		AbstractInsnNode ifLE = maxExhaustionReplacePoint.getNext().getNext();
+		if (ifLE.getOpcode() == IFLE)
+			afterFoodExhaustionCheck = ((JumpInsnNode) ifLE).label;
+			
+		
+		if (firstInjectPoint == null || maxExhaustionReplacePoint == null || ifLE == null || afterFoodExhaustionCheck == null)
+			throw new RuntimeException("Unexpected instructions found in FoodStats.onUpdate");
+
+		InsnList toInject = new InsnList();
+
+		LabelNode ifHungerLossPercentageNotZero = new LabelNode();
+
+		toInject.add(new FieldInsnNode(GETSTATIC, Type.getInternalName(IguanaConfig.class), "hungerLossRatePercentage", "I"));
+		toInject.add(new JumpInsnNode(IFNE, ifHungerLossPercentageNotZero));
+
+		toInject.add(new VarInsnNode(ALOAD, 0));
+		toInject.add(new InsnNode(FCONST_0));
+		toInject.add(new FieldInsnNode(PUTFIELD, classNode.name.replace(".", "/"), isObfuscated ? "c" : "foodExhaustionLevel", "F"));
+
+		toInject.add(new VarInsnNode(ALOAD, 0));
+		toInject.add(new InsnNode(FCONST_0));
+		toInject.add(new FieldInsnNode(PUTFIELD, classNode.name.replace(".", "/"), isObfuscated ? "b" : "foodSaturationLevel", "F"));
+
+		toInject.add(new VarInsnNode(ALOAD, 0));
+		toInject.add(new VarInsnNode(BIPUSH, 19));
+		toInject.add(new FieldInsnNode(PUTFIELD, classNode.name.replace(".", "/"), isObfuscated ? "a" : "foodLevel", "I"));
+
+		toInject.add(new JumpInsnNode(GOTO, afterFoodExhaustionCheck));
+		toInject.add(ifHungerLossPercentageNotZero);
+
+		method.instructions.insert(firstInjectPoint, toInject);
+		
+		toInject.clear();
+		toInject.add(new VarInsnNode(ALOAD, 1));
+		toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "getMaxExhaustion", "(Lnet/minecraft/entity/player/EntityPlayer;)F"));
+		
+		method.instructions.insertBefore(maxExhaustionReplacePoint, toInject);
+		method.instructions.remove(maxExhaustionReplacePoint);
+		
+		AbstractInsnNode setToZeroTarget = ifLE.getNext();
+		while (setToZeroTarget != null && setToZeroTarget.getOpcode() != DUP)
+		{
+			setToZeroTarget = setToZeroTarget.getNext();
+		}
+		
+		if (setToZeroTarget == null)
+			throw new RuntimeException("Failed to find DUP instruction after IFLE");
+		
+		method.instructions.insertBefore(setToZeroTarget, new InsnNode(FCONST_0));
+		
+		AbstractInsnNode insnToRemove = setToZeroTarget;
+		while (insnToRemove != null && insnToRemove.getOpcode() != PUTFIELD)
+		{
+			insnToRemove = insnToRemove.getNext();
+			method.instructions.remove(insnToRemove.getPrevious());
+		}
+	}
+
 	private ClassNode readClassFromBytes(byte[] bytes)
 	{
 		ClassNode classNode = new ClassNode();
@@ -316,7 +411,7 @@ public class ClassTransformer implements IClassTransformer
 
 	private AbstractInsnNode findFirstInstruction(MethodNode method)
 	{
-		for (AbstractInsnNode instruction : method.instructions.toArray())
+		for (AbstractInsnNode instruction = method.instructions.getFirst(); instruction != null; instruction = instruction.getNext())
 		{
 			if (instruction.getType() != AbstractInsnNode.LABEL && instruction.getType() != AbstractInsnNode.LINE)
 				return instruction;
@@ -324,9 +419,19 @@ public class ClassTransformer implements IClassTransformer
 		return null;
 	}
 
+	private AbstractInsnNode findFirstInstructionOfType(MethodNode method, int opcode)
+	{
+		for (AbstractInsnNode instruction = method.instructions.getFirst(); instruction != null; instruction = instruction.getNext())
+		{
+			if (instruction.getOpcode() == opcode)
+				return instruction;
+		}
+		return null;
+	}
+
 	private AbstractInsnNode findFirstInstructionOfTypeWithDesc(MethodNode method, int opcode, String desc)
 	{
-		for (AbstractInsnNode instruction : method.instructions.toArray())
+		for (AbstractInsnNode instruction = method.instructions.getFirst(); instruction != null; instruction = instruction.getNext())
 		{
 			if (instruction.getOpcode() == opcode)
 			{
@@ -349,8 +454,8 @@ public class ClassTransformer implements IClassTransformer
     private AbstractInsnNode findField(MethodNode method, String field, String type, int timeFound)
     {
         int found = 0;
-        for(AbstractInsnNode instruction : method.instructions.toArray())
-        {
+		for (AbstractInsnNode instruction = method.instructions.getFirst(); instruction != null; instruction = instruction.getNext())
+		{
             if(instruction.getOpcode() == GETFIELD)
             {
                 FieldInsnNode fieldNode = (FieldInsnNode) instruction;
@@ -381,13 +486,12 @@ public class ClassTransformer implements IClassTransformer
 
 	private LabelNode findEndLabel(MethodNode method)
 	{
-		LabelNode lastLabel = null;
-		for (AbstractInsnNode instruction : method.instructions.toArray())
+		for (AbstractInsnNode instruction = method.instructions.getLast(); instruction != null; instruction = instruction.getPrevious())
 		{
 			if (instruction instanceof LabelNode)
-				lastLabel = (LabelNode) instruction;
+				return (LabelNode) instruction;
 		}
-		return lastLabel;
+		return null;
 	}
 
 	private AbstractInsnNode findLastInstructionOfType(MethodNode method, int bytecode)

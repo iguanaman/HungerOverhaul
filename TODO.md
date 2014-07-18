@@ -11,8 +11,8 @@ Incomplete list of things that need to be done. Will be added to/edited as thing
  - [x] Catch-all food value division for anything not specifically modified (IguanaConfig.modFoodValueDivider)
 - [x] Food regens health (config option)
 - [x] Configurable damage on starve
-- [ ] Configurable max foodExhaustionLevel
-- [ ] IguanaConfig.hungerLossRatePercentage being zero stopping food stats from changing/keeping it at a specific level (19/0/0)
+- [x] Configurable max foodExhaustionLevel
+- [x] IguanaConfig.hungerLossRatePercentage being zero stopping food stats from changing/keeping it at a specific level (19/0/0)
 - [x] Configurable minimum hunger to heal (IguanaConfig.minHungerToHeal)
 - [ ] Configurable time between health regen from hunger (multiple config options)
 - [ ] Separate starve timer from food timer

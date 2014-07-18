@@ -1,11 +1,14 @@
 package iguanaman.hungeroverhaul.core;
 
+import iguanaman.hungeroverhaul.HungerOverhaul;
+import iguanaman.hungeroverhaul.IguanaConfig;
 import iguanaman.hungeroverhaul.api.FoodEvent;
 import iguanaman.hungeroverhaul.api.FoodValues;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.FoodStats;
+import net.minecraft.world.EnumDifficulty;
 import net.minecraftforge.common.MinecraftForge;
 
 public class Hooks
@@ -27,9 +30,50 @@ public class Hooks
 	{
 		MinecraftForge.EVENT_BUS.post(new FoodEvent.FoodEaten(player, itemFood, itemStack, foodValues, hungerAdded, saturationAdded));
 	}
-	
+
 	public static int getModifiedFoodEatingSpeed(ItemFood itemFood, ItemStack itemStack)
 	{
 		return FoodValues.getModified(itemFood, itemStack).hunger * 8 + 8;
+	}
+
+	public static float getMaxExhaustion(EntityPlayer player)
+	{
+		EnumDifficulty difficulty = player.worldObj.difficultySetting;
+		float hungerLossRate = 3f;
+		if (IguanaConfig.difficultyScaling && IguanaConfig.difficultyScalingHunger)
+		{
+			if (difficulty == EnumDifficulty.PEACEFUL)
+				hungerLossRate = 5F;
+			else if (difficulty == EnumDifficulty.EASY)
+				hungerLossRate = 4F;
+		}
+
+		return hungerLossRate / (IguanaConfig.hungerLossRatePercentage / 100F);
+	}
+
+	// unused; hook not implemented yet
+	public static float getHealthRegenPeriod(EntityPlayer player)
+	{
+		float wellfedModifier = 1.0F;
+		if (player.isPotionActive(HungerOverhaul.potionWellFed))
+			wellfedModifier = 0.75F;
+
+		EnumDifficulty difficulty = player.worldObj.difficultySetting;
+		float difficultyModifierHealing = 1.0F;
+		if (IguanaConfig.difficultyScaling && IguanaConfig.difficultyScalingHealing)
+		{
+			if (difficulty.getDifficultyId() <= EnumDifficulty.EASY.getDifficultyId())
+				difficultyModifierHealing = 0.75F;
+			else if (difficulty == EnumDifficulty.HARD)
+				difficultyModifierHealing = 1.5F;
+		}
+
+		float lowHealthModifier = player.getMaxHealth() - player.getHealth();
+		lowHealthModifier *= IguanaConfig.lowHealthRegenRateModifier / 100F;
+		lowHealthModifier *= difficultyModifierHealing;
+		lowHealthModifier = (float) Math.pow(lowHealthModifier + 1F, 1.5F);
+
+		return 80.0F * difficultyModifierHealing * wellfedModifier * lowHealthModifier
+				/ (IguanaConfig.healthRegenRatePercentage / 100F);
 	}
 }
