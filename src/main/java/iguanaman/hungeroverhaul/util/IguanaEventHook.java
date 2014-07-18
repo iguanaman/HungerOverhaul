@@ -33,6 +33,8 @@ import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.*;
 import net.minecraftforge.event.terraingen.SaplingGrowTreeEvent;
+import net.minecraftforge.event.world.BlockEvent;
+
 import cpw.mods.fml.common.eventhandler.Event.Result;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
@@ -363,12 +365,14 @@ public class IguanaEventHook {
     @SubscribeEvent
     public void onBonemealUsed(BonemealEvent event)
     {
-        if (event.world.difficultySetting.getDifficultyId() < 3 || !IguanaConfig.difficultyScalingBoneMeal) {
-            int r = 1;
-            if (event.world.difficultySetting.getDifficultyId() < 1 && !IguanaConfig.difficultyScalingBoneMeal) r = event.world.rand.nextInt(3);
-            int l = Math.min(event.world.getBlockMetadata(event.x, event.y, event.z) + r, 7);
-            event.world.setBlockMetadataWithNotify(event.x, event.y, event.z, l, 2);
-            event.setResult(Result.ALLOW);
+        if(event.block instanceof BlockCrops) {
+            if(event.world.difficultySetting.getDifficultyId() < 3 || !IguanaConfig.difficultyScalingBoneMeal) {
+                int r = 1;
+                if(event.world.difficultySetting.getDifficultyId() < 1 && !IguanaConfig.difficultyScalingBoneMeal) r = event.world.rand.nextInt(3);
+                int l = Math.min(event.world.getBlockMetadata(event.x, event.y, event.z) + r, 7);
+                event.world.setBlockMetadataWithNotify(event.x, event.y, event.z, l, 2);
+                event.setResult(Result.ALLOW);
+            }
         }
     }
 
@@ -401,6 +405,26 @@ public class IguanaEventHook {
                 {
                     event.toolTip.add("Hunger: " + values.hunger + " Sat: " + values.saturationModifier + " (+" + new DecimalFormat("##.##").format(values.getSaturationIncrement()) + ")");
                 }
+            }
+        }
+    }
+
+    @SubscribeEvent
+    public void onBlockHarvested(BlockEvent.HarvestDropsEvent event)
+    {
+        if(event.block instanceof BlockCrops) {
+            event.drops.clear();
+            if (event.blockMetadata >= 7)
+            {
+                int produce = IguanaConfig.producePerHarvestMin + event.world.rand.nextInt(1 + IguanaConfig.producePerHarvestMax - IguanaConfig.producePerHarvestMin);
+                if (produce > 0) event.drops.add(new ItemStack(BlockHelper.getPlantDrops(event.block), produce, 0));
+
+                int seeds = IguanaConfig.seedsPerHarvestMin + event.world.rand.nextInt(1 + IguanaConfig.seedsPerHarvestMax - IguanaConfig.seedsPerHarvestMin);
+                if (seeds > 0) event.drops.add(new ItemStack(BlockHelper.getSeedDropps(event.block), seeds, 0));
+            }
+            else
+            {
+                event.drops.add(new ItemStack(BlockHelper.getSeedDropps(event.block), 1, 0));
             }
         }
     }

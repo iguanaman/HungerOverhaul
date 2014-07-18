@@ -24,6 +24,8 @@ Incomplete list of things that need to be done. Will be added to/edited as thing
 - [x] Food eating speed modification
 - [x] Food value tooltips (should use Forge's ItemTooltipEvent)
 
-#### Misc Stuff
-- [x] Figure out why bonemeal is so OP
-- [ ] Figure out what we need to take from the various Block/Item classes that are no longer in use
+#### From Block* Classes
+- [ ] updateTick (Tick Events?)
+- [x] Bonemealing
+- [x] getDrops
+- [x] Right-click to Harvest
