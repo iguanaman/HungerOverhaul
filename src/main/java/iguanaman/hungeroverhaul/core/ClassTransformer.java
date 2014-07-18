@@ -51,6 +51,7 @@ public class ClassTransformer implements IClassTransformer
             MethodNode methodNode1 = findMethodNodeOfClass(classNode, isObfuscated ? "a" : "onUpdate", isObfuscated ? "(Lyz;)V" : "(Lnet/minecraft/entity/player/EntityPlayer;)V");
             if (methodNode1 != null)
             {
+                addMinHungerToHeal(methodNode1);
                 addConfigurableDamageOnStarve(methodNode1);
             }
             else
@@ -267,6 +268,19 @@ public class ClassTransformer implements IClassTransformer
 		method.instructions.insertBefore(targetNode, beforeReturn);
 	}
 
+    private void addMinHungerToHeal(MethodNode method)
+    {
+        // modified code:
+        /*
+        this.foodLevel >= 18 -> this.foodLevel >= IguanaConfig.minHungerToHeal
+        */
+
+        AbstractInsnNode targetNode = findField(method, "foodLevel", "I", 3).getNext().getNext();
+
+        method.instructions.remove(targetNode.getPrevious());
+        method.instructions.insertBefore(targetNode, new FieldInsnNode(GETSTATIC, Type.getInternalName(IguanaConfig.class), "minHungerToHeal", "I"));
+    }
+
     private void addConfigurableDamageOnStarve(MethodNode method)
     {
         // modified code:
@@ -331,6 +345,27 @@ public class ClassTransformer implements IClassTransformer
 		}
 		return null;
 	}
+
+    private AbstractInsnNode findField(MethodNode method, String field, String type, int timeFound)
+    {
+        int found = 0;
+        for(AbstractInsnNode instruction : method.instructions.toArray())
+        {
+            if(instruction.getOpcode() == GETFIELD)
+            {
+                FieldInsnNode fieldNode = (FieldInsnNode) instruction;
+                if(fieldNode.name.equals(field) && fieldNode.desc.equals(type))
+                {
+                    ++found;
+                    if(found == timeFound)
+                    {
+                        return instruction;
+                    }
+                }
+            }
+        }
+        return null;
+    }
 
 	private MethodNode findMethodNodeOfClass(ClassNode classNode, String methodName, String methodDesc)
 	{

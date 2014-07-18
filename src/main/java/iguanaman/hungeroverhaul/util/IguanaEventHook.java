@@ -167,69 +167,6 @@ public class IguanaEventHook {
 		}
 	}
 
-	/*
-	@ForgeSubscribe
-    public void onSleep(PlayerSleepInBedEvent event) {
-
-		if (IguanaConfig.addSleepHungerLoss && !event.entityPlayer.capabilities.isCreativeMode) {
-
-			World world = event.entityPlayer.worldObj;
-
-	        if (!world.isRemote)
-	        {
-		        if (event.entityPlayer.isPlayerSleeping() || !event.entityPlayer.isEntityAlive())
-		        {
-		            event.result = EnumStatus.OTHER_PROBLEM;
-		            return;
-		        }
-
-		        if (!world.provider.isSurfaceWorld())
-		        {
-		        	event.result = EnumStatus.NOT_POSSIBLE_HERE;
-		            return;
-		        }
-
-		        if (world.isDaytime())
-		        {
-		        	event.result =  EnumStatus.NOT_POSSIBLE_NOW;
-		            return;
-		        }
-
-		        if (Math.abs(event.entityPlayer.posX - (double)event.x) > 3.0D || Math.abs(event.entityPlayer.posY - (double)event.y) > 2.0D || Math.abs(event.entityPlayer.posZ - (double)event.z) > 3.0D)
-		        {
-		        	event.result =  EnumStatus.TOO_FAR_AWAY;
-		            return;
-		        }
-
-		        double d0 = 8.0D;
-		        double d1 = 5.0D;
-		        List list = world.getEntitiesWithinAABB(EntityMob.class, AxisAlignedBB.getAABBPool().getAABB((double)event.x - d0, (double)event.y - d1, (double)event.z - d0, (double)event.x + d0, (double)event.y + d1, (double)event.z + d0));
-
-		        if (!list.isEmpty())
-		        {
-		        	event.result =  EnumStatus.NOT_SAFE;
-		            return;
-		        }
-	        }
-
-	        // if sleeping is possible
-			long sleepTime = 24000L - world.getWorldTime();
-			int hungerInterval = 2500;
-			if (IguanaConfig.difficultyScaling && IguanaConfig.difficultyScalingSleepHungerLoss) {
-				hungerInterval = 1500 + (((world.difficultySetting - 3) * -1) * 500);
-			}
-			int hungerLoss = Math.round(sleepTime / hungerInterval);
-			int foodLevel = event.entityPlayer.foodStats.foodLevel;
-			if (foodLevel - hungerLoss <= 6) {
-				event.entityPlayer.addChatMessage("You are too hungry to sleep");
-				event.result = EnumStatus.OTHER_PROBLEM;
-			} else {
-				event.entityPlayer.foodStats.foodLevel -= hungerLoss;
-			}
-		}
-	}
-	 */
-
     @SubscribeEvent
     public void onUseHoe(UseHoeEvent event) {
         if (IguanaConfig.modifyHoeUse) {
@@ -287,17 +224,6 @@ public class IguanaEventHook {
 					event.right.add("\u00A7eHungry\u00A7r");
 				else if (player.foodStats.getFoodLevel() <= 14)
 					event.right.add("\u00A7fPeckish\u00A7r");
-
-				/*
-				if (HungerOverhaul.modifyFoodStats == true) {
-					event.left.add("Meat: " + player.foodStats.diet[IguanaFoodType.meat.id]);
-					event.left.add("Fish: " + player.foodStats.diet[IguanaFoodType.fish.id]);
-					event.left.add("Vegetable: " + player.foodStats.diet[IguanaFoodType.vegetable.id]);
-					event.left.add("Fruit: " + player.foodStats.diet[IguanaFoodType.fruit.id]);
-					event.left.add("Grain: " + player.foodStats.diet[IguanaFoodType.grain.id]);
-					event.left.add("Dairy: " + player.foodStats.diet[IguanaFoodType.dairy.id]);
-				}
-				 */
 			}
 		}
 	}
