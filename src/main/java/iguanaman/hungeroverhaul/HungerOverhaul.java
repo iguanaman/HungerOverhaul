@@ -3,6 +3,7 @@ package iguanaman.hungeroverhaul;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
 import iguanaman.hungeroverhaul.api.FoodModifierRegistry;
@@ -62,7 +63,7 @@ public class HungerOverhaul
 
 		MinecraftForge.EVENT_BUS.register(new FoodEventHandler());
         ModuleVanilla.init();
-        ModuleTConstruct.init();
+        if(Loader.isModLoaded("TConstruct")) ModuleTConstruct.init();
         FoodModifierRegistry.registerFoodValueModifier(new FoodModifier());
 	}
 
@@ -95,7 +96,6 @@ public class HungerOverhaul
 			VillagerRegistry.instance().registerVillageCreationHandler(new VillageHandlerCustomField());
 		}
 
-		ModuleVanilla.init();
 		if(Loader.isModLoaded("harvestcraft")) { PamsModsHelper.loadHC(); ModuleHarvestCraftCrops.init(); ModuleHarvestCraftTrees.init(); }
 		if(Loader.isModLoaded("temperateplants")) ModuleTemperatePlants.init();
 		if(Loader.isModLoaded("randomplants")) ModuleRandomPlants.init();

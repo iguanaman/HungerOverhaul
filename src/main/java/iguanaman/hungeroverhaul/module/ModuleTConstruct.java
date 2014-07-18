@@ -7,26 +7,20 @@ import net.minecraft.item.ItemStack;
 import tconstruct.armor.TinkerArmor;
 import tconstruct.library.crafting.DryingRackRecipes;
 import tconstruct.util.config.PHConstruct;
-import cpw.mods.fml.common.Loader;
 
 public class ModuleTConstruct {
 
 	public static void init() {
-
-		if(Loader.isModLoaded("TConstruct"))
-			try {
-				if (!PHConstruct.enableHealthRegen)
-				{
-					PHConstruct.enableHealthRegen = true;
-					IguanaConfig.healthRegenRatePercentage = 0;
-				}
-				if (PHConstruct.alphaRegen)
-				{
-					PHConstruct.alphaRegen = false;
-					IguanaConfig.foodRegensHealth = true;
-				}
-			} catch (Exception ex) {}
-
+        if (!PHConstruct.enableHealthRegen)
+        {
+            PHConstruct.enableHealthRegen = true;
+            IguanaConfig.healthRegenRatePercentage = 0;
+        }
+        if (PHConstruct.alphaRegen)
+        {
+            PHConstruct.alphaRegen = false;
+            IguanaConfig.foodRegensHealth = true;
+        }
 		if (IguanaConfig.dryingRackTimeMultiplier != 1)
 		{
 			DryingRackRecipes.recipes.clear();
@@ -39,7 +33,5 @@ public class ModuleTConstruct {
 			DryingRackRecipes.addDryingRecipe(Items.fish, dryingTime, new ItemStack(TinkerArmor.jerky, 1, 4));
 			DryingRackRecipes.addDryingRecipe(Items.rotten_flesh, dryingTime, new ItemStack(TinkerArmor.jerky, 1, 5));
 		}
-
 	}
-
 }
