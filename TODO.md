@@ -7,7 +7,7 @@ Incomplete list of things that need to be done. Will be added to/edited as thing
  - [x] Vanilla
  - [ ] HarvestCraft
  - [x] TConstruct
- - [ ] Natura
+ - [x] Natura
  - [x] Catch-all food value division for anything not specifically modified (IguanaConfig.modFoodValueDivider)
 - [x] Food regens health (config option)
 - [x] Configurable damage on starve
@@ -25,7 +25,7 @@ Incomplete list of things that need to be done. Will be added to/edited as thing
 - [x] Food value tooltips (should use Forge's ItemTooltipEvent)
 
 #### From Block* Classes
-- [ ] Stop updateTick from running depending on biome/sunlight/regrowthMultiplier (ASM)
+- [x] Stop updateTick from running depending on biome/sunlight/regrowthMultiplier (ASM)
  - [ ] Separate regrowthMultipliers for cactus/cocoa (cactusRegrowthMultiplier/cocoaRegrowthMultiplier)
 - [x] Bonemealing
  - [x] Vanilla
