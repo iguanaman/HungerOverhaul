@@ -1,5 +1,7 @@
 package iguanaman.hungeroverhaul.core;
 
+import java.util.Random;
+
 import iguanaman.hungeroverhaul.HungerOverhaul;
 import iguanaman.hungeroverhaul.IguanaConfig;
 import iguanaman.hungeroverhaul.api.FoodEvent;
@@ -9,6 +11,9 @@ import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.FoodStats;
 import net.minecraft.world.EnumDifficulty;
+import net.minecraft.world.World;
+import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.MinecraftForge;
 
 public class Hooks
@@ -76,4 +81,24 @@ public class Hooks
 		return 80.0F * difficultyModifierHealing * wellfedModifier * lowHealthModifier
 				/ (IguanaConfig.healthRegenRatePercentage / 100F);
 	}
+
+    public static void updateTickBlockCrops(World world, int x, int y, int z, Random rand)
+    {
+        int sunlightModifier = world.isDaytime() && world.canBlockSeeTheSky(x, y, z) ? 1 : IguanaConfig.noSunlightRegrowthMultiplier;
+        if (sunlightModifier == 0) return;
+
+        // biome modifier
+        int biomeModifier = IguanaConfig.wrongBiomeRegrowthMultiplier;
+        try {
+            BiomeGenBase biome = world.getWorldChunkManager().getBiomeGenAt(x, z);
+            for (BiomeDictionary.Type biomeType : new BiomeDictionary.Type[]{BiomeDictionary.Type.FOREST, BiomeDictionary.Type.PLAINS})
+                if(BiomeDictionary.isBiomeOfType(biome, biomeType)) {
+                    biomeModifier = 1;
+                    break;
+                }
+        } catch (Exception var5) { biomeModifier = 1; }
+        if (biomeModifier == 0) return;
+
+        if (rand.nextInt(IguanaConfig.cropRegrowthMultiplier * biomeModifier) != 0) return;
+    }
 }

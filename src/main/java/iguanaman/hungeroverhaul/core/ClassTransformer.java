@@ -3,6 +3,8 @@ package iguanaman.hungeroverhaul.core;
 import static org.objectweb.asm.Opcodes.*;
 import iguanaman.hungeroverhaul.IguanaConfig;
 import iguanaman.hungeroverhaul.api.FoodValues;
+
+import net.minecraft.block.BlockBush;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.launchwrapper.IClassTransformer;
 import org.objectweb.asm.ClassReader;
@@ -82,6 +84,22 @@ public class ClassTransformer implements IClassTransformer
 
 			return writeClassToBytes(classNode);
 		}
+        if (transformedName.equals("net.minecraft.block.BlockCrops"))
+        {
+            boolean isObfuscated = !name.equals(transformedName);
+
+            ClassNode classNode = readClassFromBytes(basicClass);
+
+            MethodNode methodNode = findMethodNodeOfClass(classNode, isObfuscated ? "a" : "updateTick", isObfuscated ? "(Lahb;IIILjava/util/Random;)V" : "(Lnet/minecraft/world/World;IIILjava/util/Random;)V");
+            if (methodNode != null)
+            {
+                addUpdateTickHook(methodNode, isObfuscated);
+            }
+            else
+                throw new RuntimeException("BlockCrops: updateTick method not found");
+
+            return writeClassToBytes(classNode);
+        }
 
 		return basicClass;
 	}
@@ -424,6 +442,26 @@ public class ClassTransformer implements IClassTransformer
 			method.instructions.remove(insnToRemove.getPrevious());
 		}
 	}
+
+    private void addUpdateTickHook(MethodNode method, boolean isObfuscated)
+    {
+        // injected code
+        /*
+        Hooks.updateTickBlockCrops(p_149674_1_, p_149674_2_, p_149674_3_, p_149674_4_, p_149674_5_);
+        */
+
+        AbstractInsnNode targetNode = findFirstInstruction(method);
+
+        InsnList toInject = new InsnList();
+        toInject.add(new VarInsnNode(ALOAD, 1));
+        toInject.add(new VarInsnNode(ILOAD, 2));
+        toInject.add(new VarInsnNode(ILOAD, 3));
+        toInject.add(new VarInsnNode(ILOAD, 4));
+        toInject.add(new VarInsnNode(ALOAD, 5));
+        toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "updateTickBlockCrops", isObfuscated ? "(Lahb;IIILjava/util/Random;)V" : "(Lnet/minecraft/world/World;IIILjava/util/Random;)V"));
+
+        method.instructions.insertBefore(targetNode, toInject);
+    }
 
 	private ClassNode readClassFromBytes(byte[] bytes)
 	{
