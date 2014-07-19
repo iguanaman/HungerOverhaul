@@ -23,18 +23,6 @@ public class ModuleNatura {
 		tempName = Block.blockRegistry.getNameForObject(Blocks.cactus);
 		Blocks.cactus = cactusNew;
 		Utils.replace(Blocks.cactus, tempName);
-
-		tempName = Block.blockRegistry.getNameForObject(NContent.crops);
-		NContent.crops = new IguanaCropNatura();
-		Utils.replace(NContent.crops, tempName);
-		
-		tempName = Block.blockRegistry.getNameForObject(NContent.berryBush);
-		NContent.berryBush = new IguanaBerryBush();
-		Utils.replace(NContent.berryBush, tempName);
-		
-		tempName = Block.blockRegistry.getNameForObject(NContent.netherBerryBush);
-		NContent.netherBerryBush = new IguanaBerryBushNether();
-		Utils.replace(NContent.netherBerryBush, tempName);
 		
 		tempName = Block.blockRegistry.getNameForObject(NContent.saguaro);
 		NContent.saguaro = new IguanaSaguaro().setBlockName("saguaro.block");

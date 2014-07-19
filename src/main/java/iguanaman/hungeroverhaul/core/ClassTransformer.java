@@ -100,7 +100,7 @@ public class ClassTransformer implements IClassTransformer
 
             return writeClassToBytes(classNode);
         }
-        if (transformedName.equals("mods.natura.blocks.crops.CropBlock"))
+        if (transformedName.equals("mods.natura.blocks.crops.CropBlock") || transformedName.equals("mods.natura.blocks.crops.BerryBush"))
         {
             ClassNode classNode = readClassFromBytes(basicClass);
 
@@ -110,9 +110,19 @@ public class ClassTransformer implements IClassTransformer
                 addUpdateTickHook(methodNode, false);
             }
             else
-                throw new RuntimeException("CropBlock: updateTick method not found");
+                throw new RuntimeException(transformedName.substring(transformedName.lastIndexOf(".") + 1) + ": updateTick method not found");
 
             return writeClassToBytes(classNode);
+        }
+        if (transformedName.equals("mods.natura.blocks.crops.NetherBerryBush"))
+        {
+            ClassNode classNode = readClassFromBytes(basicClass);
+
+            MethodNode methodNode = findMethodNodeOfClass(classNode, "updateTick", "(Lnet/minecraft/world/World;IIILjava/util/Random;)V");
+            if (methodNode != null)
+            {
+                addUpdateTickHookNBB(methodNode);
+            }
         }
 
 		return basicClass;
@@ -472,7 +482,27 @@ public class ClassTransformer implements IClassTransformer
         toInject.add(new VarInsnNode(ILOAD, 3));
         toInject.add(new VarInsnNode(ILOAD, 4));
         toInject.add(new VarInsnNode(ALOAD, 5));
-        toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "updateTickHook", isObfuscated ? "(Lahb;IIILjava/util/Random;)V" : "(Lnet/minecraft/world/World;IIILjava/util/Random;)V"));
+        toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "updateTickHook", isObfuscated ? "(Lahb;IIILjava/util/Random;)V" : "(Lnet/minecraft/world/World;IIILjava/util/Random;)V")); //Is the obfuscated one needed?
+
+        method.instructions.insertBefore(targetNode, toInject);
+    }
+
+    private void addUpdateTickHookNBB(MethodNode method)
+    {
+        // injected code
+        /*
+        Hooks.updateTickBlockCrops(p_149674_1_, p_149674_2_, p_149674_3_, p_149674_4_, p_149674_5_);
+        */
+
+        AbstractInsnNode targetNode = findFirstInstruction(method);
+
+        InsnList toInject = new InsnList();
+        toInject.add(new VarInsnNode(ALOAD, 1));
+        toInject.add(new VarInsnNode(ILOAD, 2));
+        toInject.add(new VarInsnNode(ILOAD, 3));
+        toInject.add(new VarInsnNode(ILOAD, 4));
+        toInject.add(new VarInsnNode(ALOAD, 5));
+        toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "updateTickNetherBerryBush", "(Lnet/minecraft/world/World;IIILjava/util/Random;)V"));
 
         method.instructions.insertBefore(targetNode, toInject);
     }

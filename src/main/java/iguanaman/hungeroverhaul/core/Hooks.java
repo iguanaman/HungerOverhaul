@@ -101,4 +101,16 @@ public class Hooks
 
         if (rand.nextInt(IguanaConfig.cropRegrowthMultiplier * biomeModifier) != 0) return;
     }
+
+    public static void updateTickNetherBerryBush(World world, int x, int y, int z, Random rand)
+    {
+        // biome modifier
+        int biomeModifier = IguanaConfig.wrongBiomeRegrowthMultiplier;
+        try {
+            BiomeGenBase biome = world.getWorldChunkManager().getBiomeGenAt(x, z);
+            if(BiomeDictionary.isBiomeOfType(biome, BiomeDictionary.Type.NETHER)) biomeModifier = 1;
+        } catch (Exception var5) { biomeModifier = 1; }
+
+        if (rand.nextInt(IguanaConfig.cropRegrowthMultiplier * biomeModifier) != 0) return;
+    }
 }

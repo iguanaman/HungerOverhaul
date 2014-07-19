@@ -293,7 +293,7 @@ public class IguanaEventHook {
     }
 
     @SubscribeEvent
-    public void onBonemealUsed(BonemealEvent event)
+    public void onBonemealUsed(BonemealEvent event) //TODO Condense to stop recalculating things over and over again. And to make cleaner.
     {
         if(event.block instanceof BlockCrops) {
             if(event.world.difficultySetting.getDifficultyId() < 3 || !IguanaConfig.difficultyScalingBoneMeal) {
@@ -308,27 +308,75 @@ public class IguanaEventHook {
             if (l > 7) l = 7;
             event.world.setBlockMetadataWithNotify(event.x, event.y, event.z, l, 2);
             event.setResult(Result.ALLOW);
-        } else if(Loader.isModLoaded("Natura") && event.block == NContent.crops) {
-            if (event.world.difficultySetting.getDifficultyId() < 3 || !IguanaConfig.difficultyScalingBoneMeal)
-            {
-                int meta = event.world.getBlockMetadata(event.x, event.y, event.z);
-                if (meta != 3 && meta != 8)
-                    if (meta < 3)
+        } else if(Loader.isModLoaded("Natura")) {
+            if(event.block == NContent.crops) {
+                if (event.world.difficultySetting.getDifficultyId() < 3 || !IguanaConfig.difficultyScalingBoneMeal)
+                {
+                    int meta = event.world.getBlockMetadata(event.x, event.y, event.z);
+                    if (meta != 3 && meta != 8)
                     {
-                        int output = Natura.random.nextInt(3) + 1 + meta;
-                        if (event.world.difficultySetting.getDifficultyId() == 2 && IguanaConfig.difficultyScalingBoneMeal) output = 1 + meta;
-                        if (output > 3) output = 3;
-                        event.world.setBlockMetadataWithNotify(event.x, event.y, event.z, output, 3);
+                        if (meta < 3)
+                        {
+                            int output = Natura.random.nextInt(3) + 1 + meta;
+                            if (event.world.difficultySetting.getDifficultyId() == 2 && IguanaConfig.difficultyScalingBoneMeal) output = 1 + meta;
+                            if (output > 3) output = 3;
+                            event.world.setBlockMetadataWithNotify(event.x, event.y, event.z, output, 3);
+                            event.setResult(Result.ALLOW);
+                        }
+                        else
+                        {
+                            int output = Natura.random.nextInt(4) + 1 + meta;
+                            if (event.world.difficultySetting.getDifficultyId() == 2 && IguanaConfig.difficultyScalingBoneMeal) output = 1 + meta;
+                            if (output > 8) output = 8;
+                            event.world.setBlockMetadataWithNotify(event.x, event.y, event.z, output, 3);
+                            event.setResult(Result.ALLOW);
+                        }
+                    }
+                }
+            } else if(event.block == NContent.berryBush) {
+                if (event.world.difficultySetting.getDifficultyId() < 3 || !IguanaConfig.difficultyScalingBoneMeal)
+                {
+                    int meta = event.world.getBlockMetadata(event.x, event.y, event.z);
+
+                    if (meta / 4 < 2)
+                    {
+                        int setMeta = event.world.rand.nextInt(2) + 1 + meta / 4;
+                        if (setMeta > 2) setMeta = 2;
+                        if (event.world.difficultySetting.getDifficultyId() == 2 && IguanaConfig.difficultyScalingBoneMeal) setMeta = 1;
+                        event.world.setBlockMetadataWithNotify(event.x, event.y, event.z, meta % 4 + setMeta * 4, 4);
                         event.setResult(Result.ALLOW);
                     }
-                    else
+
+                    Block block = event.world.getBlock(event.x, event.y + 1, event.z);
+                    if (block == null || block.isAir(event.world, event.x, event.y + 1, event.z))
                     {
-                        int output = Natura.random.nextInt(4) + 1 + meta;
-                        if (event.world.difficultySetting.getDifficultyId() == 2 && IguanaConfig.difficultyScalingBoneMeal) output = 1 + meta;
-                        if (output > 8) output = 8;
-                        event.world.setBlockMetadataWithNotify(event.x, event.y, event.z, output, 3);
+                        if (event.world.rand.nextInt(3) == 0) event.world.setBlock(event.x, event.y + 1, event.z, event.block, meta % 4, 3);
                         event.setResult(Result.ALLOW);
                     }
+                }
+            } else if(event.block == NContent.netherBerryBush) {
+                if (event.world.difficultySetting.getDifficultyId() < 3 || !IguanaConfig.difficultyScalingBoneMeal)
+                {
+                    int meta = event.world.getBlockMetadata(event.x, event.y, event.z);
+                    if (meta / 4 < 2)
+                    {
+                        if (event.world.rand.nextBoolean())
+                        {
+                            int setMeta = event.world.rand.nextInt(2) + 1 + meta / 4;
+                            if (setMeta > 2) setMeta = 2;
+                            if (event.world.difficultySetting.getDifficultyId() == 2 && IguanaConfig.difficultyScalingBoneMeal) setMeta = 1;
+                            event.world.setBlockMetadataWithNotify(event.x, event.y, event.z, meta % 4 + setMeta * 4, 4);
+                        }
+                        event.setResult(Result.ALLOW);
+                    }
+
+                    Block block = event.world.getBlock(event.x, event.y + 1, event.z);
+                    if (block == null || block.isAir(event.world, event.x, event.y + 1, event.z))
+                    {
+                        if (event.world.rand.nextInt(6) == 0) event.world.setBlock(event.x, event.y + 1, event.z, event.block, meta % 4, 3);
+                        event.setResult(Result.ALLOW);
+                    }
+                }
             }
         }
     }
