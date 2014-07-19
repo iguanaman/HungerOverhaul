@@ -23,10 +23,6 @@ public class ModuleNatura {
 		tempName = Block.blockRegistry.getNameForObject(Blocks.cactus);
 		Blocks.cactus = cactusNew;
 		Utils.replace(Blocks.cactus, tempName);
-		
-		tempName = Block.blockRegistry.getNameForObject(NContent.saguaro);
-		NContent.saguaro = new IguanaSaguaro().setBlockName("saguaro.block");
-		Utils.replace(NContent.saguaro, tempName);
 	}*/
 
 }

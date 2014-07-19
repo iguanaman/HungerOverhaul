@@ -114,14 +114,16 @@ public class ClassTransformer implements IClassTransformer
 
             return writeClassToBytes(classNode);
         }
-        if (transformedName.equals("mods.natura.blocks.crops.NetherBerryBush"))
+        if (transformedName.equals("mods.natura.blocks.crops.NetherBerryBush") || transformedName.equals("mods.natura.blocks.trees.SaguaroBlock"))
         {
             ClassNode classNode = readClassFromBytes(basicClass);
+
+            String className = classNode.name.substring(classNode.name.lastIndexOf(".") + 1);
 
             MethodNode methodNode = findMethodNodeOfClass(classNode, "updateTick", "(Lnet/minecraft/world/World;IIILjava/util/Random;)V");
             if (methodNode != null)
             {
-                addUpdateTickHookNBB(methodNode);
+                addUpdateTickHookNBB(methodNode, className);
             }
         }
 
@@ -487,7 +489,7 @@ public class ClassTransformer implements IClassTransformer
         method.instructions.insertBefore(targetNode, toInject);
     }
 
-    private void addUpdateTickHookNBB(MethodNode method)
+    private void addUpdateTickHookNBB(MethodNode method, String className)
     {
         // injected code
         /*
@@ -502,7 +504,7 @@ public class ClassTransformer implements IClassTransformer
         toInject.add(new VarInsnNode(ILOAD, 3));
         toInject.add(new VarInsnNode(ILOAD, 4));
         toInject.add(new VarInsnNode(ALOAD, 5));
-        toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "updateTickNetherBerryBush", "(Lnet/minecraft/world/World;IIILjava/util/Random;)V"));
+        toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), className.equals("NetherBerryBush") ? "updateTickNetherBerryBush" : "updateTickSaguaro", "(Lnet/minecraft/world/World;IIILjava/util/Random;)V"));
 
         method.instructions.insertBefore(targetNode, toInject);
     }
