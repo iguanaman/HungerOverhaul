@@ -1,5 +1,6 @@
 package iguanaman.hungeroverhaul.util;
 
+import cpw.mods.fml.common.Loader;
 import iguanaman.hungeroverhaul.IguanaConfig;
 import iguanaman.hungeroverhaul.api.FoodValues;
 import iguanaman.hungeroverhaul.module.ModuleGrassSeeds;
@@ -38,6 +39,10 @@ import cpw.mods.fml.common.eventhandler.Event.Result;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import mods.natura.Natura;
+import mods.natura.blocks.crops.CropBlock;
+import mods.natura.common.NContent;
+import mods.natura.items.NaturaSeeds;
 
 public class IguanaEventHook {
 
@@ -303,6 +308,28 @@ public class IguanaEventHook {
             if (l > 7) l = 7;
             event.world.setBlockMetadataWithNotify(event.x, event.y, event.z, l, 2);
             event.setResult(Result.ALLOW);
+        } else if(Loader.isModLoaded("Natura") && event.block == NContent.crops) {
+            if (event.world.difficultySetting.getDifficultyId() < 3 || !IguanaConfig.difficultyScalingBoneMeal)
+            {
+                int meta = event.world.getBlockMetadata(event.x, event.y, event.z);
+                if (meta != 3 && meta != 8)
+                    if (meta < 3)
+                    {
+                        int output = Natura.random.nextInt(3) + 1 + meta;
+                        if (event.world.difficultySetting.getDifficultyId() == 2 && IguanaConfig.difficultyScalingBoneMeal) output = 1 + meta;
+                        if (output > 3) output = 3;
+                        event.world.setBlockMetadataWithNotify(event.x, event.y, event.z, output, 3);
+                        event.setResult(Result.ALLOW);
+                    }
+                    else
+                    {
+                        int output = Natura.random.nextInt(4) + 1 + meta;
+                        if (event.world.difficultySetting.getDifficultyId() == 2 && IguanaConfig.difficultyScalingBoneMeal) output = 1 + meta;
+                        if (output > 8) output = 8;
+                        event.world.setBlockMetadataWithNotify(event.x, event.y, event.z, output, 3);
+                        event.setResult(Result.ALLOW);
+                    }
+            }
         }
     }
 
@@ -336,22 +363,24 @@ public class IguanaEventHook {
                     event.toolTip.add("Hunger: " + values.hunger + " Sat: " + values.saturationModifier + " (+" + new DecimalFormat("##.##").format(values.getSaturationIncrement()) + ")");
                 }
             }
-        } else if(event.itemStack.getItem() instanceof ItemSeeds) {
-            if (IguanaConfig.wrongBiomeRegrowthMultiplier > 1)
-            {
-                BiomeDictionary.Type[] theBiomes = null;
+        } else if (IguanaConfig.wrongBiomeRegrowthMultiplier > 1) {
+            BiomeDictionary.Type[] theBiomes = null;
+            if(event.itemStack.getItem() instanceof ItemSeeds) {
                 if (((ItemSeeds)event.itemStack.getItem()).getPlant(null, 0, 0, 0) instanceof BlockCrops)
                     theBiomes = new BiomeDictionary.Type[]{BiomeDictionary.Type.FOREST, BiomeDictionary.Type.PLAINS};
                 else if (((ItemSeeds)event.itemStack.getItem()).getPlant(null, 0, 0, 0) instanceof BlockStem)
                     theBiomes = new BiomeDictionary.Type[]{BiomeDictionary.Type.JUNGLE, BiomeDictionary.Type.SWAMP};
+            } else if(Loader.isModLoaded("Natura") && event.itemStack.getItem() instanceof NaturaSeeds) {
+                if (((NaturaSeeds)event.itemStack.getItem()).getPlant(null, 0, 0, 0) instanceof CropBlock) //Probably don't need, but keeping it consistent.
+                    theBiomes = new BiomeDictionary.Type[]{BiomeDictionary.Type.FOREST, BiomeDictionary.Type.PLAINS};
+            }
 
-                if (theBiomes != null) {
-                    String tooltip = "";
-                    for(BiomeDictionary.Type biomeType : theBiomes)
-                        tooltip += biomeType.toString().substring(0, 1).toUpperCase() + biomeType.toString().substring(1).toLowerCase() + ", ";
-                    event.toolTip.add("Crop grows best in:");
-                    event.toolTip.add(tooltip.substring(0, tooltip.length() - 2));
-                }
+            if (theBiomes != null) {
+                String tooltip = "";
+                for(BiomeDictionary.Type biomeType : theBiomes)
+                    tooltip += biomeType.toString().substring(0, 1).toUpperCase() + biomeType.toString().substring(1).toLowerCase() + ", ";
+                event.toolTip.add("Crop grows best in:");
+                event.toolTip.add(tooltip.substring(0, tooltip.length() - 2));
             }
         }
     }
@@ -359,7 +388,21 @@ public class IguanaEventHook {
     @SubscribeEvent
     public void onBlockHarvested(BlockEvent.HarvestDropsEvent event)
     {
-        if(event.block instanceof BlockCrops) {
+        if(Loader.isModLoaded("Natura") && event.block instanceof CropBlock) {
+            event.drops.clear();
+            if (event.blockMetadata == 3 || event.blockMetadata == 8)
+            {
+                int count = IguanaConfig.producePerHarvestMin + event.world.rand.nextInt(IguanaConfig.producePerHarvestMax - IguanaConfig.producePerHarvestMin);
+                for (int i = 0; i < count; i++)
+                {
+                    Item item = event.block.getItemDropped(event.blockMetadata, event.world.rand, 0);
+                    if (item != null)
+                        event.drops.add(new ItemStack(item, 1, event.block.damageDropped(event.blockMetadata)));
+                }
+            } else {
+                event.drops.add(new ItemStack(BlockHelper.getSeedDropps(event.block), 1, BlockHelper.getSeedMetadata(event.block, event.blockMetadata)));
+            }
+        } else if(event.block instanceof BlockCrops) {
             event.drops.clear();
             if (event.blockMetadata >= 7)
             {

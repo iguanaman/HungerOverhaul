@@ -39,10 +39,6 @@ public class ModuleNatura {
 		tempName = Block.blockRegistry.getNameForObject(NContent.saguaro);
 		NContent.saguaro = new IguanaSaguaro().setBlockName("saguaro.block");
 		Utils.replace(NContent.saguaro, tempName);
-		
-		tempName = Item.itemRegistry.getNameForObject(NContent.seeds);
-		NContent.seeds = new IguanaSeedNatura(NContent.crops, Blocks.farmland).setUnlocalizedName("barley.seed");
-		Utils.replace(NContent.seeds, tempName);
 	}*/
 
 }
