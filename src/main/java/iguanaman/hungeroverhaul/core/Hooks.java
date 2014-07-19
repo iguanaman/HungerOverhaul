@@ -82,7 +82,7 @@ public class Hooks
 				/ (IguanaConfig.healthRegenRatePercentage / 100F);
 	}
 
-    public static void updateTickBlockCrops(World world, int x, int y, int z, Random rand)
+    public static void updateTickHook(World world, int x, int y, int z, Random rand)
     {
         int sunlightModifier = world.isDaytime() && world.canBlockSeeTheSky(x, y, z) ? 1 : IguanaConfig.noSunlightRegrowthMultiplier;
         if (sunlightModifier == 0) return;

@@ -100,6 +100,20 @@ public class ClassTransformer implements IClassTransformer
 
             return writeClassToBytes(classNode);
         }
+        if (transformedName.equals("mods.natura.blocks.crops.CropBlock"))
+        {
+            ClassNode classNode = readClassFromBytes(basicClass);
+
+            MethodNode methodNode = findMethodNodeOfClass(classNode, "updateTick", "(Lnet/minecraft/world/World;IIILjava/util/Random;)V");
+            if (methodNode != null)
+            {
+                addUpdateTickHook(methodNode, false);
+            }
+            else
+                throw new RuntimeException("CropBlock: updateTick method not found");
+
+            return writeClassToBytes(classNode);
+        }
 
 		return basicClass;
 	}
@@ -458,7 +472,7 @@ public class ClassTransformer implements IClassTransformer
         toInject.add(new VarInsnNode(ILOAD, 3));
         toInject.add(new VarInsnNode(ILOAD, 4));
         toInject.add(new VarInsnNode(ALOAD, 5));
-        toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "updateTickBlockCrops", isObfuscated ? "(Lahb;IIILjava/util/Random;)V" : "(Lnet/minecraft/world/World;IIILjava/util/Random;)V"));
+        toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "updateTickHook", isObfuscated ? "(Lahb;IIILjava/util/Random;)V" : "(Lnet/minecraft/world/World;IIILjava/util/Random;)V"));
 
         method.instructions.insertBefore(targetNode, toInject);
     }
