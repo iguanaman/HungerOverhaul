@@ -125,4 +125,25 @@ public class Hooks
 
         if (rand.nextInt(IguanaConfig.cactusRegrowthMultiplier * biomeModifier) != 0) return;
     }
+
+    public static void updateTickReeds(World world, int x, int y, int z, Random rand)
+    {
+        int sunlightModifier = world.isDaytime() && world.canBlockSeeTheSky(x, y, z) ? 1 : IguanaConfig.noSunlightRegrowthMultiplier;
+        if (sunlightModifier == 0) return;
+
+        // biome modifier
+        int biomeModifier = IguanaConfig.wrongBiomeRegrowthMultiplierSugarcane;
+        try {
+            BiomeGenBase biome = world.getWorldChunkManager().getBiomeGenAt(x, z);
+            for (BiomeDictionary.Type biomeType : new BiomeDictionary.Type[]{BiomeDictionary.Type.JUNGLE, BiomeDictionary.Type.SWAMP}) {
+                if(BiomeDictionary.isBiomeOfType(biome, biomeType)) {
+                    biomeModifier = 1;
+                    break;
+                }
+            }
+        } catch (Exception var5) { biomeModifier = 1; }
+        if (biomeModifier == 0) return;
+
+        if (rand.nextInt(IguanaConfig.sugarcaneRegrowthMultiplier * biomeModifier) != 0) return;
+    }
 }

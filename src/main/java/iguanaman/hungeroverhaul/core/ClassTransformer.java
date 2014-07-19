@@ -100,6 +100,22 @@ public class ClassTransformer implements IClassTransformer
 
             return writeClassToBytes(classNode);
         }
+        if (transformedName.equals("net.minecraft.block.BlockReed"))
+        {
+            boolean isObfuscated = !name.equals(transformedName);
+
+            ClassNode classNode = readClassFromBytes(basicClass);
+
+            MethodNode methodNode = findMethodNodeOfClass(classNode, isObfuscated ? "a" : "updateTick", isObfuscated ? "(Lahb;IIILjava/util/Random;)V" : "(Lnet/minecraft/world/World;IIILjava/util/Random;)V");
+            if (methodNode != null)
+            {
+                addUpdateTickHookReeds(methodNode, isObfuscated);
+            }
+            else
+                throw new RuntimeException("BlockReed: updateTick method not found");
+
+            return writeClassToBytes(classNode);
+        }
         if (transformedName.equals("mods.natura.blocks.crops.CropBlock") || transformedName.equals("mods.natura.blocks.crops.BerryBush"))
         {
             ClassNode classNode = readClassFromBytes(basicClass);
@@ -125,6 +141,10 @@ public class ClassTransformer implements IClassTransformer
             {
                 addUpdateTickHookNBB(methodNode, className);
             }
+            else
+                throw new RuntimeException(className + ": updateTick method not found");
+
+            return writeClassToBytes(classNode);
         }
 
 		return basicClass;
@@ -484,7 +504,7 @@ public class ClassTransformer implements IClassTransformer
         toInject.add(new VarInsnNode(ILOAD, 3));
         toInject.add(new VarInsnNode(ILOAD, 4));
         toInject.add(new VarInsnNode(ALOAD, 5));
-        toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "updateTickHook", isObfuscated ? "(Lahb;IIILjava/util/Random;)V" : "(Lnet/minecraft/world/World;IIILjava/util/Random;)V")); //Is the obfuscated one needed?
+        toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "updateTickHook", isObfuscated ? "(Lahb;IIILjava/util/Random;)V" : "(Lnet/minecraft/world/World;IIILjava/util/Random;)V"));
 
         method.instructions.insertBefore(targetNode, toInject);
     }
@@ -505,6 +525,26 @@ public class ClassTransformer implements IClassTransformer
         toInject.add(new VarInsnNode(ILOAD, 4));
         toInject.add(new VarInsnNode(ALOAD, 5));
         toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), className.equals("NetherBerryBush") ? "updateTickNetherBerryBush" : "updateTickSaguaro", "(Lnet/minecraft/world/World;IIILjava/util/Random;)V"));
+
+        method.instructions.insertBefore(targetNode, toInject);
+    }
+
+    private void addUpdateTickHookReeds(MethodNode method, boolean isObfuscated)
+    {
+        // injected code
+        /*
+        Hooks.updateTickBlockCrops(p_149674_1_, p_149674_2_, p_149674_3_, p_149674_4_, p_149674_5_);
+        */
+
+        AbstractInsnNode targetNode = findFirstInstruction(method);
+
+        InsnList toInject = new InsnList();
+        toInject.add(new VarInsnNode(ALOAD, 1));
+        toInject.add(new VarInsnNode(ILOAD, 2));
+        toInject.add(new VarInsnNode(ILOAD, 3));
+        toInject.add(new VarInsnNode(ILOAD, 4));
+        toInject.add(new VarInsnNode(ALOAD, 5));
+        toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "updateTickReeds", isObfuscated ? "(Lahb;IIILjava/util/Random;)V" : "(Lnet/minecraft/world/World;IIILjava/util/Random;)V"));
 
         method.instructions.insertBefore(targetNode, toInject);
     }

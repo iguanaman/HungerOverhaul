@@ -35,9 +35,7 @@ public class ModuleVanilla
         }
     }
 
-    /*public static Block carrotNew;
-    public static Block potatoNew;
-    public static Block wheatNew;
+    /*
     public static Block pumpkinStemNew;
     public static Block melonStemNew;
     public static Block reedNew;
@@ -56,20 +54,6 @@ public class ModuleVanilla
         Items.reeds = new IguanaReed(reedNew).setUnlocalizedName("reeds").setTextureName("reeds").setCreativeTab(CreativeTabs.tabMaterials);
         Utils.replace(Items.reeds, tempName);
 
-        carrotNew = new IguanaCropVegetable("carrots").setCropItem(Items.carrot).setSeedItem(Items.carrot).setBlockName("carrots").setBlockTextureName("carrots");
-        tempName = Block.blockRegistry.getNameForObject(Blocks.carrots);
-        Blocks.carrots = carrotNew;
-        Utils.replace(Blocks.carrots, tempName);
-        
-        potatoNew = new IguanaCropVegetable("potatoes").setCropItem(Items.potato).setSeedItem(Items.potato).setBlockName("potatoes").setBlockTextureName("potatoes");
-        tempName = Block.blockRegistry.getNameForObject(Blocks.potatoes);
-        Blocks.potatoes = potatoNew;
-        Utils.replace(Blocks.potatoes, tempName);
-
-        wheatNew = new IguanaCrop("crops").setCropItem(Items.wheat).setSeedItem(Items.wheat_seeds).setBlockName("crops").setBlockTextureName("wheat");
-        tempName = Block.blockRegistry.getNameForObject(Blocks.wheat);
-        Blocks.wheat = wheatNew;
-        Utils.replace(Blocks.wheat, tempName);
         tempName = Item.itemRegistry.getNameForObject(Items.wheat_seeds);
         Items.wheat_seeds = new IguanaSeed(Blocks.wheat, Blocks.farmland).setUnlocalizedName("seeds").setTextureName("seeds_wheat");
         Utils.replace(Items.wheat_seeds, tempName);
