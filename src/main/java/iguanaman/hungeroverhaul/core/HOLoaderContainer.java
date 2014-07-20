@@ -18,11 +18,12 @@ import cpw.mods.fml.common.LoadController;
 import cpw.mods.fml.common.ModMetadata;
 import cpw.mods.fml.relauncher.IFMLLoadingPlugin;
 
-@IFMLLoadingPlugin.SortingIndex(-100) // make sure the class transformer acts before most others
+//make sure the class transformer acts before most others
+@IFMLLoadingPlugin.SortingIndex(-100)
 public class HOLoaderContainer extends DummyModContainer implements IFMLLoadingPlugin
 {
 
-    private final String[] asmTransformers = new String[] { ClassTransformer.class.getName() };
+    private final String[] asmTransformers = new String[]{ClassTransformer.class.getName()};
     private final ModMetadata md = new ModMetadata();
 
     public static Logger logger = LogManager.getLogger("HO-Core");
@@ -41,67 +42,67 @@ public class HOLoaderContainer extends DummyModContainer implements IFMLLoadingP
     }
 
     @Override
-    public String getModId ()
+    public String getModId()
     {
         return "HO-Core";
     }
 
     @Override
-    public String getName ()
+    public String getName()
     {
         return "Hunger Overhaul Core";
     }
 
     @Override
-    public String getVersion ()
+    public String getVersion()
     {
         return "0.1.1";
     }
 
     @Override
-    public String getDisplayVersion ()
+    public String getDisplayVersion()
     {
         return getVersion();
     }
 
     @Override
-    public ModMetadata getMetadata ()
+    public ModMetadata getMetadata()
     {
         return md;
     }
 
     @Override
-    public boolean registerBus (EventBus bus, LoadController controller)
+    public boolean registerBus(EventBus bus, LoadController controller)
     {
         bus.register(this);
         return true;
     }
 
     @Override
-    public String[] getASMTransformerClass ()
+    public String[] getASMTransformerClass()
     {
         return asmTransformers;
     }
 
     @Override
-    public String getModContainerClass ()
+    public String getModContainerClass()
     {
         return "iguanaman.hungeroverhaul.core.HOLoaderContainer";
     }
 
     @Override
-    public String getSetupClass ()
+    public String getSetupClass()
     {
         return null;
     }
 
     @Override
-    public void injectData (Map<String, Object> data)
+    public void injectData(Map<String, Object> data)
     {
     }
 
     @Override
-    public String getAccessTransformerClass ()
+    public String getAccessTransformerClass()
     {
         return "iguanaman.hungeroverhaul.core.AccessTransformers";
     }

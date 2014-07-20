@@ -7,19 +7,28 @@ import net.minecraft.item.ItemStack;
 import iguanaman.hungeroverhaul.IguanaConfig;
 import iguanaman.hungeroverhaul.api.FoodValues;
 
-public class StackSizeTweaks {
+public class StackSizeTweaks
+{
 
-    public static void init() {
-        for(Object obj : Item.itemRegistry) {
-            Item item = (Item)obj;
-            if(item instanceof ItemFood) {
+    public static void init()
+    {
+        for (Object obj : Item.itemRegistry)
+        {
+            Item item = (Item) obj;
+            if (item instanceof ItemFood)
+            {
                 ItemStack stack = new ItemStack(item);
                 FoodValues values = FoodValues.getModified(stack);
-                if (values.hunger <= 2) item.setMaxStackSize(16 * IguanaConfig.foodStackSizeMultiplier);
-                else if (values.hunger <= 5) item.setMaxStackSize(8 * IguanaConfig.foodStackSizeMultiplier);
-                else if (values.hunger <= 8) item.setMaxStackSize(4 * IguanaConfig.foodStackSizeMultiplier);
-                else if (values.hunger <= 11) item.setMaxStackSize(2 * IguanaConfig.foodStackSizeMultiplier);
-                else item.setMaxStackSize(IguanaConfig.foodStackSizeMultiplier);
+                if (values.hunger <= 2)
+                    item.setMaxStackSize(16 * IguanaConfig.foodStackSizeMultiplier);
+                else if (values.hunger <= 5)
+                    item.setMaxStackSize(8 * IguanaConfig.foodStackSizeMultiplier);
+                else if (values.hunger <= 8)
+                    item.setMaxStackSize(4 * IguanaConfig.foodStackSizeMultiplier);
+                else if (values.hunger <= 11)
+                    item.setMaxStackSize(2 * IguanaConfig.foodStackSizeMultiplier);
+                else
+                    item.setMaxStackSize(IguanaConfig.foodStackSizeMultiplier);
             }
         }
     }

@@ -35,81 +35,85 @@ import iguanaman.hungeroverhaul.util.StackSizeTweaks;
 @Mod(modid = "HungerOverhaul", name = "Hunger Overhaul", version = "${version}", dependencies = "required-after:HO-Core;after:TConstruct;after:harvestcraft;after:temperateplants;after:randomplants;after:weeeflowers;after:Natura")
 public class HungerOverhaul
 {
-	public static final Logger Log = LogManager.getLogger("HungerOverhaul");
+    public static final Logger Log = LogManager.getLogger("HungerOverhaul");
 
-	// The instance of your mod that Forge uses.
-	@Instance("HungerOverhaul")
-	public static HungerOverhaul instance;
+    // The instance of your mod that Forge uses.
+    @Instance("HungerOverhaul")
+    public static HungerOverhaul instance;
 
     public static Potion potionWellFed;
 
-	@EventHandler
-	public void preInit(FMLPreInitializationEvent event)
-	{
-		IguanaConfig.init(event.getSuggestedConfigurationFile());
+    @EventHandler
+    public void preInit(FMLPreInitializationEvent event)
+    {
+        IguanaConfig.init(event.getSuggestedConfigurationFile());
 
         potionWellFed = new PotionWellFed();
 
-        if (IguanaConfig.removeHoeRecipes) {
+        if (IguanaConfig.removeHoeRecipes)
+        {
             RecipeRemover.removeAnyRecipe(new ItemStack(Items.wooden_hoe));
             RecipeRemover.removeAnyRecipe(new ItemStack(Items.stone_hoe));
         }
-	}
+    }
 
-	@EventHandler
-	public void init(FMLInitializationEvent event)
-	{
+    @EventHandler
+    public void init(FMLInitializationEvent event)
+    {
         //RECIPES
         GameRegistry.addRecipe(new ShapelessOreRecipe(Items.wheat_seeds, Items.wheat));
 
-		MinecraftForge.EVENT_BUS.register(new FoodEventHandler());
+        MinecraftForge.EVENT_BUS.register(new FoodEventHandler());
         ModuleVanilla.init();
-        if(Loader.isModLoaded("TConstruct")) ModuleTConstruct.init();
-        if(Loader.isModLoaded("Natura")) ModuleNatura.init();
+        if (Loader.isModLoaded("TConstruct"))
+            ModuleTConstruct.init();
+        if (Loader.isModLoaded("Natura"))
+            ModuleNatura.init();
         FoodModifierRegistry.registerFoodValueModifier(new FoodModifier());
-	}
+    }
 
     @EventHandler
     public void postInit(FMLPostInitializationEvent event)
     {
-        if (IguanaConfig.removeTallGrassSeeds || IguanaConfig.allSeedsEqual) ModuleGrassSeeds.init();
+        if (IguanaConfig.removeTallGrassSeeds || IguanaConfig.allSeedsEqual)
+            ModuleGrassSeeds.init();
         StackSizeTweaks.init();
         MinecraftForge.EVENT_BUS.register(new IguanaEventHook());
     }
 
-	@EventHandler
-	public void serverStarting(FMLServerStartingEvent event)
-	{
-		if (IguanaConfig.addSetHungerCommand)
-		{
-			event.registerServerCommand(new IguanaCommandHunger());
-		}
-	}
+    @EventHandler
+    public void serverStarting(FMLServerStartingEvent event)
+    {
+        if (IguanaConfig.addSetHungerCommand)
+        {
+            event.registerServerCommand(new IguanaCommandHunger());
+        }
+    }
 
     //Yet to be re-implemented
     /*
-	@SuppressWarnings({ "unchecked" })
-	@EventHandler
-	public void load(FMLInitializationEvent event) {
+    @SuppressWarnings({ "unchecked" })
+    @EventHandler
+    public void load(FMLInitializationEvent event) {
 
-		if (IguanaConfig.addCustomVillageField && IguanaConfig.fieldNormalWeight + IguanaConfig.fieldReedWeight + IguanaConfig.fieldStemWeight > 0)
-		{
-			MapGenStructureIO.func_143031_a(ComponentVillageCustomField.class, "IguanaField");
-			VillagerRegistry.instance().registerVillageCreationHandler(new VillageHandlerCustomField());
-		}
+    	if (IguanaConfig.addCustomVillageField && IguanaConfig.fieldNormalWeight + IguanaConfig.fieldReedWeight + IguanaConfig.fieldStemWeight > 0)
+    	{
+    		MapGenStructureIO.func_143031_a(ComponentVillageCustomField.class, "IguanaField");
+    		VillagerRegistry.instance().registerVillageCreationHandler(new VillageHandlerCustomField());
+    	}
 
-		if(Loader.isModLoaded("harvestcraft")) { PamsModsHelper.loadHC(); ModuleHarvestCraftCrops.init(); ModuleHarvestCraftTrees.init(); }
-		if(Loader.isModLoaded("temperateplants")) ModuleTemperatePlants.init();
-		if(Loader.isModLoaded("randomplants")) ModuleRandomPlants.init();
-		if(Loader.isModLoaded("weeeflowers")) { PamsModsHelper.loadWF(); ModuleWeeeFlowers.init(); };
-		if(Loader.isModLoaded("TConstruct")) ModuleTConstruct.init();
-		if(Loader.isModLoaded("Natura")) ModuleNatura.init();
+    	if(Loader.isModLoaded("harvestcraft")) { PamsModsHelper.loadHC(); ModuleHarvestCraftCrops.init(); ModuleHarvestCraftTrees.init(); }
+    	if(Loader.isModLoaded("temperateplants")) ModuleTemperatePlants.init();
+    	if(Loader.isModLoaded("randomplants")) ModuleRandomPlants.init();
+    	if(Loader.isModLoaded("weeeflowers")) { PamsModsHelper.loadWF(); ModuleWeeeFlowers.init(); };
+    	if(Loader.isModLoaded("TConstruct")) ModuleTConstruct.init();
+    	if(Loader.isModLoaded("Natura")) ModuleNatura.init();
 
-	}
+    }
 
-	@EventHandler
-	public void postInit(FMLPostInitializationEvent event) {
-		FMLCommonHandler.instance().bus().register(new IguanaPlayerHandler());
-	}
-	*/
+    @EventHandler
+    public void postInit(FMLPostInitializationEvent event) {
+    	FMLCommonHandler.instance().bus().register(new IguanaPlayerHandler());
+    }
+    */
 }

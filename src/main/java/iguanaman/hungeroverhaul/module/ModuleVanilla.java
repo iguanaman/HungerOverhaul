@@ -11,8 +11,10 @@ import iguanaman.hungeroverhaul.helper.FoodValueHelper;
 
 public class ModuleVanilla
 {
-    public static void init() {
-        if(Loader.isModLoaded("harvestcraft") || IguanaConfig.modifyFoodValues) {
+    public static void init()
+    {
+        if (Loader.isModLoaded("harvestcraft") || IguanaConfig.modifyFoodValues)
+        {
             FoodValueHelper.addModifiedFoodValues(Items.apple, new FoodValues(1, 0.05F));
             FoodValueHelper.addModifiedFoodValues(Items.bread, new FoodValues(3, 0.2F));
             FoodValueHelper.addModifiedFoodValues(Items.porkchop, new FoodValues(1, 0.05F));
