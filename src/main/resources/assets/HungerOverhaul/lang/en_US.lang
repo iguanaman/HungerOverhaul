@@ -1,2 +1,17 @@
 potion.wellfedPotion=Well Fed
 potion.newSlowdownPotionHO=Slowed
+
+# tooltip strings
+hungeroverhaul.crop.grows.best.in=Crop grows best in:
+
+# these should all be in lowercase
+hungeroverhaul.hearty=hearty %s
+hungeroverhaul.wholesome=wholesome %s
+hungeroverhaul.nourishing=nourishing %s
+hungeroverhaul.unfulfilling=unfulfilling %s
+hungeroverhaul.morsel=morsel
+hungeroverhaul.snack=snack
+hungeroverhaul.lightmeal=light meal
+hungeroverhaul.meal=meal
+hungeroverhaul.largemeal=large meal
+hungeroverhaul.feast=feast

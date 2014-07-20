@@ -25,6 +25,7 @@ import net.minecraft.item.*;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.common.BiomeDictionary;
@@ -34,7 +35,6 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.*;
 import net.minecraftforge.event.terraingen.SaplingGrowTreeEvent;
 import net.minecraftforge.event.world.BlockEvent;
-
 import cpw.mods.fml.common.eventhandler.Event.Result;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
@@ -443,31 +443,31 @@ public class IguanaEventHook
                 int hungerFill = values.hunger;
                 float satiation = values.saturationModifier * 20 - hungerFill;
 
-                String tooltip = "";
-
-                if (satiation >= 3.0F)
-                    tooltip += "hearty ";
-                else if (satiation >= 2.0F)
-                    tooltip += "wholesome ";
-                else if (satiation > 0.0F)
-                    tooltip += "nourishing ";
-                else if (satiation < 0.0F)
-                    tooltip += "unfulfilling ";
+                String mealDescriptor = "";
 
                 if (hungerFill <= 1)
-                    tooltip += "morsel";
+                    mealDescriptor = StatCollector.translateToLocal("hungeroverhaul.morsel");
                 else if (hungerFill <= 2)
-                    tooltip += "snack";
+                    mealDescriptor = StatCollector.translateToLocal("hungeroverhaul.snack");
                 else if (hungerFill <= 5)
-                    tooltip += "light meal";
+                    mealDescriptor = StatCollector.translateToLocal("hungeroverhaul.lightmeal");
                 else if (hungerFill <= 8)
-                    tooltip += "meal";
+                    mealDescriptor = StatCollector.translateToLocal("hungeroverhaul.meal");
                 else if (hungerFill <= 11)
-                    tooltip += "large meal";
+                    mealDescriptor = StatCollector.translateToLocal("hungeroverhaul.largemeal");
                 else
-                    tooltip += "feast";
+                    mealDescriptor = StatCollector.translateToLocal("hungeroverhaul.feast");
+                
+                if (satiation >= 3.0F)
+                    mealDescriptor = StatCollector.translateToLocalFormatted(StatCollector.translateToLocal("hungeroverhaul.hearty"), mealDescriptor);
+                else if (satiation >= 2.0F)
+                    mealDescriptor = StatCollector.translateToLocalFormatted(StatCollector.translateToLocal("hungeroverhaul.wholesome"), mealDescriptor);
+                else if (satiation > 0.0F)
+                    mealDescriptor = StatCollector.translateToLocalFormatted(StatCollector.translateToLocal("hungeroverhaul.nourishing"), mealDescriptor);
+                else if (satiation < 0.0F)
+                    mealDescriptor = StatCollector.translateToLocalFormatted(StatCollector.translateToLocal("hungeroverhaul.unfulfilling"), mealDescriptor);
 
-                event.toolTip.add(tooltip.substring(0, 1).toUpperCase() + tooltip.substring(1));
+                event.toolTip.add(mealDescriptor.substring(0, 1).toUpperCase() + mealDescriptor.substring(1));
 
                 if (event.showAdvancedItemTooltips)
                 {
@@ -496,7 +496,7 @@ public class IguanaEventHook
                 String tooltip = "";
                 for (BiomeDictionary.Type biomeType : theBiomes)
                     tooltip += biomeType.toString().substring(0, 1).toUpperCase() + biomeType.toString().substring(1).toLowerCase() + ", ";
-                event.toolTip.add("Crop grows best in:");
+                event.toolTip.add(StatCollector.translateToLocal("hungeroverhaul.crop.grows.best.in"));
                 event.toolTip.add(tooltip.substring(0, tooltip.length() - 2));
             }
         }
