@@ -3,9 +3,10 @@ package iguanaman.hungeroverhaul.core;
 import static org.objectweb.asm.Opcodes.*;
 import iguanaman.hungeroverhaul.IguanaConfig;
 import iguanaman.hungeroverhaul.api.FoodValues;
-
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.launchwrapper.IClassTransformer;
+import net.minecraft.util.DamageSource;
+
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.Type;
@@ -59,8 +60,8 @@ public class ClassTransformer implements IClassTransformer
             if (updateMethodNode != null)
             {
                 addMinHungerToHeal(updateMethodNode, isObfuscated);
-                addConfigurableDamageOnStarve(updateMethodNode);
                 addConfigurableHungerLoss(classNode, updateMethodNode, isObfuscated);
+                addSeparateStarveTimer(classNode, updateMethodNode, isObfuscated);
             }
             else
                 throw new RuntimeException("FoodStats: onUpdate method not found");
@@ -388,24 +389,51 @@ public class ClassTransformer implements IClassTransformer
         ifRegenRateInstructions.add(new JumpInsnNode(IFLE, ifLabel));
 
         method.instructions.insert(targetNode, ifRegenRateInstructions);
-    }
+        
+        while (targetNode != null && targetNode.getOpcode() != BIPUSH)
+        {
+            targetNode = targetNode.getNext();
+        }
+        targetNode = targetNode.getNext();
 
-    private void addConfigurableDamageOnStarve(MethodNode method)
-    {
-        // modified code:
-        /*
-        p_75118_1_.attackEntityFrom(DamageSource.starve, 1.0F); -> p_75118_1_.attackEntityFrom(DamageSource.starve, IguanaConfig.damageOnStarve);
-        */
-
-        AbstractInsnNode targetNode = findLastInstructionOfType(method, INVOKEVIRTUAL);
-
-        InsnList toInject = new InsnList();
-        toInject.add(new FieldInsnNode(GETSTATIC, Type.getInternalName(IguanaConfig.class), "damageOnStarve", "I"));
-        toInject.add(new InsnNode(I2F));
-
+        // remove BIPUSH
         method.instructions.remove(targetNode.getPrevious());
-
+        
+        InsnList toInject = new InsnList();
+        toInject.add(new InsnNode(I2F));
+        toInject.add(new VarInsnNode(ALOAD, 1));
+        toInject.add(new MethodInsnNode(INVOKESTATIC, Type.getInternalName(Hooks.class), "getHealthRegenPeriod", "(Lnet/minecraft/entity/player/EntityPlayer;)F"));
+        toInject.add(new InsnNode(FCMPL));
+        
+        // change to IFLT
+        ((JumpInsnNode) targetNode).setOpcode(IFLT);
+        
         method.instructions.insertBefore(targetNode, toInject);
+        
+        while (targetNode != null && targetNode.getOpcode() != LDC)
+        {
+            targetNode = targetNode.getNext();
+        }
+        
+        LabelNode ifHungerDrainDisabled = new LabelNode();
+        
+        toInject.clear();
+        toInject.add(new FieldInsnNode(GETSTATIC, Type.getInternalName(IguanaConfig.class), "disableHealingHungerDrain", "Z"));
+        toInject.add(new JumpInsnNode(IFNE, ifHungerDrainDisabled));
+        
+        method.instructions.insertBefore(targetNode.getPrevious(), toInject);
+        method.instructions.insert(targetNode.getNext(), ifHungerDrainDisabled);
+        
+        // remove the else if block by removing all the way until hitting the GOTO
+        AbstractInsnNode insnToRemove = ifLabel.getNext();
+        while (insnToRemove != null && insnToRemove.getOpcode() != GOTO)
+        {
+            insnToRemove = insnToRemove.getNext();
+            method.instructions.remove(insnToRemove.getPrevious());
+        }
+        // remove the GOTO as well
+        if (insnToRemove != null)
+            method.instructions.remove(insnToRemove);
     }
 
     private void addConfigurableHungerLoss(ClassNode classNode, MethodNode method, boolean isObfuscated)
@@ -486,6 +514,77 @@ public class ClassTransformer implements IClassTransformer
             method.instructions.remove(insnToRemove.getPrevious());
         }
     }
+
+	private void addSeparateStarveTimer(ClassNode classNode, MethodNode method, boolean isObfuscated)
+	{
+	    // add starveTimer field
+        classNode.fields.add(new FieldNode(ACC_PUBLIC, "starveTimer", "I", null, null));
+	    
+		// injected code:
+		/*
+		if (this.foodLevel <= 0)
+        {
+            ++this.starveTimer;
+
+            if (this.starveTimer >= 80)
+            {
+                player.attackEntityFrom(DamageSource.starve, IguanaConfig.damageOnStarve);
+                this.starveTimer = 0;
+            }
+        }
+        else
+        {
+        	this.starveTimer = 0;
+        }
+		 */
+
+        AbstractInsnNode lastReturn = findLastInstructionOfType(method, RETURN);
+
+        LabelNode ifFoodLevelNotLEZero = new LabelNode();
+        LabelNode afterElse = new LabelNode();
+
+        InsnList toInject = new InsnList();
+        
+        // if foodLevel <= 0
+        toInject.add(new VarInsnNode(ALOAD, 0));
+        toInject.add(new FieldInsnNode(GETFIELD, classNode.name.replace(".", "/"), isObfuscated ? "a" : "foodLevel", "I"));
+        toInject.add(new JumpInsnNode(IFGT, ifFoodLevelNotLEZero));
+
+        // increment starveTimer
+        toInject.add(new VarInsnNode(ALOAD, 0));
+        toInject.add(new InsnNode(DUP));
+        toInject.add(new FieldInsnNode(GETFIELD, classNode.name.replace(".", "/"), "starveTimer", "I"));
+        toInject.add(new InsnNode(ICONST_1));
+        toInject.add(new InsnNode(IADD));
+        toInject.add(new FieldInsnNode(PUTFIELD, classNode.name.replace(".", "/"), "starveTimer", "I"));
+
+        // if starveTimer >= 80 then do starve damage
+        toInject.add(new VarInsnNode(ALOAD, 0));
+        toInject.add(new FieldInsnNode(GETFIELD, classNode.name.replace(".", "/"), "starveTimer", "I"));
+        toInject.add(new VarInsnNode(BIPUSH, 80));
+        toInject.add(new JumpInsnNode(IF_ICMPLT, afterElse));
+        toInject.add(new VarInsnNode(ALOAD, 1)); // player
+        toInject.add(new FieldInsnNode(GETSTATIC, Type.getInternalName(DamageSource.class), isObfuscated ? "f" : "starve", Type.getDescriptor(DamageSource.class)));
+        toInject.add(new FieldInsnNode(GETSTATIC, Type.getInternalName(IguanaConfig.class), "damageOnStarve", "I"));
+        toInject.add(new InsnNode(I2F));
+        toInject.add(new MethodInsnNode(INVOKEVIRTUAL, Type.getInternalName(EntityPlayer.class), isObfuscated ? "a" : "attackEntityFrom", isObfuscated ? "(Lro;F)Z" : "(Lnet/minecraft/util/DamageSource;F)Z"));
+        toInject.add(new InsnNode(POP));
+        toInject.add(new VarInsnNode(ALOAD, 0));
+        toInject.add(new InsnNode(ICONST_0));
+        toInject.add(new FieldInsnNode(PUTFIELD, classNode.name.replace(".", "/"), "starveTimer", "I"));
+        
+        toInject.add(new JumpInsnNode(GOTO, afterElse));
+        toInject.add(ifFoodLevelNotLEZero);
+
+        // else set starveTimer to 0
+        toInject.add(new VarInsnNode(ALOAD, 0));
+        toInject.add(new InsnNode(ICONST_0));
+        toInject.add(new FieldInsnNode(PUTFIELD, classNode.name.replace(".", "/"), "starveTimer", "I"));
+        
+        toInject.add(afterElse);
+
+        method.instructions.insertBefore(lastReturn, toInject);
+	}
 
     private void addUpdateTickHook(MethodNode method, boolean isObfuscated)
     {

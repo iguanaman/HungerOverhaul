@@ -14,8 +14,9 @@ Incomplete list of things that need to be done. Will be added to/edited as thing
 - [x] Configurable max foodExhaustionLevel
 - [x] IguanaConfig.hungerLossRatePercentage being zero stopping food stats from changing/keeping it at a specific level (19/0/0)
 - [x] Configurable minimum hunger to heal (IguanaConfig.minHungerToHeal)
-- [ ] Configurable time between health regen from hunger (multiple config options)
-- [ ] Separate starve timer from food timer
+- [x] Configurable time between health regen from hunger (multiple config options)
+- [x] Configurable food exhaustion from health regen (IguanaConfig.disableHealingHungerDrain)
+- [x] Separate starve timer from food timer
 
 #### From IguanaFood
 - [x] Well fed buff (should be added to FoodEventHandler.onFoodEaten)
@@ -23,6 +24,9 @@ Incomplete list of things that need to be done. Will be added to/edited as thing
 - [ ] Village trading/chest loot additions
 - [x] Food eating speed modification
 - [x] Food value tooltips (should use Forge's ItemTooltipEvent)
+
+#### From IguanaPlayerHandler
+- [ ] Configurable hunger on respawn
 
 #### From Block* Classes
 - [x] Stop updateTick from running depending on biome/sunlight/regrowthMultiplier (ASM)

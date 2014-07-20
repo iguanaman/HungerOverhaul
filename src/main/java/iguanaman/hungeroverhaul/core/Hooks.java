@@ -56,7 +56,6 @@ public class Hooks
         return hungerLossRate / (IguanaConfig.hungerLossRatePercentage / 100F);
     }
 
-    // unused; hook not implemented yet
     public static float getHealthRegenPeriod(EntityPlayer player)
     {
         float wellfedModifier = 1.0F;
