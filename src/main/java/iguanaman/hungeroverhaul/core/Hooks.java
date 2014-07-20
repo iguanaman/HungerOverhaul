@@ -6,6 +6,10 @@ import iguanaman.hungeroverhaul.HungerOverhaul;
 import iguanaman.hungeroverhaul.IguanaConfig;
 import iguanaman.hungeroverhaul.api.FoodEvent;
 import iguanaman.hungeroverhaul.api.FoodValues;
+import mods.natura.blocks.crops.NetherBerryBush;
+import mods.natura.blocks.trees.SaguaroBlock;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockReed;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
@@ -81,11 +85,19 @@ public class Hooks
                 / (IguanaConfig.healthRegenRatePercentage / 100F);
     }
 
-    public static void updateTickHook(World world, int x, int y, int z, Random rand)
+    // TODO: Abstract this logic out to a growth modifier/handler
+    public static boolean shouldUpdateTick(Block block, World world, int x, int y, int z, Random rand)
     {
+        if (block instanceof NetherBerryBush)
+            return shouldNetherBerryBushUpdateTick(world, x, y, z, rand);
+        else if (block instanceof SaguaroBlock)
+            return shouldSaguaroUpdateTick(world, x, y, z, rand);
+        else if (block instanceof BlockReed)
+            return shouldReedUpdateTick(world, x, y, z, rand);
+
         int sunlightModifier = world.isDaytime() && world.canBlockSeeTheSky(x, y, z) ? 1 : IguanaConfig.noSunlightRegrowthMultiplier;
         if (sunlightModifier == 0)
-            return;
+            return false;
 
         // biome modifier
         int biomeModifier = IguanaConfig.wrongBiomeRegrowthMultiplier;
@@ -104,13 +116,15 @@ public class Hooks
             biomeModifier = 1;
         }
         if (biomeModifier == 0)
-            return;
+            return false;
 
         if (rand.nextInt(IguanaConfig.cropRegrowthMultiplier * biomeModifier) != 0)
-            return;
+            return false;
+
+        return true;
     }
 
-    public static void updateTickNetherBerryBush(World world, int x, int y, int z, Random rand)
+    public static boolean shouldNetherBerryBushUpdateTick(World world, int x, int y, int z, Random rand)
     {
         // biome modifier
         int biomeModifier = IguanaConfig.wrongBiomeRegrowthMultiplier;
@@ -126,10 +140,12 @@ public class Hooks
         }
 
         if (rand.nextInt(IguanaConfig.cropRegrowthMultiplier * biomeModifier) != 0)
-            return;
+            return false;
+
+        return true;
     }
 
-    public static void updateTickSaguaro(World world, int x, int y, int z, Random rand)
+    public static boolean shouldSaguaroUpdateTick(World world, int x, int y, int z, Random rand)
     {
         // biome modifier
         int biomeModifier = IguanaConfig.wrongBiomeRegrowthMultiplier;
@@ -145,14 +161,16 @@ public class Hooks
         }
 
         if (rand.nextInt(IguanaConfig.cactusRegrowthMultiplier * biomeModifier) != 0)
-            return;
+            return false;
+
+        return true;
     }
 
-    public static void updateTickReeds(World world, int x, int y, int z, Random rand)
+    public static boolean shouldReedUpdateTick(World world, int x, int y, int z, Random rand)
     {
         int sunlightModifier = world.isDaytime() && world.canBlockSeeTheSky(x, y, z) ? 1 : IguanaConfig.noSunlightRegrowthMultiplier;
         if (sunlightModifier == 0)
-            return;
+            return false;
 
         // biome modifier
         int biomeModifier = IguanaConfig.wrongBiomeRegrowthMultiplierSugarcane;
@@ -173,9 +191,11 @@ public class Hooks
             biomeModifier = 1;
         }
         if (biomeModifier == 0)
-            return;
+            return false;
 
         if (rand.nextInt(IguanaConfig.sugarcaneRegrowthMultiplier * biomeModifier) != 0)
-            return;
+            return false;
+
+        return true;
     }
 }
