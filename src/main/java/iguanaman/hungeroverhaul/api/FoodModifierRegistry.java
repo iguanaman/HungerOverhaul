@@ -1,5 +1,7 @@
 package iguanaman.hungeroverhaul.api;
 
+import com.google.common.collect.Sets;
+
 import java.util.Comparator;
 import java.util.TreeSet;
 
@@ -14,8 +16,8 @@ public class FoodModifierRegistry
         }
     };
 
-    private static final TreeSet<IDefaultFoodValueModifier> defaultFoodModifiers = new TreeSet<IDefaultFoodValueModifier>(foodModifierPriorityComparator);
-    private static final TreeSet<IContextualFoodValueModifier> contextualFoodModifiers = new TreeSet<IContextualFoodValueModifier>(foodModifierPriorityComparator);
+    private static final TreeSet<IDefaultFoodValueModifier> defaultFoodModifiers = Sets.newTreeSet(foodModifierPriorityComparator);
+    private static final TreeSet<IContextualFoodValueModifier> contextualFoodModifiers =  Sets.newTreeSet(foodModifierPriorityComparator);
 
     public static void registerFoodValueModifier(IFoodValueModifier foodModifier)
     {

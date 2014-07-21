@@ -1,5 +1,9 @@
 package iguanaman.hungeroverhaul;
 
+import cpw.mods.fml.common.registry.VillagerRegistry;
+import iguanaman.hungeroverhaul.module.*;
+import iguanaman.hungeroverhaul.util.VillageHandlerCustomField;
+import net.minecraft.world.gen.structure.MapGenStructureIO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -23,10 +27,6 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import iguanaman.hungeroverhaul.food.FoodModifier;
-import iguanaman.hungeroverhaul.module.ModuleGrassSeeds;
-import iguanaman.hungeroverhaul.module.ModuleNatura;
-import iguanaman.hungeroverhaul.module.ModuleTConstruct;
-import iguanaman.hungeroverhaul.module.ModuleVanilla;
 import iguanaman.hungeroverhaul.potion.PotionWellFed;
 import iguanaman.hungeroverhaul.util.IguanaEventHook;
 import iguanaman.hungeroverhaul.util.RecipeRemover;
@@ -65,6 +65,21 @@ public class HungerOverhaul
 
         MinecraftForge.EVENT_BUS.register(new FoodEventHandler());
         ModuleVanilla.init();
+        if(Loader.isModLoaded("harvestcraft"))
+        {
+            PamsModsHelper.loadHC();
+            ModuleHarvestCraftCrops.init();
+            ModuleHarvestCraftTrees.init();
+        }
+        if(Loader.isModLoaded("temperateplants"))
+            ModuleTemperatePlants.init();
+        if(Loader.isModLoaded("randomplants"))
+            ModuleRandomPlants.init();
+        if(Loader.isModLoaded("weeeflowers"))
+        {
+            PamsModsHelper.loadWF();
+            ModuleWeeeFlowers.init();
+        }
         if (Loader.isModLoaded("TConstruct"))
             ModuleTConstruct.init();
         if (Loader.isModLoaded("Natura"))
@@ -91,7 +106,7 @@ public class HungerOverhaul
     }
 
     //Yet to be re-implemented
-    /*
+
     @SuppressWarnings({ "unchecked" })
     @EventHandler
     public void load(FMLInitializationEvent event) {
@@ -101,16 +116,16 @@ public class HungerOverhaul
     		MapGenStructureIO.func_143031_a(ComponentVillageCustomField.class, "IguanaField");
     		VillagerRegistry.instance().registerVillageCreationHandler(new VillageHandlerCustomField());
     	}
-
+/*
     	if(Loader.isModLoaded("harvestcraft")) { PamsModsHelper.loadHC(); ModuleHarvestCraftCrops.init(); ModuleHarvestCraftTrees.init(); }
     	if(Loader.isModLoaded("temperateplants")) ModuleTemperatePlants.init();
     	if(Loader.isModLoaded("randomplants")) ModuleRandomPlants.init();
     	if(Loader.isModLoaded("weeeflowers")) { PamsModsHelper.loadWF(); ModuleWeeeFlowers.init(); };
     	if(Loader.isModLoaded("TConstruct")) ModuleTConstruct.init();
     	if(Loader.isModLoaded("Natura")) ModuleNatura.init();
-
+*/
     }
-
+    /*
     @EventHandler
     public void postInit(FMLPostInitializationEvent event) {
     	FMLCommonHandler.instance().bus().register(new IguanaPlayerHandler());
