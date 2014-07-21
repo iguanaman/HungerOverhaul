@@ -99,6 +99,10 @@ public class ClassTransformer implements IClassTransformer
             ClassNode classNode = readClassFromBytes(basicClass);
 
             MethodNode methodNode = findMethodNodeOfClass(classNode, isObfuscated ? "a" : "updateTick", isObfuscated ? "(Lahb;IIILjava/util/Random;)V" : "(Lnet/minecraft/world/World;IIILjava/util/Random;)V");
+            
+            if (methodNode == null)
+                methodNode = findMethodNodeOfClass(classNode, "func_149674_a", isObfuscated ? "(Lahb;IIILjava/util/Random;)V" : "(Lnet/minecraft/world/World;IIILjava/util/Random;)V");
+            
             if (methodNode != null)
             {
                 addUpdateTickHook(methodNode, isObfuscated);
