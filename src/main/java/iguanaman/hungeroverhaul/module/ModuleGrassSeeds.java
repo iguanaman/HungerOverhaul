@@ -3,6 +3,7 @@ package iguanaman.hungeroverhaul.module;
 import iguanaman.hungeroverhaul.HungerOverhaul;
 import iguanaman.hungeroverhaul.IguanaConfig;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,118 +16,117 @@ import net.minecraftforge.common.MinecraftForge;
 
 public class ModuleGrassSeeds
 {
+    public static List<Object> hoeSeedList = new ArrayList<Object>();
 
-    static class SeedEntry extends WeightedRandom.Item
+    public static Class<?> SeedEntry = null;
+    public static Constructor<?> SeedEntryConstructor = null;
+    public static Field weightField = null;
+    public static Field seedListField = null;
+    public static Field seedField = null;
+
+    public static ItemStack getSeedFromTillingGrass(World world)
     {
-        public final ItemStack seed;
-
-        public SeedEntry(ItemStack seed, int weight)
+        if (IguanaConfig.removeTallGrassSeeds)
         {
-            super(weight);
-            this.seed = seed;
+            try
+            {
+                Object entry = WeightedRandom.getRandomItem(world.rand, hoeSeedList);
+                if (entry != null && seedField.get(entry) != null)
+                    return ((ItemStack) seedField.get(entry)).copy();
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+            return null;
+        }
+        else
+        {
+            return ForgeHooks.getGrassSeed(world);
         }
     }
-
-    public static ItemStack getGrassSeed(World world)
-    {
-        HungerOverhaul.Log.info("get grass seed");
-        SeedEntry entry = (SeedEntry) WeightedRandom.getRandomItem(world.rand, seedListNew);
-        if (entry == null || entry.seed == null)
-            return null;
-        return entry.seed.copy();
-    }
-
-    public static List<SeedEntry> seedListNew = new ArrayList<SeedEntry>();
 
     @SuppressWarnings("unchecked")
     public static void init()
     {
+        initReflection();
 
-        if (IguanaConfig.removeTallGrassSeeds)
-            HungerOverhaul.Log.info("Removing tall grass seeds");
-
-        ForgeHooks hooks = new ForgeHooks();
-        Field f = null;
-        try
-        {
-            f = ForgeHooks.class.getDeclaredField("seedList");
-        }
-        catch (NoSuchFieldException e)
-        {
-            throw new RuntimeException("Could not access seedList field, report please");
-        }
-
-        f.setAccessible(true);
         List<Object> seedList = null;
         try
         {
-            seedList = (List<Object>) f.get(hooks);
+            seedList = (List<Object>) seedListField.get(null);
         }
-        catch (IllegalAccessException e)
+        catch (Exception e)
         {
-            throw new RuntimeException("Could not access seedList field, report please");
+            throw new RuntimeException(e);
         }
 
-        for (Object entry : seedList)
+        if (IguanaConfig.allSeedsEqual)
         {
-            ItemStack seed = null;
             try
             {
-                Field seedField = entry.getClass().getDeclaredField("seed");
-                seedField.setAccessible(true);
-                seed = (ItemStack) seedField.get(entry);
+                for (Object entry : seedList)
+                {
+                    weightField.set(entry, 1);
+                }
             }
-            catch (NoSuchFieldException e)
+            catch (Exception e)
             {
-                throw new RuntimeException("Could not access seed field, report please");
+                throw new RuntimeException(e);
             }
-            catch (IllegalAccessException e)
-            {
-                throw new RuntimeException("Could not access seed field, report please");
-            }
-
-            int weight = 1;
-            if (!IguanaConfig.allSeedsEqual)
-                try
-                {
-                    Field weightField = entry.getClass().getSuperclass().getDeclaredField("field_76292_a");
-                    weightField.setAccessible(true);
-                    weight = (Integer) weightField.get(entry);
-                }
-                catch (NoSuchFieldException e)
-                {
-                    try
-                    {
-                        Field weightField = entry.getClass().getSuperclass().getDeclaredField("itemWeight");
-                        weightField.setAccessible(true);
-                        weight = (Integer) weightField.get(entry);
-                    }
-                    catch (NoSuchFieldException e2)
-                    {
-                        HungerOverhaul.Log.warn("WARNING Could not access itemWeight field, report please");
-                    }
-                    catch (IllegalAccessException e2)
-                    {
-                        throw new RuntimeException("Could not access itemWeight field, report please");
-                    }
-                }
-                catch (IllegalAccessException e)
-                {
-                    throw new RuntimeException("Could not access itemWeight field, report please");
-                }
-
-            //IguanaLog.log("seed" + seed.getUnlocalizedName() + " weight" + weight);
-
-            seedListNew.add(new SeedEntry(seed, weight));
         }
 
-        seedList.clear();
-
         if (IguanaConfig.removeTallGrassSeeds)
+        {
+            HungerOverhaul.Log.info("Removing tall grass seeds");
+            for (Object seedEntry : seedList)
+            {
+                hoeSeedList.add(seedEntry);
+            }
+            seedList.clear();
             MinecraftForge.addGrassSeed(null, 10);
-        else
-            for (SeedEntry entry : seedListNew)
-                MinecraftForge.addGrassSeed(entry.seed, 1);
+        }
+    }
 
+    private static void initReflection()
+    {
+        try
+        {
+            for (Class<?> declaredClass : ForgeHooks.class.getDeclaredClasses())
+            {
+                if (declaredClass.getSimpleName().equals("SeedEntry"))
+                {
+                    SeedEntry = declaredClass;
+                    break;
+                }
+            }
+            SeedEntryConstructor = SeedEntry.getConstructor(ItemStack.class, int.class);
+            seedField = SeedEntry.getDeclaredField("seed");
+            seedField.setAccessible(true);
+            seedListField = ForgeHooks.class.getDeclaredField("seedList");
+            seedListField.setAccessible(true);
+        }
+        catch (Exception e)
+        {
+            throw new RuntimeException(e);
+        }
+
+        try
+        {
+            weightField = SeedEntry.getSuperclass().getDeclaredField("field_76292_a");
+            weightField.setAccessible(true);
+        }
+        catch (NoSuchFieldException e)
+        {
+            try
+            {
+                weightField = SeedEntry.getSuperclass().getDeclaredField("itemWeight");
+                weightField.setAccessible(true);
+            }
+            catch (NoSuchFieldException e2)
+            {
+                throw new RuntimeException(e2);
+            }
+        }
     }
 }

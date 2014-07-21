@@ -29,7 +29,6 @@ import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.common.BiomeDictionary;
-import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.*;
@@ -209,9 +208,9 @@ public class IguanaEventHook
 
                     if (event.world.rand.nextInt(100) <= seedChance)
                     {
-                        ItemStack seed = IguanaConfig.removeTallGrassSeeds ? ModuleGrassSeeds.getGrassSeed(event.world) : ForgeHooks.getGrassSeed(event.world);
+                        ItemStack seed = ModuleGrassSeeds.getSeedFromTillingGrass(event.world);
                         if (seed != null)
-                            block.dropBlockAsItem(event.world, event.x, event.y, event.z, seed.getItemDamage(), 0);
+                            block.dropBlockAsItem(event.world, event.x, event.y, event.z, seed);
                     }
                     event.world.setBlock(event.x, event.y, event.z, Blocks.dirt);
                 }
