@@ -28,7 +28,10 @@ public class ClassTransformer implements IClassTransformer
             if (methodNode != null)
             {
                 patchEntityPlayerInit(methodNode, isObfuscated);
-                return writeClassToBytes(classNode);
+				// computing frames here causes a ClassNotFoundException in ClassWriter.getCommonSuperClass
+				// in an obfuscated environment, so skip computing them as a workaround
+				// see: http://stackoverflow.com/a/11605942
+                return writeClassToBytesSkipFrames(classNode);
             }
             else
                 throw new RuntimeException("EntityPlayer: <init> method not found");
@@ -584,6 +587,13 @@ public class ClassTransformer implements IClassTransformer
     private byte[] writeClassToBytes(ClassNode classNode)
     {
         ClassWriter writer = new ClassWriter(ClassWriter.COMPUTE_MAXS | ClassWriter.COMPUTE_FRAMES);
+        classNode.accept(writer);
+        return writer.toByteArray();
+    }
+
+    private byte[] writeClassToBytesSkipFrames(ClassNode classNode)
+    {
+        ClassWriter writer = new ClassWriter(ClassWriter.COMPUTE_MAXS);
         classNode.accept(writer);
         return writer.toByteArray();
     }
