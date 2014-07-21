@@ -83,6 +83,8 @@ public class HungerOverhaul
             ModuleTConstruct.init();
         if (Loader.isModLoaded("Natura"))
             ModuleNatura.init();
+        if (Loader.isModLoaded("BiomesOPlenty"))
+            ModuleBOP.init();
         FoodModifierRegistry.registerFoodValueModifier(new FoodModifier());
 
         if (IguanaConfig.addCustomVillageField && IguanaConfig.fieldNormalWeight + IguanaConfig.fieldReedWeight + IguanaConfig.fieldStemWeight > 0)

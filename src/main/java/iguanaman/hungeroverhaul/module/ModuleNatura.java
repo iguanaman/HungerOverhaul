@@ -1,5 +1,7 @@
 package iguanaman.hungeroverhaul.module;
 
+import iguanaman.hungeroverhaul.api.FoodValues;
+import iguanaman.hungeroverhaul.food.FoodModifier;
 import net.minecraft.item.ItemStack;
 
 import iguanaman.hungeroverhaul.util.RecipeRemover;
@@ -14,6 +16,10 @@ public class ModuleNatura
         RecipeRemover.removeAnyRecipe(new ItemStack(NContent.plantItem, 1, 2));
         RecipeRemover.removeFurnaceRecipe(NContent.plantItem, 1);
         RecipeRemover.removeFurnaceRecipe(NContent.plantItem, 2);
+        //TODO get values for berries, berry medly here!
+        //do we need seperate entries per meta???
+        //FoodModifier.setModifiedFoodValues(NContent.berryItem, new FoodValues(0, 0F));
+        //FoodModifier.setModifiedFoodValues(NContent.berryMedley, new FoodValues(0, 0F));
     }
 
     /*public static Block cactusNew;
