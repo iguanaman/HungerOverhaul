@@ -68,8 +68,7 @@ public class HungerOverhaul
         if(Loader.isModLoaded("harvestcraft"))
         {
             PamsModsHelper.loadHC();
-            ModuleHarvestCraftCrops.init();
-            ModuleHarvestCraftTrees.init();
+            ModuleHarvestCraft.init();
         }
         if(Loader.isModLoaded("temperateplants"))
             ModuleTemperatePlants.init();
@@ -85,6 +84,12 @@ public class HungerOverhaul
         if (Loader.isModLoaded("Natura"))
             ModuleNatura.init();
         FoodModifierRegistry.registerFoodValueModifier(new FoodModifier());
+
+        if (IguanaConfig.addCustomVillageField && IguanaConfig.fieldNormalWeight + IguanaConfig.fieldReedWeight + IguanaConfig.fieldStemWeight > 0)
+        {
+            MapGenStructureIO.func_143031_a(ComponentVillageCustomField.class, "IguanaField");
+            VillagerRegistry.instance().registerVillageCreationHandler(new VillageHandlerCustomField());
+        }
     }
 
     @EventHandler
@@ -94,6 +99,7 @@ public class HungerOverhaul
             ModuleGrassSeeds.init();
         StackSizeTweaks.init();
         MinecraftForge.EVENT_BUS.register(new IguanaEventHook());
+        //FMLCommonHandler.instance().bus().register(new IguanaPlayerHandler());
     }
 
     @EventHandler
@@ -104,31 +110,4 @@ public class HungerOverhaul
             event.registerServerCommand(new IguanaCommandHunger());
         }
     }
-
-    //Yet to be re-implemented
-
-    @SuppressWarnings({ "unchecked" })
-    @EventHandler
-    public void load(FMLInitializationEvent event) {
-
-    	if (IguanaConfig.addCustomVillageField && IguanaConfig.fieldNormalWeight + IguanaConfig.fieldReedWeight + IguanaConfig.fieldStemWeight > 0)
-    	{
-    		MapGenStructureIO.func_143031_a(ComponentVillageCustomField.class, "IguanaField");
-    		VillagerRegistry.instance().registerVillageCreationHandler(new VillageHandlerCustomField());
-    	}
-/*
-    	if(Loader.isModLoaded("harvestcraft")) { PamsModsHelper.loadHC(); ModuleHarvestCraftCrops.init(); ModuleHarvestCraftTrees.init(); }
-    	if(Loader.isModLoaded("temperateplants")) ModuleTemperatePlants.init();
-    	if(Loader.isModLoaded("randomplants")) ModuleRandomPlants.init();
-    	if(Loader.isModLoaded("weeeflowers")) { PamsModsHelper.loadWF(); ModuleWeeeFlowers.init(); };
-    	if(Loader.isModLoaded("TConstruct")) ModuleTConstruct.init();
-    	if(Loader.isModLoaded("Natura")) ModuleNatura.init();
-*/
-    }
-    /*
-    @EventHandler
-    public void postInit(FMLPostInitializationEvent event) {
-    	FMLCommonHandler.instance().bus().register(new IguanaPlayerHandler());
-    }
-    */
 }

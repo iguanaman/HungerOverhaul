@@ -2,7 +2,6 @@ package iguanaman.hungeroverhaul;
 
 import com.google.common.collect.Lists;
 import iguanaman.hungeroverhaul.module.PamsModsHelper;
-import iguanaman.hungeroverhaul.module.ModuleVanilla;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -135,7 +134,7 @@ public class ComponentVillageCustomField extends StructureVillagePieces.Village
 		Block crop2B;
 
 		if (typeA == fieldType.REED) {
-			if (BiomeDictionary.isBiomeOfType(biome, Type.DESERT))
+			if (BiomeDictionary.isBiomeOfType(biome, Type.SANDY))
 				blockOutA = Blocks.sand;
 			else
 				blockOutA = Blocks.dirt;
@@ -150,7 +149,7 @@ public class ComponentVillageCustomField extends StructureVillagePieces.Village
 		}
 
 		if (typeB == fieldType.REED) {
-			if (BiomeDictionary.isBiomeOfType(biome, Type.DESERT))
+			if (BiomeDictionary.isBiomeOfType(biome, Type.SANDY))
 				blockOutB = Blocks.sand;
 			else
 				blockOutB = Blocks.dirt;
