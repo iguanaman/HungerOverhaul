@@ -57,10 +57,10 @@ public class ModuleGrassSeeds
         }
 
         f.setAccessible(true);
-        List<SeedEntry> seedList = null;
+        List<Object> seedList = null;
         try
         {
-            seedList = (List<SeedEntry>) f.get(hooks);
+            seedList = (List<Object>) f.get(hooks);
         }
         catch (IllegalAccessException e)
         {
