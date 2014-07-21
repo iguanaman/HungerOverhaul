@@ -5,10 +5,11 @@ Incomplete list of things that need to be done. Will be added to/edited as thing
 - [x] Food value modification support
 - [ ] Food value modifications
  - [x] Vanilla
- - [ ] HarvestCraft
+ - [x] HarvestCraft
  - [x] TConstruct
  - [x] Natura
  - [x] Catch-all food value division for anything not specifically modified (IguanaConfig.modFoodValueDivider)
+ - [ ] JSON for additional mods
 - [x] Food regens health (config option)
 - [x] Configurable damage on starve
 - [x] Configurable max foodExhaustionLevel
@@ -21,7 +22,7 @@ Incomplete list of things that need to be done. Will be added to/edited as thing
 #### From IguanaFood
 - [x] Well fed buff (should be added to FoodEventHandler.onFoodEaten)
 - [x] Stacksize modifications
-- [ ] Village trading/chest loot additions
+- [x] Village trading/chest loot additions
 - [x] Food eating speed modification
 - [x] Food value tooltips (should use Forge's ItemTooltipEvent)
 
