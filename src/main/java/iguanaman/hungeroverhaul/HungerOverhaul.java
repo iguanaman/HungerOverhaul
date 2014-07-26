@@ -10,7 +10,6 @@ import org.apache.logging.log4j.Logger;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
-import iguanaman.hungeroverhaul.api.FoodModifierRegistry;
 import iguanaman.hungeroverhaul.commands.IguanaCommandHunger;
 import iguanaman.hungeroverhaul.food.FoodEventHandler;
 
@@ -32,7 +31,7 @@ import iguanaman.hungeroverhaul.util.IguanaEventHook;
 import iguanaman.hungeroverhaul.util.RecipeRemover;
 import iguanaman.hungeroverhaul.util.StackSizeTweaks;
 
-@Mod(modid = "HungerOverhaul", name = "Hunger Overhaul", version = "${version}", dependencies = "required-after:HO-Core;after:TConstruct;after:harvestcraft;after:temperateplants;after:randomplants;after:weeeflowers;after:Natura")
+@Mod(modid = "HungerOverhaul", name = "Hunger Overhaul", version = "${version}", dependencies = "required-after:HO-Core;required-after:AppleCore;after:TConstruct;after:harvestcraft;after:temperateplants;after:randomplants;after:weeeflowers;after:Natura")
 public class HungerOverhaul
 {
     public static final Logger Log = LogManager.getLogger("HungerOverhaul");
@@ -64,6 +63,7 @@ public class HungerOverhaul
         GameRegistry.addRecipe(new ShapelessOreRecipe(Items.wheat_seeds, Items.wheat));
 
         MinecraftForge.EVENT_BUS.register(new FoodEventHandler());
+        MinecraftForge.EVENT_BUS.register(new FoodModifier());
         ModuleVanilla.init();
         if(Loader.isModLoaded("harvestcraft"))
         {
@@ -85,7 +85,6 @@ public class HungerOverhaul
             ModuleNatura.init();
         if (Loader.isModLoaded("BiomesOPlenty"))
             ModuleBOP.init();
-        FoodModifierRegistry.registerFoodValueModifier(new FoodModifier());
 
         if (IguanaConfig.addCustomVillageField && IguanaConfig.fieldNormalWeight + IguanaConfig.fieldReedWeight + IguanaConfig.fieldStemWeight > 0)
         {

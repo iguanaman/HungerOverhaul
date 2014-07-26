@@ -1,7 +1,7 @@
 package iguanaman.hungeroverhaul.module;
 
 import iguanaman.hungeroverhaul.IguanaConfig;
-import iguanaman.hungeroverhaul.api.FoodValues;
+import squeek.applecore.api.food.FoodValues;
 import iguanaman.hungeroverhaul.food.FoodModifier;
 import net.minecraft.init.Items;
 import cpw.mods.fml.common.Loader;

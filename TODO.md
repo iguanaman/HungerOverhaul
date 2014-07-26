@@ -1,8 +1,6 @@
 Incomplete list of things that need to be done. Will be added to/edited as things move forward.
 
 #### From IguanaFoodStats
-- [x] Player field
-- [x] Food value modification support
 - [ ] Food value modifications
  - [x] Vanilla
  - [x] HarvestCraft
@@ -17,20 +15,19 @@ Incomplete list of things that need to be done. Will be added to/edited as thing
 - [x] Configurable minimum hunger to heal (IguanaConfig.minHungerToHeal)
 - [x] Configurable time between health regen from hunger (multiple config options)
 - [x] Configurable food exhaustion from health regen (IguanaConfig.disableHealingHungerDrain)
-- [x] Separate starve timer from food timer
 
 #### From IguanaFood
 - [x] Well fed buff (should be added to FoodEventHandler.onFoodEaten)
 - [x] Stacksize modifications
 - [x] Village trading/chest loot additions
-- [x] Food eating speed modification
+- [ ] Food eating speed modification
 - [x] Food value tooltips (should use Forge's ItemTooltipEvent)
 
 #### From IguanaPlayerHandler
 - [ ] Configurable hunger on respawn
 
 #### From Block* Classes
-- [x] Stop updateTick from running depending on biome/sunlight/regrowthMultiplier (ASM)
+- [ ] Stop updateTick from running depending on biome/sunlight/regrowthMultiplier (ASM)
  - [ ] Separate regrowthMultipliers for cactus/cocoa (cactusRegrowthMultiplier/cocoaRegrowthMultiplier)
 - [x] Bonemealing
  - [x] Vanilla

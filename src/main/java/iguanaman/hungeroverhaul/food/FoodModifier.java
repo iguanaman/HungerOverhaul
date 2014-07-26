@@ -1,37 +1,32 @@
 package iguanaman.hungeroverhaul.food;
 
 import iguanaman.hungeroverhaul.IguanaConfig;
-import iguanaman.hungeroverhaul.api.FoodValues;
-import iguanaman.hungeroverhaul.api.IDefaultFoodValueModifier;
+import squeek.applecore.api.food.FoodEvent;
+import squeek.applecore.api.food.FoodValues;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import cpw.mods.fml.common.eventhandler.EventPriority;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
-public class FoodModifier implements IDefaultFoodValueModifier
+public class FoodModifier
 {
     private static HashMap<ItemStack, FoodValues> modifiedFoodValues = new HashMap<ItemStack, FoodValues>();
 
-    @Override
-    public int getPriority()
+    @SubscribeEvent(priority=EventPriority.HIGHEST)
+    public void getModifiedFoodValues(FoodEvent.GetFoodValues event)
     {
-        // affect food values before most other modifiers
-        return Integer.MIN_VALUE / 2;
-    }
-
-    @Override
-    public FoodValues getModifiedFoodValues(FoodValues foodValues, ItemStack itemStack)
-    {
-        FoodValues modifiedFoodValues = lookupModifiedFoodValues(itemStack);
+        FoodValues modifiedFoodValues = lookupModifiedFoodValues(event.food);
         if (modifiedFoodValues != null)
-            return modifiedFoodValues;
+            event.foodValues = modifiedFoodValues;
         else
         {
-            int foodValue = Math.max(Math.round(foodValues.hunger / (float) IguanaConfig.modFoodValueDivider), 1);
+            int foodValue = Math.max(Math.round(event.foodValues.hunger / (float) IguanaConfig.modFoodValueDivider), 1);
             float saturationValue = Math.max(foodValue / 20F, 0F);
-            return new FoodValues(foodValue, saturationValue);
+            event.foodValues = new FoodValues(foodValue, saturationValue);
         }
     }
 

@@ -2,7 +2,7 @@ package iguanaman.hungeroverhaul.util;
 
 import cpw.mods.fml.common.Loader;
 import iguanaman.hungeroverhaul.IguanaConfig;
-import iguanaman.hungeroverhaul.api.FoodValues;
+import squeek.applecore.api.food.FoodValues;
 import iguanaman.hungeroverhaul.module.ModuleGrassSeeds;
 
 import java.text.DecimalFormat;
@@ -438,7 +438,7 @@ public class IguanaEventHook
         {
             if (IguanaConfig.addFoodTooltips)
             {
-                FoodValues values = FoodValues.getModified(event.itemStack);
+                FoodValues values = FoodValues.get(event.itemStack);
                 int hungerFill = values.hunger;
                 float satiation = values.saturationModifier * 20 - hungerFill;
 
@@ -471,6 +471,8 @@ public class IguanaEventHook
                 if (event.showAdvancedItemTooltips)
                 {
                     event.toolTip.add("Hunger: " + values.hunger + " Sat: " + values.saturationModifier + " (+" + new DecimalFormat("##.##").format(values.getSaturationIncrement()) + ")");
+                    FoodValues unmodifiedValues = FoodValues.getUnmodified(event.itemStack);
+                    event.toolTip.add("Unmodified hunger: " + unmodifiedValues.hunger + " Sat: " + unmodifiedValues.saturationModifier + " (+" + new DecimalFormat("##.##").format(unmodifiedValues.getSaturationIncrement()) + ")");
                 }
             }
         }

@@ -34,8 +34,9 @@ repositories {
          name "ProfMobius Maven FS"
          url "http://mobiusstrip.eu/maven"
     }
-
-
+    maven {
+        url "http://www.ryanliptak.com/maven/"
+    }
 }
 
 // Define properties file
@@ -87,6 +88,7 @@ dependencies {
     compile "mods.natura:natura:${config.minecraft_version}-${config.natura_version}:deobf"
     compile "tconstruct:TConstruct:${config.minecraft_version}-${config.tcon_version}:deobf"
     compile "com.github.glitchfiend.biomesoplenty:BiomesOPlenty:${config.minecraft_version}-${config.bop_version}:deobf"
+    compile "applecore:AppleCore:${config.minecraft_version}-${config.applecore_version}:deobf"
 }
 
 processResources

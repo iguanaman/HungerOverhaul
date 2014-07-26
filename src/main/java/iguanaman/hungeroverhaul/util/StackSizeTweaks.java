@@ -5,7 +5,7 @@ import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 
 import iguanaman.hungeroverhaul.IguanaConfig;
-import iguanaman.hungeroverhaul.api.FoodValues;
+import squeek.applecore.api.food.FoodValues;
 
 public class StackSizeTweaks
 {
@@ -18,7 +18,7 @@ public class StackSizeTweaks
             if (item instanceof ItemFood)
             {
                 ItemStack stack = new ItemStack(item);
-                FoodValues values = FoodValues.getModified(stack);
+                FoodValues values = FoodValues.get(stack);
                 if (values.hunger <= 2)
                     item.setMaxStackSize(16 * IguanaConfig.foodStackSizeMultiplier);
                 else if (values.hunger <= 5)
