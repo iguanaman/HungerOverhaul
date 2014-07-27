@@ -1,7 +1,5 @@
 package iguanaman.hungeroverhaul.module;
 
-import iguanaman.hungeroverhaul.api.FoodValues;
-import iguanaman.hungeroverhaul.food.FoodModifier;
 import net.minecraft.item.ItemStack;
 
 import iguanaman.hungeroverhaul.util.RecipeRemover;
