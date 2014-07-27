@@ -7,6 +7,7 @@ import net.minecraft.world.gen.structure.MapGenStructureIO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
@@ -100,7 +101,7 @@ public class HungerOverhaul
             ModuleGrassSeeds.init();
         StackSizeTweaks.init();
         MinecraftForge.EVENT_BUS.register(new IguanaEventHook());
-        //FMLCommonHandler.instance().bus().register(new IguanaPlayerHandler());
+        FMLCommonHandler.instance().bus().register(new ModuleRespawnHunger());
     }
 
     @EventHandler
