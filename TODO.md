@@ -20,7 +20,7 @@ Incomplete list of things that need to be done. Will be added to/edited as thing
 - [x] Well fed buff (should be added to FoodEventHandler.onFoodEaten)
 - [x] Stacksize modifications
 - [x] Village trading/chest loot additions
-- [ ] Food eating speed modification
+- [x] Food eating speed modification
 - [x] Food value tooltips (should use Forge's ItemTooltipEvent)
 
 #### From IguanaPlayerHandler

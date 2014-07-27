@@ -1,10 +1,13 @@
 package iguanaman.hungeroverhaul.food;
 
+import net.minecraft.item.ItemFood;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.EnumDifficulty;
+import net.minecraftforge.event.entity.player.PlayerUseItemEvent;
 import iguanaman.hungeroverhaul.HungerOverhaul;
 import iguanaman.hungeroverhaul.IguanaConfig;
 import squeek.applecore.api.food.FoodEvent;
+import squeek.applecore.api.food.FoodValues;
 import squeek.applecore.api.hunger.ExhaustionEvent;
 import squeek.applecore.api.hunger.HealthRegenEvent;
 import squeek.applecore.api.hunger.StarvationEvent;
@@ -70,8 +73,9 @@ public class FoodEventHandler
     @SubscribeEvent
     public void onExhausted(ExhaustionEvent.MaxReached event)
     {
-        // always decrease hunger, even in peaceful
-        event.deltaHunger = -1;
+        // decrease hunger in peaceful
+        if (event.player.getFoodStats().getSaturationLevel() <= 0)
+            event.deltaHunger = -1;
     }
 
     @SubscribeEvent
@@ -132,5 +136,14 @@ public class FoodEventHandler
     {
         if (IguanaConfig.hungerLossRatePercentage == 0)
             event.setCanceled(true);
+    }
+
+    @SubscribeEvent
+    public void onFoodStartEating(PlayerUseItemEvent.Start event)
+    {
+        if (IguanaConfig.modifyFoodEatingSpeed && event.item.getItem() instanceof ItemFood)
+        {
+            event.duration = FoodValues.get(event.item).hunger * 8 + 8;
+        }
     }
 }
