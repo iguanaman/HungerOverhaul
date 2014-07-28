@@ -47,17 +47,19 @@ public class FoodEventHandler
     }
 
     @SubscribeEvent
-    public void onExhaustionTick(ExhaustionEvent.Tick event)
+    public void allowExhaustion(ExhaustionEvent.AllowExhaustion event)
     {
         if (IguanaConfig.hungerLossRatePercentage == 0)
         {
-            event.exhaustionLevel = 0f;
             event.player.getFoodStats().foodLevel = 19;
             event.player.getFoodStats().foodSaturationLevel = 0f;
-            event.setCanceled(true);
-            return;
+            event.setResult(Result.DENY);
         }
-
+    }
+    
+    @SubscribeEvent
+    public void getMaxExhaustion(ExhaustionEvent.GetMaxExhaustion event)
+    {
         EnumDifficulty difficulty = event.player.worldObj.difficultySetting;
         float hungerLossRate = 3f;
         if (IguanaConfig.difficultyScaling && IguanaConfig.difficultyScalingHunger)
@@ -71,7 +73,7 @@ public class FoodEventHandler
     }
 
     @SubscribeEvent
-    public void onExhausted(ExhaustionEvent.MaxReached event)
+    public void onExhausted(ExhaustionEvent.Exhausted event)
     {
         // decrease hunger in peaceful
         if (event.player.getFoodStats().getSaturationLevel() <= 0)
@@ -93,7 +95,7 @@ public class FoodEventHandler
     }
 
     @SubscribeEvent
-    public void onHealthRegenTick(HealthRegenEvent.Tick event)
+    public void onHealthRegenTick(HealthRegenEvent.GetRegenTickPeriod event)
     {
         float wellfedModifier = 1.0F;
         if (event.player.isPotionActive(HungerOverhaul.potionWellFed))

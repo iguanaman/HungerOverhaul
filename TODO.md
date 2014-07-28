@@ -24,7 +24,7 @@ Incomplete list of things that need to be done. Will be added to/edited as thing
 - [x] Food value tooltips (should use Forge's ItemTooltipEvent)
 
 #### From IguanaPlayerHandler
-- [ ] Configurable hunger on respawn
+- [x] Configurable hunger on respawn
 
 #### From Block* Classes
 - [ ] Stop updateTick from running depending on biome/sunlight/regrowthMultiplier (ASM)
