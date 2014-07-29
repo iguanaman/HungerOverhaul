@@ -2,6 +2,7 @@ package iguanaman.hungeroverhaul.util;
 
 import cpw.mods.fml.common.Loader;
 import iguanaman.hungeroverhaul.IguanaConfig;
+import squeek.applecore.api.AppleCoreAccessor;
 import squeek.applecore.api.food.FoodValues;
 import iguanaman.hungeroverhaul.module.ModuleGrassSeeds;
 
@@ -434,7 +435,7 @@ public class IguanaEventHook
     @SubscribeEvent
     public void renderTooltips(ItemTooltipEvent event)
     {
-        if (event.itemStack.getItem() instanceof ItemFood)
+        if (AppleCoreAccessor.get().isFood(event.itemStack))
         {
             if (IguanaConfig.addFoodTooltips)
             {

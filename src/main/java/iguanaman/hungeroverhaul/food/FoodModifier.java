@@ -22,7 +22,7 @@ public class FoodModifier
         FoodValues modifiedFoodValues = lookupModifiedFoodValues(event.food);
         if (modifiedFoodValues != null)
             event.foodValues = modifiedFoodValues;
-        else
+        else if (IguanaConfig.modFoodValueDivider != 1)
         {
             int foodValue = Math.max(Math.round(event.foodValues.hunger / (float) IguanaConfig.modFoodValueDivider), 1);
             float saturationValue = Math.max(foodValue / 20F, 0F);
