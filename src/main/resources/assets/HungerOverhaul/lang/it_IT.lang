@@ -1,0 +1,17 @@
+potion.wellfedPotion=Ben nutrito
+potion.newSlowdownPotionHO=Rallentato
+
+# tooltip strings
+hungeroverhaul.crop.grows.best.in=Le piante crescono meglio  in:
+
+# these should all be in lowercase
+hungeroverhaul.hearty=%s abbondante
+hungeroverhaul.wholesome=%s salutare
+hungeroverhaul.nourishing=%s nutriente
+hungeroverhaul.unfulfilling=%s inadempiente
+hungeroverhaul.morsel=boccone
+hungeroverhaul.snack=spuntino
+hungeroverhaul.lightmeal=pasto leggero
+hungeroverhaul.meal=pasto
+hungeroverhaul.largemeal=pasto grande
+hungeroverhaul.feast=banchetto
