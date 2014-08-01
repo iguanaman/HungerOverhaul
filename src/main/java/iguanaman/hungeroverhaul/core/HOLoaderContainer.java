@@ -35,7 +35,7 @@ public class HOLoaderContainer extends DummyModContainer implements IFMLLoadingP
         md.version = getVersion();
         md.name = getName();
         md.authorList = Arrays.asList("progwml6", "Parker8283");
-        md.description = "The mod responsible for allowing re-assignment of food values in MC 1.7+";
+        //md.description = "The mod responsible for allowing re-assignment of food values in MC 1.7+";
     }
 
     @Override

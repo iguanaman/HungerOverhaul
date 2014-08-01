@@ -16,8 +16,8 @@ public class ModuleRespawnHunger
         if (IguanaConfig.difficultyScaling && IguanaConfig.difficultyScalingRespawnHunger && event.player.worldObj.difficultySetting.getDifficultyId() > EnumDifficulty.EASY.getDifficultyId())
             respawnHunger -= (event.player.worldObj.difficultySetting.getDifficultyId() - 1) * IguanaConfig.respawnHungerDifficultyModifier;
 
-        event.player.getFoodStats().foodLevel = Math.min(Math.max(respawnHunger, 1), 20);
+        event.player.getFoodStats().setFoodLevel(Math.min(Math.max(respawnHunger, 1), 20));
         if (event.player.getFoodStats().getSaturationLevel() > event.player.getFoodStats().getFoodLevel())
-            event.player.getFoodStats().foodSaturationLevel = event.player.getFoodStats().getFoodLevel();
+            event.player.getFoodStats().setFoodSaturationLevel(event.player.getFoodStats().getFoodLevel());
     }
 }

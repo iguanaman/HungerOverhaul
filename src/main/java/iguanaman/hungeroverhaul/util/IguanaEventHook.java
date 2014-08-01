@@ -111,7 +111,7 @@ public class IguanaEventHook
                 {
                     EntityPlayer player = (EntityPlayer) event.entityLiving;
                     creative = player.capabilities.isCreativeMode;
-                    foodLevel = player.foodStats.getFoodLevel();
+                    foodLevel = player.getFoodStats().getFoodLevel();
                     isPlayer = true;
                 }
                 else
@@ -246,11 +246,11 @@ public class IguanaEventHook
                 else if (healthPercent < 0.5F)
                     event.left.add("\u00A7fHurt\u00A7r");
 
-                if (player.foodStats.getFoodLevel() <= 6)
+                if (player.getFoodStats().getFoodLevel() <= 6)
                     event.right.add("\u00A7cStarving\u00A7r");
-                else if (player.foodStats.getFoodLevel() <= 10)
+                else if (player.getFoodStats().getFoodLevel() <= 10)
                     event.right.add("\u00A7eHungry\u00A7r");
-                else if (player.foodStats.getFoodLevel() <= 14)
+                else if (player.getFoodStats().getFoodLevel() <= 14)
                     event.right.add("\u00A7fPeckish\u00A7r");
             }
         }
@@ -297,7 +297,7 @@ public class IguanaEventHook
         if (event.entityLiving instanceof EntityPlayer)
         {
             EntityPlayer player = (EntityPlayer) event.entityLiving;
-            player.foodStats.foodTimer = 0;
+            player.getFoodStats().foodTimer = 0;
         }
     }
 

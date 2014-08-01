@@ -51,8 +51,8 @@ public class FoodEventHandler
     {
         if (IguanaConfig.hungerLossRatePercentage == 0)
         {
-            event.player.getFoodStats().foodLevel = 19;
-            event.player.getFoodStats().foodSaturationLevel = 0f;
+            event.player.getFoodStats().setFoodLevel(19);
+            event.player.getFoodStats().setFoodSaturationLevel(0.0F);
             event.setResult(Result.DENY);
         }
     }
