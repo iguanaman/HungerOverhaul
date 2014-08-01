@@ -71,14 +71,15 @@ public class HungerOverhaul
             PamsModsHelper.loadHC();
             ModuleHarvestCraft.init();
         }
-        if(Loader.isModLoaded("temperateplants"))
+        //TODO Make work with Thaumcraft 4.2 when it comes out. That will be the first 1.7.10 version.
+        /*if(Loader.isModLoaded("temperateplants"))
             ModuleTemperatePlants.init();
         if(Loader.isModLoaded("randomplants"))
-            ModuleRandomPlants.init();
+            ModuleRandomPlants.init();*/
         if(Loader.isModLoaded("weeeflowers"))
         {
             PamsModsHelper.loadWF();
-            ModuleWeeeFlowers.init();
+            //ModuleWeeeFlowers.init();
         }
         if (Loader.isModLoaded("TConstruct"))
             ModuleTConstruct.init();

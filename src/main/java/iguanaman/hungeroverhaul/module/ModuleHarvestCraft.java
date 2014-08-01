@@ -487,8 +487,10 @@ public class ModuleHarvestCraft
             FoodModifier.setModifiedFoodValues(ItemRegistry.zucchiniItem, new FoodValues(1, 0.05F));
         }
 
+        //TODO Make work with Thaumcraft 4.2 when it comes out. That will be the first 1.7.10 version.
+
         // SAPLING ASPECTS
-        if (Loader.isModLoaded("Thaumcraft"))
+        /*if (Loader.isModLoaded("Thaumcraft"))
         {
             AspectList saplingAspects = new AspectList().add(Aspect.PLANT, 1).add(Aspect.TREE, 1);
             Block saplings[] = new Block[]{
@@ -502,12 +504,12 @@ public class ModuleHarvestCraft
             };
             for (Block sapling : saplings)
                 registerAspects(Item.getItemFromBlock(sapling), saplingAspects);
-        }
+        }*/
     }
 
-    public static void registerAspects(Item item, AspectList aspects)
+    /*public static void registerAspects(Item item, AspectList aspects)
     {
         if (!ThaumcraftApi.exists(item, -1))
             ThaumcraftApi.registerObjectTag(new ItemStack(item, 1), new int[]{-1}, aspects);
-    }
+    }*/
 }
