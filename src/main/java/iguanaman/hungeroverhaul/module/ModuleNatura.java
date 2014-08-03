@@ -23,9 +23,12 @@ public class ModuleNatura
         RecipeRemover.removeFurnaceRecipe(NContent.plantItem, 2);
 
         //TODO Figure out how iguana_man calculated the FoodValues
-        for(int i = 0; i < 4; i++)
-            FoodModifier.setModifiedFoodValues(new ItemStack(NContent.berryItem, 1, i), new FoodValues(0, 0F));
-        FoodModifier.setModifiedFoodValues(NContent.berryMedley, new FoodValues(0, 0F));
+        if (IguanaConfig.modifyFoodValues)
+        {
+            for(int i = 0; i < 4; i++)
+                FoodModifier.setModifiedFoodValues(new ItemStack(NContent.berryItem, 1, i), new FoodValues(0, 0F));
+            FoodModifier.setModifiedFoodValues(NContent.berryMedley, new FoodValues(0, 0F));
+        }
 
         // plant growth
         PlantGrowthModification cropGrowthModification = new PlantGrowthModification()
