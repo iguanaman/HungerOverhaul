@@ -1,10 +1,16 @@
 package iguanaman.hungeroverhaul.module;
 
-import net.minecraft.item.ItemStack;
-
+import iguanaman.hungeroverhaul.IguanaConfig;
+import iguanaman.hungeroverhaul.util.PlantGrowthModification;
 import iguanaman.hungeroverhaul.food.FoodModifier;
 import iguanaman.hungeroverhaul.util.RecipeRemover;
+import mods.natura.blocks.crops.BerryBush;
+import mods.natura.blocks.crops.CropBlock;
+import mods.natura.blocks.crops.NetherBerryBush;
+import mods.natura.blocks.trees.SaguaroBlock;
 import mods.natura.common.NContent;
+import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.BiomeDictionary.Type;
 import squeek.applecore.api.food.FoodValues;
 
 public class ModuleNatura
@@ -20,17 +26,33 @@ public class ModuleNatura
         for(int i = 0; i < 4; i++)
             FoodModifier.setModifiedFoodValues(new ItemStack(NContent.berryItem, 1, i), new FoodValues(0, 0F));
         FoodModifier.setModifiedFoodValues(NContent.berryMedley, new FoodValues(0, 0F));
+
+        // plant growth
+        PlantGrowthModification cropGrowthModification = new PlantGrowthModification()
+                .setNeedsSunlight(true)
+                .setGrowthTickProbability(IguanaConfig.cropRegrowthMultiplier)
+                .setBiomeGrowthModifier(Type.FOREST, 1)
+                .setBiomeGrowthModifier(Type.PLAINS, 1);
+        ModulePlantGrowth.registerPlantGrowthModifier(CropBlock.class, cropGrowthModification);
+
+        PlantGrowthModification saguaroGrowthModification = new PlantGrowthModification()
+                .setNeedsSunlight(false)
+                .setGrowthTickProbability(IguanaConfig.cactusRegrowthMultiplier)
+                .setBiomeGrowthModifier(Type.SANDY, 1);
+        ModulePlantGrowth.registerPlantGrowthModifier(SaguaroBlock.class, saguaroGrowthModification);
+
+        PlantGrowthModification berryBushGrowthModification = new PlantGrowthModification()
+                .setNeedsSunlight(true)
+                .setGrowthTickProbability(IguanaConfig.cropRegrowthMultiplier)
+                .setBiomeGrowthModifier(Type.FOREST, 1)
+                .setBiomeGrowthModifier(Type.PLAINS, 1);
+        ModulePlantGrowth.registerPlantGrowthModifier(BerryBush.class, berryBushGrowthModification);
+
+        PlantGrowthModification netherBushGrowthModification = new PlantGrowthModification()
+                .setNeedsSunlight(false)
+                .setGrowthTickProbability(IguanaConfig.cropRegrowthMultiplier)
+                .setBiomeGrowthModifier(Type.NETHER, 1);
+        ModulePlantGrowth.registerPlantGrowthModifier(NetherBerryBush.class, netherBushGrowthModification);
     }
-
-    /*public static Block cactusNew;
-
-    public static void init() {
-    	String tempName;
-    	
-    	cactusNew = new IguanaCactus().setHardness(0.4F).setStepSound(Block.soundTypeCloth).setBlockName("cactus").setBlockTextureName("cactus");
-    	tempName = Block.blockRegistry.getNameForObject(Blocks.cactus);
-    	Blocks.cactus = cactusNew;
-    	Utils.replace(Blocks.cactus, tempName);
-    }*/
 
 }

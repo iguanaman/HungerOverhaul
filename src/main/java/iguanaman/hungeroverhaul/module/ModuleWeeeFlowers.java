@@ -1,5 +1,7 @@
 package iguanaman.hungeroverhaul.module;
 
+import iguanaman.hungeroverhaul.IguanaConfig;
+import iguanaman.hungeroverhaul.util.PlantGrowthModification;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -7,6 +9,7 @@ import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 
+import com.pam.weeeflowers.BlockPamFlower;
 import com.pam.weeeflowers.weeeflowers;
 
 import cpw.mods.fml.common.Loader;
@@ -39,6 +42,12 @@ public class ModuleWeeeFlowers
         for (Block flower : flowers)
             if (!ThaumcraftApi.exists(Item.getItemFromBlock(flower), -1))
                 ThaumcraftApi.registerObjectTag(new ItemStack(flower), new int[]{-1}, flowerAspects);
+
+        // Flower growth modification
+        PlantGrowthModification flowerGrowthModification = new PlantGrowthModification()
+                .setNeedsSunlight(true)
+                .setGrowthTickProbability(IguanaConfig.flowerRegrowthMultiplier);
+        ModulePlantGrowth.registerPlantGrowthModifier(BlockPamFlower.class, flowerGrowthModification);
     }
 
 }

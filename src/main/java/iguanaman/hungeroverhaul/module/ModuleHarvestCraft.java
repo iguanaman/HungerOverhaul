@@ -1,19 +1,15 @@
 package iguanaman.hungeroverhaul.module;
 
 import iguanaman.hungeroverhaul.IguanaConfig;
-import squeek.applecore.api.food.FoodValues;
 import iguanaman.hungeroverhaul.food.FoodModifier;
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import thaumcraft.api.ThaumcraftApi;
-import thaumcraft.api.aspects.Aspect;
-import thaumcraft.api.aspects.AspectList;
+import iguanaman.hungeroverhaul.util.PlantGrowthModification;
+import net.minecraftforge.common.BiomeDictionary.Type;
+import squeek.applecore.api.food.FoodValues;
 
+import com.pam.harvestcraft.BlockPamFruit;
+import com.pam.harvestcraft.BlockPamSapling;
 import com.pam.harvestcraft.BlockRegistry;
 import com.pam.harvestcraft.ItemRegistry;
-
-import cpw.mods.fml.common.Loader;
 
 public class ModuleHarvestCraft
 {
@@ -26,7 +22,7 @@ public class ModuleHarvestCraft
             ItemRegistry.cropfoodRestore = 1;
         }
         FoodValues cropFoodValues = new FoodValues(ItemRegistry.cropfoodRestore, foodSaturation);
-        
+
         FoodModifier.setModifiedFoodValues(ItemRegistry.asparagusItem, cropFoodValues);
         FoodModifier.setModifiedFoodValues(ItemRegistry.barleyItem, cropFoodValues);
         FoodModifier.setModifiedFoodValues(ItemRegistry.beanItem, cropFoodValues);
@@ -82,7 +78,7 @@ public class ModuleHarvestCraft
         FoodModifier.setModifiedFoodValues(ItemRegistry.tomatoItem, cropFoodValues);
         FoodModifier.setModifiedFoodValues(ItemRegistry.wintersquashItem, cropFoodValues);
         FoodModifier.setModifiedFoodValues(ItemRegistry.zucchiniItem, cropFoodValues);
-        
+
         // HavestCraft Base
         if (IguanaConfig.modifyFoodValues)
         {
@@ -505,6 +501,38 @@ public class ModuleHarvestCraft
             for (Block sapling : saplings)
                 registerAspects(Item.getItemFromBlock(sapling), saplingAspects);
         }*/
+
+        // SAPLING GROWTH
+        PlantGrowthModification saplingGrowthModification = new PlantGrowthModification()
+                .setGrowthTickProbability(IguanaConfig.saplingRegrowthMultiplier);
+        ModulePlantGrowth.registerPlantGrowthModifier(BlockPamSapling.class, saplingGrowthModification);
+
+        // CROP GROWTH
+        // only need to register the exceptions here,
+        // the BlockCrops modification will cover the rest
+        PlantGrowthModification humidCropGrowthModification = new PlantGrowthModification()
+                .setNeedsSunlight(true)
+                .setGrowthTickProbability(IguanaConfig.cropRegrowthMultiplier)
+                .setBiomeGrowthModifier(Type.JUNGLE, 1)
+                .setBiomeGrowthModifier(Type.SWAMP, 1);
+        ModulePlantGrowth.registerPlantGrowthModifier(BlockRegistry.pampineappleCrop, humidCropGrowthModification);
+        ModulePlantGrowth.registerPlantGrowthModifier(BlockRegistry.pamspiceleafCrop, humidCropGrowthModification);
+        ModulePlantGrowth.registerPlantGrowthModifier(BlockRegistry.pamcandleberryCrop, humidCropGrowthModification);
+        ModulePlantGrowth.registerPlantGrowthModifier(BlockRegistry.pamgrapeCrop, humidCropGrowthModification);
+        ModulePlantGrowth.registerPlantGrowthModifier(BlockRegistry.pamkiwiCrop, humidCropGrowthModification);
+
+        PlantGrowthModification desertCropGrowthModification = new PlantGrowthModification()
+                .setNeedsSunlight(true)
+                .setGrowthTickProbability(IguanaConfig.cropRegrowthMultiplier)
+                .setBiomeGrowthModifier(Type.SANDY, 1);
+        ModulePlantGrowth.registerPlantGrowthModifier(BlockRegistry.pamcactusfruitCrop, desertCropGrowthModification);
+
+        // FRUIT GROWTH
+        // TODO: figure out if Jungle/Swamp being set as the correct biome for all fruit was intentional
+        PlantGrowthModification fruitGrowthModification = new PlantGrowthModification()
+                .setNeedsSunlight(false)
+                .setGrowthTickProbability(IguanaConfig.treeCropRegrowthMultiplier);
+        ModulePlantGrowth.registerPlantGrowthModifier(BlockPamFruit.class, fruitGrowthModification);
     }
 
     /*public static void registerAspects(Item item, AspectList aspects)

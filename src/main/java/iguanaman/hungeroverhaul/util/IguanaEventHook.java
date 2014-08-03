@@ -1,14 +1,15 @@
 package iguanaman.hungeroverhaul.util;
 
-import cpw.mods.fml.common.Loader;
 import iguanaman.hungeroverhaul.IguanaConfig;
-import squeek.applecore.api.AppleCoreAccessor;
-import squeek.applecore.api.food.FoodValues;
 import iguanaman.hungeroverhaul.module.ModuleGrassSeeds;
+import iguanaman.hungeroverhaul.module.ModulePlantGrowth;
 
 import java.text.DecimalFormat;
 import java.util.Random;
 
+import mods.natura.Natura;
+import mods.natura.blocks.crops.CropBlock;
+import mods.natura.common.NContent;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockCrops;
 import net.minecraft.block.BlockStem;
@@ -22,7 +23,9 @@ import net.minecraft.entity.passive.EntityMooshroom;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
-import net.minecraft.item.*;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemBucket;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
@@ -30,19 +33,22 @@ import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.common.BiomeDictionary;
+import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.event.entity.player.*;
-import net.minecraftforge.event.terraingen.SaplingGrowTreeEvent;
+import net.minecraftforge.event.entity.player.BonemealEvent;
+import net.minecraftforge.event.entity.player.EntityInteractEvent;
+import net.minecraftforge.event.entity.player.ItemTooltipEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.event.entity.player.UseHoeEvent;
 import net.minecraftforge.event.world.BlockEvent;
+import squeek.applecore.api.AppleCoreAccessor;
+import squeek.applecore.api.food.FoodValues;
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.eventhandler.Event.Result;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import mods.natura.Natura;
-import mods.natura.blocks.crops.CropBlock;
-import mods.natura.common.NContent;
-import mods.natura.items.NaturaSeeds;
 
 public class IguanaEventHook
 {
@@ -284,14 +290,6 @@ public class IguanaEventHook
     }
 
     @SubscribeEvent
-    public void onSaplingGrowTreeEvent(SaplingGrowTreeEvent event)
-    {
-        if (IguanaConfig.saplingRegrowthMultiplier > 1)
-            if (event.rand.nextInt(IguanaConfig.saplingRegrowthMultiplier) != 0)
-                event.setResult(Result.DENY);
-    }
-
-    @SubscribeEvent
     public void onLivingHurtEvent(LivingHurtEvent event)
     {
         if (event.entityLiving instanceof EntityPlayer)
@@ -457,7 +455,7 @@ public class IguanaEventHook
                     mealDescriptor = StatCollector.translateToLocal("hungeroverhaul.largemeal");
                 else
                     mealDescriptor = StatCollector.translateToLocal("hungeroverhaul.feast");
-                
+
                 if (satiation >= 3.0F)
                     mealDescriptor = StatCollector.translateToLocalFormatted(StatCollector.translateToLocal("hungeroverhaul.hearty"), mealDescriptor);
                 else if (satiation >= 2.0F)
@@ -479,24 +477,16 @@ public class IguanaEventHook
         }
         else if (IguanaConfig.wrongBiomeRegrowthMultiplier > 1)
         {
-            BiomeDictionary.Type[] theBiomes = null;
-            if (event.itemStack.getItem() instanceof ItemSeeds)
+            PlantGrowthModification growthModification = null;
+            if (event.itemStack.getItem() instanceof IPlantable)
             {
-                if (((ItemSeeds) event.itemStack.getItem()).getPlant(null, 0, 0, 0) instanceof BlockCrops)
-                    theBiomes = new BiomeDictionary.Type[]{BiomeDictionary.Type.FOREST, BiomeDictionary.Type.PLAINS};
-                else if (((ItemSeeds) event.itemStack.getItem()).getPlant(null, 0, 0, 0) instanceof BlockStem)
-                    theBiomes = new BiomeDictionary.Type[]{BiomeDictionary.Type.JUNGLE, BiomeDictionary.Type.SWAMP};
-            }
-            else if (Loader.isModLoaded("Natura") && event.itemStack.getItem() instanceof NaturaSeeds)
-            {
-                if (((NaturaSeeds) event.itemStack.getItem()).getPlant(null, 0, 0, 0) instanceof CropBlock) //Probably don't need, but keeping it consistent.
-                    theBiomes = new BiomeDictionary.Type[]{BiomeDictionary.Type.FOREST, BiomeDictionary.Type.PLAINS};
+                growthModification = ModulePlantGrowth.getPlantGrowthModification(((IPlantable) event.itemStack.getItem()).getPlant(null, 0, 0, 0));
             }
 
-            if (theBiomes != null)
+            if (growthModification != null && !growthModification.biomeGrowthModifiers.isEmpty())
             {
                 String tooltip = "";
-                for (BiomeDictionary.Type biomeType : theBiomes)
+                for (BiomeDictionary.Type biomeType : growthModification.biomeGrowthModifiers.keySet())
                     tooltip += biomeType.toString().substring(0, 1).toUpperCase() + biomeType.toString().substring(1).toLowerCase() + ", ";
                 event.toolTip.add(StatCollector.translateToLocal("hungeroverhaul.crop.grows.best.in"));
                 event.toolTip.add(tooltip.substring(0, tooltip.length() - 2));
