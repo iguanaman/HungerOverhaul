@@ -2,7 +2,7 @@ potion.wellfedPotion=Well Fed
 potion.newSlowdownPotionHO=Slowed
 
 # tooltip strings
-hungeroverhaul.crop.grows.best.in=Crop grows best in:
+hungeroverhaul.crop.grows.best.in=Grows best in:
 
 # these should all be in lowercase
 hungeroverhaul.hearty=hearty %s
