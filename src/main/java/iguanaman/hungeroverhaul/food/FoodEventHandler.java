@@ -6,6 +6,7 @@ import net.minecraft.world.EnumDifficulty;
 import net.minecraftforge.event.entity.player.PlayerUseItemEvent;
 import iguanaman.hungeroverhaul.HungerOverhaul;
 import iguanaman.hungeroverhaul.IguanaConfig;
+import squeek.applecore.api.AppleCoreAPI;
 import squeek.applecore.api.food.FoodEvent;
 import squeek.applecore.api.food.FoodValues;
 import squeek.applecore.api.hunger.ExhaustionEvent;
@@ -51,8 +52,9 @@ public class FoodEventHandler
     {
         if (IguanaConfig.hungerLossRatePercentage == 0)
         {
-            event.player.getFoodStats().foodLevel = 19;
-            event.player.getFoodStats().foodSaturationLevel = 0f;
+            AppleCoreAPI.mutator.setHunger(event.player, 19);
+            AppleCoreAPI.mutator.setSaturation(event.player, 0f);
+            AppleCoreAPI.mutator.setExhaustion(event.player, 0f);
             event.setResult(Result.DENY);
         }
     }

@@ -42,7 +42,7 @@ import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.entity.player.UseHoeEvent;
 import net.minecraftforge.event.world.BlockEvent;
-import squeek.applecore.api.AppleCoreAccessor;
+import squeek.applecore.api.AppleCoreAPI;
 import squeek.applecore.api.food.FoodValues;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.eventhandler.Event.Result;
@@ -295,7 +295,7 @@ public class IguanaEventHook
         if (event.entityLiving instanceof EntityPlayer)
         {
             EntityPlayer player = (EntityPlayer) event.entityLiving;
-            player.getFoodStats().foodTimer = 0;
+            AppleCoreAPI.mutator.setHealthRegenTickCounter(player, 0);
         }
     }
 
@@ -433,7 +433,7 @@ public class IguanaEventHook
     @SubscribeEvent
     public void renderTooltips(ItemTooltipEvent event)
     {
-        if (AppleCoreAccessor.get().isFood(event.itemStack))
+        if (AppleCoreAPI.accessor.isFood(event.itemStack))
         {
             if (IguanaConfig.addFoodTooltips)
             {
