@@ -33,7 +33,7 @@ Incomplete list of things that need to be done. Will be added to/edited as thing
   - [x] Stems
   - [x] Cocoa
   - [x] Reed
-  - [ ] Nether Wart
+  - [x] Nether Wart
  - [ ] HarvestCraft
   - [x] Crops
   - [ ] Saplings (unclear which biome should be set)

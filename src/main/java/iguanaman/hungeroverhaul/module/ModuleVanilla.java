@@ -6,6 +6,7 @@ import iguanaman.hungeroverhaul.util.PlantGrowthModification;
 import net.minecraft.block.BlockCactus;
 import net.minecraft.block.BlockCocoa;
 import net.minecraft.block.BlockCrops;
+import net.minecraft.block.BlockNetherWart;
 import net.minecraft.block.BlockReed;
 import net.minecraft.block.BlockSapling;
 import net.minecraft.block.BlockStem;
@@ -78,5 +79,11 @@ public class ModuleVanilla
         PlantGrowthModification saplingGrowthModification = new PlantGrowthModification()
                 .setGrowthTickProbability(IguanaConfig.saplingRegrowthMultiplier);
         ModulePlantGrowth.registerPlantGrowthModifier(BlockSapling.class, saplingGrowthModification);
+
+        PlantGrowthModification netherWartGrowthModification = new PlantGrowthModification()
+                .setNeedsSunlight(false)
+                .setGrowthTickProbability(IguanaConfig.netherWartRegrowthMultiplier)
+                .setBiomeGrowthModifier(Type.NETHER, 1);
+        ModulePlantGrowth.registerPlantGrowthModifier(BlockNetherWart.class, netherWartGrowthModification);
     }
 }

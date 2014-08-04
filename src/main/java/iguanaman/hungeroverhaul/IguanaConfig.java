@@ -28,6 +28,7 @@ public class IguanaConfig
     public static int sugarcaneRegrowthMultiplier;
     public static int treeCropRegrowthMultiplier;
     public static int saplingRegrowthMultiplier;
+    public static int netherWartRegrowthMultiplier;
     public static int dryingRackTimeMultiplier;
     public static int eggTimeoutMultiplier;
     public static int breedingTimeoutMultiplier;
@@ -188,6 +189,11 @@ public class IguanaConfig
         saplingRegrowthMultiplierProperty.comment = "Multiplier on the time it takes a sapling to grow into a tree";
         saplingRegrowthMultiplier = Math.max(saplingRegrowthMultiplierProperty.getInt(4), 1);
         saplingRegrowthMultiplierProperty.set(saplingRegrowthMultiplier);
+
+        Property netherWartRegrowthMultiplierProperty = config.get("delays", "netherWartRegrowthMultiplier", 4);
+        netherWartRegrowthMultiplierProperty.comment = "Multiplier on the time it takes nether wart to grow";
+        netherWartRegrowthMultiplier = Math.max(netherWartRegrowthMultiplierProperty.getInt(4), 1);
+        netherWartRegrowthMultiplierProperty.set(netherWartRegrowthMultiplier);
 
         Property dryingRackTimeMultiplierProperty = config.get("delays", "dryingRackTimeMultiplier", 4);
         dryingRackTimeMultiplierProperty.comment = "Multiplier on the time it takes cocoa to grow";
