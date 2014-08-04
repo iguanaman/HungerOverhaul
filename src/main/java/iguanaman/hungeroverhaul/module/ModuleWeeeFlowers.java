@@ -9,7 +9,7 @@ import thaumcraft.api.ThaumcraftApi;
 import thaumcraft.api.aspects.Aspect;
 import thaumcraft.api.aspects.AspectList;
 
-import com.pam.weeeflowers.BlockPamFlower;
+import com.pam.weeeflowers.BlockPamFlowerCrop;
 import com.pam.weeeflowers.weeeflowers;
 
 import cpw.mods.fml.common.Loader;
@@ -47,7 +47,7 @@ public class ModuleWeeeFlowers
         PlantGrowthModification flowerGrowthModification = new PlantGrowthModification()
                 .setNeedsSunlight(true)
                 .setGrowthTickProbability(IguanaConfig.flowerRegrowthMultiplier);
-        ModulePlantGrowth.registerPlantGrowthModifier(BlockPamFlower.class, flowerGrowthModification);
+        ModulePlantGrowth.registerPlantGrowthModifier(BlockPamFlowerCrop.class, flowerGrowthModification);
     }
 
 }
