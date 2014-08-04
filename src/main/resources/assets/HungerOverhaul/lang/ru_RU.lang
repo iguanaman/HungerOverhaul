@@ -1,2 +1,17 @@
 potion.wellfedPotion=Сытость
 potion.newSlowdownPotionHO=Замедление
+
+# tooltip strings
+hungeroverhaul.crop.grows.best.in=Растёт лучше в:
+
+# these should all be in lowercase
+hungeroverhaul.hearty=здоров. %s
+hungeroverhaul.wholesome=полезн. %s
+hungeroverhaul.nourishing=сытн. %s
+hungeroverhaul.unfulfilling=не полезн. %s
+hungeroverhaul.morsel=лёгкая закуска
+hungeroverhaul.snack=закуска
+hungeroverhaul.lightmeal=лёгкий завтрак
+hungeroverhaul.meal=завтрак
+hungeroverhaul.largemeal=большой завтрак
+hungeroverhaul.feast=пир
