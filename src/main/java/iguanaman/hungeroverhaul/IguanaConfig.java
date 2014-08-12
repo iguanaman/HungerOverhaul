@@ -65,10 +65,6 @@ public class IguanaConfig
     public static int modFoodValueDivider;
     public static boolean addWellFedEffect;
 
-    // Rotting
-    public static boolean addFoodRotting;
-    public static int foodRotSpeed;
-
     // harvestcraft integration
     public static boolean addTradesButcher;
     public static boolean addTradesFarmer;
@@ -328,17 +324,6 @@ public class IguanaConfig
         Property addWellFedEffectProperty = config.get("food", "addWellFedEffect", true);
         addWellFedEffectProperty.comment = "Adds a 'well fed' effect that gives slight health regen";
         addWellFedEffect = addWellFedEffectProperty.getBoolean(true);
-
-        config.getCategory("rotting");
-
-        Property addFoodRottingProperty = config.get("rotting", "addFoodRotting", false);
-        addFoodRottingProperty.comment = "Turning on causes food to spoil over time (currently buggy)";
-        addFoodRotting = addFoodRottingProperty.getBoolean(false);
-
-        Property foodRotSpeedProperty = config.get("rotting", "foodRotSpeed", 100);
-        foodRotSpeedProperty.comment = "Rate at which food rots (in ticks)";
-        foodRotSpeed = Math.max(foodRotSpeedProperty.getInt(100), 1);
-        foodRotSpeedProperty.set(foodRotSpeed);
 
         // HarvestCraft
         config.getCategory("harvestcraft");
