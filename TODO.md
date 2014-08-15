@@ -49,10 +49,10 @@ Incomplete list of things that need to be done. Will be added to/edited as thing
  - [x] Vanilla
  - [x] Natura
 - [x] getDrops
-- [ ] Right-click to Harvest
+- [x] Right-click to Harvest
  - [x] Vanilla crops
- - [ ] Natura crops
- - [ ] HarvestCraft crops
+ - [x] Natura crops
+ - [x] HarvestCraft crops
 
 #### All seeds
 - [x] Add 'crop grows best in' tooltips
@@ -62,3 +62,6 @@ Incomplete list of things that need to be done. Will be added to/edited as thing
 
 #### All foods/seeds
 - [ ] Add Thaumcraft aspects
+
+#### Misc
+- [x] Fix natura drops

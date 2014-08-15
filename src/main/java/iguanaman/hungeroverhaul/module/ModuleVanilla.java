@@ -2,15 +2,12 @@ package iguanaman.hungeroverhaul.module;
 
 import iguanaman.hungeroverhaul.IguanaConfig;
 import iguanaman.hungeroverhaul.food.FoodModifier;
+import iguanaman.hungeroverhaul.util.BonemealModification;
 import iguanaman.hungeroverhaul.util.PlantGrowthModification;
-import net.minecraft.block.BlockCactus;
-import net.minecraft.block.BlockCocoa;
-import net.minecraft.block.BlockCrops;
-import net.minecraft.block.BlockNetherWart;
-import net.minecraft.block.BlockReed;
-import net.minecraft.block.BlockSapling;
-import net.minecraft.block.BlockStem;
+import net.minecraft.block.*;
 import net.minecraft.init.Items;
+import net.minecraft.world.EnumDifficulty;
+import net.minecraft.world.World;
 import net.minecraftforge.common.BiomeDictionary.Type;
 import squeek.applecore.api.food.FoodValues;
 import cpw.mods.fml.common.Loader;
@@ -19,6 +16,9 @@ public class ModuleVanilla
 {
     public static void init()
     {
+        /*
+         * Food values
+         */
         if (Loader.isModLoaded("harvestcraft") || IguanaConfig.modifyFoodValues)
         {
             FoodModifier.setModifiedFoodValues(Items.apple, new FoodValues(1, 0.05F));
@@ -42,6 +42,9 @@ public class ModuleVanilla
             FoodModifier.setModifiedFoodValues(Items.potato, new FoodValues(1, 0.05F));
         }
 
+        /*
+         * Plant growth
+         */
         PlantGrowthModification cropGrowthModification = new PlantGrowthModification()
                 .setNeedsSunlight(true)
                 .setGrowthTickProbability(IguanaConfig.cropRegrowthMultiplier)
@@ -85,5 +88,21 @@ public class ModuleVanilla
                 .setGrowthTickProbability(IguanaConfig.netherWartRegrowthMultiplier)
                 .setBiomeGrowthModifier(Type.NETHER, 1);
         ModulePlantGrowth.registerPlantGrowthModifier(BlockNetherWart.class, netherWartGrowthModification);
+
+        /*
+         * Bonemeal
+         */
+        BonemealModification cropBonemealModification = new BonemealModification()
+        {
+            @Override
+            public int getNewMeta(World world, int x, int y, int z, Block block, int currentMeta)
+            {
+                int metaIncrease = 1;
+                if (world.difficultySetting.getDifficultyId() < EnumDifficulty.EASY.getDifficultyId())
+                    metaIncrease = world.rand.nextInt(3);
+                return Math.min(currentMeta + metaIncrease, 7);
+            }
+        };
+        ModuleBonemeal.registerBonemealModifier(BlockCrops.class, cropBonemealModification);
     }
 }

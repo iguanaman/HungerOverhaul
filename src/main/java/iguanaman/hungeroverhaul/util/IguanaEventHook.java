@@ -4,15 +4,11 @@ import iguanaman.hungeroverhaul.IguanaConfig;
 import iguanaman.hungeroverhaul.module.ModuleGrassSeeds;
 import iguanaman.hungeroverhaul.module.ModulePlantGrowth;
 
-import java.text.DecimalFormat;
 import java.util.Random;
 
-import mods.natura.Natura;
 import mods.natura.blocks.crops.CropBlock;
-import mods.natura.common.NContent;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockCrops;
-import net.minecraft.block.BlockStem;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.EntityAgeable;
@@ -36,7 +32,6 @@ import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.event.entity.player.BonemealEvent;
 import net.minecraftforge.event.entity.player.EntityInteractEvent;
 import net.minecraftforge.event.entity.player.ItemTooltipEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -305,127 +300,67 @@ public class IguanaEventHook
         if (event.action == PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK)
         {
             Block clicked = event.world.getBlock(event.x, event.y, event.z);
-            if (clicked instanceof BlockCrops)
+            int meta = event.world.getBlockMetadata(event.x, event.y, event.z);
+            int resultingMeta = -1;
+            
+            if (Loader.isModLoaded("Natura") && clicked instanceof CropBlock)
             {
-                int meta = event.world.getBlockMetadata(event.x, event.y, event.z);
-                if (meta >= 7)
-                {
-                    clicked.dropBlockAsItem(event.world, event.x, event.y, event.z, meta, 0);
-                    event.world.setBlockMetadataWithNotify(event.x, event.y, event.z, 0, 2);
-                    event.useItem = Result.DENY;
-                }
+                if (meta == 3 || meta == 8)
+                    resultingMeta = meta == 3 ? 0 : 4;
+            }
+            else if (clicked instanceof BlockCrops && meta >= 7)
+            {
+                resultingMeta = 0;
+            }
+            
+            if (resultingMeta >= 0)
+            {
+                // BlockEvent.HarvestDropsEvent gets fired from within this function
+                // therefore, the drops will be modified by our onBlockHarvested method
+                clicked.dropBlockAsItem(event.world, event.x, event.y, event.z, meta, 0);
+                event.world.setBlockMetadataWithNotify(event.x, event.y, event.z, resultingMeta, 2);
+                event.useItem = Result.DENY;
             }
         }
     }
 
     @SubscribeEvent
-    public void onBonemealUsed(BonemealEvent event) //TODO Condense to stop recalculating things over and over again. And to make cleaner.
+    public void onBlockHarvested(BlockEvent.HarvestDropsEvent event)
     {
-        if (event.block instanceof BlockCrops)
+        if (Loader.isModLoaded("Natura") && event.block instanceof CropBlock)
         {
-            if (event.world.difficultySetting.getDifficultyId() < 3 || !IguanaConfig.difficultyScalingBoneMeal)
+            event.drops.clear();
+            if (event.blockMetadata == 3 || event.blockMetadata == 8)
             {
-                int r = 1;
-                if (event.world.difficultySetting.getDifficultyId() < 1 && !IguanaConfig.difficultyScalingBoneMeal)
-                    r = event.world.rand.nextInt(3);
-                int l = Math.min(event.world.getBlockMetadata(event.x, event.y, event.z) + r, 7);
-                event.world.setBlockMetadataWithNotify(event.x, event.y, event.z, l, 2);
-                event.setResult(Result.ALLOW);
+                int count = RandomHelper.getRandomIntFromRange(IguanaConfig.producePerHarvestMin, IguanaConfig.producePerHarvestMax);
+                for (int i = 0; i < count; i++)
+                {
+                    Item item = event.block.getItemDropped(event.blockMetadata, event.world.rand, 0);
+                    if (item != null)
+                        event.drops.add(new ItemStack(item, 1, event.block.damageDropped(event.blockMetadata)));
+                }
+            }
+            else
+            {
+                event.drops.add(BlockHelper.getSeedOfBlock(event.block, event.blockMetadata));
             }
         }
-        else if (event.block instanceof BlockStem)
+        else if (event.block instanceof BlockCrops)
         {
-            int l = event.world.getBlockMetadata(event.x, event.y, event.z) + 1;
-            if (l > 7)
-                l = 7;
-            event.world.setBlockMetadataWithNotify(event.x, event.y, event.z, l, 2);
-            event.setResult(Result.ALLOW);
-        }
-        else if (Loader.isModLoaded("Natura"))
-        {
-            if (event.block == NContent.crops)
+            event.drops.clear();
+            if (event.blockMetadata >= 7)
             {
-                if (event.world.difficultySetting.getDifficultyId() < 3 || !IguanaConfig.difficultyScalingBoneMeal)
-                {
-                    int meta = event.world.getBlockMetadata(event.x, event.y, event.z);
-                    if (meta != 3 && meta != 8)
-                    {
-                        if (meta < 3)
-                        {
-                            int output = Natura.random.nextInt(3) + 1 + meta;
-                            if (event.world.difficultySetting.getDifficultyId() == 2 && IguanaConfig.difficultyScalingBoneMeal)
-                                output = 1 + meta;
-                            if (output > 3)
-                                output = 3;
-                            event.world.setBlockMetadataWithNotify(event.x, event.y, event.z, output, 3);
-                            event.setResult(Result.ALLOW);
-                        }
-                        else
-                        {
-                            int output = Natura.random.nextInt(4) + 1 + meta;
-                            if (event.world.difficultySetting.getDifficultyId() == 2 && IguanaConfig.difficultyScalingBoneMeal)
-                                output = 1 + meta;
-                            if (output > 8)
-                                output = 8;
-                            event.world.setBlockMetadataWithNotify(event.x, event.y, event.z, output, 3);
-                            event.setResult(Result.ALLOW);
-                        }
-                    }
-                }
+                int produce = RandomHelper.getRandomIntFromRange(IguanaConfig.producePerHarvestMin, IguanaConfig.producePerHarvestMax);
+                if (produce > 0)
+                    event.drops.add(BlockHelper.getProduceOfBlock(event.block, event.blockMetadata, produce));
+
+                int seeds = RandomHelper.getRandomIntFromRange(IguanaConfig.seedsPerHarvestMin, IguanaConfig.seedsPerHarvestMax);
+                if (seeds > 0)
+                    event.drops.add(BlockHelper.getSeedsOfBlock(event.block, event.blockMetadata, seeds));
             }
-            else if (event.block == NContent.berryBush)
+            else
             {
-                if (event.world.difficultySetting.getDifficultyId() < 3 || !IguanaConfig.difficultyScalingBoneMeal)
-                {
-                    int meta = event.world.getBlockMetadata(event.x, event.y, event.z);
-
-                    if (meta / 4 < 2)
-                    {
-                        int setMeta = event.world.rand.nextInt(2) + 1 + meta / 4;
-                        if (setMeta > 2)
-                            setMeta = 2;
-                        if (event.world.difficultySetting.getDifficultyId() == 2 && IguanaConfig.difficultyScalingBoneMeal)
-                            setMeta = 1;
-                        event.world.setBlockMetadataWithNotify(event.x, event.y, event.z, meta % 4 + setMeta * 4, 4);
-                        event.setResult(Result.ALLOW);
-                    }
-
-                    Block block = event.world.getBlock(event.x, event.y + 1, event.z);
-                    if (block == null || block.isAir(event.world, event.x, event.y + 1, event.z))
-                    {
-                        if (event.world.rand.nextInt(3) == 0)
-                            event.world.setBlock(event.x, event.y + 1, event.z, event.block, meta % 4, 3);
-                        event.setResult(Result.ALLOW);
-                    }
-                }
-            }
-            else if (event.block == NContent.netherBerryBush)
-            {
-                if (event.world.difficultySetting.getDifficultyId() < 3 || !IguanaConfig.difficultyScalingBoneMeal)
-                {
-                    int meta = event.world.getBlockMetadata(event.x, event.y, event.z);
-                    if (meta / 4 < 2)
-                    {
-                        if (event.world.rand.nextBoolean())
-                        {
-                            int setMeta = event.world.rand.nextInt(2) + 1 + meta / 4;
-                            if (setMeta > 2)
-                                setMeta = 2;
-                            if (event.world.difficultySetting.getDifficultyId() == 2 && IguanaConfig.difficultyScalingBoneMeal)
-                                setMeta = 1;
-                            event.world.setBlockMetadataWithNotify(event.x, event.y, event.z, meta % 4 + setMeta * 4, 4);
-                        }
-                        event.setResult(Result.ALLOW);
-                    }
-
-                    Block block = event.world.getBlock(event.x, event.y + 1, event.z);
-                    if (block == null || block.isAir(event.world, event.x, event.y + 1, event.z))
-                    {
-                        if (event.world.rand.nextInt(6) == 0)
-                            event.world.setBlock(event.x, event.y + 1, event.z, event.block, meta % 4, 3);
-                        event.setResult(Result.ALLOW);
-                    }
-                }
+                event.drops.add(BlockHelper.getSeedOfBlock(event.block, event.blockMetadata));
             }
         }
     }
@@ -433,47 +368,37 @@ public class IguanaEventHook
     @SubscribeEvent
     public void renderTooltips(ItemTooltipEvent event)
     {
-        if (AppleCoreAPI.accessor.isFood(event.itemStack))
+        if (IguanaConfig.addFoodTooltips && AppleCoreAPI.accessor.isFood(event.itemStack))
         {
-            if (IguanaConfig.addFoodTooltips)
-            {
-                FoodValues values = FoodValues.get(event.itemStack);
-                int hungerFill = values.hunger;
-                float satiation = values.saturationModifier * 20 - hungerFill;
+            FoodValues values = FoodValues.get(event.itemStack);
+            int hungerFill = values.hunger;
+            float satiation = values.saturationModifier * 20 - hungerFill;
 
-                String mealDescriptor = "";
+            String mealDescriptor = "";
 
-                if (hungerFill <= 1)
-                    mealDescriptor = StatCollector.translateToLocal("hungeroverhaul.morsel");
-                else if (hungerFill <= 2)
-                    mealDescriptor = StatCollector.translateToLocal("hungeroverhaul.snack");
-                else if (hungerFill <= 5)
-                    mealDescriptor = StatCollector.translateToLocal("hungeroverhaul.lightmeal");
-                else if (hungerFill <= 8)
-                    mealDescriptor = StatCollector.translateToLocal("hungeroverhaul.meal");
-                else if (hungerFill <= 11)
-                    mealDescriptor = StatCollector.translateToLocal("hungeroverhaul.largemeal");
-                else
-                    mealDescriptor = StatCollector.translateToLocal("hungeroverhaul.feast");
+            if (hungerFill <= 1)
+                mealDescriptor = StatCollector.translateToLocal("hungeroverhaul.morsel");
+            else if (hungerFill <= 2)
+                mealDescriptor = StatCollector.translateToLocal("hungeroverhaul.snack");
+            else if (hungerFill <= 5)
+                mealDescriptor = StatCollector.translateToLocal("hungeroverhaul.lightmeal");
+            else if (hungerFill <= 8)
+                mealDescriptor = StatCollector.translateToLocal("hungeroverhaul.meal");
+            else if (hungerFill <= 11)
+                mealDescriptor = StatCollector.translateToLocal("hungeroverhaul.largemeal");
+            else
+                mealDescriptor = StatCollector.translateToLocal("hungeroverhaul.feast");
 
-                if (satiation >= 3.0F)
-                    mealDescriptor = StatCollector.translateToLocalFormatted(StatCollector.translateToLocal("hungeroverhaul.hearty"), mealDescriptor);
-                else if (satiation >= 2.0F)
-                    mealDescriptor = StatCollector.translateToLocalFormatted(StatCollector.translateToLocal("hungeroverhaul.wholesome"), mealDescriptor);
-                else if (satiation > 0.0F)
-                    mealDescriptor = StatCollector.translateToLocalFormatted(StatCollector.translateToLocal("hungeroverhaul.nourishing"), mealDescriptor);
-                else if (satiation < 0.0F)
-                    mealDescriptor = StatCollector.translateToLocalFormatted(StatCollector.translateToLocal("hungeroverhaul.unfulfilling"), mealDescriptor);
+            if (satiation >= 3.0F)
+                mealDescriptor = StatCollector.translateToLocalFormatted(StatCollector.translateToLocal("hungeroverhaul.hearty"), mealDescriptor);
+            else if (satiation >= 2.0F)
+                mealDescriptor = StatCollector.translateToLocalFormatted(StatCollector.translateToLocal("hungeroverhaul.wholesome"), mealDescriptor);
+            else if (satiation > 0.0F)
+                mealDescriptor = StatCollector.translateToLocalFormatted(StatCollector.translateToLocal("hungeroverhaul.nourishing"), mealDescriptor);
+            else if (satiation < 0.0F)
+                mealDescriptor = StatCollector.translateToLocalFormatted(StatCollector.translateToLocal("hungeroverhaul.unfulfilling"), mealDescriptor);
 
-                event.toolTip.add(mealDescriptor.substring(0, 1).toUpperCase() + mealDescriptor.substring(1));
-
-                if (event.showAdvancedItemTooltips)
-                {
-                    event.toolTip.add("Hunger: " + values.hunger + " Sat: " + values.saturationModifier + " (+" + new DecimalFormat("##.##").format(values.getSaturationIncrement()) + ")");
-                    FoodValues unmodifiedValues = FoodValues.getUnmodified(event.itemStack);
-                    event.toolTip.add("Unmodified hunger: " + unmodifiedValues.hunger + " Sat: " + unmodifiedValues.saturationModifier + " (+" + new DecimalFormat("##.##").format(unmodifiedValues.getSaturationIncrement()) + ")");
-                }
-            }
+            event.toolTip.add(mealDescriptor.substring(0, 1).toUpperCase() + mealDescriptor.substring(1));
         }
         else if (IguanaConfig.wrongBiomeRegrowthMultiplier > 1)
         {
@@ -490,47 +415,6 @@ public class IguanaEventHook
                     tooltip += biomeType.toString().substring(0, 1).toUpperCase() + biomeType.toString().substring(1).toLowerCase() + ", ";
                 event.toolTip.add(StatCollector.translateToLocal("hungeroverhaul.crop.grows.best.in"));
                 event.toolTip.add(tooltip.substring(0, tooltip.length() - 2));
-            }
-        }
-    }
-
-    @SubscribeEvent
-    public void onBlockHarvested(BlockEvent.HarvestDropsEvent event)
-    {
-        if (Loader.isModLoaded("Natura") && event.block instanceof CropBlock)
-        {
-            event.drops.clear();
-            if (event.blockMetadata == 3 || event.blockMetadata == 8)
-            {
-                int count = IguanaConfig.producePerHarvestMin + event.world.rand.nextInt(IguanaConfig.producePerHarvestMax - IguanaConfig.producePerHarvestMin);
-                for (int i = 0; i < count; i++)
-                {
-                    Item item = event.block.getItemDropped(event.blockMetadata, event.world.rand, 0);
-                    if (item != null)
-                        event.drops.add(new ItemStack(item, 1, event.block.damageDropped(event.blockMetadata)));
-                }
-            }
-            else
-            {
-                event.drops.add(new ItemStack(BlockHelper.getSeedDropps(event.block), 1, BlockHelper.getSeedMetadata(event.block, event.blockMetadata)));
-            }
-        }
-        else if (event.block instanceof BlockCrops)
-        {
-            event.drops.clear();
-            if (event.blockMetadata >= 7)
-            {
-                int produce = IguanaConfig.producePerHarvestMin + event.world.rand.nextInt(1 + IguanaConfig.producePerHarvestMax - IguanaConfig.producePerHarvestMin);
-                if (produce > 0)
-                    event.drops.add(new ItemStack(BlockHelper.getPlantDrops(event.block), produce, 0));
-
-                int seeds = IguanaConfig.seedsPerHarvestMin + event.world.rand.nextInt(1 + IguanaConfig.seedsPerHarvestMax - IguanaConfig.seedsPerHarvestMin);
-                if (seeds > 0)
-                    event.drops.add(new ItemStack(BlockHelper.getSeedDropps(event.block), seeds, 0));
-            }
-            else
-            {
-                event.drops.add(new ItemStack(BlockHelper.getSeedDropps(event.block), 1, 0));
             }
         }
     }

@@ -1,65 +1,58 @@
 package iguanaman.hungeroverhaul.util;
 
-import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.Item;
-
-import cpw.mods.fml.common.Loader;
+import mods.natura.blocks.crops.CropBlock;
 import mods.natura.common.NContent;
+import net.minecraft.block.Block;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import cpw.mods.fml.common.Loader;
 
 public class BlockHelper
 {
-
-    public static Item getSeedDropps(Block block)
+    public static ItemStack getSeedOfBlock(Block block, int meta)
     {
-        if (block == Blocks.wheat)
-        {
-            return Items.wheat_seeds;
-        }
-        else if (block == Blocks.potatoes)
-        {
-            return Items.potato;
-        }
-        else if (block == Blocks.carrots)
-        {
-            return Items.carrot;
-        }
-        else if (Loader.isModLoaded("Natura") && block == NContent.crops)
-        {
-            return NContent.plantItem;
-        }
-        return null;
+        return getSeedsOfBlock(block, meta, 1);
     }
 
-    public static Item getPlantDrops(Block block)
+    public static ItemStack getSeedsOfBlock(Block block, int meta, int num)
     {
-        if (block == Blocks.wheat)
-        {
-            return Items.wheat;
-        }
-        else if (Loader.isModLoaded("Natura") && block == NContent.crops)
-        {
-            return NContent.seeds;
-        }
-        else
-        {
-            return getSeedDropps(block);
-        }
+        return new ItemStack(getSeedItem(block, meta), num, getSeedMetadata(block, meta));
+    }
+
+    public static ItemStack getProduceOfBlock(Block block, int meta)
+    {
+        return getProduceOfBlock(block, meta, 1);
+    }
+
+    public static ItemStack getProduceOfBlock(Block block, int meta, int num)
+    {
+        return new ItemStack(getProduceItem(block, meta), num, getProduceMetadata(block, meta));
+    }
+
+    public static Item getSeedItem(Block block, int meta)
+    {
+        return block.getItemDropped(0, RandomHelper.random, 0);
+    }
+
+    public static Item getProduceItem(Block block, int meta)
+    {
+        return block.getItemDropped(meta, RandomHelper.random, 0);
+    }
+
+    public static int getProduceMetadata(Block block, int meta)
+    {
+        return block.damageDropped(meta);
     }
 
     public static int getSeedMetadata(Block block, int meta)
     {
         if (Loader.isModLoaded("Natura") && block == NContent.crops)
         {
-            if (meta < 4)
-                return 0;
-            else
-                return 1;
+            return ((CropBlock) block).seedDamageDropped(meta);
         }
         else
         {
-            return 0;
+            return block.damageDropped(0);
         }
     }
 }

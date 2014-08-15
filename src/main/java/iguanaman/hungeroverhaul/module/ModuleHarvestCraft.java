@@ -2,7 +2,10 @@ package iguanaman.hungeroverhaul.module;
 
 import iguanaman.hungeroverhaul.IguanaConfig;
 import iguanaman.hungeroverhaul.food.FoodModifier;
+import iguanaman.hungeroverhaul.util.BonemealModification;
 import iguanaman.hungeroverhaul.util.PlantGrowthModification;
+import net.minecraft.block.Block;
+import net.minecraft.world.World;
 import net.minecraftforge.common.BiomeDictionary.Type;
 import squeek.applecore.api.food.FoodValues;
 
@@ -533,6 +536,19 @@ public class ModuleHarvestCraft
                 .setNeedsSunlight(false)
                 .setGrowthTickProbability(IguanaConfig.treeCropRegrowthMultiplier);
         ModulePlantGrowth.registerPlantGrowthModifier(BlockPamFruit.class, fruitGrowthModification);
+
+        /*
+         * Bonemeal
+         */
+        BonemealModification fruitBonemealModification = new BonemealModification()
+        {
+            @Override
+            public int getNewMeta(World world, int x, int y, int z, Block block, int currentMeta)
+            {
+                return Math.min(currentMeta + 1, 2);
+            }
+        };
+        ModuleBonemeal.registerBonemealModifier(BlockPamFruit.class, fruitBonemealModification);
     }
 
     /*public static void registerAspects(Item item, AspectList aspects)

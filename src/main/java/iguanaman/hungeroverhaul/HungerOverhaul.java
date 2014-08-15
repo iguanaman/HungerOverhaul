@@ -66,6 +66,7 @@ public class HungerOverhaul
         MinecraftForge.EVENT_BUS.register(new FoodEventHandler());
         MinecraftForge.EVENT_BUS.register(new FoodModifier());
         MinecraftForge.EVENT_BUS.register(new ModulePlantGrowth());
+        MinecraftForge.EVENT_BUS.register(new ModuleBonemeal());
         ModuleVanilla.init();
         if(Loader.isModLoaded("harvestcraft"))
         {
