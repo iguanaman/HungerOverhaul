@@ -7,7 +7,7 @@ public class PotionWellFed extends Potion
 {
     public PotionWellFed()
     {
-        super(IguanaConfig.wellFedId, false, 0);
+        super(PotionUtils.getNextPotionID(), false, 0);
         setIconIndex(7, 0);
         setPotionName("potion.wellfedPotion");
     }

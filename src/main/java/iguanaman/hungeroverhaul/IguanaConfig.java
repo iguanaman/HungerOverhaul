@@ -96,9 +96,6 @@ public class IguanaConfig
     public static int healthRegenRatePercentage;
     public static int lowHealthRegenRateModifier;
 
-    // potion ids
-    public static int wellFedId;
-
     public static void init(File file)
     {
 
@@ -411,14 +408,6 @@ public class IguanaConfig
         addLowStatMiningSlowdownProperty.comment = "Mining slowdown effect when health/hunger is low ('addLowStatEffects' must be true)";
         addLowStatMiningSlowdown = addLowStatMiningSlowdownProperty.getBoolean(true);
 
-        // potion ids
-        ConfigCategory modifiersCategory = config.getCategory("potion ids");
-        modifiersCategory.setComment("Here you can change various multipiers and cutoff values");
-
-        Property wellFedIdProperty = config.get("potion ids", "wellFedID", 30);
-        wellFedIdProperty.comment = "Potion ID for the 'Well Fed' effect (maximum 31)";
-        wellFedId = wellFedIdProperty.getInt(30);
-
         config.getCategory("health");
 
         Property foodRegensHealthProperty = config.get("health", "foodRegensHealth", false);
@@ -448,5 +437,4 @@ public class IguanaConfig
         if (config.hasChanged())
             config.save();
     }
-
 }
