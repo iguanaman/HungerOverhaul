@@ -1,12 +1,20 @@
 package iguanaman.hungeroverhaul.module;
 
+import java.lang.reflect.Field;
 import java.util.HashMap;
 
 import com.google.common.collect.Maps;
+
 import net.minecraft.block.Block;
+import net.minecraft.block.material.Material;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
 
 import com.pam.harvestcraft.BlockRegistry;
+import com.pam.harvestcraft.ItemPamSeedFood;
+import com.pam.harvestcraft.ItemRegistry;
 import com.pam.weeeflowers.weeeflowers;
 
 import cpw.mods.fml.common.Loader;
@@ -16,6 +24,7 @@ public class PamsModsHelper {
 	public static Block[] PamCrops;
 	public static Block[] PamFlowerCrops;
 	public static Item[] PamFlowerSeeds;
+	private static Field itemPamSeedFoodSoilBlock = null;
 	
 	public static HashMap<Block, Integer> crops = Maps.newHashMap();
 
@@ -91,6 +100,16 @@ public class PamsModsHelper {
 			crops.put(BlockRegistry.pamwintersquashCrop, 53);
 			crops.put(BlockRegistry.pamzucchiniCrop, 54);
 			crops.put(BlockRegistry.pambambooshootCrop, 55);
+
+            try
+            {
+                itemPamSeedFoodSoilBlock = ItemPamSeedFood.class.getDeclaredField("soilId");
+                itemPamSeedFoodSoilBlock.setAccessible(true);
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
 		}
 	}
 
@@ -109,4 +128,31 @@ public class PamsModsHelper {
 			};
 		}
 	}
+
+    // mimics the logic in ItemPamSeedFood.onItemUse
+    public static boolean canPlantSeedFoodAt(EntityPlayer player, ItemStack itemStack, World world, int x, int y, int z, int side)
+    {
+        if (!player.canPlayerEdit(x, y, z, side, itemStack) || !player.canPlayerEdit(x, y + 1, z, side, itemStack))
+            return false;
+
+        try
+        {
+            Block requiredSoil = (Block) itemPamSeedFoodSoilBlock.get(itemStack.getItem());
+            Block soilBlock = world.getBlock(x,y,z);
+            Block aboveBlock = world.getBlock(x,y + 1,z);
+            if (soilBlock == requiredSoil && aboveBlock.isAir(world, x, y + 1, z))
+            {
+                return true;
+            }
+            else if (itemStack.getItem() == ItemRegistry.cranberryItem || itemStack.getItem() == ItemRegistry.riceItem || itemStack.getItem() == ItemRegistry.seaweedItem)
+            {
+                return aboveBlock.getMaterial() == Material.water && world.getBlockMetadata(x, y + 1, z) == 0;
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

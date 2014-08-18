@@ -3,6 +3,7 @@ package iguanaman.hungeroverhaul.util;
 import iguanaman.hungeroverhaul.IguanaConfig;
 import iguanaman.hungeroverhaul.module.ModuleGrassSeeds;
 import iguanaman.hungeroverhaul.module.ModulePlantGrowth;
+import iguanaman.hungeroverhaul.module.PamsModsHelper;
 
 import java.util.Random;
 
@@ -305,7 +306,26 @@ public class IguanaEventHook
         // unplantable harvestcraft foods
         if (IguanaConfig.foodsUnplantable && event.entityPlayer.getHeldItem() != null && event.entityPlayer.getHeldItem().getItem() instanceof ItemPamSeedFood)
         {
-            event.useItem = Result.DENY;
+            if (event.world.isRemote)
+            {
+                // hacky workaround:
+                // we need to make the client aware that this is disallowed,
+                // but the client will ignore event.useItem = Result.DENY, and
+                // setCanceled will stop the packet from getting sent to the server,
+                // so we have to manually detect whether or not we are trying to
+                // plant the food and only cancel it then, otherwise you won't be
+                // able to activate any blocks with an ItemPamSeedFood in your hand
+                //
+                // note: the packet is being sent with a 0,0,0 hit position
+                // because the event doesn't provide the Vec3; if that causes problems,
+                // we'll need to recalculate the MOP or something
+                if (PamsModsHelper.canPlantSeedFoodAt(event.entityPlayer, event.entityPlayer.getHeldItem(), event.world, event.x, event.y, event.z, event.face))
+                {
+                    event.setCanceled(true);
+                }
+            }
+            else
+                event.useItem = Result.DENY;
             return;
         }
 
