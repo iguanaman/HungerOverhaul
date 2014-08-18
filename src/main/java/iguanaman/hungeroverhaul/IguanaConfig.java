@@ -70,6 +70,7 @@ public class IguanaConfig
     public static boolean addTradesFarmer;
     public static boolean addHarvestCraftChestLoot;
     public static int chestLootChance;
+    public static boolean foodsUnplantable;
 
     // hunger
     public static boolean addSleepHungerLoss;
@@ -341,6 +342,10 @@ public class IguanaConfig
         chestLootChanceProperty.comment = "Weighted chance for food to be found in chests (addHarvestCraftChestLoot must be true)";
         chestLootChance = Math.max(chestLootChanceProperty.getInt(5), 1);
         chestLootChanceProperty.set(chestLootChance);
+
+        Property foodsUnplantableProperty = config.get("harvestcraft", "foodsUnplantable", true);
+        addHarvestCraftChestLootProperty.comment = "Makes HarvestCraft foods unplantable, meaning seeds are required to plant crops";
+        foodsUnplantable = foodsUnplantableProperty.getBoolean(true);
 
         // Hunger
         config.getCategory("hunger");

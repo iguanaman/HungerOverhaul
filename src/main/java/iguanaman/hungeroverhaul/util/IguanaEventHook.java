@@ -6,6 +6,8 @@ import iguanaman.hungeroverhaul.module.ModulePlantGrowth;
 
 import java.util.Random;
 
+import com.pam.harvestcraft.ItemPamSeedFood;
+
 import mods.natura.blocks.crops.CropBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockCrops;
@@ -297,30 +299,38 @@ public class IguanaEventHook
     @SubscribeEvent
     public void onPlayerInteraction(PlayerInteractEvent event)
     {
-        if (event.action == PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK)
+        if (event.action != PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK)
+            return;
+
+        // unplantable harvestcraft foods
+        if (IguanaConfig.foodsUnplantable && event.entityPlayer.getHeldItem() != null && event.entityPlayer.getHeldItem().getItem() instanceof ItemPamSeedFood)
         {
-            Block clicked = event.world.getBlock(event.x, event.y, event.z);
-            int meta = event.world.getBlockMetadata(event.x, event.y, event.z);
-            int resultingMeta = -1;
-            
-            if (Loader.isModLoaded("Natura") && clicked instanceof CropBlock)
-            {
-                if (meta == 3 || meta == 8)
-                    resultingMeta = meta == 3 ? 0 : 4;
-            }
-            else if (clicked instanceof BlockCrops && meta >= 7)
-            {
-                resultingMeta = 0;
-            }
-            
-            if (resultingMeta >= 0)
-            {
-                // BlockEvent.HarvestDropsEvent gets fired from within this function
-                // therefore, the drops will be modified by our onBlockHarvested method
-                clicked.dropBlockAsItem(event.world, event.x, event.y, event.z, meta, 0);
-                event.world.setBlockMetadataWithNotify(event.x, event.y, event.z, resultingMeta, 2);
-                event.useItem = Result.DENY;
-            }
+            event.useItem = Result.DENY;
+            return;
+        }
+
+        // right-click to harvest
+        Block clicked = event.world.getBlock(event.x, event.y, event.z);
+        int meta = event.world.getBlockMetadata(event.x, event.y, event.z);
+        int resultingMeta = -1;
+
+        if (Loader.isModLoaded("Natura") && clicked instanceof CropBlock)
+        {
+            if (meta == 3 || meta == 8)
+                resultingMeta = meta == 3 ? 0 : 4;
+        }
+        else if (clicked instanceof BlockCrops && meta >= 7)
+        {
+            resultingMeta = 0;
+        }
+
+        if (resultingMeta >= 0)
+        {
+            // BlockEvent.HarvestDropsEvent gets fired from within this function
+            // therefore, the drops will be modified by our onBlockHarvested method
+            clicked.dropBlockAsItem(event.world, event.x, event.y, event.z, meta, 0);
+            event.world.setBlockMetadataWithNotify(event.x, event.y, event.z, resultingMeta, 2);
+            event.useItem = Result.DENY;
         }
     }
 

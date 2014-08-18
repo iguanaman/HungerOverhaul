@@ -53,6 +53,7 @@ Incomplete list of things that need to be done. Will be added to/edited as thing
  - [x] Vanilla crops
  - [x] Natura crops
  - [x] HarvestCraft crops
+- [x] Unplantable HarvestCraft foods (requires the seed to plant)
 
 #### All seeds
 - [x] Add 'crop grows best in' tooltips
