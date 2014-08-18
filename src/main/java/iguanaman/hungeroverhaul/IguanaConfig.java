@@ -344,7 +344,7 @@ public class IguanaConfig
         chestLootChanceProperty.set(chestLootChance);
 
         Property foodsUnplantableProperty = config.get("harvestcraft", "foodsUnplantable", true);
-        addHarvestCraftChestLootProperty.comment = "Makes HarvestCraft foods unplantable, meaning seeds are required to plant crops";
+        foodsUnplantableProperty.comment = "Makes HarvestCraft foods unplantable, meaning seeds are required to plant crops";
         foodsUnplantable = foodsUnplantableProperty.getBoolean(true);
 
         // Hunger
