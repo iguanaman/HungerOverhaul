@@ -8,6 +8,7 @@ import com.google.common.collect.Maps;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
@@ -27,6 +28,8 @@ public class PamsModsHelper {
 	private static Field itemPamSeedFoodSoilBlock = null;
 	
 	public static HashMap<Block, Integer> crops = Maps.newHashMap();
+    public static HashMap<Item, Block> fruitItemToBlockMap = new HashMap<Item, Block>();
+    public static HashMap<Block, Block> saplingToFruitBlockMap = new HashMap<Block, Block>();
 
 	public static void loadHC() {
 		if(Loader.isModLoaded("harvestcraft")) {
@@ -101,6 +104,42 @@ public class PamsModsHelper {
 			crops.put(BlockRegistry.pamzucchiniCrop, 54);
 			crops.put(BlockRegistry.pambambooshootCrop, 55);
 
+			mapFruit(BlockRegistry.pamappleSapling, Items.apple, BlockRegistry.pamApple);
+			mapFruit(BlockRegistry.pamalmondSapling, ItemRegistry.almondItem, BlockRegistry.pamAlmond);
+			mapFruit(BlockRegistry.pamapricotSapling, ItemRegistry.apricotItem, BlockRegistry.pamApricot);
+			mapFruit(BlockRegistry.pamavocadoSapling, ItemRegistry.avocadoItem, BlockRegistry.pamAvocado);
+			mapFruit(BlockRegistry.pambananaSapling, ItemRegistry.bananaItem, BlockRegistry.pamBanana);
+			mapFruit(BlockRegistry.pamcashewSapling, ItemRegistry.cashewItem, BlockRegistry.pamCashew);
+			mapFruit(BlockRegistry.pamcherrySapling, ItemRegistry.cherryItem, BlockRegistry.pamCherry);
+			mapFruit(BlockRegistry.pamchestnutSapling, ItemRegistry.chestnutItem, BlockRegistry.pamChestnut);
+			mapFruit(BlockRegistry.pamcinnamonSapling, ItemRegistry.cinnamonItem, BlockRegistry.pamCinnamon);
+			mapFruit(BlockRegistry.pamcoconutSapling, ItemRegistry.coconutItem, BlockRegistry.pamCoconut);
+			mapFruit(BlockRegistry.pamdateSapling, ItemRegistry.dateItem, BlockRegistry.pamDate);
+			mapFruit(BlockRegistry.pamdragonfruitSapling, ItemRegistry.dragonfruitItem, BlockRegistry.pamDragonfruit);
+			mapFruit(BlockRegistry.pamdurianSapling, ItemRegistry.durianItem, BlockRegistry.pamDurian);
+			mapFruit(BlockRegistry.pamfigSapling, ItemRegistry.figItem, BlockRegistry.pamFig);
+			mapFruit(BlockRegistry.pamgrapefruitSapling, ItemRegistry.grapefruitItem, BlockRegistry.pamGrapefruit);
+			mapFruit(BlockRegistry.pamlemonSapling, ItemRegistry.lemonItem, BlockRegistry.pamLemon);
+			mapFruit(BlockRegistry.pamlimeSapling, ItemRegistry.limeItem, BlockRegistry.pamLime);
+			mapFruit(BlockRegistry.pammapleSapling, ItemRegistry.maplesyrupItem, BlockRegistry.pamMaple);
+			mapFruit(BlockRegistry.pammangoSapling, ItemRegistry.mangoItem, BlockRegistry.pamMango);
+			mapFruit(BlockRegistry.pamnutmegSapling, ItemRegistry.nutmegItem, BlockRegistry.pamNutmeg);
+			mapFruit(BlockRegistry.pamoliveSapling, ItemRegistry.oliveItem, BlockRegistry.pamOlive);
+			mapFruit(BlockRegistry.pamorangeSapling, ItemRegistry.orangeItem, BlockRegistry.pamOrange);
+			mapFruit(BlockRegistry.pampapayaSapling, ItemRegistry.papayaItem, BlockRegistry.pamPapaya);
+			mapFruit(BlockRegistry.pampaperbarkSapling, Items.paper, BlockRegistry.pamPaperbark);
+			mapFruit(BlockRegistry.pampeachSapling, ItemRegistry.peachItem, BlockRegistry.pamPeach);
+			mapFruit(BlockRegistry.pampearSapling, ItemRegistry.pearItem, BlockRegistry.pamPear);
+			mapFruit(BlockRegistry.pampecanSapling, ItemRegistry.pecanItem, BlockRegistry.pamPecan);
+			mapFruit(BlockRegistry.pampeppercornSapling, ItemRegistry.peppercornItem, BlockRegistry.pamPeppercorn);
+			mapFruit(BlockRegistry.pampersimmonSapling, ItemRegistry.persimmonItem, BlockRegistry.pamPersimmon);
+			mapFruit(BlockRegistry.pampistachioSapling, ItemRegistry.pistachioItem, BlockRegistry.pamPistachio);
+			mapFruit(BlockRegistry.pamplumSapling, ItemRegistry.plumItem, BlockRegistry.pamPlum);
+			mapFruit(BlockRegistry.pampomegranateSapling, ItemRegistry.pomegranateItem, BlockRegistry.pamPomegranate);
+			mapFruit(BlockRegistry.pamstarfruitSapling, ItemRegistry.starfruitItem, BlockRegistry.pamStarfruit);
+			mapFruit(BlockRegistry.pamvanillabeanSapling, ItemRegistry.vanillabeanItem, BlockRegistry.pamVanillabean);
+			mapFruit(BlockRegistry.pamwalnutSapling, ItemRegistry.walnutItem, BlockRegistry.pamWalnut);
+
             try
             {
                 itemPamSeedFoodSoilBlock = ItemPamSeedFood.class.getDeclaredField("soilId");
@@ -128,6 +167,12 @@ public class PamsModsHelper {
 			};
 		}
 	}
+
+    public static void mapFruit(Block blockSapling, Item fruitItem, Block fruitBlock)
+    {
+        fruitItemToBlockMap.put(fruitItem, fruitBlock);
+        saplingToFruitBlockMap.put(blockSapling, fruitBlock);
+    }
 
     // mimics the logic in ItemPamSeedFood.onItemUse
     public static boolean canPlantSeedFoodAt(EntityPlayer player, ItemStack itemStack, World world, int x, int y, int z, int side)

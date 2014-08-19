@@ -46,7 +46,7 @@ public class ModulePlantGrowth
         {
             for (Map.Entry<Class<? extends Block>, PlantGrowthModification> entry : plantGrowthModificationsByBlockClass.entrySet())
             {
-                if (entry.getKey().isInstance(blockClass))
+                if (entry.getKey().isAssignableFrom(blockClass))
                     return entry.getValue();
             }
         }

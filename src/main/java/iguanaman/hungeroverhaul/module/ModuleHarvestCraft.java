@@ -506,9 +506,59 @@ public class ModuleHarvestCraft
         }*/
 
         // SAPLING GROWTH
-        PlantGrowthModification saplingGrowthModification = new PlantGrowthModification()
+        PlantGrowthModification genericSaplingGrowthModification = new PlantGrowthModification()
                 .setGrowthTickProbability(IguanaConfig.saplingRegrowthMultiplier);
-        ModulePlantGrowth.registerPlantGrowthModifier(BlockPamSapling.class, saplingGrowthModification);
+        ModulePlantGrowth.registerPlantGrowthModifier(BlockPamSapling.class, genericSaplingGrowthModification);
+
+        PlantGrowthModification temperateSaplingGrowthModification = new PlantGrowthModification()
+                .setGrowthTickProbability(IguanaConfig.saplingRegrowthMultiplier)
+                .setBiomeGrowthModifier(Type.FOREST, 1)
+                .setBiomeGrowthModifier(Type.PLAINS, 1);
+        for (Block temperateSapling : BlockRegistry.PamTemperateSaplings)
+        {
+            ModulePlantGrowth.registerPlantGrowthModifier(temperateSapling, temperateSaplingGrowthModification);
+        }
+        ModulePlantGrowth.registerPlantGrowthModifier(BlockRegistry.pammapleSapling, temperateSaplingGrowthModification);
+
+        PlantGrowthModification warmSaplingGrowthModification = new PlantGrowthModification()
+                .setGrowthTickProbability(IguanaConfig.saplingRegrowthMultiplier)
+                .setBiomeGrowthModifier(Type.JUNGLE, 1)
+                .setBiomeGrowthModifier(Type.SWAMP, 1);
+        for (Block warmSapling : BlockRegistry.PamWarmSaplings)
+        {
+            ModulePlantGrowth.registerPlantGrowthModifier(warmSapling, warmSaplingGrowthModification);
+        }
+        ModulePlantGrowth.registerPlantGrowthModifier(BlockRegistry.pamcinnamonSapling, warmSaplingGrowthModification);
+
+        // FRUIT GROWTH
+        PlantGrowthModification genericFruitGrowthModification = new PlantGrowthModification()
+                .setNeedsSunlight(false)
+                .setGrowthTickProbability(IguanaConfig.treeCropRegrowthMultiplier);
+        ModulePlantGrowth.registerPlantGrowthModifier(BlockPamFruit.class, genericFruitGrowthModification);
+
+        PlantGrowthModification temperateFruitGrowthModification = new PlantGrowthModification()
+                .setNeedsSunlight(false)
+                .setGrowthTickProbability(IguanaConfig.treeCropRegrowthMultiplier)
+                .setBiomeGrowthModifier(Type.FOREST, 1)
+                .setBiomeGrowthModifier(Type.PLAINS, 1);
+        for (Block temperateSapling : BlockRegistry.PamTemperateSaplings)
+        {
+            Block fruitBlock = PamsModsHelper.saplingToFruitBlockMap.get(temperateSapling);
+            ModulePlantGrowth.registerPlantGrowthModifier(fruitBlock, temperateFruitGrowthModification);
+        }
+        ModulePlantGrowth.registerPlantGrowthModifier(BlockRegistry.pamMaple, temperateSaplingGrowthModification);
+
+        PlantGrowthModification warmFruitGrowthModification = new PlantGrowthModification()
+                .setNeedsSunlight(false)
+                .setGrowthTickProbability(IguanaConfig.treeCropRegrowthMultiplier)
+                .setBiomeGrowthModifier(Type.JUNGLE, 1)
+                .setBiomeGrowthModifier(Type.SWAMP, 1);
+        for (Block warmSapling : BlockRegistry.PamWarmSaplings)
+        {
+            Block fruitBlock = PamsModsHelper.saplingToFruitBlockMap.get(warmSapling);
+            ModulePlantGrowth.registerPlantGrowthModifier(fruitBlock, warmFruitGrowthModification);
+        }
+        ModulePlantGrowth.registerPlantGrowthModifier(BlockRegistry.pamCinnamon, warmFruitGrowthModification);
 
         // CROP GROWTH
         // only need to register the exceptions here,
@@ -529,13 +579,6 @@ public class ModuleHarvestCraft
                 .setGrowthTickProbability(IguanaConfig.cropRegrowthMultiplier)
                 .setBiomeGrowthModifier(Type.SANDY, 1);
         ModulePlantGrowth.registerPlantGrowthModifier(BlockRegistry.pamcactusfruitCrop, desertCropGrowthModification);
-
-        // FRUIT GROWTH
-        // TODO: figure out if Jungle/Swamp being set as the correct biome for all fruit was intentional
-        PlantGrowthModification fruitGrowthModification = new PlantGrowthModification()
-                .setNeedsSunlight(false)
-                .setGrowthTickProbability(IguanaConfig.treeCropRegrowthMultiplier);
-        ModulePlantGrowth.registerPlantGrowthModifier(BlockPamFruit.class, fruitGrowthModification);
 
         /*
          * Bonemeal

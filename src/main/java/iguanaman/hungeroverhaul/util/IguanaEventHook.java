@@ -23,6 +23,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemBucket;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -426,12 +427,24 @@ public class IguanaEventHook
 
             event.toolTip.add(mealDescriptor.substring(0, 1).toUpperCase() + mealDescriptor.substring(1));
         }
-        else if (IguanaConfig.wrongBiomeRegrowthMultiplier > 1)
+        if (IguanaConfig.wrongBiomeRegrowthMultiplier > 1)
         {
             PlantGrowthModification growthModification = null;
             if (event.itemStack.getItem() instanceof IPlantable)
             {
                 growthModification = ModulePlantGrowth.getPlantGrowthModification(((IPlantable) event.itemStack.getItem()).getPlant(null, 0, 0, 0));
+            }
+            else if (event.itemStack.getItem() instanceof ItemBlock)
+            {
+                Block block = Block.getBlockFromItem(event.itemStack.getItem());
+                if (block != null)
+                    growthModification = ModulePlantGrowth.getPlantGrowthModification(block);
+            }
+            else
+            {
+                Block block = PamsModsHelper.fruitItemToBlockMap.get(event.itemStack.getItem());
+                if (block != null)
+                    growthModification = ModulePlantGrowth.getPlantGrowthModification(block);
             }
 
             if (growthModification != null && !growthModification.biomeGrowthModifiers.isEmpty())
