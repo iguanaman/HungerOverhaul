@@ -30,12 +30,13 @@ public class ModuleNatura
         /*
          * Food values
          */
-        //TODO Figure out how iguana_man calculated the FoodValues
         if (IguanaConfig.modifyFoodValues)
         {
             for (int i = 0; i < 4; i++)
-                FoodModifier.setModifiedFoodValues(new ItemStack(NContent.berryItem, 1, i), new FoodValues(0, 0F));
-            FoodModifier.setModifiedFoodValues(NContent.berryMedley, new FoodValues(0, 0F));
+                FoodModifier.setModifiedFoodValues(new ItemStack(NContent.berryItem, 1, i), new FoodValues(1, 0.1F));
+            for (int i = 0; i < 4; i++)
+                FoodModifier.setModifiedFoodValues(new ItemStack(NContent.netherBerryItem, 1, i), new FoodValues(1, 0.1F));
+            FoodModifier.setModifiedFoodValues(NContent.berryMedley, new FoodValues(3, 0.15F));
         }
 
         /*
