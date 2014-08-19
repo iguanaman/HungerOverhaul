@@ -27,7 +27,7 @@ Incomplete list of things that need to be done. Will be added to/edited as thing
 - [x] Configurable hunger on respawn
 
 #### From Block* Classes
-- [ ] Plant growth modifications
+- [x] Plant growth modifications
  - [x] Vanilla
   - [x] Crops
   - [x] Stems
