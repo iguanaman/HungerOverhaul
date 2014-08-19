@@ -34,10 +34,10 @@ Incomplete list of things that need to be done. Will be added to/edited as thing
   - [x] Cocoa
   - [x] Reed
   - [x] Nether Wart
- - [ ] HarvestCraft
+ - [x] HarvestCraft
   - [x] Crops
-  - [ ] Saplings (unclear which biome should be set)
-  - [ ] Fruit (unclear if the Jungle/Swamp biome check in IguanaFruit was intentional)
+  - [x] Saplings
+  - [x] Fruit
  - [x] Pam's Weeeee Flowers!
   - [x] Flowers
  - [x] Natura
