@@ -1,6 +1,7 @@
 package iguanaman.hungeroverhaul;
 
 import cpw.mods.fml.common.registry.VillagerRegistry;
+import iguanaman.hungeroverhaul.json.JsonModule;
 import iguanaman.hungeroverhaul.module.*;
 import iguanaman.hungeroverhaul.util.VillageHandlerCustomField;
 import net.minecraft.world.gen.structure.MapGenStructureIO;
@@ -32,6 +33,9 @@ import iguanaman.hungeroverhaul.util.IguanaEventHook;
 import iguanaman.hungeroverhaul.util.RecipeRemover;
 import iguanaman.hungeroverhaul.util.StackSizeTweaks;
 
+import java.io.File;
+import java.util.Date;
+
 @Mod(modid = "HungerOverhaul", name = "Hunger Overhaul", version = "${version}", dependencies = "required-after:HO-Core;required-after:AppleCore;after:TConstruct;after:harvestcraft;after:temperateplants;after:randomplants;after:weeeflowers;after:Natura")
 public class HungerOverhaul
 {
@@ -42,12 +46,11 @@ public class HungerOverhaul
     public static HungerOverhaul instance;
 
     public static Potion potionWellFed;
-
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
         IguanaConfig.init(event.getSuggestedConfigurationFile());
-
+        JsonModule.preinit(event.getModConfigurationDirectory());
         potionWellFed = new PotionWellFed();
 
         if (IguanaConfig.removeHoeRecipes)
@@ -55,6 +58,7 @@ public class HungerOverhaul
             RecipeRemover.removeAnyRecipe(new ItemStack(Items.wooden_hoe));
             RecipeRemover.removeAnyRecipe(new ItemStack(Items.stone_hoe));
         }
+
     }
 
     @EventHandler
@@ -88,7 +92,7 @@ public class HungerOverhaul
             ModuleNatura.init();
         if (Loader.isModLoaded("BiomesOPlenty"))
             ModuleBOP.init();
-
+        JsonModule.init();
         if (IguanaConfig.addCustomVillageField && IguanaConfig.fieldNormalWeight + IguanaConfig.fieldReedWeight + IguanaConfig.fieldStemWeight > 0)
         {
             MapGenStructureIO.func_143031_a(ComponentVillageCustomField.class, "IguanaField");
