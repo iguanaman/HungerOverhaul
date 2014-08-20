@@ -8,6 +8,6 @@ public class RandomHelper
     
     public static int getRandomIntFromRange(int min, int max)
     {
-        return min + (max > min ? random.nextInt(max - min) : 0);
+        return min + (max > min ? random.nextInt(1 + max - min) : 0);
     }
 }
