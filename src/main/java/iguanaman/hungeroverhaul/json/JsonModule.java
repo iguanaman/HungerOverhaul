@@ -22,7 +22,7 @@ public class JsonModule {
         File hoFolder = new File(configFolder, "HungerOverhaul");
         if(!hoFolder.exists())
             hoFolder.mkdirs();
-        hoFolder.listFiles();
+        hojsons = hoFolder.listFiles();
     }
     public static void init() {
         HungerOverhaul.Log.info("Loading JSON Files");
