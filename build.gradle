@@ -114,8 +114,7 @@ processResources
 // Add Coremod Manifest
 jar {
     manifest {
-        attributes 'FMLCorePlugin': 'iguanaman.hungeroverhaul.core.HOLoaderContainer'
-        attributes 'FMLCorePluginContainsFMLMod': 'true'
+        attributes 'FMLAT': 'HungerOverhaul_at.cfg'
     }
 }
 
@@ -124,8 +123,7 @@ task deobfJar(type: Jar) {
     from sourceSets.main.output
     classifier = 'deobf'
 	manifest {
-        attributes 'FMLCorePlugin': 'iguanaman.hungeroverhaul.core.HOLoaderContainer'
-        attributes 'FMLCorePluginContainsFMLMod': 'true'
+        attributes 'FMLAT': 'HungerOverhaul_at.cfg'
     }
 }
 
