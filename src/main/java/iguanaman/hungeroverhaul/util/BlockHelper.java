@@ -1,5 +1,9 @@
 package iguanaman.hungeroverhaul.util;
 
+import iguanaman.hungeroverhaul.module.PamsModsHelper;
+
+import com.pam.harvestcraft.BlockPamCrop;
+
 import mods.natura.blocks.crops.CropBlock;
 import mods.natura.common.NContent;
 import net.minecraft.block.Block;
@@ -31,7 +35,14 @@ public class BlockHelper
 
     public static Item getSeedItem(Block block, int meta)
     {
-        return block.getItemDropped(0, RandomHelper.random, 0);
+        Item itemDropped = block.getItemDropped(0, RandomHelper.random, 0);
+        if (block instanceof BlockPamCrop)
+        {
+            Item seedForProduct = PamsModsHelper.productToSeedMap.get(itemDropped);
+            if (seedForProduct != null)
+                return seedForProduct;
+        }
+        return itemDropped;
     }
 
     public static Item getProduceItem(Block block, int meta)

@@ -30,6 +30,7 @@ public class PamsModsHelper
     public static HashMap<Block, Integer> crops = Maps.newHashMap();
     public static HashMap<Item, Block> fruitItemToBlockMap = new HashMap<Item, Block>();
     public static HashMap<Block, Block> saplingToFruitBlockMap = new HashMap<Block, Block>();
+    public static HashMap<Item, Item> productToSeedMap = new HashMap<Item, Item>();
 
     public static void loadHC()
     {
@@ -141,6 +142,13 @@ public class PamsModsHelper
             mapFruit(BlockRegistry.pamstarfruitSapling, ItemRegistry.starfruitItem, BlockRegistry.pamStarfruit);
             mapFruit(BlockRegistry.pamvanillabeanSapling, ItemRegistry.vanillabeanItem, BlockRegistry.pamVanillabean);
             mapFruit(BlockRegistry.pamwalnutSapling, ItemRegistry.walnutItem, BlockRegistry.pamWalnut);
+
+            for (int i=0; i < ItemRegistry.PamSeeds.length && i < ItemRegistry.PamCropItems.length; i++)
+            {
+                Item seed = ItemRegistry.PamSeeds[i];
+                Item product = ItemRegistry.PamCropItems[i];
+                productToSeedMap.put(product, seed);
+            }
 
             try
             {
