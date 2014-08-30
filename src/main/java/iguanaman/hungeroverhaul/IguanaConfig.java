@@ -125,7 +125,7 @@ public class IguanaConfig
         seedChanceProperty.set(seedChance);
 
         Property hoeToolDamageMultiplierProperty = config.get("getting seeds", "hoeToolDamageMultiplier", 5);
-        hoeToolDamageMultiplierProperty.comment = "Multiplier on tool damage taken when a hoe is used";
+        hoeToolDamageMultiplierProperty.comment = "Multiplier on tool damage taken when a hoe is used ('modifyHoeUse' must be true)";
         hoeToolDamageMultiplier = Math.max(hoeToolDamageMultiplierProperty.getInt(5), 1);
         hoeToolDamageMultiplierProperty.set(hoeToolDamageMultiplier);
 
