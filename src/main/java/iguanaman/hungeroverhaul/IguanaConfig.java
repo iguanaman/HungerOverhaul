@@ -239,7 +239,7 @@ public class IguanaConfig
         config.getCategory("custom field");
 
         Property addCustomVillageFieldProperty = config.get("custom field", "addCustomVillageField", true);
-        addCustomVillageFieldProperty.comment = "Adds a custom field to villages (possibly causes crashes, use at own risk)";
+        addCustomVillageFieldProperty.comment = "Adds a custom field to villages";
         addCustomVillageField = addCustomVillageFieldProperty.getBoolean(true);
 
         Property fieldNormalWeightProperty = config.get("custom field", "fieldNormalWeight", 70);
