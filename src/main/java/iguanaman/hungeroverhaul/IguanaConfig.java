@@ -67,6 +67,7 @@ public class IguanaConfig
     // harvestcraft integration
     public static boolean addTradesButcher;
     public static boolean addTradesFarmer;
+    public static boolean addSaplingTradesFarmer;
     public static boolean addHarvestCraftChestLoot;
     public static int chestLootChance;
     public static boolean foodsUnplantable;
@@ -324,9 +325,13 @@ public class IguanaConfig
         addTradesButcherProperty.comment = "Add high tier HarvestCraft foods to the items butcher villagers will sell (HarvestCraft)";
         addTradesButcher = addTradesButcherProperty.getBoolean(true);
 
-        Property addTradesFarmerProperty = config.get("harvestcraft", "addTradesFarmer", true);
+        Property addTradesFarmerProperty = config.get("harvestcraft", "addCropTradesFarmer", true);
         addTradesFarmerProperty.comment = "Add HarvestCraft crop produce to the items farmer villagers will buy (HarvestCraft)";
         addTradesFarmer = addTradesFarmerProperty.getBoolean(true);
+
+        Property addSaplingTradesFarmerProperty = config.get("harvestcraft", "addSaplingTradesFarmer", true);
+        addSaplingTradesFarmerProperty.comment = "Add HarvestCraft saplings to the items farmer villagers will sell (HarvestCraft)";
+        addSaplingTradesFarmer = addSaplingTradesFarmerProperty.getBoolean(true);
 
         Property addHarvestCraftChestLootProperty = config.get("harvestcraft", "addHarvestCraftChestLoot", true);
         addHarvestCraftChestLootProperty.comment = "HarvestCraft items added to dungeon/temple chests (Harvestcraft)";

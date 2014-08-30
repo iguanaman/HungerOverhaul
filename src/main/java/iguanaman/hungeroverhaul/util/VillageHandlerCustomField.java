@@ -1,7 +1,5 @@
 package iguanaman.hungeroverhaul.util;
 
-import iguanaman.hungeroverhaul.ComponentVillageCustomField;
-
 import java.util.List;
 import java.util.Random;
 

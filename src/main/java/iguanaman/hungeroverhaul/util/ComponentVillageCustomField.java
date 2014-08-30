@@ -1,6 +1,8 @@
-package iguanaman.hungeroverhaul;
+package iguanaman.hungeroverhaul.util;
 
 import com.google.common.collect.Lists;
+
+import iguanaman.hungeroverhaul.IguanaConfig;
 import iguanaman.hungeroverhaul.module.PamsModsHelper;
 
 import java.util.ArrayList;

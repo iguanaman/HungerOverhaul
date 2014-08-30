@@ -5,6 +5,7 @@ import iguanaman.hungeroverhaul.json.JsonModule;
 import iguanaman.hungeroverhaul.module.*;
 import iguanaman.hungeroverhaul.util.VillageHandlerCustomField;
 import net.minecraft.world.gen.structure.MapGenStructureIO;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -14,13 +15,11 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
 import iguanaman.hungeroverhaul.commands.IguanaCommandHunger;
 import iguanaman.hungeroverhaul.food.FoodEventHandler;
-
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
-
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -29,9 +28,10 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import iguanaman.hungeroverhaul.food.FoodModifier;
 import iguanaman.hungeroverhaul.potion.PotionWellFed;
+import iguanaman.hungeroverhaul.util.ComponentVillageCustomField;
 import iguanaman.hungeroverhaul.util.IguanaEventHook;
 import iguanaman.hungeroverhaul.util.RecipeRemover;
-import iguanaman.hungeroverhaul.util.StackSizeTweaks;
+import iguanaman.hungeroverhaul.util.ItemTweaks;
 
 import java.io.File;
 import java.util.Date;
@@ -105,7 +105,7 @@ public class HungerOverhaul
     {
         if (IguanaConfig.removeTallGrassSeeds || IguanaConfig.allSeedsEqual)
             ModuleGrassSeeds.init();
-        StackSizeTweaks.init();
+        ItemTweaks.init();
         MinecraftForge.EVENT_BUS.register(new IguanaEventHook());
         FMLCommonHandler.instance().bus().register(new ModuleRespawnHunger());
     }
