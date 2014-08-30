@@ -54,7 +54,6 @@ public class IguanaConfig
     public static boolean difficultyScalingHealing;
     public static boolean difficultyScalingHunger;
     public static boolean difficultyScalingRespawnHunger;
-    public static boolean difficultyScalingSleepHungerLoss;
 
     // food
     public static boolean modifyFoodValues;
@@ -73,7 +72,6 @@ public class IguanaConfig
     public static boolean foodsUnplantable;
 
     // hunger
-    public static boolean addSleepHungerLoss;
     public static boolean addSetHungerCommand;
     public static boolean constantHungerLoss;
     public static int damageOnStarve;
@@ -270,10 +268,6 @@ public class IguanaConfig
         difficultyScalingBoneMealProperty.comment = "Effects of bone meal dependant of difficulty ('difficultyScaling' must be true)";
         difficultyScalingBoneMeal = difficultyScaling && difficultyScalingBoneMealProperty.getBoolean(true);
 
-        Property difficultyScalingSleepHungerLossProperty = config.get("difficulty scaling", "difficultyScalingSleepHungerLoss", true);
-        difficultyScalingSleepHungerLossProperty.comment = "Hunger loss while sleeping depends on difficulty ('addSleepHungerLoss' and 'difficultyScaling' must be true)";
-        difficultyScalingSleepHungerLoss = difficultyScaling && difficultyScalingSleepHungerLossProperty.getBoolean(true);
-
         Property difficultyScalingEffectsProperty = config.get("difficulty scaling", "difficultyScalingEffects", true);
         difficultyScalingEffectsProperty.comment = "Negative effects on low health/hunger scale by difficulty ('difficultyScaling' must be true)";
         difficultyScalingEffects = difficultyScaling && difficultyScalingEffectsProperty.getBoolean(true);
@@ -349,10 +343,6 @@ public class IguanaConfig
 
         // Hunger
         config.getCategory("hunger");
-
-        Property addSleepHungerLossProperty = config.get("hunger", "addSleepHungerLoss", false);
-        addSleepHungerLossProperty.comment = "Enable/disable hunger loss while sleeping";
-        addSleepHungerLoss = addSleepHungerLossProperty.getBoolean(false);
 
         Property addSetHungerCommandProperty = config.get("hunger", "addSetHungerCommand", true);
         addSetHungerCommandProperty.comment = "Adds a console command to allow OPs to set a player's hunger level";
