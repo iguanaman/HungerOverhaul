@@ -165,7 +165,7 @@ public class IguanaConfig
         sugarcaneRegrowthMultiplierProperty.set(sugarcaneRegrowthMultiplier);
 
         Property cactusRegrowthMultiplierProperty = config.get("delays", "cactusRegrowthMultiplier", 4);
-        cactusRegrowthMultiplierProperty.comment = "Multiplier on the time it takes cactus to grow (Only applies when Natura is present)";
+        cactusRegrowthMultiplierProperty.comment = "Multiplier on the time it takes cactus to grow";
         cactusRegrowthMultiplier = Math.max(cactusRegrowthMultiplierProperty.getInt(4), 1);
         cactusRegrowthMultiplierProperty.set(cactusRegrowthMultiplier);
 
@@ -190,7 +190,7 @@ public class IguanaConfig
         netherWartRegrowthMultiplierProperty.set(netherWartRegrowthMultiplier);
 
         Property dryingRackTimeMultiplierProperty = config.get("delays", "dryingRackTimeMultiplier", 4);
-        dryingRackTimeMultiplierProperty.comment = "Multiplier on the time it takes cocoa to grow";
+        dryingRackTimeMultiplierProperty.comment = "Multiplier on the time it takes food to dry on Tinkers' Construct drying racks";
         dryingRackTimeMultiplier = Math.max(dryingRackTimeMultiplierProperty.getInt(4), 1);
         dryingRackTimeMultiplierProperty.set(dryingRackTimeMultiplier);
 
