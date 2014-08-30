@@ -64,7 +64,7 @@ public class FoodEventHandler
     {
         EnumDifficulty difficulty = event.player.worldObj.difficultySetting;
         float hungerLossRate = 3f;
-        if (IguanaConfig.difficultyScaling && IguanaConfig.difficultyScalingHunger)
+        if (IguanaConfig.difficultyScalingHunger)
         {
             if (difficulty == EnumDifficulty.PEACEFUL)
                 hungerLossRate = 5F;
@@ -105,7 +105,7 @@ public class FoodEventHandler
 
         EnumDifficulty difficulty = event.player.worldObj.difficultySetting;
         float difficultyModifierHealing = 1.0F;
-        if (IguanaConfig.difficultyScaling && IguanaConfig.difficultyScalingHealing)
+        if (IguanaConfig.difficultyScalingHealing)
         {
             if (difficulty.getDifficultyId() <= EnumDifficulty.EASY.getDifficultyId())
                 difficultyModifierHealing = 0.75F;

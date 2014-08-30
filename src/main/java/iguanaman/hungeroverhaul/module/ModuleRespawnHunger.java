@@ -14,7 +14,7 @@ public class ModuleRespawnHunger
     {
         int respawnHunger = IguanaConfig.respawnHungerValue;
 
-        if (IguanaConfig.difficultyScaling && IguanaConfig.difficultyScalingRespawnHunger && event.player.worldObj.difficultySetting.getDifficultyId() > EnumDifficulty.EASY.getDifficultyId())
+        if (IguanaConfig.difficultyScalingRespawnHunger && event.player.worldObj.difficultySetting.getDifficultyId() > EnumDifficulty.EASY.getDifficultyId())
             respawnHunger -= (event.player.worldObj.difficultySetting.getDifficultyId() - 1) * IguanaConfig.respawnHungerDifficultyModifier;
 
         AppleCoreAPI.mutator.setHunger(event.player, Math.min(Math.max(respawnHunger, 1), 20));

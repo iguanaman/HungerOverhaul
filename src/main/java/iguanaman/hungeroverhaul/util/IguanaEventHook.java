@@ -132,7 +132,7 @@ public class IguanaEventHook
                 if (IguanaConfig.addLowStatEffects)
                 {
                     int difficultyModifierEffects = 2;
-                    if (IguanaConfig.difficultyScaling && IguanaConfig.difficultyScalingEffects)
+                    if (IguanaConfig.difficultyScalingEffects)
                     {
                         difficultyModifierEffects = event.entityLiving.worldObj.difficultySetting.getDifficultyId();
 

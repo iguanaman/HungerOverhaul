@@ -268,27 +268,27 @@ public class IguanaConfig
 
         Property difficultyScalingBoneMealProperty = config.get("difficulty scaling", "difficultyScalingBoneMeal", true);
         difficultyScalingBoneMealProperty.comment = "Effects of bone meal dependant of difficulty ('difficultyScaling' must be true)";
-        difficultyScalingBoneMeal = difficultyScalingBoneMealProperty.getBoolean(true);
+        difficultyScalingBoneMeal = difficultyScaling && difficultyScalingBoneMealProperty.getBoolean(true);
 
         Property difficultyScalingSleepHungerLossProperty = config.get("difficulty scaling", "difficultyScalingSleepHungerLoss", true);
         difficultyScalingSleepHungerLossProperty.comment = "Hunger loss while sleeping depends on difficulty ('addSleepHungerLoss' and 'difficultyScaling' must be true)";
-        difficultyScalingSleepHungerLoss = difficultyScalingSleepHungerLossProperty.getBoolean(true);
+        difficultyScalingSleepHungerLoss = difficultyScaling && difficultyScalingSleepHungerLossProperty.getBoolean(true);
 
         Property difficultyScalingEffectsProperty = config.get("difficulty scaling", "difficultyScalingEffects", true);
         difficultyScalingEffectsProperty.comment = "Negative effects on low health/hunger scale by difficulty ('difficultyScaling' must be true)";
-        difficultyScalingEffects = difficultyScalingEffectsProperty.getBoolean(true);
+        difficultyScalingEffects = difficultyScaling && difficultyScalingEffectsProperty.getBoolean(true);
 
         Property difficultyScalingHealingProperty = config.get("difficulty scaling", "difficultyScalingHealing", true);
         difficultyScalingHealingProperty.comment = "Healing rate scales by difficulty ('difficultyScaling' must be true)";
-        difficultyScalingHealing = difficultyScalingHealingProperty.getBoolean(true);
+        difficultyScalingHealing = difficultyScaling && difficultyScalingHealingProperty.getBoolean(true);
 
         Property difficultyScalingHungerProperty = config.get("difficulty scaling", "difficultyScalingHunger", true);
         difficultyScalingHungerProperty.comment = "Hunger loss rate scales by difficulty ('difficultyScaling' must be true)";
-        difficultyScalingHunger = difficultyScalingHungerProperty.getBoolean(true);
+        difficultyScalingHunger = difficultyScaling && difficultyScalingHungerProperty.getBoolean(true);
 
         Property difficultyScalingRespawnHungerProperty = config.get("difficulty scaling", "difficultyScalingRespawnHunger", true);
         difficultyScalingRespawnHungerProperty.comment = "Hunger value after respawn is affected by difficulty ('difficultyScaling' must be true)";
-        difficultyScalingRespawnHunger = difficultyScalingRespawnHungerProperty.getBoolean(true);
+        difficultyScalingRespawnHunger = difficultyScaling && difficultyScalingRespawnHungerProperty.getBoolean(true);
 
         // Food
         config.getCategory("food");
