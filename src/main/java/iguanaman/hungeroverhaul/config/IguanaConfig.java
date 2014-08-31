@@ -2,6 +2,7 @@ package iguanaman.hungeroverhaul.config;
 
 import java.io.File;
 
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
@@ -120,6 +121,7 @@ public class IguanaConfig
     public static void reload()
     {
         // seeds and hoes
+        config.getCategory("getting seeds").setComment("Options for obtaining seeds");
 
         Property allSeedsEqualProperty = config.get("getting seeds", "allSeedsEqual", true);
         allSeedsEqualProperty.comment = "Each seed has an equal chance to drop (grass drops and via hoes)";
@@ -148,7 +150,7 @@ public class IguanaConfig
         hoeToolDamageMultiplierProperty.set(hoeToolDamageMultiplier);
 
         // delays
-        config.getCategory("delays");
+        config.getCategory("delays").setComment("Delays for various obtaining food related activities");
 
         Property noSunlightRegrowthMultiplierProperty = config.get("delays", "noSunlightRegrowthMultiplier", 2);
         noSunlightRegrowthMultiplierProperty.comment = "Multipier on crop growth time without sunlight (1 to disable feature, 0 to make crops only grow in sunlight)";
@@ -231,7 +233,7 @@ public class IguanaConfig
         milkedTimeoutProperty.set(milkedTimeout);
 
         // harvesting
-        config.getCategory("harvesting");
+        config.getCategory("harvesting").setComment("Options related to drops from crops");
 
         Property seedsPerHarvestMinProperty = config.get("harvesting", "seedsPerHarvestMin", 0);
         seedsPerHarvestMinProperty.comment = "Minimum number of seeds you get when harvesting a non-tree crop";
@@ -254,7 +256,7 @@ public class IguanaConfig
         producePerHarvestMaxProperty.set(producePerHarvestMax);
 
         // custom field
-        config.getCategory("custom field");
+        config.getCategory("custom field").setComment("Options for enabling and manipulating a custom field in Villages");
 
         Property addCustomVillageFieldProperty = config.get("custom field", "addCustomVillageField", true);
         addCustomVillageFieldProperty.comment = "Adds a custom field to villages";
@@ -276,7 +278,7 @@ public class IguanaConfig
         fieldStemWeightProperty.set(fieldStemWeight);
 
         // difficulty scaling
-        config.getCategory("difficulty scaling");
+        config.getCategory("difficulty scaling").setComment("Options to scale the difficulty of certain elements based on game difficulty");
 
         Property difficultyScalingProperty = config.get("difficulty scaling", "difficultyScaling", true);
         difficultyScalingProperty.comment = "Enable/Disable all difficulty scaling effect in one setting";
@@ -303,7 +305,7 @@ public class IguanaConfig
         difficultyScalingRespawnHunger = difficultyScaling && difficultyScalingRespawnHungerProperty.getBoolean(true);
 
         // Food
-        config.getCategory("food");
+        config.getCategory("food").setComment("Food related options");
 
         Property modifyFoodValuesProperty = config.get("food", "modifyFoodValues", true);
         modifyFoodValuesProperty.comment = "Changes the replenishment value of vanilla and HarvestCraft foods";
@@ -336,7 +338,7 @@ public class IguanaConfig
         addWellFedEffect = addWellFedEffectProperty.getBoolean(true);
 
         // HarvestCraft
-        config.getCategory("harvestcraft");
+        config.getCategory("harvestcraft").setComment("Options related to HarvestCraft.\n" + EnumChatFormatting.RED + "Only works if HarvestCraft is installed!");
 
         Property addTradesButcherProperty = config.get("harvestcraft", "addTradesButcher", true);
         addTradesButcherProperty.comment = "Add high tier HarvestCraft foods to the items butcher villagers will sell (HarvestCraft)";
@@ -364,7 +366,7 @@ public class IguanaConfig
         foodsUnplantable = foodsUnplantableProperty.getBoolean(true);
 
         // Hunger
-        config.getCategory("hunger");
+        config.getCategory("hunger").setComment("Options related to hunger");
 
         Property addSetHungerCommandProperty = config.get("hunger", "addSetHungerCommand", true);
         addSetHungerCommandProperty.comment = "Adds a console command to allow OPs to set a player's hunger level";
@@ -399,7 +401,7 @@ public class IguanaConfig
         hungerLossRatePercentageProperty.set(hungerLossRatePercentage);
 
         // low stats
-        config.getCategory("low stats");
+        config.getCategory("low stats").setComment("Options for how to handle when the player get low health/hunger");
 
         Property addGuiTextProperty = config.get("low stats", "addGuiText", true);
         addGuiTextProperty.comment = "Shows onscreen text when hunger/health is low";
@@ -425,7 +427,7 @@ public class IguanaConfig
         addLowStatMiningSlowdownProperty.comment = "Mining slowdown effect when health/hunger is low ('addLowStatEffects' must be true)";
         addLowStatMiningSlowdown = addLowStatMiningSlowdownProperty.getBoolean(true);
 
-        config.getCategory("health");
+        config.getCategory("health").setComment("Options related to health");
 
         Property foodRegensHealthProperty = config.get("health", "foodRegensHealth", false);
         foodRegensHealthProperty.comment = "Eating food regenerates health";
