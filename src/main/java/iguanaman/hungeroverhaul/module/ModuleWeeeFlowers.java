@@ -1,6 +1,6 @@
 package iguanaman.hungeroverhaul.module;
 
-import iguanaman.hungeroverhaul.IguanaConfig;
+import iguanaman.hungeroverhaul.config.IguanaConfig;
 import iguanaman.hungeroverhaul.util.PlantGrowthModification;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;

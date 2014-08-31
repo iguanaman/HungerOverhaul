@@ -1,6 +1,6 @@
 package iguanaman.hungeroverhaul.module;
 
-import iguanaman.hungeroverhaul.IguanaConfig;
+import iguanaman.hungeroverhaul.config.IguanaConfig;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 

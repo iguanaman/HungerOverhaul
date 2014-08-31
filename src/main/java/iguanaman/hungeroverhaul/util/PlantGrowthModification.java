@@ -1,6 +1,6 @@
 package iguanaman.hungeroverhaul.util;
 
-import iguanaman.hungeroverhaul.IguanaConfig;
+import iguanaman.hungeroverhaul.config.IguanaConfig;
 
 import java.util.HashMap;
 import java.util.Map;

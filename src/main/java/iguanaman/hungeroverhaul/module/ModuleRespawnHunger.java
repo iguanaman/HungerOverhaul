@@ -1,6 +1,6 @@
 package iguanaman.hungeroverhaul.module;
 
-import iguanaman.hungeroverhaul.IguanaConfig;
+import iguanaman.hungeroverhaul.config.IguanaConfig;
 import net.minecraft.world.EnumDifficulty;
 import squeek.applecore.api.AppleCoreAPI;
 import cpw.mods.fml.common.eventhandler.EventPriority;

@@ -1,6 +1,6 @@
 package iguanaman.hungeroverhaul.food;
 
-import iguanaman.hungeroverhaul.IguanaConfig;
+import iguanaman.hungeroverhaul.config.IguanaConfig;
 import squeek.applecore.api.food.FoodEvent;
 import squeek.applecore.api.food.FoodValues;
 

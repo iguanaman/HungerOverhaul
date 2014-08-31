@@ -1,6 +1,5 @@
 package iguanaman.hungeroverhaul.potion;
 
-import iguanaman.hungeroverhaul.IguanaConfig;
 import net.minecraft.potion.Potion;
 
 public class PotionWellFed extends Potion

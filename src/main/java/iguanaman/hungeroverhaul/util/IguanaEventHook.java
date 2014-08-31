@@ -1,6 +1,6 @@
 package iguanaman.hungeroverhaul.util;
 
-import iguanaman.hungeroverhaul.IguanaConfig;
+import iguanaman.hungeroverhaul.config.IguanaConfig;
 import iguanaman.hungeroverhaul.module.ModuleGrassSeeds;
 import iguanaman.hungeroverhaul.module.ModulePlantGrowth;
 import iguanaman.hungeroverhaul.module.PamsModsHelper;

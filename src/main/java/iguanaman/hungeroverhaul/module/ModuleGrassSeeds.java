@@ -1,7 +1,7 @@
 package iguanaman.hungeroverhaul.module;
 
 import iguanaman.hungeroverhaul.HungerOverhaul;
-import iguanaman.hungeroverhaul.IguanaConfig;
+import iguanaman.hungeroverhaul.config.IguanaConfig;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;

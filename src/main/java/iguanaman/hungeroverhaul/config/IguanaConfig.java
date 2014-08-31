@@ -1,4 +1,4 @@
-package iguanaman.hungeroverhaul;
+package iguanaman.hungeroverhaul.config;
 
 import java.io.File;
 
@@ -6,8 +6,13 @@ import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 
+import cpw.mods.fml.client.event.ConfigChangedEvent;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+
 public class IguanaConfig
 {
+    public static Configuration config;
+    public static final String[] CATEGORIES = new String[] {"getting seeds", "delays", "harvesting", "custom field", "difficulty scaling", "food", "harvestcraft", "hunger", "low stats", "health"};
 
     // seeds + hoes
     public static boolean allSeedsEqual;
@@ -98,10 +103,22 @@ public class IguanaConfig
 
     public static void init(File file)
     {
+        if(config == null) {
+            config = new Configuration(file);
+            reload();
+        }
+    }
 
-        Configuration config = new Configuration(file);
-        config.load();
+    @SubscribeEvent
+    public void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event)
+    {
+        if(event.modID.equals("HungerOverhaul")) {
+            reload();
+        }
+    }
 
+    public static void reload()
+    {
         // seeds and hoes
 
         Property allSeedsEqualProperty = config.get("getting seeds", "allSeedsEqual", true);
