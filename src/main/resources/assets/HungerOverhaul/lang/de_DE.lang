@@ -1,0 +1,17 @@
+potion.wellfedPotion=Wohl genährt
+potion.newSlowdownPotionHO=Verlangsamt
+
+# tooltip strings
+hungeroverhaul.crop.grows.best.in=Wächst am besten in:
+
+# these should all be in lowercase
+hungeroverhaul.hearty=herzhaftes %s
+hungeroverhaul.wholesome=gesundes %s
+hungeroverhaul.nourishing=nahrhaftes %s
+hungeroverhaul.unfulfilling=nicht erfüllendes %s
+hungeroverhaul.morsel=Häppchen
+hungeroverhaul.snack=Imbiss
+hungeroverhaul.lightmeal=leichte Mahlzeit
+hungeroverhaul.meal=Mahlzeit
+hungeroverhaul.largemeal=große Mahlzeit
+hungeroverhaul.feast=Festessen
