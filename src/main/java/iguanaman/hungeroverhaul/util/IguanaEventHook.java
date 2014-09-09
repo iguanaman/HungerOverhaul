@@ -402,28 +402,43 @@ public class IguanaEventHook
             float satiation = values.saturationModifier * 20 - hungerFill;
 
             String mealDescriptor = "";
+            String noun;
+            String adjective = null;
 
             if (hungerFill <= 1)
-                mealDescriptor = StatCollector.translateToLocal("hungeroverhaul.morsel");
+                noun = "morsel";
             else if (hungerFill <= 2)
-                mealDescriptor = StatCollector.translateToLocal("hungeroverhaul.snack");
+                noun = "snack";
             else if (hungerFill <= 5)
-                mealDescriptor = StatCollector.translateToLocal("hungeroverhaul.lightmeal");
+                noun = "lightmeal";
             else if (hungerFill <= 8)
-                mealDescriptor = StatCollector.translateToLocal("hungeroverhaul.meal");
+                noun = "meal";
             else if (hungerFill <= 11)
-                mealDescriptor = StatCollector.translateToLocal("hungeroverhaul.largemeal");
+                noun = "largemeal";
             else
-                mealDescriptor = StatCollector.translateToLocal("hungeroverhaul.feast");
+                noun = "feast";
 
             if (satiation >= 3.0F)
-                mealDescriptor = StatCollector.translateToLocalFormatted(StatCollector.translateToLocal("hungeroverhaul.hearty"), mealDescriptor);
+                adjective = "hearty";
             else if (satiation >= 2.0F)
-                mealDescriptor = StatCollector.translateToLocalFormatted(StatCollector.translateToLocal("hungeroverhaul.wholesome"), mealDescriptor);
+                adjective = "wholesome";
             else if (satiation > 0.0F)
-                mealDescriptor = StatCollector.translateToLocalFormatted(StatCollector.translateToLocal("hungeroverhaul.nourishing"), mealDescriptor);
+                adjective = "nourishing";
             else if (satiation < 0.0F)
-                mealDescriptor = StatCollector.translateToLocalFormatted(StatCollector.translateToLocal("hungeroverhaul.unfulfilling"), mealDescriptor);
+                adjective = "unfulfilling";
+
+            if (adjective != null && StatCollector.canTranslate("hungeroverhaul." + adjective + "." + noun))
+            {
+                mealDescriptor = StatCollector.translateToLocal("hungeroverhaul." + adjective + "." + noun);
+            }
+            else
+            {
+                mealDescriptor = StatCollector.translateToLocal("hungeroverhaul." + noun);
+                if (adjective != null)
+                {
+                    mealDescriptor = StatCollector.translateToLocalFormatted(StatCollector.translateToLocal("hungeroverhaul." + adjective), mealDescriptor);
+                }
+            }
 
             event.toolTip.add(mealDescriptor.substring(0, 1).toUpperCase() + mealDescriptor.substring(1));
         }
