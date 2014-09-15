@@ -13,6 +13,7 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 public class IguanaConfig
 {
     public static Configuration config;
+    @SuppressWarnings("unused") //Part of the Config GUI system that's removed (for now)
     public static final String[] CATEGORIES = new String[] {"getting seeds", "delays", "harvesting", "custom field", "difficulty scaling", "food", "harvestcraft", "hunger", "low stats", "health"};
 
     // seeds + hoes

@@ -34,7 +34,7 @@ import iguanaman.hungeroverhaul.util.IguanaEventHook;
 import iguanaman.hungeroverhaul.util.RecipeRemover;
 import iguanaman.hungeroverhaul.util.ItemTweaks;
 
-@Mod(modid = "HungerOverhaul", name = "Hunger Overhaul", version = "${version}", guiFactory = "iguanaman.hungeroverhaul.config.IguanaGuiFactory", dependencies = "required-after:Forge@[10.13.0.1187,);required-after:AppleCore;after:TConstruct;after:harvestcraft;after:temperateplants;after:randomplants;after:weeeflowers;after:Natura")
+@Mod(modid = "HungerOverhaul", name = "Hunger Overhaul", version = "${version}", dependencies = "required-after:Forge@[10.13.0.1187,);required-after:AppleCore;after:TConstruct;after:harvestcraft;after:temperateplants;after:randomplants;after:weeeflowers;after:Natura")
 public class HungerOverhaul
 {
     public static final Logger Log = LogManager.getLogger("HungerOverhaul");
