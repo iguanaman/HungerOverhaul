@@ -15,3 +15,7 @@ hungeroverhaul.lightmeal=light meal
 hungeroverhaul.meal=meal
 hungeroverhaul.largemeal=large meal
 hungeroverhaul.feast=feast
+
+# if necessary, special cases for the meal descriptors can be handled by
+# defining combined strings like so (remove the #)
+#hungeroverhaul.hearty.largemeal=hearty large meal
