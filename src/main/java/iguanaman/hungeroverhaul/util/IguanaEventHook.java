@@ -354,28 +354,11 @@ public class IguanaEventHook
     @SubscribeEvent
     public void onBlockHarvested(BlockEvent.HarvestDropsEvent event)
     {
-        if (Loader.isModLoaded("Natura") && event.block instanceof CropBlock)
+        boolean isNaturaCrop = Loader.isModLoaded("Natura") && event.block instanceof CropBlock;
+        if (isNaturaCrop || event.block instanceof BlockCrops)
         {
             event.drops.clear();
-            if (event.blockMetadata == 3 || event.blockMetadata == 8)
-            {
-                int count = RandomHelper.getRandomIntFromRange(IguanaConfig.producePerHarvestMin, IguanaConfig.producePerHarvestMax);
-                for (int i = 0; i < count; i++)
-                {
-                    Item item = event.block.getItemDropped(event.blockMetadata, event.world.rand, 0);
-                    if (item != null)
-                        event.drops.add(new ItemStack(item, 1, event.block.damageDropped(event.blockMetadata)));
-                }
-            }
-            else
-            {
-                event.drops.add(BlockHelper.getSeedOfBlock(event.block, event.blockMetadata));
-            }
-        }
-        else if (event.block instanceof BlockCrops)
-        {
-            event.drops.clear();
-            if (event.blockMetadata >= 7)
+            if ((!isNaturaCrop && event.blockMetadata >= 7) || (isNaturaCrop && event.blockMetadata == 3 || event.blockMetadata == 8))
             {
                 int produce = RandomHelper.getRandomIntFromRange(IguanaConfig.producePerHarvestMin, IguanaConfig.producePerHarvestMax);
                 if (produce > 0)
