@@ -83,7 +83,7 @@ public class FoodEventHandler
     }
 
     @SubscribeEvent
-    public void allowHealthRegen(HealthRegenEvent.Regen event)
+    public void allowHealthRegen(HealthRegenEvent.AllowRegen event)
     {
         if (event.player.getFoodStats().getFoodLevel() >= IguanaConfig.minHungerToHeal
                 && IguanaConfig.healthRegenRatePercentage > 0
