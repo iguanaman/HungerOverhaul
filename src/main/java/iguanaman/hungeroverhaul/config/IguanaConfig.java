@@ -356,7 +356,7 @@ public class IguanaConfig
         addHarvestCraftChestLootProperty.comment = "HarvestCraft items added to dungeon/temple chests (Harvestcraft)";
         addHarvestCraftChestLoot = addHarvestCraftChestLootProperty.getBoolean(true);
 
-        Property chestLootMaxStackSizeProperty = config.get("harvestcraft", "chestLootChance", 64);
+        Property chestLootMaxStackSizeProperty = config.get("harvestcraft", "chestLootMaxStackSize", 64);
         chestLootMaxStackSizeProperty.comment = "Max stack size for food to be found in chests (addHarvestCraftChestLoot must be true)";
         chestLootMaxStackSize = Math.max(chestLootMaxStackSizeProperty.getInt(64), 1);
         chestLootMaxStackSizeProperty.set(chestLootMaxStackSize);
