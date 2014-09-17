@@ -97,7 +97,7 @@ public class ItemTweaks
 
     public static void addChestLoot(Item item, ItemStack stack, FoodValues values)
     {
-        int maxStackSize = item.getItemStackLimit(stack);
+        int maxStackSize = Math.min(IguanaConfig.chestLootMaxStackSize, item.getItemStackLimit(stack));
         ChestGenHooks.getInfo(ChestGenHooks.DUNGEON_CHEST).addItem(new WeightedRandomChestContent(stack, 0, maxStackSize, IguanaConfig.chestLootChance));
         ChestGenHooks.getInfo(ChestGenHooks.MINESHAFT_CORRIDOR).addItem(new WeightedRandomChestContent(stack, 0, maxStackSize, IguanaConfig.chestLootChance));
         ChestGenHooks.getInfo(ChestGenHooks.PYRAMID_DESERT_CHEST).addItem(new WeightedRandomChestContent(stack, 0, maxStackSize, IguanaConfig.chestLootChance));

@@ -3,7 +3,6 @@ package iguanaman.hungeroverhaul.config;
 import java.io.File;
 
 import net.minecraft.util.EnumChatFormatting;
-import net.minecraftforge.common.config.ConfigCategory;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
 
@@ -13,7 +12,6 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 public class IguanaConfig
 {
     public static Configuration config;
-    @SuppressWarnings("unused") //Part of the Config GUI system that's removed (for now)
     public static final String[] CATEGORIES = new String[] {"getting seeds", "delays", "harvesting", "custom field", "difficulty scaling", "food", "harvestcraft", "hunger", "low stats", "health"};
 
     // seeds + hoes
@@ -76,6 +74,7 @@ public class IguanaConfig
     public static boolean addTradesFarmer;
     public static boolean addSaplingTradesFarmer;
     public static boolean addHarvestCraftChestLoot;
+    public static int chestLootMaxStackSize;
     public static int chestLootChance;
     public static boolean foodsUnplantable;
 
@@ -356,6 +355,11 @@ public class IguanaConfig
         Property addHarvestCraftChestLootProperty = config.get("harvestcraft", "addHarvestCraftChestLoot", true);
         addHarvestCraftChestLootProperty.comment = "HarvestCraft items added to dungeon/temple chests (Harvestcraft)";
         addHarvestCraftChestLoot = addHarvestCraftChestLootProperty.getBoolean(true);
+
+        Property chestLootMaxStackSizeProperty = config.get("harvestcraft", "chestLootChance", 64);
+        chestLootMaxStackSizeProperty.comment = "Max stack size for food to be found in chests (addHarvestCraftChestLoot must be true)";
+        chestLootMaxStackSize = Math.max(chestLootMaxStackSizeProperty.getInt(64), 1);
+        chestLootMaxStackSizeProperty.set(chestLootMaxStackSize);
 
         Property chestLootChanceProperty = config.get("harvestcraft", "chestLootChance", 5);
         chestLootChanceProperty.comment = "Weighted chance for food to be found in chests (addHarvestCraftChestLoot must be true)";
