@@ -5,13 +5,27 @@ potion.newSlowdownPotionHO=Замедление
 hungeroverhaul.crop.grows.best.in=Растёт лучше в:
 
 # these should all be in lowercase
-hungeroverhaul.hearty=здоров. %s
-hungeroverhaul.wholesome=полезн. %s
-hungeroverhaul.nourishing=сытн. %s
-hungeroverhaul.unfulfilling=не полезн. %s
+hungeroverhaul.hearty=здоровый %s
+hungeroverhaul.wholesome=полезный %s
+hungeroverhaul.nourishing=сытный %s
+hungeroverhaul.unfulfilling=не полезный %s
 hungeroverhaul.morsel=лёгкая закуска
 hungeroverhaul.snack=закуска
 hungeroverhaul.lightmeal=лёгкий завтрак
 hungeroverhaul.meal=завтрак
 hungeroverhaul.largemeal=большой завтрак
 hungeroverhaul.feast=пир
+
+# if necessary, special cases for the meal descriptors can be handled by
+# defining combined strings like so (remove the #)
+#hungeroverhaul.hearty.largemeal=hearty large meal
+
+hungeroverhaul.hearty.morsel=здоровая лёгкая закуска
+hungeroverhaul.wholesome.morsel=полезная лёгкая закуска
+hungeroverhaul.nourishing.morsel=сытная лёгкая закуска
+hungeroverhaul.unfulfilling.morsel=не полезная лёгкая закуска
+
+hungeroverhaul.hearty.snack=здоровая закуска
+hungeroverhaul.wholesome.snack=полезная закуска
+hungeroverhaul.nourishing.snack=сытная закуска
+hungeroverhaul.unfulfilling.snack=не полезная закуска
