@@ -347,7 +347,25 @@ public class IguanaEventHook
             // therefore, the drops will be modified by our onBlockHarvested method
             clicked.dropBlockAsItem(event.world, event.x, event.y, event.z, meta, 0);
             event.world.setBlockMetadataWithNotify(event.x, event.y, event.z, resultingMeta, 2);
-            event.useItem = Result.DENY;
+
+            // hacky workaround:
+            // if the client deems it is unable to place the block that is held,
+            // the right click packet will not be sent to the server at all
+            // so, instead, we have to manually send the packet and then
+            // cancel the event (canceling the event will stop the client from
+            // doing any further processing)
+            //
+            // this fixes client desyncs when right clicking a mature crop
+            // while holding an ItemBlock; the crop will get reset on the client
+            // but the packet wouldn't get sent to the server because of the above
+            // so it would remain unharvested on the server
+            if (event.world.isRemote)
+            {
+               ClientHelper.sendRightClickPacket(event.x, event.y, event.z, event.face, event.entityPlayer.inventory.getCurrentItem(), 0f, 0f, 0f);
+               event.setCanceled(true);
+            }
+            else
+                event.useItem = Result.DENY;
         }
     }
 
