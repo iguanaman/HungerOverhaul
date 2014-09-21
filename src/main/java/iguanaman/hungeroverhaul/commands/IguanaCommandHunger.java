@@ -2,6 +2,7 @@ package iguanaman.hungeroverhaul.commands;
 
 import java.util.List;
 
+import squeek.applecore.api.AppleCoreAPI;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.command.WrongUsageException;
@@ -33,7 +34,7 @@ public class IguanaCommandHunger extends CommandBase
         {
             EntityPlayerMP entityplayermp = astring.length >= 2 ? getPlayer(icommandsender, astring[0]) : getCommandSenderAsPlayer(icommandsender);
             int foodValue = astring.length >= 2 ? parseIntBounded(icommandsender, astring[1], 0, 20) : parseIntBounded(icommandsender, astring[0], 0, 20);
-            entityplayermp.getFoodStats().setFoodLevel(foodValue);
+            AppleCoreAPI.mutator.setHunger(entityplayermp, foodValue);
             func_152374_a(icommandsender, this, 1, "Set " + entityplayermp.getDisplayName() + "'s hunger to " + foodValue);
         }
         else
