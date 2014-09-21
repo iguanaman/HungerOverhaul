@@ -3,6 +3,7 @@ package iguanaman.hungeroverhaul.util;
 import com.pam.harvestcraft.BlockPamSapling;
 import com.pam.harvestcraft.ItemPamSeedFood;
 
+import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.registry.VillagerRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
@@ -51,12 +52,12 @@ public class ItemTweaks
                         if (IguanaConfig.addHarvestCraftChestLoot)
                             addChestLoot(item, stack, values);
                     }
-                    if (IguanaConfig.addTradesFarmer && item instanceof ItemPamSeedFood)
+                    if (Loader.isModLoaded("harvestcraft") && IguanaConfig.addTradesFarmer && item instanceof ItemPamSeedFood)
                     {
                         addCropTrade(item);
                     }
                 }
-                else if (IguanaConfig.addSaplingTradesFarmer && item instanceof ItemBlock)
+                else if (Loader.isModLoaded("harvestcraft") && IguanaConfig.addSaplingTradesFarmer && item instanceof ItemBlock)
                 {
                     Block block = Block.getBlockFromItem(item);
                     if (block instanceof BlockPamSapling)
