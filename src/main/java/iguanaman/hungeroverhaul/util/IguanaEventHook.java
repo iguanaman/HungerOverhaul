@@ -306,7 +306,7 @@ public class IguanaEventHook
             return;
 
         // unplantable harvestcraft foods
-        if (IguanaConfig.foodsUnplantable && event.entityPlayer.getHeldItem() != null && event.entityPlayer.getHeldItem().getItem() instanceof ItemPamSeedFood)
+        if (IguanaConfig.foodsUnplantable && Loader.isModLoaded("harvestcraft") && event.entityPlayer.getHeldItem() != null && event.entityPlayer.getHeldItem().getItem() instanceof ItemPamSeedFood)
         {
             if (event.world.isRemote)
             {

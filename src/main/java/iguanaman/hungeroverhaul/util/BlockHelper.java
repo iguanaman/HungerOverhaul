@@ -36,7 +36,7 @@ public class BlockHelper
     public static Item getSeedItem(Block block, int meta)
     {
         Item itemDropped = block.getItemDropped(0, RandomHelper.random, 0);
-        if (block instanceof BlockPamCrop)
+        if (Loader.isModLoaded("harvestcraft") && block instanceof BlockPamCrop)
         {
             Item seedForProduct = PamsModsHelper.productToSeedMap.get(itemDropped);
             if (seedForProduct != null)
