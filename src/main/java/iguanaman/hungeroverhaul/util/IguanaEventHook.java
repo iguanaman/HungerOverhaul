@@ -45,6 +45,7 @@ import squeek.applecore.api.AppleCoreAPI;
 import squeek.applecore.api.food.FoodValues;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.eventhandler.Event.Result;
+import cpw.mods.fml.common.eventhandler.EventPriority;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -393,7 +394,7 @@ public class IguanaEventHook
         }
     }
 
-    @SubscribeEvent
+    @SubscribeEvent(priority=EventPriority.LOWEST)
     public void renderTooltips(ItemTooltipEvent event)
     {
         if (IguanaConfig.addFoodTooltips && AppleCoreAPI.accessor.isFood(event.itemStack))
@@ -441,7 +442,8 @@ public class IguanaEventHook
                 }
             }
 
-            event.toolTip.add(mealDescriptor.substring(0, 1).toUpperCase() + mealDescriptor.substring(1));
+            int topIndex = event.toolTip.size() > 0 ? 1 : 0;
+            event.toolTip.add(topIndex, mealDescriptor.substring(0, 1).toUpperCase() + mealDescriptor.substring(1));
         }
         if (IguanaConfig.wrongBiomeRegrowthMultiplier > 1)
         {
