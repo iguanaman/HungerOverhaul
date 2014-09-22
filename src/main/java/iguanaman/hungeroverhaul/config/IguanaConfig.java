@@ -79,7 +79,6 @@ public class IguanaConfig
     public static boolean foodsUnplantable;
 
     // hunger
-    public static boolean addSetHungerCommand;
     public static boolean constantHungerLoss;
     public static int damageOnStarve;
     public static int respawnHungerValue;
@@ -372,10 +371,6 @@ public class IguanaConfig
 
         // Hunger
         config.getCategory("hunger").setComment("Options related to hunger");
-
-        Property addSetHungerCommandProperty = config.get("hunger", "addSetHungerCommand", true);
-        addSetHungerCommandProperty.comment = "Adds a console command to allow OPs to set a player's hunger level";
-        addSetHungerCommand = addSetHungerCommandProperty.getBoolean(true);
 
         Property constantHungerLossProperty = config.get("hunger", "constantHungerLoss", true);
         constantHungerLossProperty.comment = "You lose hunger (very slowly) at all times";

@@ -14,7 +14,6 @@ import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
-import iguanaman.hungeroverhaul.commands.IguanaCommandHunger;
 import iguanaman.hungeroverhaul.food.FoodEventHandler;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -26,7 +25,6 @@ import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import iguanaman.hungeroverhaul.food.FoodModifier;
 import iguanaman.hungeroverhaul.potion.PotionWellFed;
 import iguanaman.hungeroverhaul.util.ComponentVillageCustomField;
@@ -107,14 +105,5 @@ public class HungerOverhaul
         ItemTweaks.init();
         MinecraftForge.EVENT_BUS.register(new IguanaEventHook());
         FMLCommonHandler.instance().bus().register(new ModuleRespawnHunger());
-    }
-
-    @EventHandler
-    public void serverStarting(FMLServerStartingEvent event)
-    {
-        if (IguanaConfig.addSetHungerCommand)
-        {
-            event.registerServerCommand(new IguanaCommandHunger());
-        }
     }
 }
