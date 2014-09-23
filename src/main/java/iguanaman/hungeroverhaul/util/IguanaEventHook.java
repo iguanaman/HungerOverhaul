@@ -450,7 +450,7 @@ public class IguanaEventHook
             PlantGrowthModification growthModification = null;
             if (event.itemStack.getItem() instanceof IPlantable)
             {
-                growthModification = ModulePlantGrowth.getPlantGrowthModification(((IPlantable) event.itemStack.getItem()).getPlant(null, 0, 0, 0));
+                growthModification = ModulePlantGrowth.getPlantGrowthModification(((IPlantable) event.itemStack.getItem()).getPlant(event.entityPlayer.worldObj, 0, 0, 0));
             }
             else if (event.itemStack.getItem() instanceof ItemBlock)
             {
