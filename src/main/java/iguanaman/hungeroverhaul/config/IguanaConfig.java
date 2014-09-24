@@ -140,7 +140,7 @@ public class IguanaConfig
 
         Property seedChanceProperty = config.get("getting seeds", "seedChance", 20);
         seedChanceProperty.comment = "Chance for seed to drop from hoe use on normal difficulty";
-        seedChance = Math.max(seedChanceProperty.getInt(20), 1);
+        seedChance = Math.max(seedChanceProperty.getInt(20), 0);
         seedChanceProperty.set(seedChance);
 
         Property hoeToolDamageMultiplierProperty = config.get("getting seeds", "hoeToolDamageMultiplier", 5);

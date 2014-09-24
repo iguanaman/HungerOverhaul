@@ -205,7 +205,7 @@ public class IguanaEventHook
 
                 Block block1 = Blocks.farmland;
                 event.world.playSoundEffect(event.x + 0.5F, event.y + 0.5F, event.z + 0.5F, block1.stepSound.soundName, (block1.stepSound.getVolume() + 1.0F) / 2.0F, block1.stepSound.getPitch() * 0.8F);
-                if (!event.world.isRemote)
+                if (!event.world.isRemote && IguanaConfig.seedChance > 0)
                 {
                     int seedChance = IguanaConfig.seedChance;
                     if (event.world.difficultySetting.getDifficultyId() < 2)
