@@ -19,7 +19,7 @@ public class ModuleVanilla
         /*
          * Food values
          */
-        if (Loader.isModLoaded("harvestcraft") || IguanaConfig.modifyFoodValues)
+        if (IguanaConfig.modifyFoodValues)
         {
             FoodModifier.setModifiedFoodValues(Items.apple, new FoodValues(1, 0.05F));
             FoodModifier.setModifiedFoodValues(Items.bread, new FoodValues(3, 0.2F));
