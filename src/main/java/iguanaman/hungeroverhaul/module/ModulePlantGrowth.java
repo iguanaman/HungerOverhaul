@@ -91,7 +91,7 @@ public class ModulePlantGrowth
         }
 
         // random
-        if (event.random.nextInt((int) (IguanaConfig.cropRegrowthMultiplier * biomeModifier * sunlightModifier)) != 0)
+        if (event.random.nextInt((int) (growthModification.growthTickProbability * biomeModifier * sunlightModifier)) != 0)
         {
             event.setResult(Result.DENY);
             return;
