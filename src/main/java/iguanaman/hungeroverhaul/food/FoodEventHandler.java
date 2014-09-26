@@ -145,7 +145,7 @@ public class FoodEventHandler
     @SubscribeEvent
     public void onFoodStartEating(PlayerUseItemEvent.Start event)
     {
-        if (IguanaConfig.modifyFoodEatingSpeed && event.item.getItem() instanceof ItemFood)
+        if (IguanaConfig.modifyFoodEatingSpeed && event.item != null && event.item.getItem() instanceof ItemFood)
         {
             event.duration = FoodValues.get(event.item).hunger * 8 + 8;
         }
