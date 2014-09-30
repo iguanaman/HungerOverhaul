@@ -342,6 +342,11 @@ public class IguanaEventHook
         int meta = event.world.getBlockMetadata(event.x, event.y, event.z);
         int resultingMeta = -1;
 
+        // certain things we don't want to add right-click harvest support for
+        // TODO: allow the user to set a custom blacklist?
+        if (clicked == Block.getBlockFromName("ExtraUtilities:plant/ender_lilly"))
+            return;
+
         if (Loader.isModLoaded("Natura") && clicked instanceof CropBlock)
         {
             if (meta == 3 || meta == 8)
