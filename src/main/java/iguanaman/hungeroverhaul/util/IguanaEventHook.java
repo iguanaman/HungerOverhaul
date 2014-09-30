@@ -390,6 +390,11 @@ public class IguanaEventHook
     @SubscribeEvent
     public void onBlockHarvested(BlockEvent.HarvestDropsEvent event)
     {
+        // certain things we don't want to modify the drops of
+        // TODO: allow the user to set a custom blacklist?
+        if (event.block == Block.getBlockFromName("ExtraUtilities:plant/ender_lilly"))
+            return;
+
         boolean isNaturaCrop = Loader.isModLoaded("Natura") && event.block instanceof CropBlock;
         if (isNaturaCrop || event.block instanceof BlockCrops)
         {
