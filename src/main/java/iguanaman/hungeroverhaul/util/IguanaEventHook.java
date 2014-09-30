@@ -299,9 +299,19 @@ public class IguanaEventHook
         }
     }
 
+    static long lastRightClickCrop = 0;
+
     @SubscribeEvent
     public void onPlayerInteraction(PlayerInteractEvent event)
     {
+        // slightly hacky workaround:
+        // if RIGHT_CLICK_BLOCK is canceled or useItem == Result.DENY, then
+        // the right click falls through to RIGHT_CLICK_AIR. To correctly cancel the RIGHT_CLICK_AIR,
+        // we need to make sure that it is happening on the same tick that the right click was performed
+        if (event.action == PlayerInteractEvent.Action.RIGHT_CLICK_AIR && lastRightClickCrop == event.world.getWorldTime())
+        {
+            event.setCanceled(true);
+        }
         if (event.action != PlayerInteractEvent.Action.RIGHT_CLICK_BLOCK)
             return;
 
@@ -348,6 +358,8 @@ public class IguanaEventHook
             // therefore, the drops will be modified by our onBlockHarvested method
             clicked.dropBlockAsItem(event.world, event.x, event.y, event.z, meta, 0);
             event.world.setBlockMetadataWithNotify(event.x, event.y, event.z, resultingMeta, 2);
+
+            lastRightClickCrop = event.world.getWorldTime();
 
             // hacky workaround:
             // if the client deems it is unable to place the block that is held,
