@@ -19,6 +19,9 @@ public class FoodModifier
     @SubscribeEvent(priority=EventPriority.HIGHEST)
     public void getModifiedFoodValues(FoodEvent.GetFoodValues event)
     {
+        if (!IguanaConfig.modifyFoodValues)
+            return;
+
         FoodValues modifiedFoodValues = lookupModifiedFoodValues(event.food);
         if (modifiedFoodValues != null)
             event.foodValues = modifiedFoodValues;
