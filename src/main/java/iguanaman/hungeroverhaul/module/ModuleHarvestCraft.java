@@ -27,7 +27,6 @@ public class ModuleHarvestCraft
         if (IguanaConfig.modifyFoodValues)
         {
             // crop special cases (unsure why these are singled out, exactly; was like this in 1.6.4)
-            @SuppressWarnings("unchecked")
             List<Item> lowerSaturationCrops = Arrays.asList(new Item[]{
             ItemRegistry.riceItem,
             ItemRegistry.chilipepperItem,

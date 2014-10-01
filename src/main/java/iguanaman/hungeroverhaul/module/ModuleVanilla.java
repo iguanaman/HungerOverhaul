@@ -10,7 +10,6 @@ import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import net.minecraftforge.common.BiomeDictionary.Type;
 import squeek.applecore.api.food.FoodValues;
-import cpw.mods.fml.common.Loader;
 
 public class ModuleVanilla
 {
