@@ -32,7 +32,7 @@ import iguanaman.hungeroverhaul.util.IguanaEventHook;
 import iguanaman.hungeroverhaul.util.RecipeRemover;
 import iguanaman.hungeroverhaul.util.ItemTweaks;
 
-@Mod(modid = "HungerOverhaul", name = "Hunger Overhaul", version = "${version}", dependencies = "required-after:Forge@[10.13,);required-after:AppleCore;after:TConstruct;after:harvestcraft;after:temperateplants;after:randomplants;after:weeeflowers;after:Natura;after:IC2")
+@Mod(modid = "HungerOverhaul", name = "Hunger Overhaul", version = "${version}", dependencies = "required-after:Forge@[10.13,);required-after:AppleCore;after:TConstruct;after:harvestcraft;after:temperateplants;after:randomplants;after:weeeflowers;after:Natura;after:IC2;after:*")
 public class HungerOverhaul
 {
     public static final Logger Log = LogManager.getLogger("HungerOverhaul");
