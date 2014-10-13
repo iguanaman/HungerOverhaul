@@ -30,7 +30,11 @@ public class ModulePlantGrowth
 
     public static PlantGrowthModification getPlantGrowthModification(Block block)
     {
+        if (block == null)
+            return null;
+
         PlantGrowthModification growthModification = plantGrowthModificationsByBlock.get(block);
+
         if (growthModification != null)
             return growthModification;
         else
