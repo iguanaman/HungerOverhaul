@@ -62,6 +62,7 @@ public class IguanaConfig
 
     // food
     public static boolean modifyFoodValues;
+    public static boolean useHOFoodValues;
     public static boolean addFoodTooltips;
     public static boolean modifyFoodStackSize;
     public static boolean modifyFoodEatingSpeed;
@@ -307,8 +308,12 @@ public class IguanaConfig
         config.getCategory("food").setComment("Food related options");
 
         Property modifyFoodValuesProperty = config.get("food", "modifyFoodValues", true);
-        modifyFoodValuesProperty.comment = "Changes the replenishment value of vanilla and HarvestCraft foods";
+        modifyFoodValuesProperty.comment = "Enables/disables all food value modification";
         modifyFoodValues = modifyFoodValuesProperty.getBoolean(true);
+
+        Property useHOFoodValuesProperty = config.get("food", "useHOFoodValues", true);
+        useHOFoodValuesProperty.comment = "Enables/disables Hunger Overhaul manually setting the food values for supported mods ('modifyFoodValues' must be true)";
+        useHOFoodValues = useHOFoodValuesProperty.getBoolean(true);
 
         Property addFoodTooltipsProperty = config.get("food", "addFoodTooltips", true);
         addFoodTooltipsProperty.comment = "Add tooltips to food items showing hints at food value";

@@ -24,7 +24,7 @@ public class ModuleHarvestCraft
     public static void init()
     {
         // SETUP VALUES
-        if (IguanaConfig.modifyFoodValues)
+        if (IguanaConfig.modifyFoodValues && IguanaConfig.useHOFoodValues)
         {
             // crop special cases (unsure why these are singled out, exactly; was like this in 1.6.4)
             List<Item> lowerSaturationCrops = Arrays.asList(new Item[]{

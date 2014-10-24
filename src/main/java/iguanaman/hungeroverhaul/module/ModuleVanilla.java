@@ -18,7 +18,7 @@ public class ModuleVanilla
         /*
          * Food values
          */
-        if (IguanaConfig.modifyFoodValues)
+        if (IguanaConfig.modifyFoodValues && IguanaConfig.useHOFoodValues)
         {
             FoodModifier.setModifiedFoodValues(Items.apple, new FoodValues(1, 0.05F));
             FoodModifier.setModifiedFoodValues(Items.bread, new FoodValues(3, 0.2F));

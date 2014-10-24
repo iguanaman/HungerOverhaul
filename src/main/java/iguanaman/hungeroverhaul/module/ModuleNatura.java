@@ -30,7 +30,7 @@ public class ModuleNatura
         /*
          * Food values
          */
-        if (IguanaConfig.modifyFoodValues)
+        if (IguanaConfig.modifyFoodValues && IguanaConfig.useHOFoodValues)
         {
             for (int i = 0; i < 4; i++)
                 FoodModifier.setModifiedFoodValues(new ItemStack(NContent.berryItem, 1, i), new FoodValues(1, 0.1F));
