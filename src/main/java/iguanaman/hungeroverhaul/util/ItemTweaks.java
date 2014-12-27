@@ -69,16 +69,22 @@ public class ItemTweaks
 
     public static void modifyStackSize(Item item, ItemStack stack, FoodValues values)
     {
+        int curStackSize = item.getItemStackLimit(stack);
+        int newStackSize = curStackSize;
+
         if (values.hunger <= 2)
-            item.setMaxStackSize(16 * IguanaConfig.foodStackSizeMultiplier);
+            newStackSize = 16 * IguanaConfig.foodStackSizeMultiplier;
         else if (values.hunger <= 5)
-            item.setMaxStackSize(8 * IguanaConfig.foodStackSizeMultiplier);
+            newStackSize = 8 * IguanaConfig.foodStackSizeMultiplier;
         else if (values.hunger <= 8)
-            item.setMaxStackSize(4 * IguanaConfig.foodStackSizeMultiplier);
+            newStackSize = 4 * IguanaConfig.foodStackSizeMultiplier;
         else if (values.hunger <= 11)
-            item.setMaxStackSize(2 * IguanaConfig.foodStackSizeMultiplier);
+            newStackSize = 2 * IguanaConfig.foodStackSizeMultiplier;
         else
-            item.setMaxStackSize(IguanaConfig.foodStackSizeMultiplier);
+            newStackSize = IguanaConfig.foodStackSizeMultiplier;
+
+        if (curStackSize > newStackSize)
+            item.setMaxStackSize(newStackSize);
     }
 
     public static void addButcherTrade(Item item, ItemStack stack, FoodValues values)
