@@ -52,6 +52,21 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 public class IguanaEventHook
 {
+    private static long lastRightClickCrop = 0;
+    public static ItemAndBlockList rightClickHarvestBlacklist = new ItemAndBlockList();
+    public static ItemAndBlockList harvestDropsBlacklist = new ItemAndBlockList();
+    static
+    {
+        if (Loader.isModLoaded("ExtraUtilities"))
+        {
+            Block enderLilly = Block.getBlockFromName("ExtraUtilities:plant/ender_lilly");
+            if (enderLilly != null)
+            {
+                rightClickHarvestBlacklist.add(enderLilly);
+                harvestDropsBlacklist.add(enderLilly);
+            }
+        }
+    }
 
     @SubscribeEvent
     public void onLivingUpdate(LivingUpdateEvent event)
@@ -299,8 +314,6 @@ public class IguanaEventHook
         }
     }
 
-    static long lastRightClickCrop = 0;
-
     @SubscribeEvent
     public void onPlayerInteraction(PlayerInteractEvent event)
     {
@@ -343,8 +356,7 @@ public class IguanaEventHook
         int resultingMeta = -1;
 
         // certain things we don't want to add right-click harvest support for
-        // TODO: allow the user to set a custom blacklist?
-        if (clicked == Block.getBlockFromName("ExtraUtilities:plant/ender_lilly"))
+        if (rightClickHarvestBlacklist.contains(clicked))
             return;
 
         if (Loader.isModLoaded("Natura") && clicked instanceof CropBlock)
@@ -391,8 +403,7 @@ public class IguanaEventHook
     public void onBlockHarvested(BlockEvent.HarvestDropsEvent event)
     {
         // certain things we don't want to modify the drops of
-        // TODO: allow the user to set a custom blacklist?
-        if (event.block == Block.getBlockFromName("ExtraUtilities:plant/ender_lilly"))
+        if (harvestDropsBlacklist.contains(event.block))
             return;
 
         boolean isNaturaCrop = Loader.isModLoaded("Natura") && event.block instanceof CropBlock;
