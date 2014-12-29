@@ -2,14 +2,11 @@ package iguanaman.hungeroverhaul.util;
 
 import iguanaman.hungeroverhaul.HungerOverhaul;
 import iguanaman.hungeroverhaul.food.FoodModifier;
-import net.minecraft.block.Block;
-import net.minecraft.item.Item;
 
 import com.google.common.collect.ImmutableList;
 
 import cpw.mods.fml.common.event.FMLInterModComms;
 import cpw.mods.fml.common.event.FMLInterModComms.IMCMessage;
-import cpw.mods.fml.common.registry.GameData;
 
 public class IMCHandler
 {
@@ -38,35 +35,20 @@ public class IMCHandler
 
             if (blacklist != null)
             {
-                if (message.isItemStackMessage())
+                if (message.isItemStackMessage() && message.getItemStackValue() != null)
                 {
                     blacklist.add(message.getItemStackValue());
                 }
-                else if (message.isStringMessage())
+                else if (message.isStringMessage() && message.getStringValue() != null)
                 {
-                    String msg = message.getStringValue();
-                    if (msg.contains(":"))
+                    try
                     {
-                        Item item = GameData.getItemRegistry().getObject(msg);
-                        Block block = GameData.getBlockRegistry().getObject(msg);
-
-                        if (item != null)
-                            blacklist.add(item);
-                        if (block != null)
-                            blacklist.add(block);
+                        blacklist.add(message.getStringValue());
                     }
-                    else
+                    catch (ClassNotFoundException e)
                     {
-                        try
-                        {
-                            Class<?> clazz = Class.forName(message.getStringValue());
-                            blacklist.add(clazz);
-                        }
-                        catch (ClassNotFoundException e)
-                        {
-                            HungerOverhaul.Log.error("Class to blacklist not found (sent by mod " + message.getSender() + ")");
-                            e.printStackTrace();
-                        }
+                        HungerOverhaul.Log.error("Class to blacklist not found (IMC sent by mod " + message.getSender() + ")");
+                        e.printStackTrace();
                     }
                 }
             }

@@ -10,6 +10,7 @@ import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
+import cpw.mods.fml.common.registry.GameData;
 
 public class ItemAndBlockList
 {
@@ -26,16 +27,37 @@ public class ItemAndBlockList
     public void add(Item item)
     {
         items.add(item);
+        add(new ItemStack(item));
     }
 
     public void add(Block block)
     {
         blocks.add(block);
+        add(new ItemStack(block));
     }
 
     public void add(ItemStack itemStack)
     {
         itemStacks.add(itemStack);
+    }
+
+    public void add(String objectOrClassName) throws ClassNotFoundException
+    {
+        if (objectOrClassName.contains(":"))
+        {
+            Item item = GameData.getItemRegistry().getObject(objectOrClassName);
+            Block block = GameData.getBlockRegistry().getObject(objectOrClassName);
+
+            if (item != null)
+                add(item);
+            if (block != null)
+                add(block);
+        }
+        else
+        {
+            Class<?> clazz = Class.forName(objectOrClassName);
+            add(clazz);
+        }
     }
 
     public boolean contains(Class<?> clazz)
@@ -87,9 +109,6 @@ public class ItemAndBlockList
             return true;
 
         if (contains(block.getClass()))
-            return true;
-
-        if (contains(Item.getItemFromBlock(block)))
             return true;
 
         return false;

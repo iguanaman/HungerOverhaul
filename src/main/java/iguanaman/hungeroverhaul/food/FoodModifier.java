@@ -24,6 +24,9 @@ public class FoodModifier
         if (!IguanaConfig.modifyFoodValues)
             return;
 
+        if (blacklist.contains(event.food))
+            return;
+
         FoodValues modifiedFoodValues = lookupModifiedFoodValues(event.food);
         if (modifiedFoodValues != null)
             event.foodValues = modifiedFoodValues;
@@ -47,14 +50,11 @@ public class FoodModifier
 
     private static FoodValues lookupModifiedFoodValues(ItemStack stack)
     {
-        if (!blacklist.contains(stack))
+        for (Map.Entry<ItemStack, FoodValues> entry : modifiedFoodValues.entrySet())
         {
-            for (Map.Entry<ItemStack, FoodValues> entry : modifiedFoodValues.entrySet())
+            if (stack.isItemEqual(entry.getKey()))
             {
-                if (stack.isItemEqual(entry.getKey()))
-                {
-                    return entry.getValue();
-                }
+                return entry.getValue();
             }
         }
         return null;
