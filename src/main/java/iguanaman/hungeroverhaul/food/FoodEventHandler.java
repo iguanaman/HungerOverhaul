@@ -147,7 +147,9 @@ public class FoodEventHandler
     {
         if (IguanaConfig.modifyFoodEatingSpeed && event.item != null && event.item.getItem() instanceof ItemFood)
         {
-            event.duration = FoodValues.get(event.item).hunger * 8 + 8;
+            int hunger = FoodValues.get(event.item).hunger;
+            if (hunger > 0)
+                event.duration = hunger * 8 + 8;
         }
     }
 }
