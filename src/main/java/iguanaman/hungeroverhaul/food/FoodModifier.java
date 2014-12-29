@@ -1,6 +1,7 @@
 package iguanaman.hungeroverhaul.food;
 
 import iguanaman.hungeroverhaul.config.IguanaConfig;
+import iguanaman.hungeroverhaul.util.ItemAndBlockList;
 import squeek.applecore.api.food.FoodEvent;
 import squeek.applecore.api.food.FoodValues;
 
@@ -15,11 +16,15 @@ import net.minecraft.item.ItemStack;
 public class FoodModifier
 {
     private static HashMap<ItemStack, FoodValues> modifiedFoodValues = new HashMap<ItemStack, FoodValues>();
+    public static ItemAndBlockList blacklist = new ItemAndBlockList();
 
-    @SubscribeEvent(priority=EventPriority.HIGHEST)
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
     public void getModifiedFoodValues(FoodEvent.GetFoodValues event)
     {
         if (!IguanaConfig.modifyFoodValues)
+            return;
+
+        if (blacklist.contains(event.food))
             return;
 
         FoodValues modifiedFoodValues = lookupModifiedFoodValues(event.food);

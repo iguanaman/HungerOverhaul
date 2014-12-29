@@ -24,10 +24,12 @@ import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.common.event.FMLInterModComms;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import iguanaman.hungeroverhaul.food.FoodModifier;
 import iguanaman.hungeroverhaul.potion.PotionWellFed;
 import iguanaman.hungeroverhaul.util.ComponentVillageCustomField;
+import iguanaman.hungeroverhaul.util.IMCHandler;
 import iguanaman.hungeroverhaul.util.IguanaEventHook;
 import iguanaman.hungeroverhaul.util.RecipeRemover;
 import iguanaman.hungeroverhaul.util.ItemTweaks;
@@ -42,6 +44,7 @@ public class HungerOverhaul
     public static HungerOverhaul instance;
 
     public static Potion potionWellFed;
+
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
@@ -69,16 +72,16 @@ public class HungerOverhaul
         MinecraftForge.EVENT_BUS.register(new ModulePlantGrowth());
         MinecraftForge.EVENT_BUS.register(new ModuleBonemeal());
         ModuleVanilla.init();
-        if(Loader.isModLoaded("harvestcraft"))
+        if (Loader.isModLoaded("harvestcraft"))
         {
             PamsModsHelper.loadHC();
             ModuleHarvestCraft.init();
         }
-        if(Loader.isModLoaded("temperateplants"))
+        if (Loader.isModLoaded("temperateplants"))
             ModuleTemperatePlants.init();
-        if(Loader.isModLoaded("randomplants"))
+        if (Loader.isModLoaded("randomplants"))
             ModuleRandomPlants.init();
-        if(Loader.isModLoaded("weeeflowers"))
+        if (Loader.isModLoaded("weeeflowers"))
         {
             PamsModsHelper.loadWF();
             ModuleWeeeFlowers.init();
@@ -105,5 +108,11 @@ public class HungerOverhaul
         ItemTweaks.init();
         MinecraftForge.EVENT_BUS.register(new IguanaEventHook());
         FMLCommonHandler.instance().bus().register(new ModuleRespawnHunger());
+    }
+
+    @EventHandler
+    public void handleIMCMessages(FMLInterModComms.IMCEvent event)
+    {
+        IMCHandler.processMessages(event.getMessages());
     }
 }
