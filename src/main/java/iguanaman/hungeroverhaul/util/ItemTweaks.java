@@ -8,11 +8,11 @@ import cpw.mods.fml.common.registry.VillagerRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.WeightedRandomChestContent;
 import net.minecraftforge.common.ChestGenHooks;
 import iguanaman.hungeroverhaul.config.IguanaConfig;
-import squeek.applecore.api.AppleCoreAPI;
 import squeek.applecore.api.food.FoodValues;
 
 public class ItemTweaks
@@ -28,8 +28,8 @@ public class ItemTweaks
 
     public static void init()
     {
-        boolean worthLooping = IguanaConfig.modifyFoodStackSize 
-                || IguanaConfig.addTradesButcher 
+        boolean worthLooping = IguanaConfig.modifyFoodStackSize
+                || IguanaConfig.addTradesButcher
                 || IguanaConfig.addHarvestCraftChestLoot
                 || IguanaConfig.addTradesFarmer
                 || IguanaConfig.addSaplingTradesFarmer;
@@ -38,7 +38,7 @@ public class ItemTweaks
             for (Object obj : Item.itemRegistry)
             {
                 Item item = (Item) obj;
-                if (AppleCoreAPI.accessor.isFood(new ItemStack(item)))
+                if (item instanceof ItemFood)
                 {
                     ItemStack stack = new ItemStack(item);
                     FoodValues values = FoodValues.get(stack);
