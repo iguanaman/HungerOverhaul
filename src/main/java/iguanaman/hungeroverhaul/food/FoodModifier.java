@@ -30,11 +30,16 @@ public class FoodModifier
         FoodValues modifiedFoodValues = lookupModifiedFoodValues(event.food);
         if (modifiedFoodValues != null)
             event.foodValues = modifiedFoodValues;
-        else if (IguanaConfig.modFoodValueDivider != 1)
+        else
         {
-            int foodValue = Math.max(Math.round(event.foodValues.hunger / (float) IguanaConfig.modFoodValueDivider), 1);
-            float saturationValue = Math.max(foodValue / 20F, 0F);
-            event.foodValues = new FoodValues(foodValue, saturationValue);
+            int hunger = Math.max(Math.round(event.foodValues.hunger / IguanaConfig.foodHungerDivider), 1);
+            float saturation = event.foodValues.saturationModifier;
+            if (IguanaConfig.foodHungerToSaturationDivider != 0)
+            {
+                saturation = hunger / (float) IguanaConfig.foodHungerToSaturationDivider;
+            }
+            saturation /= IguanaConfig.foodSaturationDivider;
+            event.foodValues = new FoodValues(hunger, saturation);
         }
     }
 

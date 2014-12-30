@@ -5,14 +5,13 @@ import java.io.File;
 import net.minecraft.util.EnumChatFormatting;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.common.config.Property;
-
 import cpw.mods.fml.client.event.ConfigChangedEvent;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 
 public class IguanaConfig
 {
     public static Configuration config;
-    public static final String[] CATEGORIES = new String[] {"getting seeds", "delays", "harvesting", "custom field", "difficulty scaling", "food", "harvestcraft", "hunger", "low stats", "health"};
+    public static final String[] CATEGORIES = new String[]{"getting seeds", "delays", "harvesting", "custom field", "difficulty scaling", "food", "harvestcraft", "hunger", "low stats", "health"};
 
     // seeds + hoes
     public static boolean allSeedsEqual;
@@ -67,7 +66,11 @@ public class IguanaConfig
     public static boolean modifyFoodStackSize;
     public static boolean modifyFoodEatingSpeed;
     public static int foodStackSizeMultiplier;
+    @Deprecated
     public static int modFoodValueDivider;
+    public static float foodHungerDivider;
+    public static float foodSaturationDivider;
+    public static float foodHungerToSaturationDivider;
     public static boolean addWellFedEffect;
 
     // harvestcraft integration
@@ -104,7 +107,8 @@ public class IguanaConfig
 
     public static void init(File file)
     {
-        if(config == null) {
+        if (config == null)
+        {
             config = new Configuration(file);
             reload();
         }
@@ -113,7 +117,8 @@ public class IguanaConfig
     @SubscribeEvent
     public void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event)
     {
-        if(event.modID.equals("HungerOverhaul")) {
+        if (event.modID.equals("HungerOverhaul"))
+        {
             reload();
         }
     }
@@ -332,10 +337,24 @@ public class IguanaConfig
         foodStackSizeMultiplier = Math.max(foodStackSizeMultiplierProperty.getInt(1), 1);
         foodStackSizeMultiplierProperty.set(foodStackSizeMultiplier);
 
-        Property modFoodValueDividerProperty = config.get("food", "modFoodValueDivider", 4);
-        modFoodValueDividerProperty.comment = "Other mod's food replenishment values are divided by this ('modifyFoodValues' must be true)";
-        modFoodValueDivider = Math.max(modFoodValueDividerProperty.getInt(4), 1);
-        modFoodValueDividerProperty.set(modFoodValueDivider);
+        // renamed to foodHungerDivider; this will transfer the old value over
+        int oldFoodValueDividerValue = Math.max(config.get("food", "modFoodValueDivider", 4).getInt(4), 1);
+        config.getCategory("food").remove("modFoodValueDivider");
+
+        Property foodHungerDividerProperty = config.get("food", "foodHungerDivider", (float) oldFoodValueDividerValue);
+        foodHungerDividerProperty.comment = "Food values not manually set (see 'useHOFoodValues') will have their hunger value divided by this ('modifyFoodValues' must be true)";
+        foodHungerDivider = (float) foodHungerDividerProperty.getDouble();
+
+        // for backwards compatibility
+        modFoodValueDivider = (int) Math.max(foodHungerDivider, 1);
+
+        Property foodSaturationDividerProperty = config.get("food", "foodSaturationDivider", 1.0f);
+        foodSaturationDividerProperty.comment = "Food values not manually set (see 'useHOFoodValues') will have their saturation modifier divided by this ('modifyFoodValues' must be true)\nNote: Gets applied after 'foodHungerToSaturationDivider'";
+        foodSaturationDivider = (float) foodSaturationDividerProperty.getDouble();
+
+        Property foodHungerToSaturationDividerProperty = config.get("food", "foodHungerToSaturationDivider", 20.0f);
+        foodHungerToSaturationDividerProperty.comment = "Food values not manually set (see 'useHOFoodValues') will have their saturation modifier set to <modified hunger> divided by this ('modifyFoodValues' must be true)\nSet to 0 to disable";
+        foodHungerToSaturationDivider = (float) foodHungerToSaturationDividerProperty.getDouble();
 
         Property addWellFedEffectProperty = config.get("food", "addWellFedEffect", true);
         addWellFedEffectProperty.comment = "Adds a 'well fed' effect that gives slight health regen";
