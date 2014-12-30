@@ -1,6 +1,5 @@
 package iguanaman.hungeroverhaul.food;
 
-import net.minecraft.item.ItemFood;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraftforge.event.entity.player.PlayerUseItemEvent;
@@ -145,7 +144,7 @@ public class FoodEventHandler
     @SubscribeEvent
     public void onFoodStartEating(PlayerUseItemEvent.Start event)
     {
-        if (IguanaConfig.modifyFoodEatingSpeed && event.item != null && event.item.getItem() instanceof ItemFood)
+        if (IguanaConfig.modifyFoodEatingSpeed && AppleCoreAPI.accessor.isFood(event.item))
         {
             int hunger = FoodValues.get(event.item).hunger;
             if (hunger > 0)
