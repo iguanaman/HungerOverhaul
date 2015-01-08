@@ -55,21 +55,33 @@ public class JsonModule
         HungerOverhaul.Log.info("Loading data from json");
         for (HOJsonData h : hoData)
         {
-            for (Food f : h.foods)
+            if (h.foods != null)
             {
-                FoodModifier.setModifiedFoodValues(f.toItemStack(), f.toFoodValues());
+                for (Food f : h.foods)
+                {
+                    FoodModifier.setModifiedFoodValues(f.toItemStack(), f.toFoodValues());
+                }
             }
-            for (GameObject gameObj : h.foodsBlacklist)
+            if (h.foodsBlacklist != null)
             {
-                addGameObjectToList(FoodModifier.blacklist, gameObj);
+                for (GameObject gameObj : h.foodsBlacklist)
+                {
+                    addGameObjectToList(FoodModifier.blacklist, gameObj);
+                }
             }
-            for (GameObject gameObj : h.dropsBlacklist)
+            if (h.dropsBlacklist != null)
             {
-                addGameObjectToList(IguanaEventHook.harvestDropsBlacklist, gameObj);
+                for (GameObject gameObj : h.dropsBlacklist)
+                {
+                    addGameObjectToList(IguanaEventHook.harvestDropsBlacklist, gameObj);
+                }
             }
-            for (GameObject gameObj : h.harvestBlacklist)
+            if (h.harvestBlacklist != null)
             {
-                addGameObjectToList(IguanaEventHook.rightClickHarvestBlacklist, gameObj);
+                for (GameObject gameObj : h.harvestBlacklist)
+                {
+                    addGameObjectToList(IguanaEventHook.rightClickHarvestBlacklist, gameObj);
+                }
             }
         }
         HungerOverhaul.Log.info("Loaded all data from JSON");
