@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.util.List;
 
+import squeek.applecore.api.food.FoodValues;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
 
@@ -59,7 +60,10 @@ public class JsonModule
             {
                 for (Food f : h.foods)
                 {
-                    FoodModifier.setModifiedFoodValues(f.toItemStack(), f.toFoodValues());
+                    ItemStack itemStack = f.toItemStack();
+                    FoodValues foodValues = f.toFoodValues();
+                    if (itemStack != null && itemStack.getItem() != null && foodValues != null)
+                        FoodModifier.setModifiedFoodValues(itemStack, foodValues);
                 }
             }
             if (h.foodsBlacklist != null)
