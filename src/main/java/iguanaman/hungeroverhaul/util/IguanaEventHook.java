@@ -29,6 +29,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.EnumChatFormatting;
 import net.minecraft.util.StatCollector;
 import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
@@ -261,18 +262,18 @@ public class IguanaEventHook
                 float healthPercent = player.getHealth() / player.getMaxHealth();
 
                 if (healthPercent <= 0.15F)
-                    event.left.add("\u00A7cDying\u00A7r");
+                    event.left.add(EnumChatFormatting.RED + StatCollector.translateToLocal("hungeroverhaul.dying") + EnumChatFormatting.RESET);
                 else if (healthPercent <= 0.3F)
-                    event.left.add("\u00A7eInjured\u00A7r");
+                    event.left.add(EnumChatFormatting.YELLOW + StatCollector.translateToLocal("hungeroverhaul.injured") + EnumChatFormatting.RESET);
                 else if (healthPercent < 0.5F)
-                    event.left.add("\u00A7fHurt\u00A7r");
+                    event.left.add(EnumChatFormatting.WHITE + StatCollector.translateToLocal("hungeroverhaul.hurt") + EnumChatFormatting.RESET);
 
                 if (player.getFoodStats().getFoodLevel() <= 6)
-                    event.right.add("\u00A7cStarving\u00A7r");
+                    event.right.add(EnumChatFormatting.RED + StatCollector.translateToLocal("hungeroverhaul.starving") + EnumChatFormatting.RESET);
                 else if (player.getFoodStats().getFoodLevel() <= 10)
-                    event.right.add("\u00A7eHungry\u00A7r");
+                    event.right.add(EnumChatFormatting.YELLOW + StatCollector.translateToLocal("hungeroverhaul.hungry") + EnumChatFormatting.RESET);
                 else if (player.getFoodStats().getFoodLevel() <= 14)
-                    event.right.add("\u00A7fPeckish\u00A7r");
+                    event.right.add(EnumChatFormatting.WHITE + StatCollector.translateToLocal("hungeroverhaul.peckish") + EnumChatFormatting.RESET);
             }
         }
     }

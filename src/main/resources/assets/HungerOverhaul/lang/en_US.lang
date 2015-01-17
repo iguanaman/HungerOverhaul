@@ -19,3 +19,11 @@ hungeroverhaul.feast=feast
 # if necessary, special cases for the meal descriptors can be handled by
 # defining combined strings like so (remove the #)
 #hungeroverhaul.hearty.largemeal=hearty large meal
+
+# health/hunger status text
+hungeroverhaul.dying=Dying
+hungeroverhaul.injured=Injured
+hungeroverhaul.hurt=Hurt
+hungeroverhaul.starving=Starving
+hungeroverhaul.hungry=Hungry
+hungeroverhaul.peckish=Peckish
