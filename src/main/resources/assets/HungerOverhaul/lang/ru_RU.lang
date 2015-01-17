@@ -20,6 +20,14 @@ hungeroverhaul.feast=пир
 # defining combined strings like so (remove the #)
 #hungeroverhaul.hearty.largemeal=hearty large meal
 
+# health/hunger status text
+hungeroverhaul.dying=Вы умираете
+hungeroverhaul.injured=Вы травмированы
+hungeroverhaul.hurt=Вы ранены
+hungeroverhaul.starving=Вы умираете от голода
+hungeroverhaul.hungry=Вы голодны
+hungeroverhaul.peckish=Вы проголодались
+
 hungeroverhaul.hearty.morsel=здоровая лёгкая закуска
 hungeroverhaul.wholesome.morsel=полезная лёгкая закуска
 hungeroverhaul.nourishing.morsel=сытная лёгкая закуска
