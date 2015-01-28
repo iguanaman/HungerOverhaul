@@ -38,7 +38,8 @@ public class ItemAndBlockList
 
     public void add(ItemStack itemStack)
     {
-        itemStacks.add(itemStack);
+        if (itemStack != null && itemStack.getItem() != null)
+            itemStacks.add(itemStack);
     }
 
     public void add(String objectOrClassName) throws ClassNotFoundException
@@ -78,10 +79,13 @@ public class ItemAndBlockList
 
     public boolean contains(ItemStack itemStack)
     {
-        for (ItemStack curItemStack : itemStacks)
+        if (itemStack != null && itemStack.getItem() != null)
         {
-            if (OreDictionary.itemMatches(curItemStack, itemStack, false))
-                return true;
+            for (ItemStack curItemStack : itemStacks)
+            {
+                if (OreDictionary.itemMatches(curItemStack, itemStack, false))
+                    return true;
+            }
         }
         return false;
     }

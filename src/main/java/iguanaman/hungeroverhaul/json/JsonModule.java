@@ -93,6 +93,9 @@ public class JsonModule
 
     public static void addGameObjectToList(ItemAndBlockList list, GameObject gameObj)
     {
+        if (gameObj.name.isEmpty())
+            return;
+
         if (gameObj.meta == OreDictionary.WILDCARD_VALUE)
         {
             if (gameObj.toBlock() != null)
