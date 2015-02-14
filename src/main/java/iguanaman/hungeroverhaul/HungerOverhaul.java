@@ -1,5 +1,7 @@
 package iguanaman.hungeroverhaul;
 
+import java.io.File;
+
 import cpw.mods.fml.common.registry.VillagerRegistry;
 import iguanaman.hungeroverhaul.config.IguanaConfig;
 import iguanaman.hungeroverhaul.json.JsonModule;
@@ -48,7 +50,7 @@ public class HungerOverhaul
     @EventHandler
     public void preInit(FMLPreInitializationEvent event)
     {
-        IguanaConfig.init(event.getSuggestedConfigurationFile());
+        IguanaConfig.init(new File(event.getModConfigurationDirectory(), "HungerOverhaul"), event.getSuggestedConfigurationFile());
         FMLCommonHandler.instance().bus().register(new IguanaConfig());
         JsonModule.preinit(event.getModConfigurationDirectory());
         potionWellFed = new PotionWellFed();
