@@ -251,7 +251,7 @@ public class IguanaConfig
     @Deprecated
     public static final ConfigOption<Boolean> addSleepHungerLoss = removeOption(CATEGORY_HUNGER, "addSleepHungerLoss", false);
     @Deprecated
-    public static final ConfigOption<Boolean> difficultyScalingSleepHungerLoss = removeOption(CATEGORY_HUNGER, "difficultyScalingSleepHungerLoss", true);
+    public static final ConfigOption<Boolean> difficultyScalingSleepHungerLoss = removeOption(CATEGORY_DIFFICULTY_SCALING, "difficultyScalingSleepHungerLoss", true);
 
     public static void init(File configDir, File oldConfigFile)
     {
