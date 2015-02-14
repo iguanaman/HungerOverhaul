@@ -1,9 +1,5 @@
 package iguanaman.hungeroverhaul.json;
 
-import com.google.common.collect.Lists;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
 import iguanaman.hungeroverhaul.HungerOverhaul;
 import iguanaman.hungeroverhaul.food.FoodModifier;
 import iguanaman.hungeroverhaul.util.IguanaEventHook;
@@ -13,14 +9,21 @@ import java.io.File;
 import java.io.FileReader;
 import java.util.List;
 
-import squeek.applecore.api.food.FoodValues;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
+
+import org.apache.commons.io.FilenameUtils;
+
+import squeek.applecore.api.food.FoodValues;
+
+import com.google.common.collect.Lists;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 public class JsonModule
 {
     private static Gson GSON;
-    private static File[] hojsons;
+    private static List<File> hojsons = Lists.newArrayList();
     private static List<HOJsonData> hoData = Lists.newArrayList();
 
     public static void preinit(File configFolder)
@@ -32,7 +35,14 @@ public class JsonModule
         File hoFolder = new File(configFolder, "HungerOverhaul");
         if (!hoFolder.exists())
             hoFolder.mkdirs();
-        hojsons = hoFolder.listFiles();
+
+        for (File potentialConfigFile : configFolder.listFiles())
+        {
+            if (!FilenameUtils.getExtension(potentialConfigFile.getName()).equalsIgnoreCase("json"))
+                continue;
+
+            hojsons.add(potentialConfigFile);
+        }
     }
 
     public static void init()
@@ -56,6 +66,9 @@ public class JsonModule
         HungerOverhaul.Log.info("Loading data from json");
         for (HOJsonData h : hoData)
         {
+            if (h == null)
+                continue;
+
             if (h.foods != null)
             {
                 for (Food f : h.foods)
