@@ -239,8 +239,9 @@ public class IguanaConfig
     public static int foodHealDivider;
     public static final ConfigOption<Integer> healthRegenRatePercentageOption = addOption(CATEGORY_HEALTH, "healthRegenRatePercentage", 100, 0, null, 100, "Speed up or slow down the rate that health regenerates (0 to disable regen)");
     public static int healthRegenRatePercentage;
-    // TODO: blank slate
-    public static final ConfigOption<Integer> lowHealthRegenRateModifierOption = addOption(CATEGORY_HEALTH, "lowHealthRegenRateModifier", 5, 0, null, 5, "The lower your health the longer it takes to regen, modify the effect here (lower = less effect)");
+    public static final ConfigOption<Boolean> modifyRegenRateOnLowHealthOption = addOption(CATEGORY_HEALTH, "modifyRegenRateOnLowHealth", true, false, "The lower your health the longer it takes to regen");
+    public static boolean modifyRegenRateOnLowHealth;
+    public static final ConfigOption<Integer> lowHealthRegenRateModifierOption = addOption(CATEGORY_HEALTH, "lowHealthRegenRateModifier", 5, 0, null, 5, "The lower your health the longer it takes to regen, modify the effect here (lower = less effect) (modifyRegenRateOnLowHealth must be true)");
     public static int lowHealthRegenRateModifier;
 
     // various removed options
@@ -422,6 +423,7 @@ public class IguanaConfig
         foodRegensHealth = foodRegensHealthOption.get(config);
         minHungerToHeal = minHungerToHealOption.get(config);
         healthRegenRatePercentage = healthRegenRatePercentageOption.get(config);
+        modifyRegenRateOnLowHealth = modifyRegenRateOnLowHealthOption.get(config);
         lowHealthRegenRateModifier = lowHealthRegenRateModifierOption.get(config);
         foodHealDivider = foodHealDividerOption.get(config);
 

@@ -112,10 +112,14 @@ public class FoodEventHandler
                 difficultyModifierHealing = 1.5F;
         }
 
-        float lowHealthModifier = event.player.getMaxHealth() - event.player.getHealth();
-        lowHealthModifier *= IguanaConfig.lowHealthRegenRateModifier / 100F;
-        lowHealthModifier *= difficultyModifierHealing;
-        lowHealthModifier = (float) Math.pow(lowHealthModifier + 1F, 1.5F);
+        float lowHealthModifier = 1.0F;
+        if (IguanaConfig.modifyRegenRateOnLowHealth)
+        {
+            lowHealthModifier = event.player.getMaxHealth() - event.player.getHealth();
+            lowHealthModifier *= IguanaConfig.lowHealthRegenRateModifier / 100F;
+            lowHealthModifier *= difficultyModifierHealing;
+            lowHealthModifier = (float) Math.pow(lowHealthModifier + 1F, 1.5F);
+        }
 
         event.regenTickPeriod = Math.round(80.0F * difficultyModifierHealing * wellfedModifier * lowHealthModifier
                 / (IguanaConfig.healthRegenRatePercentage / 100F));
