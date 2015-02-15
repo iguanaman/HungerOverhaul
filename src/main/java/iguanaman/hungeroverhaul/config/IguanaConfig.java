@@ -126,14 +126,15 @@ public class IguanaConfig
     public static int milkedTimeout;
 
     // crop drops
-    // TODO: blank slate
-    public static final ConfigOption<Integer> seedsPerHarvestMinOption = addOption(CATEGORY_HARVESTING, "seedsPerHarvestMin", 0, 0, null, 0, "Minimum number of seeds you get when harvesting a non-tree crop");
+    public static final ConfigOption<Boolean> modifyCropDropsOption = addOption(CATEGORY_HARVESTING, "modifyCropDrops", true, false, "Enables/disables modification of the item drops of crops (produce and seeds)");
+    public static boolean modifyCropDrops;
+    public static final ConfigOption<Integer> seedsPerHarvestMinOption = addOption(CATEGORY_HARVESTING, "seedsPerHarvestMin", 0, 0, null, 0, "Minimum number of seeds you get when harvesting a non-tree crop (modifyCropDrops must be true)");
     public static int seedsPerHarvestMin;
-    public static final ConfigOption<Integer> seedsPerHarvestMaxOption = addOption(CATEGORY_HARVESTING, "seedsPerHarvestMax", 0, 0, null, 0, "Maximum number of seeds you get when harvesting a non-tree crop");
+    public static final ConfigOption<Integer> seedsPerHarvestMaxOption = addOption(CATEGORY_HARVESTING, "seedsPerHarvestMax", 0, 0, null, 0, "Maximum number of seeds you get when harvesting a non-tree crop (modifyCropDrops must be true)");
     public static int seedsPerHarvestMax;
-    public static final ConfigOption<Integer> producePerHarvestMinOption = addOption(CATEGORY_HARVESTING, "producePerHarvestMin", 2, 0, null, 2, "Minimum number of produce you get when harvesting a non-tree crop");
+    public static final ConfigOption<Integer> producePerHarvestMinOption = addOption(CATEGORY_HARVESTING, "producePerHarvestMin", 2, 0, null, 2, "Minimum number of produce you get when harvesting a non-tree crop (modifyCropDrops must be true)");
     public static int producePerHarvestMin;
-    public static final ConfigOption<Integer> producePerHarvestMaxOption = addOption(CATEGORY_HARVESTING, "producePerHarvestMax", 4, 0, null, 4, "Maximum number of produce you get when harvesting a non-tree crop");
+    public static final ConfigOption<Integer> producePerHarvestMaxOption = addOption(CATEGORY_HARVESTING, "producePerHarvestMax", 4, 0, null, 4, "Maximum number of produce you get when harvesting a non-tree crop (modifyCropDrops must be true)");
     public static int producePerHarvestMax;
 
     // village field
@@ -370,6 +371,7 @@ public class IguanaConfig
         breedingTimeoutMultiplier = breedingTimeoutMultiplierOption.get(config);
         childDurationMultiplier = childDurationMultiplierOption.get(config);
         milkedTimeout = milkedTimeoutOption.get(config);
+        modifyCropDrops = modifyCropDropsOption.get(config);
         seedsPerHarvestMin = seedsPerHarvestMinOption.get(config);
         seedsPerHarvestMax = seedsPerHarvestMaxOption.get(config);
         producePerHarvestMin = producePerHarvestMinOption.get(config);

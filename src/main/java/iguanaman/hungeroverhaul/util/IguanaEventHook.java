@@ -403,6 +403,9 @@ public class IguanaEventHook
     @SubscribeEvent
     public void onBlockHarvested(BlockEvent.HarvestDropsEvent event)
     {
+        if (!IguanaConfig.modifyCropDrops)
+            return;
+
         // certain things we don't want to modify the drops of
         if (harvestDropsBlacklist.contains(event.block))
             return;
