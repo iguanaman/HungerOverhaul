@@ -88,8 +88,7 @@ public class IguanaConfig
     public static boolean removeHoeRecipes;
     public static final ConfigOption<Integer> hoeToolDamageMultiplierOption = addOption(CATEGORY_GETTING_SEEDS, "hoeToolDamageMultiplier", 5, 1, null, 1, "Multiplier on tool damage taken when a hoe is used ('modifyHoeUse' must be true)");
     public static int hoeToolDamageMultiplier;
-    // TODO: blank slate
-    public static final ConfigOption<Integer> seedChanceOption = addOption(CATEGORY_GETTING_SEEDS, "seedChance", 20, 0, null, 20, "Chance for seed to drop from hoe use on normal difficulty");
+    public static final ConfigOption<Integer> seedChanceOption = addOption(CATEGORY_GETTING_SEEDS, "seedChance", 20, 0, 100, 20, "Percent chance for seed to drop from hoe use on normal difficulty ('modifyHoeUse' must be true)");
     public static int seedChance;
 
     // delays
@@ -123,7 +122,6 @@ public class IguanaConfig
     public static int breedingTimeoutMultiplier;
     public static final ConfigOption<Integer> childDurationMultiplierOption = addOption(CATEGORY_DELAYS, "childDurationMultiplier", 4, 0, null, 1, "Multiplier applied to the delay before children become adults");
     public static int childDurationMultiplier;
-    // TODO: blank slate?
     public static final ConfigOption<Integer> milkedTimeoutOption = addOption(CATEGORY_DELAYS, "milkedTimeout", 20, 0, null, 0, "Delay (in minutes) after milking a cow before it can be milked again");
     public static int milkedTimeout;
 
