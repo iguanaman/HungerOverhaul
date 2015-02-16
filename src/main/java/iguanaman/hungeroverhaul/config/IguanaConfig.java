@@ -142,11 +142,11 @@ public class IguanaConfig
     // village field
     public static final ConfigOption<Boolean> addCustomVillageFieldOption = addOption(CATEGORY_CUSTOM_FIELD, "addCustomVillageField", true, false, "Adds a custom field to villages");
     public static boolean addCustomVillageField;
-    public static final ConfigOption<Integer> fieldNormalWeightOption = addOption(CATEGORY_CUSTOM_FIELD, "fieldNormalWeight", 70, 0, null, 70, "Weighted chance for custom field to contain 'normal' crops");
+    public static final ConfigOption<Integer> fieldNormalWeightOption = addOption(CATEGORY_CUSTOM_FIELD, "fieldNormalWeight", 70, 0, null, 0, "Weighted chance for custom field to contain 'normal' crops");
     public static int fieldNormalWeight;
-    public static final ConfigOption<Integer> fieldReedWeightOption = addOption(CATEGORY_CUSTOM_FIELD, "fieldReedWeight", 10, 0, null, 10, "Weighted chance for custom field to contain reeds");
+    public static final ConfigOption<Integer> fieldReedWeightOption = addOption(CATEGORY_CUSTOM_FIELD, "fieldReedWeight", 10, 0, null, 0, "Weighted chance for custom field to contain reeds");
     public static int fieldReedWeight;
-    public static final ConfigOption<Integer> fieldStemWeightOption = addOption(CATEGORY_CUSTOM_FIELD, "fieldStemWeight", 10, 0, null, 10, "Weighted chance for custom field to contain pumpkins/melons");
+    public static final ConfigOption<Integer> fieldStemWeightOption = addOption(CATEGORY_CUSTOM_FIELD, "fieldStemWeight", 10, 0, null, 0, "Weighted chance for custom field to contain pumpkins/melons");
     public static int fieldStemWeight;
 
     // difficulty scaling
