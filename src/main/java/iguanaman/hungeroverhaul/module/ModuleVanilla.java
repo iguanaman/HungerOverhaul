@@ -1,5 +1,6 @@
 package iguanaman.hungeroverhaul.module;
 
+import cpw.mods.fml.common.registry.GameRegistry;
 import iguanaman.hungeroverhaul.config.IguanaConfig;
 import iguanaman.hungeroverhaul.food.FoodModifier;
 import iguanaman.hungeroverhaul.util.BonemealModification;
@@ -9,12 +10,16 @@ import net.minecraft.init.Items;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
 import net.minecraftforge.common.BiomeDictionary.Type;
+import net.minecraftforge.oredict.ShapelessOreRecipe;
 import squeek.applecore.api.food.FoodValues;
 
 public class ModuleVanilla
 {
     public static void init()
     {
+        if (IguanaConfig.addSeedsCraftingRecipe)
+            GameRegistry.addRecipe(new ShapelessOreRecipe(Items.wheat_seeds, Items.wheat));
+
         /*
          * Food values
          */

@@ -90,6 +90,8 @@ public class IguanaConfig
     public static int hoeToolDamageMultiplier;
     public static final ConfigOption<Integer> seedChanceOption = addOption(CATEGORY_GETTING_SEEDS, "seedChance", 20, 0, 100, 20, "Percent chance for seed to drop from hoe use on normal difficulty ('modifyHoeUse' must be true)");
     public static int seedChance;
+    public static final ConfigOption<Boolean> addSeedsCraftingRecipeOption = addOption(CATEGORY_GETTING_SEEDS, "addSeedsCraftingRecipe", true, false, "Adds a crafting recipe to turn 1 wheat into 1 seed");
+    public static boolean addSeedsCraftingRecipe;
 
     // delays
     public static final ConfigOption<Integer> noSunlightRegrowthMultiplierOption = addOption(CATEGORY_DELAYS, "noSunlightRegrowthMultiplier", 2, 0, null, 1, "Multipier on crop growth time without sunlight (1 to disable feature, 0 to make crops only grow in sunlight)");
@@ -355,6 +357,7 @@ public class IguanaConfig
         removeTallGrassSeeds = removeTallGrassSeedsOption.get(config);
         seedChance = seedChanceOption.get(config);
         hoeToolDamageMultiplier = hoeToolDamageMultiplierOption.get(config);
+        addSeedsCraftingRecipe = addSeedsCraftingRecipeOption.get(config);
         noSunlightRegrowthMultiplier = noSunlightRegrowthMultiplierOption.get(config);
         wrongBiomeRegrowthMultiplier = wrongBiomeRegrowthMultiplierOption.get(config);
         wrongBiomeRegrowthMultiplierSugarcane = wrongBiomeRegrowthMultiplierSugarcaneOption.get(config);

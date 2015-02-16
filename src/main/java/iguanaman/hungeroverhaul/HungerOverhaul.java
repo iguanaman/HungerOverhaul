@@ -15,13 +15,11 @@ import org.apache.logging.log4j.Logger;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
-import cpw.mods.fml.common.registry.GameRegistry;
 import iguanaman.hungeroverhaul.food.FoodEventHandler;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.Potion;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.oredict.ShapelessOreRecipe;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -66,9 +64,6 @@ public class HungerOverhaul
     @EventHandler
     public void init(FMLInitializationEvent event)
     {
-        //RECIPES
-        GameRegistry.addRecipe(new ShapelessOreRecipe(Items.wheat_seeds, Items.wheat));
-
         MinecraftForge.EVENT_BUS.register(new FoodEventHandler());
         MinecraftForge.EVENT_BUS.register(new FoodModifier());
         MinecraftForge.EVENT_BUS.register(new ModulePlantGrowth());
