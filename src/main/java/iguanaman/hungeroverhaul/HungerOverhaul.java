@@ -52,13 +52,6 @@ public class HungerOverhaul
         FMLCommonHandler.instance().bus().register(new IguanaConfig());
         JsonModule.preinit(event.getModConfigurationDirectory());
         potionWellFed = new PotionWellFed();
-
-        if (IguanaConfig.removeHoeRecipes)
-        {
-            RecipeRemover.removeAnyRecipe(new ItemStack(Items.wooden_hoe));
-            RecipeRemover.removeAnyRecipe(new ItemStack(Items.stone_hoe));
-        }
-
     }
 
     @EventHandler
@@ -105,6 +98,12 @@ public class HungerOverhaul
         ItemTweaks.init();
         MinecraftForge.EVENT_BUS.register(new IguanaEventHook());
         FMLCommonHandler.instance().bus().register(new ModuleRespawnHunger());
+
+        if (IguanaConfig.removeHoeRecipes)
+        {
+            RecipeRemover.removeAnyRecipe(new ItemStack(Items.wooden_hoe));
+            RecipeRemover.removeAnyRecipe(new ItemStack(Items.stone_hoe));
+        }
     }
 
     @EventHandler
