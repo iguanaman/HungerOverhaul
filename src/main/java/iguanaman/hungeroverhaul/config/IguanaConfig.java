@@ -30,6 +30,7 @@ public class IguanaConfig
     public static final ConfigCategory CATEGORY_DIFFICULTY_SCALING = addCategory("difficulty scaling", "Options to scale the difficulty of certain elements based on game difficulty");
     public static final ConfigCategory CATEGORY_FOOD = addCategory("food", "Food related options");
     public static final ConfigCategory CATEGORY_HARVESTCRAFT = addCategory("harvestcraft", "Options related to HarvestCraft.\n" + EnumChatFormatting.RED + "Only works if HarvestCraft is installed!");
+    public static final ConfigCategory CATEGORY_NATURA = addCategory("natura", "Options related to Natura.\n" + EnumChatFormatting.RED + "Only works if Natura is installed!");
     public static final ConfigCategory CATEGORY_HUNGER = addCategory("hunger", "Options related to hunger");
     public static final ConfigCategory CATEGORY_LOW_STATS = addCategory("low stats", "Options for how to handle when the player get low health/hunger");
     public static final ConfigCategory CATEGORY_HEALTH = addCategory("health", "Options related to health");
@@ -204,6 +205,14 @@ public class IguanaConfig
     public static int chestLootChance;
     public static final ConfigOption<Boolean> foodsUnplantableOption = addOption(CATEGORY_HARVESTCRAFT, "foodsUnplantable", true, false, "Makes HarvestCraft foods unplantable, meaning seeds are required to plant crops");
     public static boolean foodsUnplantable;
+
+    // natura integration
+    public static final ConfigOption<Boolean> removeNaturaFlourCraftingRecipesOption = addOption(CATEGORY_NATURA, "removeNaturaFlourCraftingRecipes", true, false, "Removes the default barley/wheat -> flour recipes.\nNote: These recipes are always removed if 'addSeedsCraftingRecipe' in 'getting seeds' is true because otherwise they'd conflict.");
+    public static boolean removeNaturaFlourCraftingRecipes;
+    public static final ConfigOption<Boolean> removeNaturaFlourSmeltingRecipeOption = addOption(CATEGORY_NATURA, "removeNaturaFlourSmeltingRecipe", true, false, "Removes the default barley/wheat flour -> bread smelting recipes.");
+    public static boolean removeNaturaFlourSmeltingRecipe;
+    public static final ConfigOption<Boolean> addAlternateNaturaFlourCraftingRecipesOption = addOption(CATEGORY_NATURA, "addAlternateNaturaFlourCraftingRecipes", false, false, "Adds alternate recipes to turn barley/wheat into flour: 2x wheat/barley -> flour.");
+    public static boolean addAlternateNaturaFlourCraftingRecipes;
 
     // hunger
     public static final ConfigOption<Boolean> constantHungerLossOption = addOption(CATEGORY_HUNGER, "constantHungerLoss", true, false, "You lose hunger (very slowly) at all times");
@@ -413,6 +422,9 @@ public class IguanaConfig
         chestLootMaxStackSize = chestLootMaxStackSizeOption.get(config);
         chestLootChance = chestLootChanceOption.get(config);
         foodsUnplantable = foodsUnplantableOption.get(config);
+        removeNaturaFlourCraftingRecipes = removeNaturaFlourCraftingRecipesOption.get(config);
+        removeNaturaFlourSmeltingRecipe = removeNaturaFlourSmeltingRecipeOption.get(config);
+        addAlternateNaturaFlourCraftingRecipes = addAlternateNaturaFlourCraftingRecipesOption.get(config);
         constantHungerLoss = constantHungerLossOption.get(config);
         damageOnStarve = damageOnStarveOption.get(config);
         respawnHungerValue = respawnHungerValueOption.get(config);

@@ -13,6 +13,7 @@ import mods.natura.blocks.crops.NetherBerryBush;
 import mods.natura.blocks.trees.SaguaroBlock;
 import mods.natura.common.NContent;
 import net.minecraft.block.Block;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
@@ -24,13 +25,32 @@ public class ModuleNatura
 {
     public static void init()
     {
-        if (IguanaConfig.addSeedsCraftingRecipe)
-            GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(NContent.seeds, 1, 0), new ItemStack(NContent.plantItem, 1, 0)));
+        ItemStack barley = new ItemStack(NContent.plantItem, 1, 0);
+        ItemStack barleySeeds = new ItemStack(NContent.seeds, 1, 0);
+        ItemStack barleyFlour = new ItemStack(NContent.plantItem, 1, 1);
+        ItemStack wheatFlour = new ItemStack(NContent.plantItem, 1, 2);
 
-        RecipeRemover.removeAnyRecipe(new ItemStack(NContent.plantItem, 1, 1));
-        RecipeRemover.removeAnyRecipe(new ItemStack(NContent.plantItem, 1, 2));
-        RecipeRemover.removeFurnaceRecipe(NContent.plantItem, 1);
-        RecipeRemover.removeFurnaceRecipe(NContent.plantItem, 2);
+        if (IguanaConfig.addSeedsCraftingRecipe)
+        {
+            GameRegistry.addRecipe(new ShapelessOreRecipe(barleySeeds, barley));
+        }
+
+        // seed recipe conflicts with the default flour recipe, so remove it
+        if (IguanaConfig.removeNaturaFlourCraftingRecipes || IguanaConfig.addSeedsCraftingRecipe)
+        {
+            RecipeRemover.removeAnyRecipe(barleyFlour);
+            RecipeRemover.removeAnyRecipe(wheatFlour);
+        }
+        if (IguanaConfig.removeNaturaFlourSmeltingRecipe)
+        {
+            RecipeRemover.removeFurnaceRecipe(barleyFlour);
+            RecipeRemover.removeFurnaceRecipe(wheatFlour);
+        }
+        if (IguanaConfig.addAlternateNaturaFlourCraftingRecipes)
+        {
+            GameRegistry.addRecipe(new ShapelessOreRecipe(barleyFlour, barley, barley));
+            GameRegistry.addRecipe(new ShapelessOreRecipe(wheatFlour, Items.wheat, Items.wheat));
+        }
 
         /*
          * Food values
