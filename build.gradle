@@ -93,13 +93,13 @@ dependencies {
 
 // note: the 'repository' url changes with each version
 repositories { ivy { artifactPattern "http://addons.cursecdn.com/files/2223/550/[module] [revision].[ext]" } }
-dependencies { compile "pam:Pam's HarvestCraft:1.7.10f" }
+dependencies { compile "pam:Pam\'s HarvestCraft:1.7.10f" }
 repositories { ivy { artifactPattern "http://addons.cursecdn.com/files/2206/431/[module] [revision].[ext]"} }
-dependencies { compile "pam:Pam's Random Pants:1.7.2a@zip"}
+dependencies { compile "pam:Pam\'s Random Pants:1.7.2a@zip"}
 repositories { ivy { artifactPattern "http://addons.cursecdn.com/files/2206/430/[module] [revision].[ext]"} }
-dependencies { compile "pam:Pam's Temperate Plants:1.7.2b@zip"}
+dependencies { compile "pam:Pam\'s Temperate Plants:1.7.2b@zip"}
 repositories { ivy { artifactPattern "http://addons.cursecdn.com/files/2206/423/[module] [revision].[ext]"} }
-dependencies { compile "pam:Pam's WeeeFlowers:1.7.2b@zip"}
+dependencies { compile "pam:Pam\'s WeeeFlowers:1.7.2b@zip"}
 
 processResources
 {
