@@ -1,10 +1,9 @@
 package iguanaman.hungeroverhaul.util;
 
-import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.FurnaceRecipes;
@@ -27,10 +26,18 @@ public class RecipeRemover
     }
 
     @SuppressWarnings("unchecked")
-    public static void removeFurnaceRecipe(Item item, int metadata)
+    public static void removeFurnaceRecipe(ItemStack furnaceInput)
     {
         Map<ItemStack, ItemStack> recipes = FurnaceRecipes.smelting().getSmeltingList();
-        recipes.remove(Arrays.asList(item, metadata));
+        Iterator<Map.Entry<ItemStack, ItemStack>> recipeIterator = recipes.entrySet().iterator();
+        while (recipeIterator.hasNext())
+        {
+            Map.Entry<ItemStack, ItemStack> entry = recipeIterator.next();
+            if (ItemStack.areItemStacksEqual(entry.getKey(), furnaceInput))
+            {
+                recipeIterator.remove();
+            }
+        }
     }
 
 }
