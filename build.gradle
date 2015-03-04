@@ -37,6 +37,19 @@ repositories {
     maven {
         url "http://www.ryanliptak.com/maven/"
     }
+    ivy {
+        artifactPattern "http://addons.cursecdn.com/files/2223/550/[module] [revision].[ext]"
+    }
+    ivy {
+        artifactPattern "http://addons.cursecdn.com/files/2206/431/[module] [revision].[ext]"
+    }
+    ivy {
+        artifactPattern "http://addons.cursecdn.com/files/2206/430/[module] [revision].[ext]"
+    }
+    ivy { 
+        artifactPattern "http://addons.cursecdn.com/files/2206/423/[module] [revision].[ext]"
+    }
+
 }
 
 // Define properties file
@@ -89,17 +102,11 @@ dependencies {
     compile "tconstruct:TConstruct:${config.minecraft_version}-${config.tcon_version}:deobf"
     compile "com.github.glitchfiend.biomesoplenty:BiomesOPlenty:${config.minecraft_version}-${config.bop_version}:deobf"
     compile "applecore:AppleCore:${config.minecraft_version}-${config.applecore_version}:deobf"
+    compile "pam:Pam's HarvestCraft:1.7.10f@jar"
+    compile "pam:Pam's Random Pants:1.7.2a@zip"
+    compile "pam:Pam's Temperate Plants:1.7.2b@zip"
+    compile "pam:Pam's WeeeFlowers:1.7.2b@zip"
 }
-
-// note: the 'repository' url changes with each version
-repositories { ivy { artifactPattern "http://addons.cursecdn.com/files/2223/550/[module] [revision].[ext]" } }
-dependencies { compile "pam:Pam\'s HarvestCraft:1.7.10f" }
-repositories { ivy { artifactPattern "http://addons.cursecdn.com/files/2206/431/[module] [revision].[ext]"} }
-dependencies { compile "pam:Pam\'s Random Pants:1.7.2a@zip"}
-repositories { ivy { artifactPattern "http://addons.cursecdn.com/files/2206/430/[module] [revision].[ext]"} }
-dependencies { compile "pam:Pam\'s Temperate Plants:1.7.2b@zip"}
-repositories { ivy { artifactPattern "http://addons.cursecdn.com/files/2206/423/[module] [revision].[ext]"} }
-dependencies { compile "pam:Pam\'s WeeeFlowers:1.7.2b@zip"}
 
 processResources
 {
