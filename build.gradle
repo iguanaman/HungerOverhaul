@@ -93,7 +93,7 @@ dependencies {
 
 // the single quotes in these filenames seems to cause problems with
 // the jenkins server, so skip this for jenkins builds
-if (System.getenv().BUILD_NUMBER != null) {
+if (System.getenv().BUILD_NUMBER == null) {
     // note: the 'repository' url changes with each version
     repositories { ivy { artifactPattern "http://addons.cursecdn.com/files/2223/550/[module] [revision].[ext]" } }
     dependencies { compile "pam:Pam's HarvestCraft:1.7.10f@jar" }
