@@ -36,7 +36,7 @@ public class JsonModule
         if (!hoFolder.exists())
             hoFolder.mkdirs();
 
-        for (File potentialConfigFile : configFolder.listFiles())
+        for (File potentialConfigFile : hoFolder.listFiles())
         {
             if (!FilenameUtils.getExtension(potentialConfigFile.getName()).equalsIgnoreCase("json"))
                 continue;
