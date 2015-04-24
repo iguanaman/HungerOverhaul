@@ -45,21 +45,32 @@ public class FoodModifier
 
     public static void setModifiedFoodValues(Item item, FoodValues values)
     {
-        modifiedFoodValues.put(new ItemStack(item), values);
+        setModifiedFoodValues(new ItemStack(item), values);
     }
 
     public static void setModifiedFoodValues(ItemStack stack, FoodValues values)
     {
+        ItemStack foundMatchingFood = findMatchingFood(stack);
+        if (foundMatchingFood != null)
+        {
+            modifiedFoodValues.remove(foundMatchingFood);
+        }
         modifiedFoodValues.put(stack, values);
     }
 
     private static FoodValues lookupModifiedFoodValues(ItemStack stack)
     {
+        ItemStack foundMatchingFood = findMatchingFood(stack);
+        return foundMatchingFood != null ? modifiedFoodValues.get(foundMatchingFood) : null;
+    }
+
+    private static ItemStack findMatchingFood(ItemStack stack)
+    {
         for (Map.Entry<ItemStack, FoodValues> entry : modifiedFoodValues.entrySet())
         {
             if (stack.isItemEqual(entry.getKey()))
             {
-                return entry.getValue();
+                return entry.getKey();
             }
         }
         return null;
