@@ -161,40 +161,40 @@ public class IguanaEventHook
                     if (!creative && isPlayer && !event.entityLiving.isDead && healthPercent > 0f)
                     {
 
-                        if (IguanaConfig.addLowStatSlowness)
-                            if (foodLevel <= 1 || healthPercent <= 0.05F)
+                        if (IguanaConfig.addLowHealthSlowness || IguanaConfig.addLowHungerSlowness)
+                            if ((IguanaConfig.addLowHungerSlowness && foodLevel <= 1) || (IguanaConfig.addLowHealthSlowness && healthPercent <= 0.05F))
                                 event.entityLiving.addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 19, 1 + difficultyModifierEffects, true));
-                            else if (foodLevel <= 2 || healthPercent <= 0.10F)
+                            else if ((IguanaConfig.addLowHungerSlowness && foodLevel <= 2) || (IguanaConfig.addLowHealthSlowness && healthPercent <= 0.10F))
                                 event.entityLiving.addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 19, difficultyModifierEffects, true));
-                            else if ((foodLevel <= 3 || healthPercent <= 0.15F) && difficultyModifierEffects >= 1)
+                            else if (((IguanaConfig.addLowHungerSlowness && foodLevel <= 3) || (IguanaConfig.addLowHealthSlowness && healthPercent <= 0.15F)) && difficultyModifierEffects >= 1)
                                 event.entityLiving.addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 19, -1 + difficultyModifierEffects, true));
-                            else if ((foodLevel <= 4 || healthPercent <= 0.20F) && difficultyModifierEffects >= 2)
+                            else if (((IguanaConfig.addLowHungerSlowness && foodLevel <= 4) || (IguanaConfig.addLowHealthSlowness && healthPercent <= 0.20F)) && difficultyModifierEffects >= 2)
                                 event.entityLiving.addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 19, -2 + difficultyModifierEffects, true));
-                            else if ((foodLevel <= 5 || healthPercent <= 0.25F) && difficultyModifierEffects >= 3)
+                            else if (((IguanaConfig.addLowHungerSlowness && foodLevel <= 5) || (IguanaConfig.addLowHealthSlowness && healthPercent <= 0.25F)) && difficultyModifierEffects >= 3)
                                 event.entityLiving.addPotionEffect(new PotionEffect(Potion.moveSlowdown.id, 19, -3 + difficultyModifierEffects, true));
 
-                        if (IguanaConfig.addLowStatMiningSlowdown)
-                            if (foodLevel <= 1 || healthPercent <= 0.05F)
+                        if (IguanaConfig.addLowHealthMiningSlowdown || IguanaConfig.addLowHungerMiningSlowdown)
+                            if ((IguanaConfig.addLowHungerMiningSlowdown && foodLevel <= 1) || (IguanaConfig.addLowHealthMiningSlowdown && healthPercent <= 0.05F))
                                 event.entityLiving.addPotionEffect(new PotionEffect(Potion.digSlowdown.id, 19, 1 + difficultyModifierEffects, true));
-                            else if (foodLevel <= 2 || healthPercent <= 0.10F)
+                            else if ((IguanaConfig.addLowHungerMiningSlowdown && foodLevel <= 2) || (IguanaConfig.addLowHealthMiningSlowdown && healthPercent <= 0.10F))
                                 event.entityLiving.addPotionEffect(new PotionEffect(Potion.digSlowdown.id, 19, difficultyModifierEffects, true));
-                            else if ((foodLevel <= 3 || healthPercent <= 0.15F) && difficultyModifierEffects >= 1)
+                            else if (((IguanaConfig.addLowHungerMiningSlowdown && foodLevel <= 3) || (IguanaConfig.addLowHealthMiningSlowdown && healthPercent <= 0.15F)) && difficultyModifierEffects >= 1)
                                 event.entityLiving.addPotionEffect(new PotionEffect(Potion.digSlowdown.id, 19, -1 + difficultyModifierEffects, true));
-                            else if ((foodLevel <= 4 || healthPercent <= 0.20F) && difficultyModifierEffects >= 2)
+                            else if (((IguanaConfig.addLowHungerMiningSlowdown && foodLevel <= 4) || (IguanaConfig.addLowHealthMiningSlowdown && healthPercent <= 0.20F)) && difficultyModifierEffects >= 2)
                                 event.entityLiving.addPotionEffect(new PotionEffect(Potion.digSlowdown.id, 19, -2 + difficultyModifierEffects, true));
-                            else if ((foodLevel <= 5 || healthPercent <= 0.25F) && difficultyModifierEffects >= 3)
+                            else if (((IguanaConfig.addLowHungerMiningSlowdown && foodLevel <= 5) || (IguanaConfig.addLowHealthMiningSlowdown && healthPercent <= 0.25F)) && difficultyModifierEffects >= 3)
                                 event.entityLiving.addPotionEffect(new PotionEffect(Potion.digSlowdown.id, 19, -3 + difficultyModifierEffects, true));
 
-                        if (IguanaConfig.addLowStatWeakness)
+                        if (IguanaConfig.addLowHealthWeakness || IguanaConfig.addLowHungerWeakness)
                             //Weakness effect
-                            if ((foodLevel <= 1 || healthPercent <= 0.05F) && difficultyModifierEffects >= 1)
+                            if (((IguanaConfig.addLowHungerWeakness && foodLevel <= 1) || (IguanaConfig.addLowHealthWeakness && healthPercent <= 0.05F)) && difficultyModifierEffects >= 1)
                                 event.entityLiving.addPotionEffect(new PotionEffect(Potion.weakness.id, 19, -1 + difficultyModifierEffects, true));
-                            else if ((foodLevel <= 2 || healthPercent <= 0.10F) && difficultyModifierEffects >= 2)
+                            else if (((IguanaConfig.addLowHungerWeakness && foodLevel <= 2) || (IguanaConfig.addLowHealthWeakness && healthPercent <= 0.10F)) && difficultyModifierEffects >= 2)
                                 event.entityLiving.addPotionEffect(new PotionEffect(Potion.weakness.id, 19, -2 + difficultyModifierEffects, true));
-                            else if ((foodLevel <= 3 || healthPercent <= 0.15F) && difficultyModifierEffects >= 3)
+                            else if (((IguanaConfig.addLowHungerWeakness && foodLevel <= 3) || (IguanaConfig.addLowHealthWeakness && healthPercent <= 0.15F)) && difficultyModifierEffects >= 3)
                                 event.entityLiving.addPotionEffect(new PotionEffect(Potion.weakness.id, 19, -3 + difficultyModifierEffects, true));
 
-                        if (IguanaConfig.addLowStatNausea && isPlayer && (foodLevel <= 1 || healthPercent <= 0.05F))
+                        if ((IguanaConfig.addLowHungerNausea && foodLevel <= 1) || (IguanaConfig.addLowHealthNausea && healthPercent <= 0.05F))
                             event.entityLiving.addPotionEffect(new PotionEffect(Potion.confusion.id, 19, 0, true));
                     }
                 }

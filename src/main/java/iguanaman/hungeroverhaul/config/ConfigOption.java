@@ -78,9 +78,28 @@ public class ConfigOption<T>
             throw new RuntimeException("Unknown ConfigOption type for '" + category + ":" + name + "': " + defaultValue.getClass().getName());
     }
 
+    public T getBackwardsCompatible(Configuration config, ConfigOption<T> legacyConfigOption)
+    {
+        if (legacyConfigOption.exists(config))
+        {
+            T oldConfigOptionValue = legacyConfigOption.get(config);
+            if (oldConfigOptionValue != null)
+                set(config, oldConfigOptionValue);
+        }
+        return get(config);
+    }
+
     public Property getProperty(Configuration config)
     {
-        return config.getCategory(category).get(name);
+        Property property = config.getCategory(category).get(name);
+        if (property == null)
+            property = config.get(category, name, defaultValue.toString());
+        return property;
+    }
+
+    public boolean exists(Configuration config)
+    {
+        return config.hasCategory(category) && config.getCategory(category).containsKey(name);
     }
 
     public void set(Configuration config, T value)

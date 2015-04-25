@@ -233,14 +233,22 @@ public class IguanaConfig
     public static boolean addGuiText;
     public static final ConfigOption<Boolean> addLowStatEffectsOption = addOption(CATEGORY_LOW_STATS, "addLowStatEffects", true, false, "Enables/disables all low hunger/health effects");
     public static boolean addLowStatEffects;
-    public static final ConfigOption<Boolean> addLowStatNauseaOption = addOption(CATEGORY_LOW_STATS, "addLowStatNausea", true, false, "Nausea effect when hunger is really low ('addLowStatEffects' must be true)");
-    public static boolean addLowStatNausea;
-    public static final ConfigOption<Boolean> addLowStatSlownessOption = addOption(CATEGORY_LOW_STATS, "addLowStatSlowness", true, false, "Slowness effect when health/hunger is low ('addLowStatEffects' must be true)");
-    public static boolean addLowStatSlowness;
-    public static final ConfigOption<Boolean> addLowStatWeaknessOption = addOption(CATEGORY_LOW_STATS, "addLowStatWeakness", true, false, "Weakness effect when health/hunger is low ('addLowStatEffects' must be true)");
-    public static boolean addLowStatWeakness;
-    public static final ConfigOption<Boolean> addLowStatMiningSlowdownOption = addOption(CATEGORY_LOW_STATS, "addLowStatMiningSlowdown", true, false, "Mining slowdown effect when health/hunger is low ('addLowStatEffects' must be true)");
-    public static boolean addLowStatMiningSlowdown;
+    public static final ConfigOption<Boolean> addLowHealthNauseaOption = addOption(CATEGORY_LOW_STATS, "addLowHealthNausea", true, false, "Nausea effect when health is really low ('addLowStatEffects' must be true)");
+    public static boolean addLowHealthNausea;
+    public static final ConfigOption<Boolean> addLowHungerNauseaOption = addOption(CATEGORY_LOW_STATS, "addLowHungerNausea", true, false, "Nausea effect when hunger is really low ('addLowStatEffects' must be true)");
+    public static boolean addLowHungerNausea;
+    public static final ConfigOption<Boolean> addLowHealthSlownessOption = addOption(CATEGORY_LOW_STATS, "addLowHealthSlowness", true, false, "Slowness effect when health is low ('addLowStatEffects' must be true)");
+    public static boolean addLowHealthSlowness;
+    public static final ConfigOption<Boolean> addLowHungerSlownessOption = addOption(CATEGORY_LOW_STATS, "addLowHungerSlowness", true, false, "Slowness effect when hunger is low ('addLowStatEffects' must be true)");
+    public static boolean addLowHungerSlowness;
+    public static final ConfigOption<Boolean> addLowHealthWeaknessOption = addOption(CATEGORY_LOW_STATS, "addLowHealthWeakness", true, false, "Weakness effect when health is low ('addLowStatEffects' must be true)");
+    public static boolean addLowHealthWeakness;
+    public static final ConfigOption<Boolean> addLowHungerWeaknessOption = addOption(CATEGORY_LOW_STATS, "addLowHungerWeakness", true, false, "Weakness effect when hunger is low ('addLowStatEffects' must be true)");
+    public static boolean addLowHungerWeakness;
+    public static final ConfigOption<Boolean> addLowHealthMiningSlowdownOption = addOption(CATEGORY_LOW_STATS, "addLowHealthMiningSlowdown", true, false, "Mining slowdown effect when health is low ('addLowStatEffects' must be true)");
+    public static boolean addLowHealthMiningSlowdown;
+    public static final ConfigOption<Boolean> addLowHungerMiningSlowdownOption = addOption(CATEGORY_LOW_STATS, "addLowHungerMiningSlowdown", true, false, "Mining slowdown effect when hunger is low ('addLowStatEffects' must be true)");
+    public static boolean addLowHungerMiningSlowdown;
 
     // health
     public static final ConfigOption<Integer> minHungerToHealOption = addOption(CATEGORY_HEALTH, "minHungerToHeal", 7, 0, null, 18, "Minimum hunger level before healing starts");
@@ -263,6 +271,14 @@ public class IguanaConfig
     public static final ConfigOption<Boolean> addSleepHungerLoss = removeOption(CATEGORY_HUNGER, "addSleepHungerLoss", false);
     @Deprecated
     public static final ConfigOption<Boolean> difficultyScalingSleepHungerLoss = removeOption(CATEGORY_DIFFICULTY_SCALING, "difficultyScalingSleepHungerLoss", true);
+    @Deprecated
+    public static final ConfigOption<Boolean> addLowStatNauseaOption = removeOption(CATEGORY_LOW_STATS, "addLowStatNausea", true);
+    @Deprecated
+    public static final ConfigOption<Boolean> addLowStatSlownessOption = removeOption(CATEGORY_LOW_STATS, "addLowStatSlowness", true);
+    @Deprecated
+    public static final ConfigOption<Boolean> addLowStatWeaknessOption = removeOption(CATEGORY_LOW_STATS, "addLowStatWeakness", true);
+    @Deprecated
+    public static final ConfigOption<Boolean> addLowStatMiningSlowdownOption = removeOption(CATEGORY_LOW_STATS, "addLowStatMiningSlowdown", true);
 
     public static void init(File configDir, File oldConfigFile)
     {
@@ -405,10 +421,7 @@ public class IguanaConfig
         modifyFoodStackSize = modifyFoodStackSizeOption.get(config);
         foodStackSizeMultiplier = foodStackSizeMultiplierOption.get(config);
 
-        // renamed to foodHungerDivider; this will transfer the old value over
-        float oldFoodValueDividerValue = modFoodValueDividerOption.get(config);
-        foodHungerDividerOption.defaultValue = oldFoodValueDividerValue;
-        foodHungerDivider = foodHungerDividerOption.get(config);
+        foodHungerDivider = foodHungerDividerOption.getBackwardsCompatible(config, modFoodValueDividerOption);
         // for backwards compatibility
         modFoodValueDivider = (int) foodHungerDivider;
 
@@ -433,10 +446,14 @@ public class IguanaConfig
         hungerLossRatePercentage = hungerLossRatePercentageOption.get(config);
         addGuiText = addGuiTextOption.get(config);
         addLowStatEffects = addLowStatEffectsOption.get(config);
-        addLowStatNausea = addLowStatNauseaOption.get(config);
-        addLowStatSlowness = addLowStatSlownessOption.get(config);
-        addLowStatWeakness = addLowStatWeaknessOption.get(config);
-        addLowStatMiningSlowdown = addLowStatMiningSlowdownOption.get(config);
+        addLowHealthNausea = addLowHealthNauseaOption.getBackwardsCompatible(config, addLowStatNauseaOption);
+        addLowHungerNausea = addLowHungerNauseaOption.getBackwardsCompatible(config, addLowStatNauseaOption);
+        addLowHealthSlowness = addLowHealthSlownessOption.getBackwardsCompatible(config, addLowStatSlownessOption);
+        addLowHungerSlowness = addLowHungerSlownessOption.getBackwardsCompatible(config, addLowStatSlownessOption);
+        addLowHealthWeakness = addLowHealthWeaknessOption.getBackwardsCompatible(config, addLowStatWeaknessOption);
+        addLowHungerWeakness = addLowHungerWeaknessOption.getBackwardsCompatible(config, addLowStatWeaknessOption);
+        addLowHealthMiningSlowdown = addLowHealthMiningSlowdownOption.getBackwardsCompatible(config, addLowStatMiningSlowdownOption);
+        addLowHungerMiningSlowdown = addLowHungerMiningSlowdownOption.getBackwardsCompatible(config, addLowStatMiningSlowdownOption);
         foodRegensHealth = foodRegensHealthOption.get(config);
         minHungerToHeal = minHungerToHealOption.get(config);
         healthRegenRatePercentage = healthRegenRatePercentageOption.get(config);
