@@ -67,6 +67,15 @@ public class IguanaEventHook
                 harvestDropsBlacklist.add(enderLilly);
             }
         }
+
+        if (Loader.isModLoaded("ThaumicTinkerer"))
+        {
+            Block infusedGrain = Block.getBlockFromName("ThaumicTinkerer:infusedGrainBlock");
+            if (infusedGrain != null)
+            {
+                harvestDropsBlacklist.add(infusedGrain);
+            }
+        }
     }
 
     @SubscribeEvent
