@@ -25,12 +25,18 @@ public class ConfigOption<T>
         this.defaultValue = defaultValue;
         this.blankSlate = blankSlate;
         this.comment = comment;
-        this.minValue = minValue != null ? minValue : getDefaultMinValue(defaultValue);
-        this.maxValue = maxValue != null ? maxValue : getDefaultMaxValue(defaultValue);
+        this.minValue = minValue != null ? minValue : getDefaultMinValue();
+        this.maxValue = maxValue != null ? maxValue : getDefaultMaxValue();
+    }
+
+    public String getComment()
+    {
+        String commentSuffix = "vanilla: " + blankSlate;
+        return comment + " [" + commentSuffix + "]";
     }
 
     @SuppressWarnings("unchecked")
-    private T getDefaultMinValue(T defaultValue)
+    private T getDefaultMinValue()
     {
         if (defaultValue instanceof Integer)
             return (T) Integer.valueOf(Integer.MIN_VALUE);
@@ -43,7 +49,7 @@ public class ConfigOption<T>
     }
 
     @SuppressWarnings("unchecked")
-    private T getDefaultMaxValue(T defaultValue)
+    private T getDefaultMaxValue()
     {
         if (defaultValue instanceof Integer)
             return (T) Integer.valueOf(Integer.MAX_VALUE);
@@ -59,15 +65,15 @@ public class ConfigOption<T>
     public T get(Configuration config)
     {
         if (defaultValue instanceof Boolean)
-            return (T) Boolean.valueOf(config.getBoolean(name, category, (Boolean) defaultValue, comment));
+            return (T) Boolean.valueOf(config.getBoolean(name, category, (Boolean) defaultValue, getComment()));
         else if (defaultValue instanceof Integer)
-            return (T) Integer.valueOf(config.getInt(name, category, (Integer) defaultValue, (Integer) minValue, (Integer) maxValue, comment));
+            return (T) Integer.valueOf(config.getInt(name, category, (Integer) defaultValue, (Integer) minValue, (Integer) maxValue, getComment()));
         else if (defaultValue instanceof Float)
-            return (T) Float.valueOf((float) config.getFloat(name, category, (Float) defaultValue, (Float) minValue, (Float) maxValue, comment));
+            return (T) Float.valueOf((float) config.getFloat(name, category, (Float) defaultValue, (Float) minValue, (Float) maxValue, getComment()));
         else if (defaultValue instanceof Double)
             return (T) Double.valueOf(Math.min((Double) maxValue, Math.max((Double) minValue, getProperty(config).getDouble())));
         else if (defaultValue instanceof String)
-            return (T) config.getString(name, category, (String) defaultValue, comment);
+            return (T) config.getString(name, category, (String) defaultValue, getComment());
         else
             throw new RuntimeException("Unknown ConfigOption type for '" + category + ":" + name + "': " + defaultValue.getClass().getName());
     }

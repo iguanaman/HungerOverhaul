@@ -217,9 +217,9 @@ public class IguanaConfig
     // hunger
     public static final ConfigOption<Boolean> constantHungerLossOption = addOption(CATEGORY_HUNGER, "constantHungerLoss", true, false, "You lose hunger (very slowly) at all times");
     public static boolean constantHungerLoss;
-    public static final ConfigOption<Integer> damageOnStarveOption = addOption(CATEGORY_HUNGER, "damageOnStarve", 200, 2, "Amount of damage you take when hunger hits zero (vanilla default 2)");
+    public static final ConfigOption<Integer> damageOnStarveOption = addOption(CATEGORY_HUNGER, "damageOnStarve", 200, 2, "Amount of damage you take when hunger hits zero");
     public static int damageOnStarve;
-    public static final ConfigOption<Integer> respawnHungerValueOption = addOption(CATEGORY_HUNGER, "respawnHungerValue", 20, 0, null, 20, "hunger value set after respawning for peaceful/easy difficulty (vanilla default is 20)");
+    public static final ConfigOption<Integer> respawnHungerValueOption = addOption(CATEGORY_HUNGER, "respawnHungerValue", 20, 0, null, 20, "hunger value set after respawning for peaceful/easy difficulty");
     public static int respawnHungerValue;
     public static final ConfigOption<Integer> respawnHungerDifficultyModifierOption = addOption(CATEGORY_HUNGER, "respawnHungerDifficultyModifier", 4, 0, null, 4, "The amount difficulty modifies the hunger value set after respawning  ('difficultyScaling' and 'difficultyScalingRespawnHunger' must be true)");
     public static int respawnHungerDifficultyModifier;
@@ -243,7 +243,7 @@ public class IguanaConfig
     public static boolean addLowStatMiningSlowdown;
 
     // health
-    public static final ConfigOption<Integer> minHungerToHealOption = addOption(CATEGORY_HEALTH, "minHungerToHeal", 7, 0, null, 18, "Minimum hunger level before healing starts (vanilla default is 18)");
+    public static final ConfigOption<Integer> minHungerToHealOption = addOption(CATEGORY_HEALTH, "minHungerToHeal", 7, 0, null, 18, "Minimum hunger level before healing starts");
     public static int minHungerToHeal;
     public static final ConfigOption<Boolean> foodRegensHealthOption = addOption(CATEGORY_HEALTH, "foodRegensHealth", false, false, "Eating food regenerates health");
     public static boolean foodRegensHealth;
