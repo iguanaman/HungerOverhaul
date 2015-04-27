@@ -225,8 +225,8 @@ public class IguanaConfig
     public static int respawnHungerDifficultyModifier;
     public static final ConfigOption<Boolean> disableHealingHungerDrainOption = addOption(CATEGORY_HUNGER, "disableHealingHungerDrain", true, false, "Disable the hunger drain when healing that was introduced in vanilla 1.6.2");
     public static boolean disableHealingHungerDrain;
-    public static final ConfigOption<Integer> hungerLossRatePercentageOption = addOption(CATEGORY_HUNGER, "hungerLossRatePercentage", 100, 0, null, 100, "Speed up or slow down the rate that hunger drops (set to 0 to disable hunger loss)");
-    public static int hungerLossRatePercentage;
+    public static final ConfigOption<Float> hungerLossRatePercentageOption = addOption(CATEGORY_HUNGER, "hungerLossRatePercentage", 4F/3F * 100F, 0F, null, 100F, "Speed up or slow down the rate that hunger drops (set to 0 to disable hunger loss)");
+    public static float hungerLossRatePercentage;
 
     // low stat
     public static final ConfigOption<Boolean> addGuiTextOption = addOption(CATEGORY_LOW_STATS, "addGuiText", true, false, "Shows onscreen text when hunger/health is low");

@@ -62,15 +62,15 @@ public class FoodEventHandler
     public void getMaxExhaustion(ExhaustionEvent.GetMaxExhaustion event)
     {
         EnumDifficulty difficulty = event.player.worldObj.difficultySetting;
-        float hungerLossRate = 3f;
+        float hungerLossRate = event.maxExhaustionLevel / (IguanaConfig.hungerLossRatePercentage / 100F);
         if (IguanaConfig.difficultyScalingHunger)
         {
             if (difficulty == EnumDifficulty.PEACEFUL)
-                hungerLossRate = 5F;
+                hungerLossRate *= 5F/3F;
             else if (difficulty == EnumDifficulty.EASY)
-                hungerLossRate = 4F;
+                hungerLossRate *= 4F/3F;
         }
-        event.maxExhaustionLevel = hungerLossRate / (IguanaConfig.hungerLossRatePercentage / 100F);
+        event.maxExhaustionLevel = hungerLossRate;
     }
 
     @SubscribeEvent
