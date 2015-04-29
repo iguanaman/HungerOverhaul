@@ -199,7 +199,7 @@ public class IguanaConfig
     public static boolean addSaplingTradesFarmer;
     public static final ConfigOption<Boolean> addHarvestCraftChestLootOption = addOption(CATEGORY_HARVESTCRAFT, "addHarvestCraftChestLoot", true, false, "HarvestCraft items added to dungeon/temple chests (Harvestcraft)");
     public static boolean addHarvestCraftChestLoot;
-    public static final ConfigOption<Integer> chestLootMaxStackSizeOption = addOption(CATEGORY_HARVESTCRAFT, "chestLootMaxStackSize", 64, 1, null, 64, "Max stack size for food to be found in chests (addHarvestCraftChestLoot must be true)");
+    public static final ConfigOption<Integer> chestLootMaxStackSizeOption = addOption(CATEGORY_HARVESTCRAFT, "chestLootMaxStackSize", 16, 1, null, 64, "Max stack size for food to be found in chests (addHarvestCraftChestLoot must be true)");
     public static int chestLootMaxStackSize;
     public static final ConfigOption<Integer> chestLootChanceOption = addOption(CATEGORY_HARVESTCRAFT, "chestLootChance", 5, 1, null, 5, "Weighted chance for food to be found in chests (addHarvestCraftChestLoot must be true)");
     public static int chestLootChance;
