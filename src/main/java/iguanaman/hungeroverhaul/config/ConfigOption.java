@@ -41,9 +41,9 @@ public class ConfigOption<T>
         if (defaultValue instanceof Integer)
             return (T) Integer.valueOf(Integer.MIN_VALUE);
         else if (defaultValue instanceof Float)
-            return (T) Float.valueOf(Float.MIN_VALUE);
+            return (T) Float.valueOf(-Float.MAX_VALUE);
         else if (defaultValue instanceof Double)
-            return (T) Double.valueOf(Double.MIN_VALUE);
+            return (T) Double.valueOf(-Double.MAX_VALUE);
         else
             return null;
     }
