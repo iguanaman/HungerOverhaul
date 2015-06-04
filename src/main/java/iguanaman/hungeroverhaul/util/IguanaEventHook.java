@@ -5,6 +5,7 @@ import iguanaman.hungeroverhaul.module.ModuleGrassSeeds;
 import iguanaman.hungeroverhaul.module.ModulePlantGrowth;
 import iguanaman.hungeroverhaul.module.PamsModsHelper;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import com.pam.harvestcraft.ItemPamSeedFood;
@@ -35,6 +36,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.IPlantable;
+import net.minecraftforge.event.ForgeEventFactory;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.EntityInteractEvent;
@@ -383,7 +385,32 @@ public class IguanaEventHook
         {
             // BlockEvent.HarvestDropsEvent gets fired from within this function
             // therefore, the drops will be modified by our onBlockHarvested method
-            clicked.dropBlockAsItem(event.world, event.x, event.y, event.z, meta, 0);
+            if (!event.world.isRemote && !event.world.restoringBlockSnapshots) // do not drop items while restoring blockstates, prevents item dupe
+            {
+                ArrayList<ItemStack> items = clicked.getDrops(event.world, event.x, event.y, event.z, meta, 0);
+                float odds = ForgeEventFactory.fireBlockHarvesting(items, event.world, clicked, event.x, event.y, event.z, meta, 0, 1.0f, false, event.entityPlayer);
+
+                int seeds = RandomHelper.getRandomIntFromRange(IguanaConfig.seedsPerHarvestRightClickMin, IguanaConfig.seedsPerHarvestRightClickMax);
+                ItemStack seedItem = BlockHelper.getSeedsOfBlock(clicked, meta, seeds);
+                ItemStack produceItem = BlockHelper.getProduceOfBlock(clicked, meta);
+
+                boolean eatSeeds = (seedItem.getItem() != produceItem.getItem() || seedItem.getItemDamage() != produceItem.getItemDamage());
+                for (ItemStack item : items)
+                {
+                    if (eatSeeds && item.getItem() == seedItem.getItem() && item.getItemDamage() == seedItem.getItemDamage()) {
+                        continue;
+                    }
+
+                    if (event.world.rand.nextFloat() <= odds)
+                    {
+                        clicked.dropBlockAsItem(event.world, event.x, event.y, event.z, item);
+                    }
+                }
+
+                if (eatSeeds && seedItem.stackSize > 0)
+                    clicked.dropBlockAsItem(event.world, event.x, event.y, event.z, seedItem);
+            }
+
             event.world.setBlockMetadataWithNotify(event.x, event.y, event.z, resultingMeta, 2);
 
             lastRightClickCrop = event.world.getWorldTime();
@@ -429,7 +456,7 @@ public class IguanaEventHook
                 if (produce > 0)
                     event.drops.add(BlockHelper.getProduceOfBlock(event.block, event.blockMetadata, produce));
 
-                int seeds = RandomHelper.getRandomIntFromRange(IguanaConfig.seedsPerHarvestMin, IguanaConfig.seedsPerHarvestMax);
+                int seeds = RandomHelper.getRandomIntFromRange(IguanaConfig.seedsPerHarvestBreakMin, IguanaConfig.seedsPerHarvestBreakMax);
                 if (seeds > 0)
                     event.drops.add(BlockHelper.getSeedsOfBlock(event.block, event.blockMetadata, seeds));
             }
