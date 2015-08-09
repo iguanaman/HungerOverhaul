@@ -120,7 +120,7 @@ public class ComponentVillageCustomField extends StructureVillagePieces.Village
 		int x = par3StructureBoundingBox.getCenterX();
 		int z = par3StructureBoundingBox.getCenterZ();
 
-		BiomeGenBase biome = par1World.getWorldChunkManager().getBiomeGenAt(x, z);
+		BiomeGenBase biome = par1World.getBiomeGenForCoords(x, z);
 
 		typeA = randomFieldType(biome, par2Random);
 		typeB = randomFieldType(biome, par2Random);

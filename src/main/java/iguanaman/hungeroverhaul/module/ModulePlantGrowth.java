@@ -78,7 +78,7 @@ public class ModulePlantGrowth
         if (!growthModification.biomeGrowthModifiers.isEmpty())
         {
             biomeModifier = IguanaConfig.wrongBiomeRegrowthMultiplier;
-            BiomeGenBase biome = event.world.getWorldChunkManager().getBiomeGenAt(event.x, event.z);
+            BiomeGenBase biome = event.world.getBiomeGenForCoords(event.x, event.z);
             for (BiomeDictionary.Type type : BiomeDictionary.getTypesForBiome(biome))
             {
                 if (growthModification.biomeGrowthModifiers.containsKey(type))
