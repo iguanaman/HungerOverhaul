@@ -84,6 +84,10 @@ minecraft {
 }
 
 dependencies {
+    compile "codechicken:CodeChickenLib:1.7.10-1.1.3.127:dev"
+    compile "codechicken:ForgeMultipart:1.7.10-1.1.2.331:dev"
+    compile "codechicken:CodeChickenCore:1.7.10-1.0.4.29:dev"
+    compile "codechicken:NotEnoughItems:1.7.10-1.0.3.74:dev"
     compile "mantle:Mantle:${config.minecraft_version}-${config.mantle_version}:deobf"
     compile "mods.natura:natura:${config.minecraft_version}-${config.natura_version}:deobf"
     compile "tconstruct:TConstruct:${config.minecraft_version}-${config.tcon_version}:deobf"
