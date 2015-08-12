@@ -3,6 +3,7 @@
 /build
 /run
 /libs
+/eclipse
 
 # Eclipse
 .classpath
