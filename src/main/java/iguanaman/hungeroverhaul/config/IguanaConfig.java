@@ -415,11 +415,11 @@ public class IguanaConfig
         fieldReedWeight = fieldReedWeightOption.get(config);
         fieldStemWeight = fieldStemWeightOption.get(config);
         difficultyScaling = difficultyScalingOption.get(config);
-        difficultyScalingBoneMeal = difficultyScalingBoneMealOption.get(config);
-        difficultyScalingEffects = difficultyScalingEffectsOption.get(config);
-        difficultyScalingHealing = difficultyScalingHealingOption.get(config);
-        difficultyScalingHunger = difficultyScalingHungerOption.get(config);
-        difficultyScalingRespawnHunger = difficultyScalingRespawnHungerOption.get(config);
+        difficultyScalingBoneMeal = difficultyScalingBoneMealOption.get(config) && difficultyScaling;
+        difficultyScalingEffects = difficultyScalingEffectsOption.get(config) && difficultyScaling;
+        difficultyScalingHealing = difficultyScalingHealingOption.get(config) && difficultyScaling;
+        difficultyScalingHunger = difficultyScalingHungerOption.get(config) && difficultyScaling;
+        difficultyScalingRespawnHunger = difficultyScalingRespawnHungerOption.get(config) && difficultyScaling;
         modifyFoodValues = modifyFoodValuesOption.get(config);
         useHOFoodValues = useHOFoodValuesOption.get(config);
         addFoodTooltips = addFoodTooltipsOption.get(config);
