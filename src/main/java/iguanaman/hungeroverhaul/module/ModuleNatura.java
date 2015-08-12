@@ -106,7 +106,7 @@ public class ModuleNatura
                 if (currentMeta != metaFullyGrown)
                 {
                     metaIncrease = 1;
-                    if (world.difficultySetting != EnumDifficulty.NORMAL)
+                    if (IguanaConfig.difficultyScalingBoneMeal && world.difficultySetting.ordinal() < EnumDifficulty.NORMAL.ordinal())
                     {
                         int metaRandomIncreaseRange = currentMeta < 3 ? 2 : 3;
                         metaIncrease += Natura.random.nextInt(metaRandomIncreaseRange);
@@ -130,7 +130,7 @@ public class ModuleNatura
                         int setMeta = world.rand.nextInt(2) + 1 + currentMeta / 4;
                         if (setMeta > 2)
                             setMeta = 2;
-                        if (world.difficultySetting == EnumDifficulty.NORMAL)
+                        if (IguanaConfig.difficultyScalingBoneMeal && world.difficultySetting.ordinal() >= EnumDifficulty.NORMAL.ordinal())
                             setMeta = 1;
                         resultingMeta = currentMeta % 4 + setMeta * 4;
                     }

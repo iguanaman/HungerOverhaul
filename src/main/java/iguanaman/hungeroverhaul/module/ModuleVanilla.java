@@ -102,7 +102,7 @@ public class ModuleVanilla
             public int getNewMeta(World world, int x, int y, int z, Block block, int currentMeta)
             {
                 int metaIncrease = 1;
-                if (world.difficultySetting.getDifficultyId() < EnumDifficulty.EASY.getDifficultyId())
+                if (IguanaConfig.difficultyScalingBoneMeal && world.difficultySetting.getDifficultyId() < EnumDifficulty.EASY.getDifficultyId())
                     metaIncrease = world.rand.nextInt(3);
                 return Math.min(currentMeta + metaIncrease, 7);
             }

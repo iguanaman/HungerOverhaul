@@ -143,6 +143,10 @@ public class IguanaConfig
     public static int producePerHarvestMin;
     public static final ConfigOption<Integer> producePerHarvestMaxOption = addOption(CATEGORY_HARVESTING, "producePerHarvestMax", 4, 0, null, 4, "Maximum number of produce you get when harvesting a non-tree crop (modifyCropDrops must be true)");
     public static int producePerHarvestMax;
+    public static final ConfigOption<Float> bonemealEffectivenessOption = addOption(CATEGORY_HARVESTING, "bonemealEffectiveness", 0.5f, 0.0f, 1.0f, 1.0f, "Multiplier on the effectiveness of bonemeal; the smaller this is, the more often bonemeal will fail to create growth. Set to 0 to disable bonemeal completely.");
+    public static float bonemealEffectiveness;
+    public static final ConfigOption<Boolean> modifyBonemealGrowthOption = addOption(CATEGORY_HARVESTING, "modifyBonemealGrowth", true, false, "Reduces the amount of growth from a successful bonemeal on certain plants (uses IguanaMan's opinionated values)");
+    public static boolean modifyBonemealGrowth;
 
     // village field
     public static final ConfigOption<Boolean> addCustomVillageFieldOption = addOption(CATEGORY_CUSTOM_FIELD, "addCustomVillageField", true, false, "Adds a custom field to villages");
@@ -157,7 +161,7 @@ public class IguanaConfig
     // difficulty scaling
     public static final ConfigOption<Boolean> difficultyScalingOption = addOption(CATEGORY_DIFFICULTY_SCALING, "difficultyScaling", true, false, "Enable/Disable all difficulty scaling effect in one setting");
     public static boolean difficultyScaling;
-    public static final ConfigOption<Boolean> difficultyScalingBoneMealOption = addOption(CATEGORY_DIFFICULTY_SCALING, "difficultyScalingBoneMeal", true, false, "Effects of bone meal dependant of difficulty ('difficultyScaling' must be true)");
+    public static final ConfigOption<Boolean> difficultyScalingBoneMealOption = addOption(CATEGORY_DIFFICULTY_SCALING, "difficultyScalingBoneMeal", true, false, "Effects of bone meal dependant of difficulty ('difficultyScaling' and 'modifyBonemealGrowth' must be true)");
     public static boolean difficultyScalingBoneMeal;
     public static final ConfigOption<Boolean> difficultyScalingEffectsOption = addOption(CATEGORY_DIFFICULTY_SCALING, "difficultyScalingEffects", true, false, "Negative effects on low health/hunger scale by difficulty ('difficultyScaling' must be true)");
     public static boolean difficultyScalingEffects;
@@ -410,6 +414,8 @@ public class IguanaConfig
         seedsPerHarvestBreakMax = seedsPerHarvestBreakMaxOption.get(config);
         producePerHarvestMin = producePerHarvestMinOption.get(config);
         producePerHarvestMax = producePerHarvestMaxOption.get(config);
+        bonemealEffectiveness = bonemealEffectivenessOption.get(config);
+        modifyBonemealGrowth = modifyBonemealGrowthOption.getBackwardsCompatible(config, difficultyScalingBoneMealOption);
         addCustomVillageField = addCustomVillageFieldOption.get(config);
         fieldNormalWeight = fieldNormalWeightOption.get(config);
         fieldReedWeight = fieldReedWeightOption.get(config);
