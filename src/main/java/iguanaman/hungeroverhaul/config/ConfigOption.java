@@ -80,7 +80,7 @@ public class ConfigOption<T>
 
     public T getBackwardsCompatible(Configuration config, ConfigOption<T> legacyConfigOption)
     {
-        if (legacyConfigOption.exists(config))
+        if (!this.exists(config) && legacyConfigOption.exists(config))
         {
             T oldConfigOptionValue = legacyConfigOption.get(config);
             if (oldConfigOptionValue != null)
