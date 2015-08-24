@@ -287,6 +287,14 @@ public class IguanaConfig
     public static final ConfigOption<Boolean> addLowStatWeaknessOption = removeOption(CATEGORY_LOW_STATS, "addLowStatWeakness", true);
     @Deprecated
     public static final ConfigOption<Boolean> addLowStatMiningSlowdownOption = removeOption(CATEGORY_LOW_STATS, "addLowStatMiningSlowdown", true);
+    @Deprecated
+    public static final ConfigOption<Integer> seedsPerHarvestMinOption = removeOption(CATEGORY_HARVESTING, "seedsPerHarvestMin", 0);
+    @Deprecated
+    public static int seedsPerHarvestMin;
+    @Deprecated
+    public static final ConfigOption<Integer> seedsPerHarvestMaxOption = removeOption(CATEGORY_HARVESTING, "seedsPerHarvestMax", 0);
+    @Deprecated
+    public static int seedsPerHarvestMax;
 
     public static void init(File configDir, File oldConfigFile)
     {
@@ -408,10 +416,12 @@ public class IguanaConfig
         childDurationMultiplier = childDurationMultiplierOption.get(config);
         milkedTimeout = milkedTimeoutOption.get(config);
         modifyCropDrops = modifyCropDropsOption.get(config);
-        seedsPerHarvestRightClickMin = seedsPerHarvestRightClickMinOption.get(config);
-        seedsPerHarvestRightClickMax = seedsPerHarvestRightClickMaxOption.get(config);
-        seedsPerHarvestBreakMin = seedsPerHarvestBreakMinOption.get(config);
-        seedsPerHarvestBreakMax = seedsPerHarvestBreakMaxOption.get(config);
+        seedsPerHarvestRightClickMin = seedsPerHarvestRightClickMinOption.getBackwardsCompatible(config, seedsPerHarvestMinOption);
+        seedsPerHarvestRightClickMax = seedsPerHarvestRightClickMaxOption.getBackwardsCompatible(config, seedsPerHarvestMaxOption);
+        seedsPerHarvestBreakMin = seedsPerHarvestBreakMinOption.getBackwardsCompatible(config, seedsPerHarvestMinOption);
+        seedsPerHarvestBreakMax = seedsPerHarvestBreakMaxOption.getBackwardsCompatible(config, seedsPerHarvestMaxOption);
+        seedsPerHarvestMin = seedsPerHarvestRightClickMin;
+        seedsPerHarvestMax = seedsPerHarvestRightClickMax;
         producePerHarvestMin = producePerHarvestMinOption.get(config);
         producePerHarvestMax = producePerHarvestMaxOption.get(config);
         bonemealEffectiveness = bonemealEffectivenessOption.get(config);
