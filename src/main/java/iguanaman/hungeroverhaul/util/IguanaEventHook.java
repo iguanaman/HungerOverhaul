@@ -107,7 +107,7 @@ public class IguanaEventHook
             }
 
             // Reduced milked value every second
-            if (IguanaConfig.milkedTimeout > 0 && event.entityLiving instanceof EntityCow && event.entityLiving.worldObj.getWorldTime() % 20 == 0)
+            if (IguanaConfig.milkedTimeout > 0 && event.entityLiving instanceof EntityCow && event.entityLiving.worldObj.getTotalWorldTime() % 20 == 0)
             {
                 NBTTagCompound tags = event.entityLiving.getEntityData();
                 if (tags.hasKey("Milked"))
@@ -333,7 +333,7 @@ public class IguanaEventHook
         // if RIGHT_CLICK_BLOCK is canceled or useItem == Result.DENY, then
         // the right click falls through to RIGHT_CLICK_AIR. To correctly cancel the RIGHT_CLICK_AIR,
         // we need to make sure that it is happening on the same tick that the right click was performed
-        if (event.action == PlayerInteractEvent.Action.RIGHT_CLICK_AIR && lastRightClickCrop == event.world.getWorldTime())
+        if (event.action == PlayerInteractEvent.Action.RIGHT_CLICK_AIR && lastRightClickCrop == event.world.getTotalWorldTime())
         {
             event.setCanceled(true);
         }
@@ -413,7 +413,7 @@ public class IguanaEventHook
 
             event.world.setBlockMetadataWithNotify(event.x, event.y, event.z, resultingMeta, 2);
 
-            lastRightClickCrop = event.world.getWorldTime();
+            lastRightClickCrop = event.world.getTotalWorldTime();
 
             // hacky workaround:
             // if the client deems it is unable to place the block that is held,
