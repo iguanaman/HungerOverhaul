@@ -1,5 +1,6 @@
 package iguanaman.hungeroverhaul.util;
 
+import iguanaman.hungeroverhaul.config.IguanaConfig;
 import net.minecraft.block.Block;
 import net.minecraft.world.World;
 
