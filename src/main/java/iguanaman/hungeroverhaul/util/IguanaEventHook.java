@@ -365,6 +365,9 @@ public class IguanaEventHook
         }
 
         // right-click to harvest
+        if (!IguanaConfig.enableRightClickHarvesting)
+            return;
+
         Block clicked = event.world.getBlock(event.x, event.y, event.z);
         int meta = event.world.getBlockMetadata(event.x, event.y, event.z);
         int resultingMeta = -1;

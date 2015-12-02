@@ -129,6 +129,8 @@ public class IguanaConfig
     public static int milkedTimeout;
 
     // crop drops
+    public static final ConfigOption<Boolean> enableRightClickHarvestingOption = addOption(CATEGORY_HARVESTING, "enableRightClickHarvesting", true, false, "Enables/disables harvest crops by right clicking them");
+    public static boolean enableRightClickHarvesting;
     public static final ConfigOption<Boolean> modifyCropDropsRightClickOption = addOption(CATEGORY_HARVESTING, "modifyCropDropsRightClick", true, false, "Enables/disables modification of the item drops of crops when right clicking them (produce and seeds)");
     public static boolean modifyCropDropsRightClick;
     public static final ConfigOption<Boolean> modifyCropDropsBreakOption = addOption(CATEGORY_HARVESTING, "modifyCropDropsBreak", true, false, "Enables/disables modification of the item drops of crops when breaking them (produce and seeds)");
@@ -433,6 +435,7 @@ public class IguanaConfig
         breedingTimeoutMultiplier = breedingTimeoutMultiplierOption.get(config);
         childDurationMultiplier = childDurationMultiplierOption.get(config);
         milkedTimeout = milkedTimeoutOption.get(config);
+        enableRightClickHarvesting = enableRightClickHarvestingOption.get(config);
         modifyCropDropsBreak = modifyCropDropsBreakOption.getBackwardsCompatible(config, modifyCropDropsOption);
         modifyCropDropsRightClick = modifyCropDropsRightClickOption.getBackwardsCompatible(config, modifyCropDropsOption);
         modifyCropDrops = modifyCropDropsBreak;
