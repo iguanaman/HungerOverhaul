@@ -91,20 +91,20 @@ public class IguanaEventHook
         // Slow growth and egg rates
         if (event.entityLiving instanceof EntityAnimal)
         {
-            int rndBreed = rand.nextInt(IguanaConfig.breedingTimeoutMultiplier);
-            int rndChild = rand.nextInt(IguanaConfig.childDurationMultiplier);
+            float rndBreed = RandomHelper.nextFloat(rand, IguanaConfig.breedingTimeoutMultiplier);
+            float rndChild = RandomHelper.nextFloat(rand, IguanaConfig.childDurationMultiplier);
             EntityAgeable ageable = (EntityAgeable) event.entityLiving;
             int growingAge = ageable.getGrowingAge();
-            if (growingAge > 0 && rndBreed != 0)
+            if (growingAge > 0 && rndBreed >= 1)
                 ageable.setGrowingAge(++growingAge);
-            else if (growingAge < 0 && rndChild != 0)
+            else if (growingAge < 0 && rndChild >= 1)
                 ageable.setGrowingAge(--growingAge);
 
             if (IguanaConfig.eggTimeoutMultiplier > 1 && event.entityLiving instanceof EntityChicken)
             {
-                int rnd = rand.nextInt(IguanaConfig.eggTimeoutMultiplier);
+                float rnd = RandomHelper.nextFloat(rand, IguanaConfig.eggTimeoutMultiplier);
                 EntityChicken chicken = (EntityChicken) event.entityLiving;
-                if (chicken.timeUntilNextEgg > 0 && rnd != 0)
+                if (chicken.timeUntilNextEgg > 0 && rnd >= 1)
                     chicken.timeUntilNextEgg += 1;
             }
 

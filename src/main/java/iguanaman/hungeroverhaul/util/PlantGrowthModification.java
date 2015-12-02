@@ -11,8 +11,8 @@ public class PlantGrowthModification
 {
     public boolean needsSunlight = true;
     public final HashMap<BiomeDictionary.Type, Float> biomeGrowthModifiers = new HashMap<BiomeDictionary.Type, Float>();
-    public int growthTickProbability = 0;
-    public int wrongBiomeMultiplier = IguanaConfig.wrongBiomeRegrowthMultiplier;
+    public float growthTickProbability = 0;
+    public float wrongBiomeMultiplier = IguanaConfig.wrongBiomeRegrowthMultiplier;
 
     public PlantGrowthModification setNeedsSunlight(boolean needsSunlight)
     {
@@ -37,13 +37,13 @@ public class PlantGrowthModification
         return this;
     }
 
-    public PlantGrowthModification setGrowthTickProbability(int growthTickProbability)
+    public PlantGrowthModification setGrowthTickProbability(float growthTickProbability)
     {
         this.growthTickProbability = growthTickProbability;
         return this;
     }
-    
-    public PlantGrowthModification setWrongBiomeMultiplier(int wrongBiomeMultiplier)
+
+    public PlantGrowthModification setWrongBiomeMultiplier(float wrongBiomeMultiplier)
     {
         this.wrongBiomeMultiplier = wrongBiomeMultiplier;
         return this;
