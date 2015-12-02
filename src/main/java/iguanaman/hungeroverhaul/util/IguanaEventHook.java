@@ -6,9 +6,8 @@ import iguanaman.hungeroverhaul.module.ModulePlantGrowth;
 import iguanaman.hungeroverhaul.module.PamsModsHelper;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
-
-import com.pam.harvestcraft.ItemPamSeedFood;
 
 import mods.natura.blocks.crops.CropBlock;
 import net.minecraft.block.Block;
@@ -46,6 +45,9 @@ import net.minecraftforge.event.entity.player.UseHoeEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import squeek.applecore.api.AppleCoreAPI;
 import squeek.applecore.api.food.FoodValues;
+
+import com.pam.harvestcraft.ItemPamSeedFood;
+
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.eventhandler.Event.Result;
 import cpw.mods.fml.common.eventhandler.EventPriority;
@@ -385,30 +387,18 @@ public class IguanaEventHook
         {
             // BlockEvent.HarvestDropsEvent gets fired from within this function
             // therefore, the drops will be modified by our onBlockHarvested method
+            // but we re-modify them using the right-click specific config options
             if (!event.world.isRemote && !event.world.restoringBlockSnapshots) // do not drop items while restoring blockstates, prevents item dupe
             {
-                ArrayList<ItemStack> items = clicked.getDrops(event.world, event.x, event.y, event.z, meta, 0);
-                float odds = ForgeEventFactory.fireBlockHarvesting(items, event.world, clicked, event.x, event.y, event.z, meta, 0, 1.0f, false, event.entityPlayer);
+                ArrayList<ItemStack> drops = clicked.getDrops(event.world, event.x, event.y, event.z, meta, 0);
+                float odds = ForgeEventFactory.fireBlockHarvesting(drops, event.world, clicked, event.x, event.y, event.z, meta, 0, 1.0f, false, event.entityPlayer);
 
-                int seeds = RandomHelper.getRandomIntFromRange(IguanaConfig.seedsPerHarvestRightClickMin, IguanaConfig.seedsPerHarvestRightClickMax);
-                ItemStack seedItem = BlockHelper.getSeedsOfBlock(clicked, meta, seeds);
-                ItemStack produceItem = BlockHelper.getProduceOfBlock(clicked, meta);
+                List<ItemStack> modifiedDrops = BlockHelper.modifyCropDrops(drops, clicked, meta, IguanaConfig.seedsPerHarvestRightClickMin, IguanaConfig.seedsPerHarvestRightClickMax, IguanaConfig.producePerHarvestRightClickMin, IguanaConfig.producePerHarvestRightClickMax);
 
-                boolean eatSeeds = (seedItem.getItem() != produceItem.getItem() || seedItem.getItemDamage() != produceItem.getItemDamage());
-                for (ItemStack item : items)
+                for (ItemStack drop : modifiedDrops)
                 {
-                    if (eatSeeds && item.getItem() == seedItem.getItem() && item.getItemDamage() == seedItem.getItemDamage()) {
-                        continue;
-                    }
-
-                    if (event.world.rand.nextFloat() <= odds)
-                    {
-                        clicked.dropBlockAsItem(event.world, event.x, event.y, event.z, item);
-                    }
+                    clicked.dropBlockAsItem(event.world, event.x, event.y, event.z, drop);
                 }
-
-                if (eatSeeds && seedItem.stackSize > 0)
-                    clicked.dropBlockAsItem(event.world, event.x, event.y, event.z, seedItem);
             }
 
             event.world.setBlockMetadataWithNotify(event.x, event.y, event.z, resultingMeta, 2);
@@ -428,8 +418,8 @@ public class IguanaEventHook
             // so it would remain unharvested on the server
             if (event.world.isRemote)
             {
-               ClientHelper.sendRightClickPacket(event.x, event.y, event.z, event.face, event.entityPlayer.inventory.getCurrentItem(), 0f, 0f, 0f);
-               event.setCanceled(true);
+                ClientHelper.sendRightClickPacket(event.x, event.y, event.z, event.face, event.entityPlayer.inventory.getCurrentItem(), 0f, 0f, 0f);
+                event.setCanceled(true);
             }
             else
                 event.useItem = Result.DENY;
@@ -439,35 +429,33 @@ public class IguanaEventHook
     @SubscribeEvent
     public void onBlockHarvested(BlockEvent.HarvestDropsEvent event)
     {
-        if (!IguanaConfig.modifyCropDrops)
+        if (!IguanaConfig.modifyCropDropsBreak)
             return;
 
         // certain things we don't want to modify the drops of
-        if (harvestDropsBlacklist.contains(event.block))
+        if (IguanaEventHook.harvestDropsBlacklist.contains(event.block))
             return;
 
         boolean isNaturaCrop = Loader.isModLoaded("Natura") && event.block instanceof CropBlock;
-        if (isNaturaCrop || event.block instanceof BlockCrops)
-        {
-            event.drops.clear();
-            if ((!isNaturaCrop && event.blockMetadata >= 7) || (isNaturaCrop && event.blockMetadata == 3 || event.blockMetadata == 8))
-            {
-                int produce = RandomHelper.getRandomIntFromRange(IguanaConfig.producePerHarvestMin, IguanaConfig.producePerHarvestMax);
-                if (produce > 0)
-                    event.drops.add(BlockHelper.getProduceOfBlock(event.block, event.blockMetadata, produce));
+        boolean eligable = isNaturaCrop || event.block instanceof BlockCrops;
 
-                int seeds = RandomHelper.getRandomIntFromRange(IguanaConfig.seedsPerHarvestBreakMin, IguanaConfig.seedsPerHarvestBreakMax);
-                if (seeds > 0)
-                    event.drops.add(BlockHelper.getSeedsOfBlock(event.block, event.blockMetadata, seeds));
-            }
-            else
-            {
-                event.drops.add(BlockHelper.getSeedOfBlock(event.block, event.blockMetadata));
-            }
+        if (!eligable)
+            return;
+
+        boolean fullyGrown = (!isNaturaCrop && event.blockMetadata >= 7) || (isNaturaCrop && event.blockMetadata == 3 || event.blockMetadata == 8);
+
+        if (!fullyGrown)
+            return;
+
+        List<ItemStack> modifiedDrops = BlockHelper.modifyCropDrops(event.drops, event.block, event.blockMetadata, IguanaConfig.seedsPerHarvestBreakMin, IguanaConfig.seedsPerHarvestBreakMax, IguanaConfig.producePerHarvestBreakMin, IguanaConfig.producePerHarvestBreakMax);
+        event.drops.clear();
+        for (ItemStack drop : modifiedDrops)
+        {
+            event.drops.add(drop);
         }
     }
 
-    @SubscribeEvent(priority=EventPriority.LOWEST)
+    @SubscribeEvent(priority = EventPriority.LOWEST)
     public void renderTooltips(ItemTooltipEvent event)
     {
         if (IguanaConfig.addFoodTooltips && AppleCoreAPI.accessor.isFood(event.itemStack))
