@@ -32,3 +32,11 @@ hungeroverhaul.lightmeal=leichte Mahlzeit
 hungeroverhaul.meal=Mahlzeit
 hungeroverhaul.largemeal=große Mahlzeit
 hungeroverhaul.feast=Festessen
+
+# health/hunger status text
+hungeroverhaul.dying=sterbend
+hungeroverhaul.injured=verwundet
+hungeroverhaul.hurt=schmerzend
+hungeroverhaul.starving=sehr hungrig
+hungeroverhaul.hungry=hungrig
+hungeroverhaul.peckish=leicht hungrig
