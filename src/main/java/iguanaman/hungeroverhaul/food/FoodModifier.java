@@ -36,7 +36,7 @@ public class FoodModifier
             float saturation = event.foodValues.saturationModifier;
             if (IguanaConfig.foodHungerToSaturationDivider != 0)
             {
-                saturation = hunger / (float) IguanaConfig.foodHungerToSaturationDivider;
+                saturation = hunger / IguanaConfig.foodHungerToSaturationDivider;
             }
             saturation /= IguanaConfig.foodSaturationDivider;
             event.foodValues = new FoodValues(hunger, saturation);

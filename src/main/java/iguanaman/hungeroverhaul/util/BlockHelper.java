@@ -1,18 +1,55 @@
 package iguanaman.hungeroverhaul.util;
 
+import iguanaman.hungeroverhaul.config.IguanaConfig;
 import iguanaman.hungeroverhaul.module.PamsModsHelper;
 
-import com.pam.harvestcraft.BlockPamCrop;
+import java.util.ArrayList;
+import java.util.List;
 
 import mods.natura.blocks.crops.CropBlock;
 import mods.natura.common.NContent;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockCrops;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+
+import com.pam.harvestcraft.BlockPamCrop;
+
 import cpw.mods.fml.common.Loader;
 
 public class BlockHelper
 {
+    public static List<ItemStack> modifyCropDrops(List<ItemStack> drops, Block block, int meta, int minSeeds, int maxSeeds, int minProduce, int maxProduce)
+    {
+        List<ItemStack> modifiedDrops = new ArrayList<ItemStack>();
+
+        int seeds = RandomHelper.getRandomIntFromRange(minSeeds, maxSeeds);
+        int produce = RandomHelper.getRandomIntFromRange(minProduce, maxProduce);
+        ItemStack seedItem = BlockHelper.getSeedsOfBlock(block, meta, seeds);
+        ItemStack produceItem = BlockHelper.getProduceOfBlock(block, meta, produce);
+        boolean produceIsNotSeed = (seedItem.getItem() != produceItem.getItem() || seedItem.getItemDamage() != produceItem.getItemDamage());
+
+        for (ItemStack item : drops)
+        {
+            // don't include seed/produce already in the list; we'll add them back afterwards
+            if (item.isItemEqual(seedItem) || item.isItemEqual(produceItem))
+            {
+                continue;
+            }
+
+            modifiedDrops.add(item);
+        }
+
+        // only add seeds if they are different from produce
+        if (produceIsNotSeed && seedItem.stackSize > 0)
+            modifiedDrops.add(seedItem);
+
+        if (produceItem.stackSize > 0)
+            modifiedDrops.add(produceItem);
+
+        return modifiedDrops;
+    }
+
     public static ItemStack getSeedOfBlock(Block block, int meta)
     {
         return getSeedsOfBlock(block, meta, 1);

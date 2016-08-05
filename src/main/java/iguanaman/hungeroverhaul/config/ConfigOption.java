@@ -69,7 +69,7 @@ public class ConfigOption<T>
         else if (defaultValue instanceof Integer)
             return (T) Integer.valueOf(config.getInt(name, category, (Integer) defaultValue, (Integer) minValue, (Integer) maxValue, getComment()));
         else if (defaultValue instanceof Float)
-            return (T) Float.valueOf((float) config.getFloat(name, category, (Float) defaultValue, (Float) minValue, (Float) maxValue, getComment()));
+            return (T) Float.valueOf(config.getFloat(name, category, (Float) defaultValue, (Float) minValue, (Float) maxValue, getComment()));
         else if (defaultValue instanceof Double)
             return (T) Double.valueOf(Math.min((Double) maxValue, Math.max((Double) minValue, getProperty(config).getDouble())));
         else if (defaultValue instanceof String)

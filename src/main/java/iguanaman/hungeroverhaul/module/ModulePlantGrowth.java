@@ -2,6 +2,7 @@ package iguanaman.hungeroverhaul.module;
 
 import iguanaman.hungeroverhaul.config.IguanaConfig;
 import iguanaman.hungeroverhaul.util.PlantGrowthModification;
+import iguanaman.hungeroverhaul.util.RandomHelper;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -66,7 +67,7 @@ public class ModulePlantGrowth
             return;
 
         // sunlight
-        int sunlightModifier = !growthModification.needsSunlight || (growthModification.needsSunlight && event.world.isDaytime() && event.world.canBlockSeeTheSky(event.x, event.y, event.z)) ? 1 : IguanaConfig.noSunlightRegrowthMultiplier;
+        float sunlightModifier = !growthModification.needsSunlight || (growthModification.needsSunlight && event.world.isDaytime() && event.world.canBlockSeeTheSky(event.x, event.y, event.z)) ? 1 : IguanaConfig.noSunlightRegrowthMultiplier;
         if (sunlightModifier == 0)
         {
             event.setResult(Result.DENY);
@@ -95,7 +96,7 @@ public class ModulePlantGrowth
         }
 
         // random
-        if (event.random.nextInt((int) (growthModification.growthTickProbability * biomeModifier * sunlightModifier)) != 0)
+        if (RandomHelper.nextFloat(event.random, growthModification.growthTickProbability * biomeModifier * sunlightModifier) >= 1)
         {
             event.setResult(Result.DENY);
             return;

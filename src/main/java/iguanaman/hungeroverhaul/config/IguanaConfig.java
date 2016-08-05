@@ -95,54 +95,62 @@ public class IguanaConfig
     public static boolean addSeedsCraftingRecipe;
 
     // delays
-    public static final ConfigOption<Integer> noSunlightRegrowthMultiplierOption = addOption(CATEGORY_DELAYS, "noSunlightRegrowthMultiplier", 2, 0, null, 1, "Multipier on crop growth time without sunlight (1 to disable feature, 0 to make crops only grow in sunlight)");
-    public static int noSunlightRegrowthMultiplier;
-    public static final ConfigOption<Integer> wrongBiomeRegrowthMultiplierOption = addOption(CATEGORY_DELAYS, "wrongBiomeRegrowthMultiplier", 2, 0, null, 1, "Multipier on crop growth time (except sugarcane) in the wrong biome (1 to disable feature, 0 to make crops only grow in correct biome)");
-    public static int wrongBiomeRegrowthMultiplier;
-    public static final ConfigOption<Integer> wrongBiomeRegrowthMultiplierSugarcaneOption = addOption(CATEGORY_DELAYS, "wrongBiomeRegrowthMultiplierSugarcane", 2, 0, null, 1, "Multipier on sugarcane growth time in the wrong biome (1 to disable feature, 0 to make sugarcane only grow in correct biome)");
-    public static int wrongBiomeRegrowthMultiplierSugarcane;
-    public static final ConfigOption<Integer> flowerRegrowthMultiplierOption = addOption(CATEGORY_DELAYS, "flowerRegrowthMultiplier", 1, 0, null, 1, "Multiplier on the time it takes a WeeeFlower crop to grow");
-    public static int flowerRegrowthMultiplier;
-    public static final ConfigOption<Integer> cropRegrowthMultiplierOption = addOption(CATEGORY_DELAYS, "cropRegrowthMultiplier", 4, 0, null, 1, "Multiplier on the time it takes a non-tree crop to grow");
-    public static int cropRegrowthMultiplier;
-    public static final ConfigOption<Integer> cactusRegrowthMultiplierOption = addOption(CATEGORY_DELAYS, "cactusRegrowthMultiplier", 4, 0, null, 1, "Multiplier on the time it takes cactus to grow");
-    public static int cactusRegrowthMultiplier;
-    public static final ConfigOption<Integer> cocoaRegrowthMultiplierOption = addOption(CATEGORY_DELAYS, "cocoaRegrowthMultiplier", 4, 0, null, 1, "Multiplier on the time it takes cocoa to grow");
-    public static int cocoaRegrowthMultiplier;
-    public static final ConfigOption<Integer> sugarcaneRegrowthMultiplierOption = addOption(CATEGORY_DELAYS, "sugarcaneRegrowthMultiplier", 4, 0, null, 1, "Multiplier on the time it takes sugarcane to grow");
-    public static int sugarcaneRegrowthMultiplier;
-    public static final ConfigOption<Integer> treeCropRegrowthMultiplierOption = addOption(CATEGORY_DELAYS, "treeCropRegrowthMultiplier", 4, 0, null, 1, "Multiplier on the time it takes a tree crop to grow");
-    public static int treeCropRegrowthMultiplier;
-    public static final ConfigOption<Integer> saplingRegrowthMultiplierOption = addOption(CATEGORY_DELAYS, "saplingRegrowthMultiplier", 4, 0, null, 1, "Multiplier on the time it takes a sapling to grow into a tree");
-    public static int saplingRegrowthMultiplier;
-    public static final ConfigOption<Integer> netherWartRegrowthMultiplierOption = addOption(CATEGORY_DELAYS, "netherWartRegrowthMultiplier", 4, 0, null, 1, "Multiplier on the time it takes nether wart to grow");
-    public static int netherWartRegrowthMultiplier;
-    public static final ConfigOption<Integer> dryingRackTimeMultiplierOption = addOption(CATEGORY_DELAYS, "dryingRackTimeMultiplier", 4, 0, null, 1, "Multiplier on the time it takes food to dry on Tinkers' Construct drying racks");
-    public static int dryingRackTimeMultiplier;
-    public static final ConfigOption<Integer> eggTimeoutMultiplierOption = addOption(CATEGORY_DELAYS, "eggTimeoutMultiplier", 4, 0, null, 1, "Multiplier applied to the delay between chicken egg laying");
-    public static int eggTimeoutMultiplier;
-    public static final ConfigOption<Integer> breedingTimeoutMultiplierOption = addOption(CATEGORY_DELAYS, "breedingTimeoutMultiplier", 4, 0, null, 1, "Multiplier applied to the delay between breeding entities");
-    public static int breedingTimeoutMultiplier;
-    public static final ConfigOption<Integer> childDurationMultiplierOption = addOption(CATEGORY_DELAYS, "childDurationMultiplier", 4, 0, null, 1, "Multiplier applied to the delay before children become adults");
-    public static int childDurationMultiplier;
+    public static final ConfigOption<Float> noSunlightRegrowthMultiplierOption = addOption(CATEGORY_DELAYS, "noSunlightRegrowthMultiplier", 2f, 0f, null, 1f, "Multipier on crop growth time without sunlight (1 to disable feature, 0 to make crops only grow in sunlight)");
+    public static float noSunlightRegrowthMultiplier;
+    public static final ConfigOption<Float> wrongBiomeRegrowthMultiplierOption = addOption(CATEGORY_DELAYS, "wrongBiomeRegrowthMultiplier", 2f, 0f, null, 1f, "Multipier on crop growth time (except sugarcane) in the wrong biome (1 to disable feature, 0 to make crops only grow in correct biome)");
+    public static float wrongBiomeRegrowthMultiplier;
+    public static final ConfigOption<Float> wrongBiomeRegrowthMultiplierSugarcaneOption = addOption(CATEGORY_DELAYS, "wrongBiomeRegrowthMultiplierSugarcane", 2f, 0f, null, 1f, "Multipier on sugarcane growth time in the wrong biome (1 to disable feature, 0 to make sugarcane only grow in correct biome)");
+    public static float wrongBiomeRegrowthMultiplierSugarcane;
+    public static final ConfigOption<Float> flowerRegrowthMultiplierOption = addOption(CATEGORY_DELAYS, "flowerRegrowthMultiplier", 1f, 0f, null, 1f, "Multiplier on the time it takes a WeeeFlower crop to grow");
+    public static float flowerRegrowthMultiplier;
+    public static final ConfigOption<Float> cropRegrowthMultiplierOption = addOption(CATEGORY_DELAYS, "cropRegrowthMultiplier", 4f, 0f, null, 1f, "Multiplier on the time it takes a non-tree crop to grow");
+    public static float cropRegrowthMultiplier;
+    public static final ConfigOption<Float> cactusRegrowthMultiplierOption = addOption(CATEGORY_DELAYS, "cactusRegrowthMultiplier", 4f, 0f, null, 1f, "Multiplier on the time it takes cactus to grow");
+    public static float cactusRegrowthMultiplier;
+    public static final ConfigOption<Float> cocoaRegrowthMultiplierOption = addOption(CATEGORY_DELAYS, "cocoaRegrowthMultiplier", 4f, 0f, null, 1f, "Multiplier on the time it takes cocoa to grow");
+    public static float cocoaRegrowthMultiplier;
+    public static final ConfigOption<Float> sugarcaneRegrowthMultiplierOption = addOption(CATEGORY_DELAYS, "sugarcaneRegrowthMultiplier", 4f, 0f, null, 1f, "Multiplier on the time it takes sugarcane to grow");
+    public static float sugarcaneRegrowthMultiplier;
+    public static final ConfigOption<Float> treeCropRegrowthMultiplierOption = addOption(CATEGORY_DELAYS, "treeCropRegrowthMultiplier", 4f, 0f, null, 1f, "Multiplier on the time it takes a tree crop to grow");
+    public static float treeCropRegrowthMultiplier;
+    public static final ConfigOption<Float> saplingRegrowthMultiplierOption = addOption(CATEGORY_DELAYS, "saplingRegrowthMultiplier", 4f, 0f, null, 1f, "Multiplier on the time it takes a sapling to grow into a tree");
+    public static float saplingRegrowthMultiplier;
+    public static final ConfigOption<Float> netherWartRegrowthMultiplierOption = addOption(CATEGORY_DELAYS, "netherWartRegrowthMultiplier", 4f, 0f, null, 1f, "Multiplier on the time it takes nether wart to grow");
+    public static float netherWartRegrowthMultiplier;
+    public static final ConfigOption<Float> dryingRackTimeMultiplierOption = addOption(CATEGORY_DELAYS, "dryingRackTimeMultiplier", 4f, 0f, null, 1f, "Multiplier on the time it takes food to dry on Tinkers' Construct drying racks");
+    public static float dryingRackTimeMultiplier;
+    public static final ConfigOption<Float> eggTimeoutMultiplierOption = addOption(CATEGORY_DELAYS, "eggTimeoutMultiplier", 4f, 0f, null, 1f, "Multiplier applied to the delay between chicken egg laying");
+    public static float eggTimeoutMultiplier;
+    public static final ConfigOption<Float> breedingTimeoutMultiplierOption = addOption(CATEGORY_DELAYS, "breedingTimeoutMultiplier", 4f, 0f, null, 1f, "Multiplier applied to the delay between breeding entities");
+    public static float breedingTimeoutMultiplier;
+    public static final ConfigOption<Float> childDurationMultiplierOption = addOption(CATEGORY_DELAYS, "childDurationMultiplier", 4f, 0f, null, 1f, "Multiplier applied to the delay before children become adults");
+    public static float childDurationMultiplier;
     public static final ConfigOption<Integer> milkedTimeoutOption = addOption(CATEGORY_DELAYS, "milkedTimeout", 20, 0, null, 0, "Delay (in minutes) after milking a cow before it can be milked again");
     public static int milkedTimeout;
 
     // crop drops
-    public static final ConfigOption<Boolean> modifyCropDropsOption = addOption(CATEGORY_HARVESTING, "modifyCropDrops", true, false, "Enables/disables modification of the item drops of crops (produce and seeds)");
-    public static boolean modifyCropDrops;
-    public static final ConfigOption<Integer> seedsPerHarvestRightClickMinOption = addOption(CATEGORY_HARVESTING, "seedsPerHarvestRightClickMin", 0, 0, null, 0, "Minimum number of seeds you get when harvesting a non-tree crop (modifyCropDrops must be true) with right click");
+    public static final ConfigOption<Boolean> enableRightClickHarvestingOption = addOption(CATEGORY_HARVESTING, "enableRightClickHarvesting", true, false, "Enables/disables harvest crops by right clicking them");
+    public static boolean enableRightClickHarvesting;
+    public static final ConfigOption<Boolean> modifyCropDropsRightClickOption = addOption(CATEGORY_HARVESTING, "modifyCropDropsRightClick", true, false, "Enables/disables modification of the item drops of crops when right clicking them (produce and seeds)");
+    public static boolean modifyCropDropsRightClick;
+    public static final ConfigOption<Boolean> modifyCropDropsBreakOption = addOption(CATEGORY_HARVESTING, "modifyCropDropsBreak", true, false, "Enables/disables modification of the item drops of crops when breaking them (produce and seeds)");
+    public static boolean modifyCropDropsBreak;
+    public static final ConfigOption<Integer> seedsPerHarvestRightClickMinOption = addOption(CATEGORY_HARVESTING, "seedsPerHarvestRightClickMin", 0, 0, null, 0, "Minimum number of seeds you get when harvesting a non-tree crop with right click (modifyCropDrops must be true)");
     public static int seedsPerHarvestRightClickMin;
-    public static final ConfigOption<Integer> seedsPerHarvestRightClickMaxOption = addOption(CATEGORY_HARVESTING, "seedsPerHarvestRightClickMax", 0, 0, null, 0, "Maximum number of seeds you get when harvesting a non-tree crop (modifyCropDrops must be true) with right click");
+    public static final ConfigOption<Integer> seedsPerHarvestRightClickMaxOption = addOption(CATEGORY_HARVESTING, "seedsPerHarvestRightClickMax", 0, 0, null, 0, "Maximum number of seeds you get when harvesting a non-tree crop with right click (modifyCropDrops must be true)");
     public static int seedsPerHarvestRightClickMax;
-    public static final ConfigOption<Integer> seedsPerHarvestBreakMinOption = addOption(CATEGORY_HARVESTING, "seedsPerHarvestBreakMin", 0, 0, null, 0, "Minimum number of seeds you get when harvesting a non-tree crop (modifyCropDrops must be true) by breaking it");
+    public static final ConfigOption<Integer> seedsPerHarvestBreakMinOption = addOption(CATEGORY_HARVESTING, "seedsPerHarvestBreakMin", 0, 0, null, 0, "Minimum number of seeds you get when harvesting a non-tree crop by breaking it (modifyCropDrops must be true)");
     public static int seedsPerHarvestBreakMin;
-    public static final ConfigOption<Integer> seedsPerHarvestBreakMaxOption = addOption(CATEGORY_HARVESTING, "seedsPerHarvestBreakMax", 0, 0, null, 0, "Maximum number of seeds you get when harvesting a non-tree crop (modifyCropDrops must be tree) by breaking it");
+    public static final ConfigOption<Integer> seedsPerHarvestBreakMaxOption = addOption(CATEGORY_HARVESTING, "seedsPerHarvestBreakMax", 0, 0, null, 0, "Maximum number of seeds you get when harvesting a non-tree crop by breaking it (modifyCropDrops must be tree)");
     public static int seedsPerHarvestBreakMax;
-    public static final ConfigOption<Integer> producePerHarvestMinOption = addOption(CATEGORY_HARVESTING, "producePerHarvestMin", 2, 0, null, 2, "Minimum number of produce you get when harvesting a non-tree crop (modifyCropDrops must be true)");
-    public static int producePerHarvestMin;
-    public static final ConfigOption<Integer> producePerHarvestMaxOption = addOption(CATEGORY_HARVESTING, "producePerHarvestMax", 4, 0, null, 4, "Maximum number of produce you get when harvesting a non-tree crop (modifyCropDrops must be true)");
-    public static int producePerHarvestMax;
+    public static final ConfigOption<Integer> producePerHarvestRightClickMinOption = addOption(CATEGORY_HARVESTING, "producePerHarvestRightClickMin", 2, 0, null, 2, "Minimum number of produce you get when harvesting a non-tree crop with right click (modifyCropDrops must be true)");
+    public static int producePerHarvestRightClickMin;
+    public static final ConfigOption<Integer> producePerHarvestRightClickMaxOption = addOption(CATEGORY_HARVESTING, "producePerHarvestRightClickMax", 4, 0, null, 4, "Maximum number of produce you get when harvesting a non-tree crop with right click (modifyCropDrops must be true)");
+    public static int producePerHarvestRightClickMax;
+    public static final ConfigOption<Integer> producePerHarvestBreakMinOption = addOption(CATEGORY_HARVESTING, "producePerHarvestBreakMin", 2, 0, null, 2, "Minimum number of produce you get when harvesting a non-tree crop by breaking it (modifyCropDrops must be true)");
+    public static int producePerHarvestBreakMin;
+    public static final ConfigOption<Integer> producePerHarvestBreakMaxOption = addOption(CATEGORY_HARVESTING, "producePerHarvestBreakMax", 4, 0, null, 4, "Maximum number of produce you get when harvesting a non-tree crop by breaking it (modifyCropDrops must be true)");
+    public static int producePerHarvestBreakMax;
     public static final ConfigOption<Float> bonemealEffectivenessOption = addOption(CATEGORY_HARVESTING, "bonemealEffectiveness", 0.5f, 0.0f, 1.0f, 1.0f, "Multiplier on the effectiveness of bonemeal; the smaller this is, the more often bonemeal will fail to create growth. Set to 0 to disable bonemeal completely.");
     public static float bonemealEffectiveness;
     public static final ConfigOption<Boolean> modifyBonemealGrowthOption = addOption(CATEGORY_HARVESTING, "modifyBonemealGrowth", true, false, "Reduces the amount of growth from a successful bonemeal on certain plants (uses IguanaMan's opinionated values)");
@@ -295,6 +303,18 @@ public class IguanaConfig
     public static final ConfigOption<Integer> seedsPerHarvestMaxOption = removeOption(CATEGORY_HARVESTING, "seedsPerHarvestMax", 0);
     @Deprecated
     public static int seedsPerHarvestMax;
+    @Deprecated
+    public static final ConfigOption<Integer> producePerHarvestMinOption = removeOption(CATEGORY_HARVESTING, "producePerHarvestMin", 2);
+    @Deprecated
+    public static int producePerHarvestMin;
+    @Deprecated
+    public static final ConfigOption<Integer> producePerHarvestMaxOption = removeOption(CATEGORY_HARVESTING, "producePerHarvestMax", 4);
+    @Deprecated
+    public static int producePerHarvestMax;
+    @Deprecated
+    public static final ConfigOption<Boolean> modifyCropDropsOption = removeOption(CATEGORY_HARVESTING, "modifyCropDrops", true);
+    @Deprecated
+    public static boolean modifyCropDrops;
 
     public static void init(File configDir, File oldConfigFile)
     {
@@ -415,15 +435,22 @@ public class IguanaConfig
         breedingTimeoutMultiplier = breedingTimeoutMultiplierOption.get(config);
         childDurationMultiplier = childDurationMultiplierOption.get(config);
         milkedTimeout = milkedTimeoutOption.get(config);
-        modifyCropDrops = modifyCropDropsOption.get(config);
+        enableRightClickHarvesting = enableRightClickHarvestingOption.get(config);
+        modifyCropDropsBreak = modifyCropDropsBreakOption.getBackwardsCompatible(config, modifyCropDropsOption);
+        modifyCropDropsRightClick = modifyCropDropsRightClickOption.getBackwardsCompatible(config, modifyCropDropsOption);
+        modifyCropDrops = modifyCropDropsBreak;
         seedsPerHarvestRightClickMin = seedsPerHarvestRightClickMinOption.getBackwardsCompatible(config, seedsPerHarvestMinOption);
         seedsPerHarvestRightClickMax = seedsPerHarvestRightClickMaxOption.getBackwardsCompatible(config, seedsPerHarvestMaxOption);
         seedsPerHarvestBreakMin = seedsPerHarvestBreakMinOption.getBackwardsCompatible(config, seedsPerHarvestMinOption);
         seedsPerHarvestBreakMax = seedsPerHarvestBreakMaxOption.getBackwardsCompatible(config, seedsPerHarvestMaxOption);
         seedsPerHarvestMin = seedsPerHarvestRightClickMin;
         seedsPerHarvestMax = seedsPerHarvestRightClickMax;
-        producePerHarvestMin = producePerHarvestMinOption.get(config);
-        producePerHarvestMax = producePerHarvestMaxOption.get(config);
+        producePerHarvestRightClickMin = producePerHarvestRightClickMinOption.getBackwardsCompatible(config, producePerHarvestMinOption);
+        producePerHarvestRightClickMax = producePerHarvestRightClickMaxOption.getBackwardsCompatible(config, producePerHarvestMaxOption);
+        producePerHarvestBreakMin = producePerHarvestBreakMinOption.getBackwardsCompatible(config, producePerHarvestMinOption);
+        producePerHarvestBreakMax = producePerHarvestBreakMaxOption.getBackwardsCompatible(config, producePerHarvestMaxOption);
+        producePerHarvestMin = producePerHarvestRightClickMin;
+        producePerHarvestMax = producePerHarvestRightClickMax;
         bonemealEffectiveness = bonemealEffectivenessOption.get(config);
         modifyBonemealGrowth = modifyBonemealGrowthOption.getBackwardsCompatible(config, difficultyScalingBoneMealOption);
         addCustomVillageField = addCustomVillageFieldOption.get(config);
