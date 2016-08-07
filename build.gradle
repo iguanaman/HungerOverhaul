@@ -1,0 +1,195 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        maven {
+            name = "forge"
+            url = "http://files.minecraftforge.net/maven"
+        }
+        maven {
+            name = "sonatype"
+            url = "https://oss.sonatype.org/content/repositories/snapshots/"
+        }
+    }
+    dependencies {
+        classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
+    }
+}
+
+apply plugin: 'forge'
+
+group= "iguanaman" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = "HungerOverhaul"
+
+
+repositories {
+    maven {
+        name 'DVS1 Maven FS'
+        url 'http://dvs1.progwml6.com/files/maven'
+    }
+    maven {
+        name 'CB Maven FS'
+        url "http://chickenbones.net/maven/"
+    }
+    maven {
+         name "ProfMobius Maven FS"
+         url "http://mobiusstrip.eu/maven"
+    }
+    maven {
+        url "http://www.ryanliptak.com/maven/"
+    }
+}
+
+// Define properties file
+ext.configFile = file "build.properties"
+
+configFile.withReader {
+    // Load config.  It shall from now be referenced as simply config or project.config
+    def prop = new Properties()
+    prop.load(it)
+    project.ext.config = new ConfigSlurper().parse prop
+}
+
+
+// Finds and sets version data
+task buildInfo {
+    def cmd = "git rev-parse --short HEAD"
+    def proc = cmd.execute()
+    proc.waitFor()
+    if (proc.exitValue() == 0) {
+        ext.revision = proc.text.trim()
+    } else {
+        ext.revision = "GITBORK"
+    }
+
+    if (System.getenv().BUILD_NUMBER != null) {
+        ext.buildNum = "jenkins${System.getenv().BUILD_NUMBER}"
+    } else {
+        ext.buildNum = "DEV.${project.buildInfo.revision}"
+    }
+}
+ext.artifact_version = 'NFG'
+if (System.getenv().ARTIFACT_VERSION == null) {
+    artifact_version = "${config.mod_version}.${project.buildInfo.buildNum}"
+}
+if (System.getenv().ARTIFACT_VERSION != null) {
+    artifact_version = "${system.getenv().ARTIFACT_VERSION}"
+}
+
+version = "${config.minecraft_version}-${artifact_version}"
+
+minecraft {
+    version = config.minecraft_version + "-" + config.forge_version
+    runDir = 'run'
+    replace '${version}', project.version
+}
+
+dependencies {
+    compile "mantle:Mantle:${config.minecraft_version}-${config.mantle_version}:deobf"
+    compile "mods.natura:natura:${config.minecraft_version}-${config.natura_version}:deobf"
+    compile "tconstruct:TConstruct:${config.minecraft_version}-${config.tcon_version}:deobf"
+    compile "com.github.glitchfiend.biomesoplenty:BiomesOPlenty:${config.minecraft_version}-${config.bop_version}:deobf"
+    compile "applecore:AppleCore:${config.minecraft_version}-${config.applecore_version}:deobf"
+}
+
+// the single quotes in these filenames seems to cause problems with
+// the jenkins server, so skip this for jenkins builds
+if (System.getenv().BUILD_NUMBER == null) {
+    // note: the 'repository' url changes with each version
+    repositories { ivy { artifactPattern "http://addons.cursecdn.com/files/2268/386/[module] [revision].[ext]" } }
+    dependencies { compile "pam:Pam's HarvestCraft:1.7.10La@jar" }
+    repositories { ivy { artifactPattern "http://addons.cursecdn.com/files/2206/431/[module] [revision].[ext]"} }
+    dependencies { compile "pam:Pam's Random Pants:1.7.2a@zip"}
+    repositories { ivy { artifactPattern "http://addons.cursecdn.com/files/2206/430/[module] [revision].[ext]"} }
+    dependencies { compile "pam:Pam's Temperate Plants:1.7.2b@zip"}
+    repositories { ivy { artifactPattern "http://addons.cursecdn.com/files/2206/423/[module] [revision].[ext]"} }
+    dependencies { compile "pam:Pam's WeeeFlowers:1.7.2b@zip"}
+}
+
+processResources
+{
+    // this will ensure that this task is redone when the versions change.
+    inputs.property "version", artifact_version
+    inputs.property "mcversion", config.minecraft_version
+
+    // replace stuff in mcmod.info, nothing else
+    from(sourceSets.main.resources.srcDirs) {
+        include 'mcmod.info'
+                
+        // replace version and mcversion
+        expand 'version':artifact_version,'mcversion':config.minecraft_version
+    }
+        
+    // copy everything else, thats not the mcmod.info
+    from(sourceSets.main.resources.srcDirs) {
+        exclude 'mcmod.info'
+    }
+}
+
+// Add Coremod Manifest
+jar {
+    manifest {
+        attributes 'FMLAT': 'HungerOverhaul_at.cfg'
+    }
+}
+
+// Create deobf dev jars
+task deobfJar(type: Jar) {
+    from sourceSets.main.output
+    classifier = 'deobf'
+    manifest {
+        attributes 'FMLAT': 'HungerOverhaul_at.cfg'
+    }
+}
+
+artifacts {
+    archives deobfJar
+}
+// verify the properties exist.. or initialize.
+if (!project.hasProperty("keystore_location")) // keystore location
+    ext.keystore_location = ".";
+    
+if (!project.hasProperty("keystore_user_alias")) // keystore user alias
+    ext.keystore_user_alias = "";
+if (!project.hasProperty("sftp_username"))
+    ext.sftp_username = "";
+if (!project.hasProperty("sftp_key"))
+    ext.sftp_key = "";
+if (!project.hasProperty("keystore_user_password")) // keystore user pass
+    ext.keystore_user_password = "";
+if (System.getenv().KSK_PW != null)
+    ext.keystore_user_password =System.getenv().KSK_PW;
+task("signJar", dependsOn: "build")
+{
+    inputs.file jar.getArchivePath()
+    inputs.file keystore_location
+    inputs.property "keystore_user_alias", keystore_user_alias
+    inputs.property "keystore_user_password", keystore_user_password
+    outputs.file jar.getArchivePath()
+    
+    // only sign if the keystore exists
+    onlyIf {
+        return keystore_location != "."
+    }
+    println "archive path >> "+jar.getArchivePath()
+    println jar.getArchivePath()
+    // the actual action.. sign the jar.
+    doLast {
+        ant.signjar(
+            destDir: jar.destinationDir,
+            jar: jar.getArchivePath(),
+            keystore: keystore_location,
+            alias: keystore_user_alias,
+            storepass: keystore_user_password,
+            keypass: keystore_user_password
+        )
+    }
+}
+uploadArchives {
+    repositories {
+        if(project.hasProperty("local_maven")) {
+            mavenDeployer {
+            repository(url: "file://${local_maven}")
+            }
+        }
+    }
+}
